@@ -19,8 +19,8 @@
 #include <stdio.h>
 #include <limits.h>
 #include <time.h>
+#include "utils.h"
 #include "uuid.h"
-#include "rand.h"
 #include "hash.h"
 
 

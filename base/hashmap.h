@@ -22,6 +22,7 @@
 #define _HASHMAP_H_
 
 #include <stddef.h>
+#include "hash.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -32,7 +33,7 @@ typedef struct HexHashmap *Hashmap;
 
 
 /* hash function */
-typedef int(*HashFunc)(void *key);
+typedef hash_t(*HashFunc)(void *key);
 
 
 /* key comparison function */
@@ -69,8 +70,6 @@ size_t hashmap_bucketcount(Hashmap hashmap);
 size_t hashmap_capacity(Hashmap hashmap);
 
 size_t hashmap_count_collisions(Hashmap hashmap);
-
-int hashmap_int_hash(void *key);
 
 int hashmap_int_equals(void *keyA, void *keyB);
 

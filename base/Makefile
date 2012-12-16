@@ -46,8 +46,14 @@ memory_unittest.test: utils.o memory.o unittest.o tests/memory_unittest.cc
 hashmap.o: hashmap.c hashmap.h
 	$(CC) $(CFLAGS) -c hashmap.c hashmap.h
 
-hashmap_unittest.test: utils.o hashmap.o unittest.o memory.h utils.h assert.h tests/hashmap_unittest.cc
-	$(CXX) $(LIBGTEST) utils.o hashmap.o unittest.o memory.h utils.h assert.h tests/hashmap_unittest.cc -o hashmap_unittest.test
+hashmap_unittest.test: utils.o hash.o hashmap.o unittest.o memory.h utils.h assert.h tests/hashmap_unittest.cc
+	$(CXX) $(LIBGTEST) utils.o hash.o hashmap.o unittest.o memory.h utils.h assert.h tests/hashmap_unittest.cc -o hashmap_unittest.test
+
+dict.o: dict.c dict.h
+	$(CC) $(CFLAGS) -c dict.c dict.h
+
+dict_unittest.test: utils.o hash.o dict.o hashmap.o unittest.o tests/dict_unittest.cc
+	$(CXX) $(LIBGTEST) utils.o hash.o dict.o hashmap.o unittest.o tests/dict_unittest.cc -o dict_unittest.test
 
 uuid.o: uuid.h uuid.c
 	$(CC) $(CLAFGS) -c uuid.c uuid.h

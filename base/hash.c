@@ -27,7 +27,7 @@
 #include "hash.h"
 #include "utils.h"
 
-#define GOLDEN_PRIME 12347
+#define GOLDEN_PRIME 1237
 
 /*************************************
  * Use Horner's rule to hash string.
@@ -63,13 +63,16 @@ hash_t _hash_str_long(const char * str, size_t len)
   return h;
 }
 
+#define LONG_STR_LENGTH 20
+
 hash_t hash_str(const char * str)
 {
   RETURN_VAL_IF_NULL(str, 0);
 
   size_t len = strlen(str);
 
-  return len <= 20 ? _hash_str_short(str, len) : _hash_str_long(str, len);  
+  return _hash_str_short(str, len);
+  //return len <= LONG_STR_LENGTH ? _hash_str_short(str, len) : _hash_str_long(str, len);  
 }
 
 hash_t hash32shift(unsigned int key)

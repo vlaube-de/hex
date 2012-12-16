@@ -22,7 +22,10 @@
  * All unit tests do and should be linked to this.
  * */
 
+#include <list>
 #include "unittest.h"
+#include "memory.h"
+#include "utils.h"
 
 using ::testing::EmptyTestEventListener;
 using ::testing::InitGoogleTest;
@@ -32,6 +35,23 @@ using ::testing::TestEventListeners;
 using ::testing::TestInfo;
 using ::testing::TestPartResult;
 using ::testing::UnitTest;
+using ::testing::factory::FactoryBase;
+
+
+FactoryBase::~FactoryBase()
+{
+  clear();
+}
+
+
+void FactoryBase::clear()
+{
+  std::list<void*>::iterator it;
+  for(it = _instances.begin(); it != _instances.end(); it++) {
+    void* p = *it;
+    HEX_FREE(p);
+  }
+}
 
 
 /* entry point for unit test executable */

@@ -18,22 +18,28 @@
 #include "../../base/memory.h"
 #include "../../base/unittest.h"
 #include "../../base/assert.h"
+#include "../../base/uuid.h"
 #include "../../base/utils.h"
 #include "../ast.h"
 #include "../ftable.h"
+#include "../testing/factories/paramlist_factory.h"
 
+using ::testing::factory::ParamlistFactory;
 
 class FtableTest : public ::testing::Test {
 protected:
   virtual void SetUp() {
     _ftable = ftable_create();
+    _paramlistFactory = new ParamlistFactory();
   }
 
   virtual void TearDown() {
     ftable_free(&_ftable);
+    delete _paramlistFactory;
   }
 
   Ftable _ftable;
+  ParamlistFactory *_paramlistFactory;
 };
 
 
@@ -44,79 +50,109 @@ TEST_F(FtableTest, FtableCreationTest) {
 }
 
 TEST_F(FtableTest, ftable_putTest1) {
+  /*
+   * Test that ftable_put works.
+   */
+  char module_name[] = "hex.compiler.ftable";
   char name[] = "do_something";
+  hash_t parent_id = uuid_create_and_hash();
   hex_type_t return_type = 1;
-  ParameterList paramlist = NULL;
+  ParameterList paramlist = (ParameterList)_paramlistFactory->create();
 
-  FtableEntry entry = ftable_put(_ftable, name, return_type, paramlist);
+  FtableEntry actual_entry = ftable_put(
+    _ftable,
+    parent_id,
+    module_name,
+    name,
+    return_type,
+    paramlist
+  );
 
-  HEX_ASSERT(entry);
-  
-  ASSERT_STREQ(name, entry->name);
-  ASSERT_EQ(return_type, entry->return_type);
-  ASSERT_EQ(paramlist, entry->paramlist);
+  HEX_ASSERT(actual_entry);
+  HEX_ASSERT(actual_entry->id);
 
-  char *mingled_name = ftable_mingle_name(entry);
-  ASSERT_STREQ(mingled_name, entry->mingled_name);
+  ASSERT_STREQ(module_name, actual_entry->module_name);
+  ASSERT_STREQ(name, actual_entry->name);
+  ASSERT_EQ(parent_id, actual_entry->parent_id);
+  ASSERT_EQ(return_type, actual_entry->return_type);
+  ASSERT_EQ(paramlist, actual_entry->paramlist);
+
+  char *mingled_name = ftable_mingle_name(actual_entry);
+  ASSERT_STREQ(mingled_name, actual_entry->mingled_name);
 
   ASSERT_EQ(1, ftable_size(_ftable));
 
-  entry = (FtableEntry)ftable_lookup(_ftable, name, paramlist);
+  FtableEntry expected_entry = (FtableEntry)ftable_lookup(
+    _ftable,
+    module_name,
+    name,
+    paramlist
+  );
 
-  HEX_ASSERT(entry);
+  HEX_ASSERT(expected_entry);
 
-  ASSERT_STREQ(name, entry->name);
-  ASSERT_EQ(return_type, entry->return_type);
-  ASSERT_EQ(paramlist, entry->paramlist);
-
-  ASSERT_STREQ(mingled_name, entry->mingled_name);
+  ASSERT_TRUE(ftable_compare(actual_entry, expected_entry));
 
   HEX_FREE(mingled_name);
 }
 
 TEST_F(FtableTest, ftable_putTest2) {
+  /*
+   * Test that two functions of different name and return type
+   * in the same module gives two different FtableEntry.
+   */
+  char module_name1[] = "hex.compiler.ftable";
+  char module_name2[] = "hex.compiler.ftable";
   char name1[] = "doSomething";
   char name2[] = "doNothing";
+  hash_t parent_id = uuid_create_and_hash();
   hex_type_t return_type1 = 1;
   hex_type_t return_type2 = 2;
   ParameterList paramlist1 = NULL;
   ParameterList paramlist2 = NULL;
 
-  FtableEntry entry1 = ftable_put(_ftable, name1, return_type1, paramlist1);
-  FtableEntry entry2 = ftable_put(_ftable, name2, return_type2, paramlist2);
+  FtableEntry actual_entry_1 = ftable_put(
+    _ftable,
+    parent_id,
+    module_name1,
+    name1,
+    return_type1,
+    paramlist1
+  );
 
-  HEX_ASSERT(entry1);
-  HEX_ASSERT(entry2);
+  FtableEntry actual_entry_2 = ftable_put(
+    _ftable,
+    parent_id,
+    module_name2,
+    name2,
+    return_type2,
+    paramlist2
+  );
 
-  ASSERT_NE(entry1, entry2);
+  HEX_ASSERT(actual_entry_1);
+  HEX_ASSERT(actual_entry_2);
 
-  ASSERT_STREQ(name1, entry1->name);
-  ASSERT_EQ(return_type1, entry1->return_type);
-  ASSERT_EQ(paramlist1, entry1->paramlist);
+  ASSERT_STREQ(name1, actual_entry_1->name);
+  ASSERT_EQ(return_type1, actual_entry_1->return_type);
+  ASSERT_EQ(paramlist1, actual_entry_1->paramlist);
 
-  ASSERT_STREQ(name2, entry2->name);
-  ASSERT_EQ(return_type2, entry2->return_type);
-  ASSERT_EQ(paramlist2, entry2->paramlist);
+  ASSERT_STREQ(name2, actual_entry_2->name);
+  ASSERT_EQ(return_type2, actual_entry_2->return_type);
+  ASSERT_EQ(paramlist2, actual_entry_2->paramlist);
 
-  ASSERT_STRNE(entry1->mingled_name, entry2->mingled_name);
-
-  char *mingled_name1=NULL;
-  char *mingled_name2=NULL;
-
-  mingled_name1 = ftable_mingle_name(entry1);
-  mingled_name2 = ftable_mingle_name(entry2);
-
-  ASSERT_STREQ(mingled_name1, entry1->mingled_name);
-  ASSERT_STREQ(mingled_name2, entry2->mingled_name);
-  ASSERT_STRNE(mingled_name1, mingled_name2);
-
-  HEX_FREE(mingled_name1);
-  HEX_FREE(mingled_name2);
+  ASSERT_FALSE(ftable_compare(actual_entry_1, actual_entry_2));
 }
 
 TEST_F(FtableTest, ftable_putTest3) {
+  /*
+   * Test that two functions with same name, return type
+   * but with different parameter in the same module
+   * gives two different FtableEntry. */
+  char module_name1[] = "hex.compiler.ftable";
+  char module_name2[] = "hex.compiler.ftable";
   char name1[] = "factorial";
   char name2[] = "factorial";
+  hash_t parent_id = uuid_create_and_hash();
   hex_type_t return_type1 = 1;
   hex_type_t return_type2 = 1;
   ParameterList paramlist1 = NULL;
@@ -133,39 +169,66 @@ TEST_F(FtableTest, ftable_putTest3) {
   paramlist2->parameter = param;
   paramlist2->next = NULL;
 
-  FtableEntry entry1 = ftable_put(_ftable, name1, return_type1, paramlist1);
-  FtableEntry entry2 = ftable_put(_ftable, name2, return_type2, paramlist2);
+  FtableEntry actual_entry_1 = ftable_put(
+    _ftable,
+    parent_id,
+    module_name1,
+    name1,
+    return_type1,
+    paramlist1
+  );
 
-  HEX_ASSERT(entry1);
-  HEX_ASSERT(entry2);
+  FtableEntry actual_entry_2 = ftable_put(
+    _ftable,
+    parent_id,
+    module_name2,
+    name2,
+    return_type2,
+    paramlist2
+  );
 
-  ASSERT_STREQ(name1, entry1->name);
-  ASSERT_EQ(return_type1, entry1->return_type);
-  ASSERT_EQ(paramlist1, entry1->paramlist);
+  HEX_ASSERT(actual_entry_1);
+  HEX_ASSERT(actual_entry_2);
 
-  ASSERT_STREQ(name2, entry2->name);
-  ASSERT_EQ(return_type2, entry2->return_type);
-  ASSERT_EQ(paramlist2, entry2->paramlist);
+  ASSERT_STREQ(name1, actual_entry_1->name);
+  ASSERT_EQ(return_type1, actual_entry_1->return_type);
+  ASSERT_EQ(paramlist1, actual_entry_1->paramlist);
 
-  ASSERT_STRNE(entry1->mingled_name, entry2->mingled_name);
+  ASSERT_STREQ(name2, actual_entry_2->name);
+  ASSERT_EQ(return_type2, actual_entry_2->return_type);
+  ASSERT_EQ(paramlist2, actual_entry_2->paramlist);
 
-  char *mingled_name1=NULL;
-  char *mingled_name2=NULL;
+  FtableEntry expected_entry_1 = ftable_lookup_by_id(
+    _ftable,
+    actual_entry_1->id
+  );
 
-  mingled_name1 = ftable_mingle_name(entry1);
-  mingled_name2 = ftable_mingle_name(entry2);
+  FtableEntry expected_entry_2 = ftable_lookup_by_id(
+    _ftable,
+    actual_entry_2->id
+  );
 
-  ASSERT_STREQ(mingled_name1, entry1->mingled_name);
-  ASSERT_STREQ(mingled_name2, entry2->mingled_name);
-  ASSERT_STRNE(mingled_name1, mingled_name2);
+  HEX_ASSERT(expected_entry_1);
+  HEX_ASSERT(expected_entry_2);
 
-  HEX_FREE(mingled_name1);
-  HEX_FREE(mingled_name2);
+  ASSERT_FALSE(ftable_compare(actual_entry_1, actual_entry_2));
+  ASSERT_FALSE(ftable_compare(expected_entry_1, expected_entry_2));
+  ASSERT_TRUE(ftable_compare(actual_entry_1, expected_entry_1));
+  ASSERT_TRUE(ftable_compare(actual_entry_2, expected_entry_2));
 }
 
 TEST_F(FtableTest, ftable_putTest4) {
+  /*
+   * Test that two functions of same name, return type but
+   * different parameter in different modules givens two different
+   * FtableEntry.
+   */
+  char module_name1[] = "hex.compiler.vtable";
+  char module_name2[] = "hex.compiler.ftable";
   char name1[] = "factorial";
   char name2[] = "factorial";
+  hash_t parent_id1 = uuid_create_and_hash();
+  hash_t parent_id2 = uuid_create_and_hash();
   hex_type_t return_type1 = 1;
   hex_type_t return_type2 = 1;
   ParameterList paramlist1 = HEX_MALLOC(struct HexParameterList);
@@ -190,58 +253,147 @@ TEST_F(FtableTest, ftable_putTest4) {
   paramlist2->parameter = param2;
   paramlist2->next = NULL;
 
-  FtableEntry entry1 = ftable_put(_ftable, name1, return_type1, paramlist1);
-  FtableEntry entry2 = ftable_put(_ftable, name2, return_type2, paramlist2);
+  FtableEntry actual_entry_1 = ftable_put(
+    _ftable,
+    parent_id1,
+    module_name1,
+    name1,
+    return_type1,
+    paramlist1
+  );
 
-  HEX_ASSERT(entry1);
-  HEX_ASSERT(entry2);
+  FtableEntry actual_entry_2 = ftable_put(
+    _ftable,
+    parent_id2,
+    module_name2,
+    name2,
+    return_type2,
+    paramlist2
+  );
 
-  ASSERT_STREQ(name1, entry1->name);
-  ASSERT_EQ(return_type1, entry1->return_type);
-  ASSERT_EQ(paramlist1, entry1->paramlist);
+  HEX_ASSERT(actual_entry_1);
+  HEX_ASSERT(actual_entry_2);
 
-  ASSERT_STREQ(name2, entry2->name);
-  ASSERT_EQ(return_type2, entry2->return_type);
-  ASSERT_EQ(paramlist2, entry2->paramlist);
+  ASSERT_STREQ(name1, actual_entry_1->name);
+  ASSERT_EQ(return_type1, actual_entry_1->return_type);
+  ASSERT_EQ(paramlist1, actual_entry_1->paramlist);
 
-  ASSERT_STRNE(entry1->mingled_name, entry2->mingled_name);
+  ASSERT_STREQ(name2, actual_entry_2->name);
+  ASSERT_EQ(return_type2, actual_entry_2->return_type);
+  ASSERT_EQ(paramlist2, actual_entry_2->paramlist);
 
-  char *mingled_name1=NULL;
-  char *mingled_name2=NULL;
+  FtableEntry expected_entry_1 = ftable_lookup_by_id(
+    _ftable,
+    actual_entry_1->id
+  );
 
-  mingled_name1 = ftable_mingle_name(entry1);
-  mingled_name2 = ftable_mingle_name(entry2);
+  FtableEntry expected_entry_2 = ftable_lookup_by_id(
+    _ftable,
+    actual_entry_2->id
+  );
 
-  ASSERT_STREQ(mingled_name1, entry1->mingled_name);
-  ASSERT_STREQ(mingled_name2, entry2->mingled_name);
-  ASSERT_STRNE(mingled_name1, mingled_name2);
+  HEX_ASSERT(expected_entry_1);
+  HEX_ASSERT(expected_entry_2);
 
-  HEX_FREE(mingled_name1);
-  HEX_FREE(mingled_name2);
+  ASSERT_FALSE(ftable_compare(actual_entry_1, actual_entry_2));
+  ASSERT_FALSE(ftable_compare(expected_entry_1, expected_entry_2));
+  ASSERT_TRUE(ftable_compare(actual_entry_1, expected_entry_1));
+  ASSERT_TRUE(ftable_compare(actual_entry_2, expected_entry_2));
 }
 
 TEST_F(FtableTest, ftable_lookup_by_nameTest) {
-  char func_name[] = "calculate_mass_of_sun";
+  /*
+   * Test that lookup by name works for existing entry
+   * and not for non-existing entries.
+   */
+  char module_name[] = "hex.compiler.ftable";
+  char name[] = "calculate_mass_of_sun";
+  hash_t parent_id = uuid_create_and_hash();
 
-  FtableEntry entry=NULL;
-
-  entry = ftable_put(
-    _ftable, func_name, 0, NULL);
-
-  HEX_ASSERT(entry);
-  ASSERT_STREQ(func_name, entry->name);
-
-  entry = ftable_lookup_by_name(
+  FtableEntry actual_entry = ftable_put(
     _ftable,
-    func_name);
-
-  HEX_ASSERT(entry);
-  ASSERT_STREQ(func_name, entry->name);
-
-  entry = ftable_lookup_by_name(
-    _ftable,
-    (char*)"_some_random_function"
+    parent_id,
+    module_name,
+    name,
+    0x0,
+    NULL
   );
 
-  HEX_ASSERT(entry == NULL);
+  HEX_ASSERT(actual_entry);
+  HEX_ASSERT(actual_entry->id);
+
+  ASSERT_STREQ(module_name, actual_entry->module_name);
+  ASSERT_STREQ(name, actual_entry->name);
+
+  FtableEntry expected_entry = ftable_lookup_by_name(
+    _ftable,
+    module_name,
+    name
+  );
+
+  HEX_ASSERT(expected_entry);
+  HEX_ASSERT(expected_entry->id);
+
+  ASSERT_TRUE(ftable_compare(actual_entry, expected_entry));
+
+  FtableEntry unexpected_entry = ftable_lookup_by_name(
+    _ftable,
+    module_name,
+    generate_text(10, 12) 
+  );
+
+  HEX_ASSERT(unexpected_entry == NULL);
+}
+
+TEST_F(FtableTest, ftable_lookup_by_parent_idTest) {
+  /*
+   * Test that lookup by parent id works for existing entry
+   * and not for non-existing entries. */
+  char module_name[] = "hex.compiler.ftable";
+  char name[] = "calculate_mass_of_sun";
+  hash_t parent_id = uuid_create_and_hash();
+  hex_type_t return_type = 0x01;
+  ParameterList paramlist = NULL;
+
+  FtableEntry actual_entry = ftable_put(
+    _ftable,
+    parent_id,
+    module_name,
+    name,
+    return_type,
+    paramlist
+  );
+
+  HEX_ASSERT(actual_entry);
+
+  ASSERT_STREQ(module_name, actual_entry->module_name);
+  ASSERT_STREQ(name, actual_entry->name);
+
+  FtableEntry expected_entry = ftable_lookup_by_parent_id(
+    _ftable,
+    parent_id,
+    name
+  );
+
+  HEX_ASSERT(expected_entry);
+
+  ASSERT_TRUE(ftable_compare(actual_entry, expected_entry));
+
+  /* Look up with an invalid parent id */
+  FtableEntry unexpected_entry_1 = ftable_lookup_by_parent_id(
+    _ftable,
+    uuid_create_and_hash(),
+    name
+  );
+
+  HEX_ASSERT(unexpected_entry_1 == NULL);
+
+  /* Look up with an invalid entry name */
+  FtableEntry unexpected_entry_2 = ftable_lookup_by_parent_id(
+    _ftable,
+    parent_id,
+    generate_text(10, 12)
+  );
+
+  HEX_ASSERT(unexpected_entry_2 == NULL);
 }

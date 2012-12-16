@@ -20,6 +20,8 @@
 #ifndef _UTILS_H_
 #define _UTILS_H_
 
+#include <stddef.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -169,6 +171,81 @@ clear_nth_bit(int *val, char bit);
  */
 int
 is_bit_set(int val, char bit);
+
+/*
+ * int
+ * hex_rand_top(int max)
+ *
+ * Generated a pseudo-random integer number in the range between 1 and 'max'.
+ */
+int
+hex_rand_top(int max);
+
+/*
+ * int
+ * hex_rand_range(int min, int max)
+ *
+ * Generates a pseudo-random integer number in the range between 'min' and 'max'.
+ */
+int
+hex_rand_range(int min, int max);
+
+/*
+ * double
+ * hex_randf_top(double max)
+ *
+ * Generated a pseudo-random floating number in the range between 1.0 and 'max'.
+ */
+double
+hex_randf_top(double max);
+
+/*
+ * int
+ * hex_randf_range(double min, double max)
+ *
+ * Generates a pseudo-random floating number in the range between 'min' and 'max'.
+ */
+double
+hex_randf_range(double min, double max);
+
+/*
+ * char*
+ * generate_text(size_t length=0, size_max=0)
+ *
+ * Generated a random string of specified length(optional).
+ *
+ * Parameters:
+ *  size_t len: The specified length of the string. If not specified,
+ *    generated a random string of length less or equal to 'max'.
+ *    This parameter is optional.
+ *  size_t max: The max number of characters of the text string generated.
+ *    This parameter is optional.
+ *
+ * Preconditions:
+ *  There are four scenarios based on the input of this function:
+ *    1. Both 'len' and 'max' are non-zero:
+ *      The generated text string will have a length in between 'len' and 'max'.
+ *    2. Only 'len' is non-zero:
+ *      The generated text string will have exactly 'len' characters in length.
+ *    3. Only max is non-zero:
+ *      The generated text string will have a random length between 1 and 'max'.
+ *    4. Both of 'len' and 'max' are zero: 
+ *      NULL is returned.
+ */
+char*
+generate_text(size_t len, size_t max);
+
+/*
+ * char*
+ * generate_loremipsum()
+ *
+ * Generate Lorem Ipsum.
+ *
+ * Reference:
+ * http://www.lipsum.com/
+ */
+char*
+generate_loremipsum();
 
 
 //===========================================================================

@@ -15,36 +15,20 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#ifndef _PARAMLIST_FACTORY_H_
+#define _PARAMLIST_FACTORY_H_
 
-/*
- * Unit test
- *
- * All unit testing stuff should be here.
- * All unit tests do and should include this header.
- */
+#include "../../../base/unittest.h"
+#include "../../ast.h"
 
-#ifndef _UNIT_TEST_H_
-#define _UNIT_TEST_H_
-
-#include <gtest/gtest.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <list>
-
-
-namespace testing {
+namespace testing{
   namespace factory {
-    class FactoryBase {
-    public:
-      virtual ~FactoryBase();
-
-      virtual void* create()=0;
+    class ParamlistFactory : public ::testing::factory::FactoryBase {
+      public:
+      virtual void* create();
       virtual void clear();
-    protected:
-      std::list<void*> _instances;
     };
   }
 }
 
-
-#endif /* _UNIT_TEST_H_ */
+#endif /* _PARAMLIST_FACTORY_H_ */

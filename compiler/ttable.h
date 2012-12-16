@@ -38,21 +38,46 @@ size_t ttable_size(Ttable ttable);
 
 size_t ttable_capacity(Ttable ttable);
 
-void* ttable_put(Ttable ttable, char *name);
+char* ttable_mingle_name(TtableEntry entry);
 
-TtableEntry ttable_lookup(Ttable ttable, char *name); 
+void* ttable_put(Ttable ttable, char *module_name, char *type_name);
 
-void* ttable_put_member_var(Ttable ttable, char *name, char *member_name,
-  hex_type_t type, hex_type_qualifier_t type_qualifier);
+TtableEntry ttable_lookup(Ttable ttable, char *module_name, char *type_name); 
 
-void* ttable_put_member_func(Ttable ttable, char *name, char *member_name,
-  hex_type_t return_type, void* paramlist);
+void* ttable_put_member(
+  Ttable ttable,
+  char *module_name,
+  char *type_name,
+  char *member_name,
+  hex_type_t type,
+  hex_type_qualifier_t type_qualifier);
 
-int ttable_lookup_member_var(Ttable ttable, char *name, char *member_name);
-
-int ttable_lookup_member_func(Ttable ttable, char *name, char *member_name,
+void* ttable_put_method(
+  Ttable ttable,
+  char *module_name,
+  char *type_name,
+  char *method_name,
+  hex_type_t return_type,
   void* paramlist);
 
+void* ttable_lookup_member(
+  Ttable ttable,
+  char *module_name,
+  char *type_name,
+  char *member_name);
+
+void* ttable_lookup_method(
+  Ttable ttable,
+  char *module_name,
+  char *type_name,
+  char *method_name,
+  void* paramlist);
+
+hash_t ttable_get_entry_id(TtableEntry entry);
+
+int ttable_compare_entry_by_id(TtableEntry entry1, TtableEntry entry2);
+
+int ttable_compare_entry(TtableEntry entry1, TtableEntry entry2);
 
 #ifdef __cplusplus
 }

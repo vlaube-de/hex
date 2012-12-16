@@ -22,6 +22,9 @@
 #include "../base/utils.h"
 #include "../base/strbuf.h"
 #include "../base/hashmap.h"
+#include "../base/strbuf.h"
+#include "../base/uuid.h"
+#include "../base/hash.h"
 #include "vtable.h"
 #include "ftable.h"
 #include "ttable.h"
@@ -30,7 +33,10 @@
 #define TTABLE_DEFAULT_CAPACITY 20
 
 struct HexTtableEntry {
+  hash_t id;
+  char *module_name;
   char *name;
+  char *mingled_name;
   Vtable vtable;
   Ftable ftable;
 };
@@ -51,9 +57,9 @@ inline int _ttable_keycmpfunc(void *key1, void *key2)
 }
 
 static
-inline int _ttable_hashfunc(void *key)
+inline hash_t _ttable_hashfunc(void *key)
 {
-  return (hash_t)hash_str((char*)key);
+  return hash_str((char*)key);
 }
 
 Ttable ttable_create()
@@ -83,9 +89,10 @@ Ttable ttable_create()
 }
 
 static
-TtableEntry _ttable_create_entry(char *name)
+TtableEntry _ttable_create_entry(char *module_name, char *type_name)
 {
-  HEX_ASSERT(name);
+  HEX_ASSERT(module_name);
+  HEX_ASSERT(type_name);
 
   Vtable _vtable = vtable_create();
 
@@ -103,6 +110,7 @@ TtableEntry _ttable_create_entry(char *name)
   }
 
   TtableEntry entry = HEX_MALLOC(struct HexTtableEntry);
+  HEX_ASSERT(entry);
 
   if(!entry) {
     HEX_FREE(_vtable);
@@ -111,41 +119,56 @@ TtableEntry _ttable_create_entry(char *name)
     return NULL;
   }
 
-  char *_name = MALLOC(strlen(name)+1);
-
-  if(!_name) {
-    HEX_FREE(_vtable);
-    HEX_FREE(_ftable);
-    HEX_FREE(entry);
-    errno = ENOMEM;
-    return NULL;
-  }
-
-  entry->name = _name;
+  entry->id = uuid_create_and_hash();
+  entry->module_name = strdup(module_name);
+  entry->name = strdup(type_name);
   entry->vtable = _vtable;
   entry->ftable = _ftable;
-
-  strcpy(entry->name, name);
+  entry->mingled_name = ttable_mingle_name(entry);
 
   return entry;
 }
 
 static
-int _ttable_free_entry(void *name, void *entry)
+int _ttable_free_entry(void *key, void *value)
 {
-  HEX_ASSERT(name);
-  HEX_ASSERT(entry);
+  HEX_ASSERT(key);
+  HEX_ASSERT(value);
 
-  char *_name = (char*)name;
-  TtableEntry _entry = (TtableEntry)entry;
+  char *_mingled_name = (char*)key;
+  TtableEntry _entry = (TtableEntry)value;
 
   vtable_free(&_entry->vtable);
   ftable_free(&_entry->ftable);
 
+  HEX_FREE(_mingled_name);
+
+  HEX_ASSERT(_mingled_name == NULL);
   HEX_ASSERT(_entry->vtable == NULL);
   HEX_ASSERT(_entry->ftable == NULL);
 
   return 1;
+}
+
+char* ttable_mingle_name(TtableEntry entry)
+{
+  HEX_ASSERT(entry);
+
+  Strbuf strbuf = strbuf_create();
+  HEX_ASSERT(strbuf);
+
+  strbuf_append(strbuf, entry->module_name);
+  strbuf_append(strbuf, ".");
+  strbuf_append(strbuf, entry->name);
+
+  char *mingled_name = strdup(strbuf_cstr(strbuf));
+
+  HEX_ASSERT(mingled_name);
+
+  strbuf_free(&strbuf);
+  HEX_ASSERT(strbuf == NULL);
+
+  return mingled_name;
 }
 
 void ttable_free(Ttable *ttable)
@@ -178,17 +201,23 @@ size_t ttable_capacity(Ttable ttable)
 
 void* ttable_put(
   Ttable ttable,
+  char *module_name,
   char *name)
 {
   HEX_ASSERT(ttable);
+  HEX_ASSERT(module_name);
   HEX_ASSERT(name);
 
-  TtableEntry _entry = _ttable_create_entry(name);
+  TtableEntry _entry = (TtableEntry)_ttable_create_entry(module_name, name);
 
   HEX_ASSERT(_entry);
 
-  return hashmap_put(ttable->hashmap, name, _entry); 
+  return hashmap_put(ttable->hashmap, _entry->mingled_name, _entry); 
 }
+
+typedef struct HexTtableLookupArg {
+  char *mingled_name;
+} *TtableLookupArg;
 
 static
 inline int _ttable_lookup(void *key, void *value, void *arg)
@@ -196,81 +225,151 @@ inline int _ttable_lookup(void *key, void *value, void *arg)
   HEX_ASSERT(key);
   HEX_ASSERT(arg);
 
-  return strcmp((char*)key, (char*)arg) == 0;
+  char *mingled_name = (char*)key;
+  TtableLookupArg _arg = (TtableLookupArg)arg;
+
+  return strcmp(mingled_name, _arg->mingled_name) == 0;
 }
 
-TtableEntry ttable_lookup(Ttable ttable, char *name)
+TtableEntry ttable_lookup(Ttable ttable, char *module_name, char *name)
 {
   HEX_ASSERT(ttable);
   HEX_ASSERT(name);
 
-  return (TtableEntry)hashmap_lookup(ttable->hashmap, _ttable_lookup, name); 
+  TtableEntry _entry = _ttable_create_entry(module_name, name);
+
+  struct HexTtableLookupArg arg = {
+    .mingled_name = _entry->mingled_name
+  };
+
+  HEX_FREE(_entry);
+
+  return (TtableEntry)hashmap_lookup(ttable->hashmap, _ttable_lookup, &arg); 
 }
 
-void* ttable_put_member_var(
+void* ttable_put_member(
   Ttable ttable,
-  char *name,
+  char *module_name,
+  char *type_name,
   char *member_name,
   hex_type_t type,
   hex_type_qualifier_t type_qualifier)
 {
   HEX_ASSERT(ttable);
-  HEX_ASSERT(name);
+  HEX_ASSERT(module_name);
+  HEX_ASSERT(type_name);
   HEX_ASSERT(member_name);
 
-  TtableEntry entry = ttable_lookup(ttable, name);
+  TtableEntry entry = ttable_lookup(ttable, module_name, type_name);
 
   RETURN_VAL_IF_NULL(entry, NULL);
 
-  return vtable_put(entry->vtable, HEX_VAR_SCOPE_TYPE_MEMBER,
-    member_name, type, type_qualifier, 1); 
+  return vtable_put(
+    entry->vtable,
+    entry->mingled_name,
+    member_name,
+    HEX_VAR_SCOPE_TYPE_MEMBER,
+    type,
+    type_qualifier,
+    0x01
+  ); 
 }
 
-void* ttable_put_member_func(
+void* ttable_put_method(
   Ttable ttable,
-  char *name,
-  char *member_name,
+  char *module_name,
+  char *type_name,
+  char *method_name,
   hex_type_t return_type,
   void* paramlist)
 {
   HEX_ASSERT(ttable);
-  HEX_ASSERT(name);
-  HEX_ASSERT(member_name);
+  HEX_ASSERT(module_name);
+  HEX_ASSERT(type_name);
+  HEX_ASSERT(method_name);
 
-  TtableEntry entry = ttable_lookup(ttable, name);
+  TtableEntry entry = ttable_lookup(ttable, module_name, type_name);
 
   RETURN_VAL_IF_NULL(entry, NULL);
 
-  return ftable_put(entry->ftable, member_name, return_type, paramlist);
+  return ftable_put(
+    entry->ftable,
+    entry->mingled_name,
+    method_name,
+    return_type,
+    paramlist
+  );
 }
 
-int ttable_lookup_member_var(Ttable ttable, char *name, char *member_name)
+void* ttable_lookup_member(
+  Ttable ttable,
+  char *module_name,
+  char *type_name,
+  char *member_name)
 {
   HEX_ASSERT(ttable);
-  HEX_ASSERT(name);
+  HEX_ASSERT(module_name);
+  HEX_ASSERT(type_name);
   HEX_ASSERT(member_name);
 
-  TtableEntry entry = ttable_lookup(ttable, name);
+  TtableEntry entry = ttable_lookup(ttable, module_name, type_name);
 
   RETURN_VAL_IF_NULL(entry, 0);
 
-  void *p = vtable_lookup(entry->vtable, member_name, 1);
+  void *p = vtable_lookup(
+    entry->vtable,
+    entry->mingled_name,
+    member_name,
+    0x01
+  );
 
-  return (p != NULL);
+  return p;
 }
 
-int ttable_lookup_member_func(Ttable ttable, char *name, char *member_name,
+void* ttable_lookup_method(
+  Ttable ttable,
+  char *module_name,
+  char *type_name,
+  char *method_name,
   void* paramlist)
 {
   HEX_ASSERT(ttable);
-  HEX_ASSERT(name);
-  HEX_ASSERT(member_name);
+  HEX_ASSERT(module_name);
+  HEX_ASSERT(type_name);
+  HEX_ASSERT(method_name);
 
-  TtableEntry entry = ttable_lookup(ttable, name);
+  TtableEntry entry = ttable_lookup(ttable, module_name, type_name);
 
-  RETURN_VAL_IF_NULL(entry, 0);
+  RETURN_VAL_IF_NULL(entry, NULL);
 
-  void *p = ftable_lookup(entry->ftable, member_name, paramlist);
+  void *p = ftable_lookup(
+    entry->ftable,
+    entry->mingled_name,
+    method_name,
+    paramlist
+  );
 
-  return (p != NULL);
+  return p;
+}
+
+hash_t ttable_get_entry_id(TtableEntry entry)
+{
+  HEX_ASSERT(entry);
+  return entry->id;
+}
+
+int ttable_compare_entry_by_id(TtableEntry entry1, TtableEntry entry2)
+{
+  HEX_ASSERT(entry1);
+  HEX_ASSERT(entry2);
+
+  return entry1->id == entry2->id;
+}
+
+int ttable_compare_entry(TtableEntry entry1, TtableEntry entry2)
+{
+  HEX_ASSERT(entry1);
+  HEX_ASSERT(entry2);
+
+  return strcmp(entry1->mingled_name, entry2->mingled_name) == 0;
 }

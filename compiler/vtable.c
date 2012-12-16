@@ -47,13 +47,13 @@ inline int _vtable_keycmpfunc(void *key1, void *key2)
 }
 
 static
-inline int _vtable_hashfunc(void *key)
+inline hash_t _vtable_hashfunc(void *key)
 {
-  return (hash_t)hash_str((char*)key);
+  return hash_str((char*)key);
 }
 
 /*
- * mingled name = 'name' + '_' + type + '_' + 'indent_level' 
+ * mingled name = 'module_name' + '_' + 'name' + '_' + type + '_' + 'indent_level' 
  * */
 char* vtable_mingle_name(VtableEntry entry)
 {
@@ -69,6 +69,8 @@ char* vtable_mingle_name(VtableEntry entry)
   snprintf(type_str, sizeof(type_str), "%u", (unsigned int)entry->type);
   snprintf(indent_level_str, sizeof(indent_level_str), "%u", entry->indent_level);
 
+  strbuf_append(strbuf, (const char*)entry->module_name);
+  strbuf_append(strbuf, "_");
   strbuf_append(strbuf, (const char*)entry->name);
   strbuf_append(strbuf, "_");
   strbuf_append(strbuf, (const char*)type_str);
@@ -76,7 +78,6 @@ char* vtable_mingle_name(VtableEntry entry)
   strbuf_append(strbuf, (const char*)indent_level_str);
 
   char *mingled_name = strbuf_cstr(strbuf);
-
   HEX_ASSERT(mingled_name);
 
   HEX_FREE(strbuf);
@@ -123,13 +124,16 @@ size_t vtable_capacity(Vtable vtable)
 
 void* vtable_put(
   Vtable vtable,
-  hex_scope_type_t scope_type,
+  hash_t parent_id,
+  char *module_name,
   char *name,
+  hex_scope_type_t scope_type,
   hex_type_t type,
   hex_type_qualifier_t type_qualifier,
   unsigned int indent_level)
 {
   HEX_ASSERT(vtable);
+  HEX_ASSERT(module_name);
   HEX_ASSERT(name);
 
   VtableEntry entry = HEX_MALLOC(struct HexVtableEntry);  
@@ -137,18 +141,24 @@ void* vtable_put(
 
   memset(entry, 0, sizeof(struct HexVtableEntry));
 
+  entry->parent_id = parent_id;
+  entry->module_name = strdup(module_name);
+  entry->name = strdup(name);
   entry->scope_type = scope_type;
-  entry->name = name;
   entry->type = type;
   entry->type_qualifier = type_qualifier;
   entry->indent_level = indent_level;
 
   entry->mingled_name = vtable_mingle_name(entry);
+  entry->id = hash_str(entry->mingled_name);
 
   return hashmap_put(vtable->hashmap, entry->mingled_name, entry);
 }
 
 typedef struct HexVtableLookupArg {
+  hash_t id;
+  hash_t parent_id;
+  char *module_name;
   char *name;
   unsigned int indent_level;
 } *VtableLookupArg;
@@ -163,20 +173,101 @@ int _vtable_lookup(void *key, void *value, void *arg)
   VtableEntry _entry = (VtableEntry)value;
 
   return strcmp(_entry->name, _arg->name) == 0 &&
+    strcmp(_entry->module_name, _arg->module_name) == 0 &&
     _entry->indent_level <= _arg->indent_level; 
 }
 
-VtableEntry vtable_lookup(Vtable vtable, char *name, unsigned int indent_level)
+VtableEntry vtable_lookup(
+  Vtable vtable, char *module_name, char *name, unsigned int indent_level)
 {
   HEX_ASSERT(vtable);
+  HEX_ASSERT(module_name);
   HEX_ASSERT(name);
 
   struct HexVtableLookupArg arg = {
+    .module_name = module_name,
     .name = name,
     .indent_level = indent_level
   };
 
-  VtableEntry entry = (VtableEntry)hashmap_lookup(vtable->hashmap, _vtable_lookup, &arg);
+  VtableEntry entry = (VtableEntry)hashmap_lookup(
+    vtable->hashmap,
+    _vtable_lookup,
+    &arg
+  );
+
+  return entry;
+}
+
+typedef struct HexVtableLookupByParentIdArg {
+  hash_t parent_id;
+  char *name;
+} *VtableLookupByParentIdArg;
+
+static
+int _vtable_lookup_by_parent_id(void* key, void* value, void* arg)
+{
+  HEX_ASSERT(value);
+  HEX_ASSERT(arg);
+
+  VtableEntry _entry = (VtableEntry)value;
+  VtableLookupByParentIdArg _arg = (VtableLookupByParentIdArg)arg;
+
+  return _entry->parent_id == _arg->parent_id &&
+    strcmp(_entry->name, _arg->name) == 0;
+}
+
+VtableEntry vtable_lookup_by_parent_id(
+  Vtable vtable, hash_t parent_id, char *name)
+{
+  HEX_ASSERT(vtable);
+  HEX_ASSERT(parent_id);
+  HEX_ASSERT(name);
+
+  struct HexVtableLookupByParentIdArg arg = {
+    .parent_id = parent_id,
+    .name = name
+  };
+
+  VtableEntry entry = (VtableEntry)hashmap_lookup(
+    vtable->hashmap,
+    _vtable_lookup_by_parent_id,
+    &arg
+  );
+
+  return entry;
+}
+
+typedef struct HexVtableLookupByIdArg {
+  hash_t id;
+} *VtableLookupByIdArg;
+
+static
+int _vtable_lookup_by_id(void *key, void* value, void* arg)
+{
+  HEX_ASSERT(value);
+  HEX_ASSERT(arg);
+
+  VtableLookupByIdArg _arg = (VtableLookupByIdArg)arg;
+  VtableEntry _entry = (VtableEntry)value;
+
+  return _entry->id == _arg->id;
+}
+
+VtableEntry vtable_lookup_by_id(Vtable vtable, hash_t id)
+{
+  HEX_ASSERT(vtable);
+  HEX_ASSERT(id);
+
+  struct HexVtableLookupByIdArg arg = {
+    .id = id
+  };
+
+  VtableEntry entry = (VtableEntry)hashmap_lookup(
+    vtable->hashmap,
+    _vtable_lookup_by_id,
+    &arg
+  );
 
   return entry;
 }
@@ -192,4 +283,13 @@ void vtable_free(Vtable *vtable)
   HEX_FREE(_vtable);
 
   *vtable = _vtable;
+}
+
+int vtable_compare(VtableEntry entry1, VtableEntry entry2)
+{
+  HEX_ASSERT(entry1);
+  HEX_ASSERT(entry2);
+
+  return entry1->id == entry2->id;
+  //return strcmp(entry1->mingled_name, entry2->mingled_name) == 0;
 }

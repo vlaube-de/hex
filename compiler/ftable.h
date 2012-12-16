@@ -21,7 +21,7 @@
 #include <stddef.h>
 #include "ast.h"
 #include "types.h"
-
+#include "../base/hash.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -29,6 +29,9 @@ extern "C" {
 
 
 typedef struct HexFtableEntry {
+  hash_t id;
+  hash_t parent_id;
+  char *module_name;
   char *name;
   hex_type_t return_type;
   void *paramlist;
@@ -45,14 +48,35 @@ size_t ftable_size(Ftable ftable);
 
 size_t ftable_capacity(Ftable ftable);
 
-FtableEntry ftable_put(Ftable ftable, char *name, hex_type_t return_type,
+FtableEntry ftable_put(
+  Ftable ftable,
+  hash_t parent_id,
+  char *module_name,
+  char *name,
+  hex_type_t return_type,
   void *paramlist);
 
-FtableEntry ftable_lookup(Ftable ftable, char *name, void *paramlist);
+FtableEntry ftable_lookup(
+  Ftable ftable,
+  char *module_name,
+  char *name,
+  void *paramlist);
 
-FtableEntry ftable_lookup_by_name(Ftable ftable, char *name);
+FtableEntry ftable_lookup_by_name(
+  Ftable ftable,
+  char *module_name,
+  char *name);
+
+FtableEntry ftable_lookup_by_parent_id(
+  Ftable ftable,
+  hash_t parent_id,
+  char *name);
+
+FtableEntry ftable_lookup_by_id(Ftable ftable, hash_t id);
 
 void ftable_free(Ftable *ftable);
+
+int ftable_compare(FtableEntry entry1, FtableEntry entry2);
 
 
 #ifdef __cplusplus

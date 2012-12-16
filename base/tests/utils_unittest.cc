@@ -16,8 +16,11 @@
  */
 
 
+#include <string.h>
 #include "../unittest.h"
+#include "../memory.h"
 #include "../utils.h"
+#include "../assert.h"
 
 
 /*******************************************
@@ -277,4 +280,101 @@ TEST(is_bit_setTest, TestSetOn32thBit) {
   EXPECT_FALSE(is_bit_set(val, 8));
   EXPECT_FALSE(is_bit_set(val, 16));
   EXPECT_TRUE(is_bit_set(val, 32));
+}
+
+/*******************************************
+ * Tests for:
+ * hex_rand_top(int top)
+ *******************************************/
+TEST(hex_rand_topTest, hex_rand_topTest) {
+  int i;
+  for(i = 1; i <= 5000; i++) {
+    ASSERT_LE(hex_rand_top(i), i);
+  }
+}
+
+/*******************************************
+ * Tests for:
+ * hex_rand_range(int min, int max)
+ *******************************************/
+TEST(hex_rand_rangeTest, hex_rand_rangeTest) {
+  int i;
+  int min = 20;
+  for(i = min; i <= 5000; i++) {
+    int _rand = hex_rand_range(min, i);
+    ASSERT_LE(min, _rand);
+    ASSERT_GE(i, _rand);
+  }
+}
+
+/*******************************************
+ * Tests for:
+ * hex_randf_top(double top)
+ *******************************************/
+TEST(hex_randf_topTest, hex_randf_topTest) {
+  int i;
+  for(i = 1.0f; i <= 5000.0f; i++) {
+    ASSERT_LE(hex_rand_top(i), i);
+  }
+}
+
+/*******************************************
+ * Tests for:
+ * hex_randf_range(double min, double max)
+ *******************************************/
+TEST(hex_randf_rangeTest, hex_randf_rangeTest) {
+  double i;
+  double min = 20.0f;
+  for(i = min; i <= 5000.0f; i++) {
+    double _rand = hex_randf_range(min, i);
+    ASSERT_LE(min, _rand);
+    ASSERT_GE(i, _rand);
+  }
+}
+
+/*******************************************
+ * Tests for:
+ * generate_text(size_t len, size_t max) 
+ *******************************************/
+TEST(generate_textTest, PassNonZeroLenAndMaxTest) {
+  char *text = generate_text(6, 12);
+  HEX_ASSERT(text);
+  ASSERT_LE(6, strlen(text));
+  ASSERT_GE(12, strlen(text));
+}
+
+TEST(generate_textTest, PassZeroMinAndMaxTest) {
+  char *text = generate_text(0, 0);
+  HEX_ASSERT(text == NULL);
+}
+
+TEST(generate_textTest, PassNonZeroLenAndZeroMaxTest) {
+  int i;
+  for(i = 1; i <= 5000; i++) {
+    char *text = generate_text(i, 0);
+    HEX_ASSERT(text);
+    ASSERT_EQ(i, strlen(text));
+    HEX_FREE(text);
+  }
+}
+
+TEST(generate_textTest, PassZeroLenAndNonZeroMaxTest) {
+  int i;
+  for(i = 1; i <= 5000; i++) {
+    char *text = generate_text(0, i);
+    HEX_ASSERT(text);
+    ASSERT_GE(i, strlen(text));
+    HEX_FREE(text);
+  }
+}
+
+/*******************************************
+ * Tests for:
+ * generate_loremipsum()
+ *******************************************/
+TEST(generate_loremipsumTest, generate_loremipsumTest) {
+  char *ipsum = generate_loremipsum();
+  HEX_ASSERT(ipsum);
+  ASSERT_GE(strlen(ipsum), 0);
+  HEX_FREE(ipsum);
 }

@@ -33,7 +33,7 @@
 /* Hashmap entry(bucket) */
 typedef struct HexHashmapEntry {
   void *key;
-  int hash;
+  hash_t hash;
   void *value;
   struct HexHashmapEntry *next;
 } *HashmapEntry;
@@ -91,13 +91,13 @@ Hashmap hashmap_create(size_t initial_capacity,
  * Secondary hashing against bad hashses.
  */
 static
-inline int _hash_key(Hashmap hashmap, void *key)
+inline hash_t _hash_key(Hashmap hashmap, void *key)
 {
   HEX_ASSERT(hashmap);
 
   RETURN_VAL_IF_NULL(key, -1);
 
-  int h = hashmap->hash(key);
+  hash_t h = hashmap->hash(key);
 
   h += ~(h << 9);
   h ^= (((unsigned int) h) >> 14);
@@ -185,7 +185,7 @@ void hashmap_free(Hashmap *hashmap)
 
 
 static
-HashmapEntry _create_entry(void *key, int hash, void *val)
+HashmapEntry _create_entry(void *key, hash_t hash, void *val)
 {
   HashmapEntry entry=NULL;
   entry = HEX_MALLOC(struct HexHashmapEntry);
@@ -204,7 +204,7 @@ HashmapEntry _create_entry(void *key, int hash, void *val)
 }
 
 static
-inline int _equals_key(void *keyA, int hashA, void *keyB, int hashB,
+inline int _equals_key(void *keyA, hash_t hashA, void *keyB, hash_t hashB,
   KeyCmpFunc keycmp)
 {
   RETURN_VAL_IF_EQ(hashA, hashB, 1);
@@ -219,7 +219,7 @@ void* hashmap_put(Hashmap hashmap, void *key, void *val)
   RETURN_VAL_IF_NULL(key, NULL);
   RETURN_VAL_IF_NULL(val, NULL);
 
-  int hash = _hash_key(hashmap, key);
+  hash_t hash = _hash_key(hashmap, key);
   size_t index = _calculate_index(hashmap->bucketCount, hash);
 
   HashmapEntry *p = &(hashmap->buckets[index]);
@@ -265,7 +265,7 @@ void* hashmap_get(Hashmap hashmap, void *key)
   RETURN_VAL_IF_NULL(key, NULL);
   RETURN_VAL_IF_TRUE(hashmap->size == 0, NULL);
 
-  int hash = _hash_key(hashmap, key);
+  hash_t hash = _hash_key(hashmap, key);
   int index = _calculate_index(hashmap->bucketCount, hash);
 
   HashmapEntry *p = &(hashmap->buckets[index]);
@@ -289,7 +289,7 @@ hashmap_contains_key(Hashmap hashmap, void *key)
 
   RETURN_VAL_IF_NULL(key, 0);
 
-  int hash = _hash_key(hashmap, key);
+  hash_t hash = _hash_key(hashmap, key);
   int index = _calculate_index(hashmap->bucketCount, hash);
 
   HashmapEntry entry = hashmap->buckets[index];
@@ -311,7 +311,7 @@ int hashmap_remove_bucket(Hashmap hashmap, void *key)
 
   RETURN_VAL_IF_NULL(key, 0);
 
-  int hash = _hash_key(hashmap, key);
+  hash_t hash = _hash_key(hashmap, key);
   int index = _calculate_index(hashmap->bucketCount, hash);
 
   HashmapEntry *p = &(hashmap->buckets[index]);
@@ -335,7 +335,7 @@ void* hashmap_remove(Hashmap hashmap, void *key)
 
   RETURN_VAL_IF_NULL(key, NULL);
 
-  int hash = _hash_key(hashmap, key);
+  hash_t hash = _hash_key(hashmap, key);
   int index = _calculate_index(hashmap->bucketCount, hash);
 
   HashmapEntry *p = &(hashmap->buckets[index]);
@@ -428,13 +428,6 @@ size_t hashmap_count_collisions(Hashmap hashmap)
   }
 
   return collisions;
-}
-
-int hashmap_int_hash(void *key)
-{
-  HEX_ASSERT(key);
-  int i = DEREF_VOID(int, key);
-  return i;
 }
 
 int

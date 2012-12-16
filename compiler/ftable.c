@@ -46,20 +46,23 @@ inline int _ftable_keycmpfunc(void *key1, void *key2)
 }
 
 static
-inline int _ftable_hashfunc(void *key)
+inline hash_t _ftable_hashfunc(void *key)
 {
   HEX_ASSERT(key);
-  return (hash_t)hash_str((char*)key);
+  return hash_str((char*)key);
 }
 
 char* ftable_mingle_name(FtableEntry entry)
 {
   HEX_ASSERT(entry);
+  HEX_ASSERT(entry->module_name);
   HEX_ASSERT(entry->name);
 
   Strbuf strbuf = strbuf_create();
   HEX_ASSERT(strbuf);
 
+  strbuf_append(strbuf, (const char*)entry->module_name);
+  strbuf_append(strbuf, ".");
   strbuf_append(strbuf, (const char*)entry->name);
 
   ParameterList paramlist = (ParameterList)entry->paramlist;
@@ -133,11 +136,14 @@ size_t ftable_capacity(Ftable ftable)
 
 FtableEntry ftable_put(
   Ftable ftable,
+  hash_t parent_id,
+  char *module_name,
   char *name,
   hex_type_t return_type,
   void *paramlist)
 {
   HEX_ASSERT(ftable);
+  HEX_ASSERT(module_name);
   HEX_ASSERT(name);
 
   FtableEntry entry = HEX_MALLOC(struct HexFtableEntry);
@@ -145,16 +151,21 @@ FtableEntry ftable_put(
 
   memset(entry, 0, sizeof(struct HexFtableEntry));
 
-  entry->name = name;
+  entry->parent_id = parent_id;
+  entry->module_name = strdup(module_name);
+  entry->name = strdup(name);
   entry->return_type = return_type;
   entry->paramlist = paramlist;
 
   entry->mingled_name = ftable_mingle_name(entry);
+  entry->id = hash_str(entry->mingled_name);
 
   return (FtableEntry)hashmap_put(ftable->hashmap, entry->mingled_name, entry);
 }
 
 typedef struct HexFtableLookupArg {
+  char *module_name;
+  char *name;
   char *mingled_name;
 } *FtableLookupArg;
 
@@ -173,27 +184,36 @@ int _ftable_lookup(void *key, void *value, void *arg)
   return strcmp(_key, _arg->mingled_name) == 0;
 }
 
-FtableEntry ftable_lookup(Ftable ftable, char *name, void *paramlist)
+FtableEntry ftable_lookup(
+  Ftable ftable,
+  char *module_name,
+  char *name,
+  void *paramlist)
 {
   HEX_ASSERT(ftable);
+  HEX_ASSERT(module_name);
   HEX_ASSERT(name);
 
   FtableEntry _entry = HEX_MALLOC(struct HexFtableEntry);
   HEX_ASSERT(_entry);
 
-  _entry->name = name;
+  _entry->module_name = strdup(module_name);
+  _entry->name = strdup(name);
   _entry->paramlist = paramlist;
-
-  char *mingled_name = ftable_mingle_name(_entry);
-  HEX_ASSERT(mingled_name);
+  _entry->mingled_name = ftable_mingle_name(_entry);
 
   struct HexFtableLookupArg arg = {
-    .mingled_name = mingled_name
+    .mingled_name = _entry->mingled_name
   };
 
-  FtableEntry entry = (FtableEntry)hashmap_lookup(ftable->hashmap, _ftable_lookup, &arg);
+  FtableEntry entry = (FtableEntry)hashmap_lookup(
+    ftable->hashmap,
+    _ftable_lookup,
+    &arg
+  );
 
-  HEX_FREE(mingled_name);
+  HEX_FREE(_entry->mingled_name);
+  HEX_FREE(_entry);
 
   return entry;
 }
@@ -204,21 +224,103 @@ int _ftable_lookup_by_name(void *key, void *value, void *arg)
   HEX_ASSERT(key);
   HEX_ASSERT(arg);
 
-  char *_name = (char*)arg;
-  FtableEntry _entry = (FtableEntry)value;
+  FtableLookupArg _arg = (FtableLookupArg)arg;
+  FtableEntry entry = (FtableEntry)value;
 
-  return strcmp(_name, _entry->name) == 0;
+  return strcmp(_arg->module_name, entry->module_name) == 0 &&
+    strcmp(_arg->name, entry->name) == 0;
 }
 
-FtableEntry ftable_lookup_by_name(Ftable ftable, char *name)
+FtableEntry ftable_lookup_by_name(Ftable ftable, char *module_name, char *name)
 {
   HEX_ASSERT(ftable);
+  HEX_ASSERT(module_name);
   HEX_ASSERT(name);
+
+  struct HexFtableLookupArg arg = {
+    .module_name = module_name,
+    .name = name
+  };
 
   FtableEntry entry = (FtableEntry)hashmap_lookup(
     ftable->hashmap,
     _ftable_lookup_by_name,
-    name
+    &arg
+  );
+
+  return entry;
+}
+
+typedef struct HexFtableLookupByParentIdArg {
+  hash_t parent_id;
+  char *name;
+} *FtableLookupByParentIdArg;
+
+static
+int _ftable_lookup_by_parent_id(void* key, void* value, void* arg)
+{
+  HEX_ASSERT(value);
+  HEX_ASSERT(arg);
+
+  FtableEntry _entry = (FtableEntry)value;
+  FtableLookupByParentIdArg _arg = (FtableLookupByParentIdArg)arg;
+
+  return _entry->parent_id == _arg->parent_id &&
+    strcmp(_entry->name, _arg->name) == 0;
+}
+
+FtableEntry ftable_lookup_by_parent_id(
+  Ftable ftable,
+  hash_t parent_id,
+  char *name)
+{
+  HEX_ASSERT(ftable);
+  HEX_ASSERT(parent_id);
+  HEX_ASSERT(name);
+
+  struct HexFtableLookupByParentIdArg arg = {
+    .parent_id = parent_id,
+    .name = name
+  };
+
+  FtableEntry entry = (FtableEntry)hashmap_lookup(
+    ftable->hashmap,
+    _ftable_lookup_by_parent_id,
+    &arg
+  );
+
+  return entry;
+}
+
+typedef struct HexFtableLookupByIdArg {
+  hash_t id;
+} *FtableLookupByIdArg;
+
+static
+int _ftable_lookup_by_id(void *key, void *value, void *arg)
+{
+  HEX_ASSERT(value);
+  HEX_ASSERT(arg);
+
+  FtableLookupByIdArg _arg = (FtableLookupByIdArg)arg;
+  FtableEntry _entry = (FtableEntry)value;
+
+  return _entry->id == _arg->id;
+}
+
+FtableEntry ftable_lookup_by_id(Ftable ftable, hash_t id)
+{
+  HEX_ASSERT(ftable);
+  HEX_ASSERT(id);
+
+  struct HexFtableLookupByIdArg arg = {
+    .id = id
+  };
+
+  FtableEntry entry = (FtableEntry)hashmap_lookup(
+    ftable->hashmap,
+    _ftable_lookup_by_id,
+    &arg
   );
 
   return entry;
@@ -235,4 +337,18 @@ void ftable_free(Ftable *ftable)
   HEX_FREE(_ftable);
 
   *ftable = _ftable;
+}
+
+int ftable_compare(FtableEntry entry1, FtableEntry entry2)
+{
+  HEX_ASSERT(entry1);
+  HEX_ASSERT(entry2);
+
+  int _res = entry1->id == entry2->id;
+  int res = strcmp(entry1->mingled_name, entry2->mingled_name) == 0;
+  int res2 = entry1->parent_id == entry2->parent_id;
+
+  HEX_ASSERT(_res == res);
+
+  return res;
 }

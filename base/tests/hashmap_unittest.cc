@@ -17,12 +17,13 @@
 
 #include "../unittest.h"
 #include "../assert.h"
+#include "../hash.h"
 #include "../hashmap.h"
 #include "../utils.h"
 
 
-int simple_hash(char *s) {
-  int h = 0;
+hash_t simple_hash(char *s) {
+  hash_t h = 0;
   int i;
 
   for(i = 0; i < strlen(s); i++) {
@@ -32,7 +33,7 @@ int simple_hash(char *s) {
   return h;
 }
 
-int hashfunc(void *key) {
+hash_t hashfunc(void *key) {
   RETURN_VAL_IF_NULL(key, 0);
   char *s = (char*)key;
   return simple_hash(s);

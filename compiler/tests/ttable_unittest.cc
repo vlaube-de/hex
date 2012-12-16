@@ -47,77 +47,125 @@ TEST_F(TtableTest, TtableCreationTest) {
   ASSERT_LE(0, ttable_capacity(_ttable));
 }
 
-TEST_F(TtableTest, TtablePutAndLookupTest1) {
+TEST_F(TtableTest, ttable_putTest1) {
+  char module_name[] = "hex.compiler.ttable";
   char type_name[] = "MyObject";
   
-  TtableEntry entry1 = (TtableEntry)ttable_put(_ttable, type_name);
+  TtableEntry expected_entry = (TtableEntry)ttable_put(
+    _ttable,
+    module_name,
+    type_name
+  );
 
-  HEX_ASSERT(entry1);
+  HEX_ASSERT(expected_entry);
 
-  TtableEntry entry2 = ttable_lookup(_ttable, type_name);
+  TtableEntry actual_entry = (TtableEntry)ttable_lookup(
+    _ttable,
+    module_name,
+    type_name
+  );
 
-  HEX_ASSERT(entry2);
+  HEX_ASSERT(actual_entry);
 
-  ASSERT_EQ(entry1, entry2);
+  ASSERT_EQ(expected_entry, actual_entry);
+  ASSERT_TRUE(ttable_compare_entry_by_id(expected_entry, actual_entry));
 }
 
-TEST_F(TtableTest, TtablePutAndLookupTest2) {
+TEST_F(TtableTest, ttable_putTest2) {
+  char module_name[] = "hex.compiler.ttable";
   char type_name[] = "YourObject";
 
-  TtableEntry entry1 = (TtableEntry)ttable_put(_ttable, type_name);
+  TtableEntry entry1 = (TtableEntry)ttable_put(_ttable, module_name, type_name);
 
   HEX_ASSERT(entry1);
 
-  TtableEntry entry2 = (TtableEntry)ttable_put(_ttable, type_name);
+  TtableEntry entry2 = (TtableEntry)ttable_put(_ttable, module_name, type_name);
 
   HEX_ASSERT(entry2);
 
   ASSERT_EQ(entry1, entry2);
 }
 
-TEST_F(TtableTest, TtablePutAndLookupMemberVarTest1) {
+TEST_F(TtableTest, ttable_lookup_memberTest1) {
+  char module_name[] = "hex.compiler.ttable";
   char type_name[] = "OurObject";
 
-  TtableEntry entry = (TtableEntry)ttable_put(_ttable, type_name);
+  TtableEntry entry = (TtableEntry)ttable_put(
+    _ttable,
+    module_name,
+    type_name
+  );
 
   HEX_ASSERT(entry);
 
   char member_name[] = "some_random_name";
-  hex_type_t type = 1;
+  hex_type_t type = 0x01;
   hex_type_qualifier_t type_qualifier = HEX_TYPE_QUALIFIER_CONST;
 
-  VtableEntry member = (VtableEntry)ttable_put_member_var(_ttable, type_name,
-    member_name, type, type_qualifier);
+  VtableEntry actual_member = (VtableEntry)ttable_put_member(
+    _ttable,
+    module_name,
+    type_name,
+    member_name,
+    type,
+    type_qualifier
+  );
 
-  HEX_ASSERT(member);
+  HEX_ASSERT(actual_member);
 
-  ASSERT_STREQ(member_name, member->name);
-  ASSERT_EQ(HEX_VAR_SCOPE_TYPE_MEMBER, member->scope_type);
-  ASSERT_EQ(type, member->type);
-  ASSERT_EQ(type_qualifier, member->type_qualifier);
+  ASSERT_STREQ(member_name, actual_member->name);
+  ASSERT_EQ(HEX_VAR_SCOPE_TYPE_MEMBER, actual_member->scope_type);
+  ASSERT_EQ(type, actual_member->type);
+  ASSERT_EQ(type_qualifier, actual_member->type_qualifier);
 
-  ASSERT_TRUE(ttable_lookup_member_var(_ttable, type_name, member_name));
+  VtableEntry expected_member = (VtableEntry)ttable_lookup_member(
+    _ttable,
+    module_name,
+    type_name,
+    member_name
+  );
+
+  HEX_ASSERT(expected_member);
+
+  ASSERT_EQ(expected_member->id, actual_member->id);
 }
 
-TEST_F(TtableTest, TtablePutAndLookupMemberFuncTest1) {
+TEST_F(TtableTest, ttable_put_methodTest1) {
+  char module_name[] = "hex.compiler.ttable";
   char type_name[] = "OurObject";
-
-  TtableEntry entry = (TtableEntry)ttable_put(_ttable, type_name);
+  
+  TtableEntry entry = (TtableEntry)ttable_put(_ttable, module_name, type_name);
 
   HEX_ASSERT(entry);
 
-  char member_name[] = "do_something";
-  hex_type_t return_type = 1;
+  char method_name[] = "do_something";
+  hex_type_t return_type = 0x01;
   ParameterList paramlist = NULL; 
 
-  FtableEntry member = (FtableEntry)ttable_put_member_func(_ttable, type_name,
-    member_name, return_type, paramlist);
+  FtableEntry actual_member = (FtableEntry)ttable_put_method(
+    _ttable,
+    module_name,
+    type_name,
+    method_name,
+    return_type,
+    paramlist
+  );
 
-  HEX_ASSERT(member);
+  HEX_ASSERT(actual_member);
 
-  ASSERT_STREQ(member_name, member->name);
-  ASSERT_EQ(return_type, member->return_type);
-  ASSERT_EQ(paramlist, member->paramlist);
+  ASSERT_STREQ(method_name, actual_member->name);
+  ASSERT_EQ(return_type, actual_member->return_type);
+  ASSERT_EQ(paramlist, actual_member->paramlist);
 
-  ASSERT_TRUE(ttable_lookup_member_func(_ttable, type_name, member_name, paramlist));
+  FtableEntry expected_member = (FtableEntry)ttable_lookup_method(
+    _ttable,
+    module_name,
+    type_name,
+    method_name,
+    paramlist
+  );
+
+  HEX_ASSERT(expected_member);
+
+  ASSERT_EQ(expected_member->id, actual_member->id);
 }

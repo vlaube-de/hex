@@ -15,46 +15,36 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/*
+ * A dictionary container for storing key-value pairs with the keys
+ * being strings.
+ */
 
-#ifndef _RAND_H_
-#define _RAND_H_
+#ifndef _DICT_H_
+#define _DICT_H_
 
-#include "utils.h"
+#include <stddef.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
+typedef struct HexDict *Dict;
 
-int
-inline hex_rand_top(int max)
-{
-  return rand() % max;
-}
+Dict dict_create();
 
-int
-inline hex_rand_range(int min, int max)
-{
-  return MAX(min, hex_rand_top(max));
-}
+size_t dict_size(Dict dict);
 
-double
-inline hex_randf_top(double max)
-{
-  double f = (double)rand() / RAND_MAX;
-  return f * max;
-}
+void dict_free(Dict *dict);
 
-double
-inline hex_randf_range(double min, double max)
-{
-  double f = (double)rand() / RAND_MAX;
-  return min + f * (max - min);
-}
+void* dict_put(Dict dict, const char *key, void* val);
+
+void* dict_get(Dict dict, const char *key);
 
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* _RAND_H_ */
+
+#endif /* _DICT_H_ */

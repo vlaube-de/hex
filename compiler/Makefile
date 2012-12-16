@@ -46,23 +46,32 @@ compiler.out: parser.o lex.yy.c ast.o semantics.o vtable.o ftable.o ttable.o com
 lexer.out: parser.tab.h
 	make LDLIBS=-ll lexer
 
+paramlist_factory.o: testing/factories/paramlist_factory.h testing/factories/paramlist_factory.cc
+	$(CXX) -c testing/factories/paramlist_factory.h testing/factories/paramlist_factory.cc 
+
 vtable.o: vtable.h vtable.c
 	$(CC) $(CFLAGS) -c vtable.h vtable.c
 
-vtable_unittest.test: vtable.o ../base/hashmap.o ../base/strbuf.o ../base/hash.o ../base/unittest.o tests/vtable_unittest.cc
-	$(CXX) $(LIBGTEST) vtable.o ../base/hashmap.o ../base/strbuf.o ../base/hash.o ../base/unittest.o tests/vtable_unittest.cc -o vtable_unittest.test
+vtable_unittest.test: vtable.o ../base/utils.o ../base/hashmap.o ../base/strbuf.o ../base/hash.o ../base/uuid.o ../base/unittest.o tests/vtable_unittest.cc
+	$(CXX) $(LIBGTEST) vtable.o ../base/utils.o ../base/hashmap.o ../base/strbuf.o ../base/hash.o ../base/uuid.o ../base/unittest.o tests/vtable_unittest.cc -o vtable_unittest.test
 
 ftable.o: ftable.h ftable.c
 	$(CC) $(CFLAGS) -c ftable.h ftable.c
 
-ftable_unittest.test: ftable.o ../base/hashmap.o ../base/strbuf.o ../base/hash.o ../base/unittest.o tests/ftable_unittest.cc
-	$(CXX) $(LIBGTEST) ftable.o ../base/hashmap.o ../base/strbuf.o ../base/hash.o ../base/unittest.o tests/ftable_unittest.cc -o ftable_unittest.test
+ftable_unittest.test: ftable.o ../base/utils.o ../base/hashmap.o ../base/strbuf.o ../base/hash.o ../base/uuid.o ../base/unittest.o tests/ftable_unittest.cc testing/factories/paramlist_factory.cc
+	$(CXX) $(LIBGTEST) ftable.o ../base/utils.o ../base/hashmap.o ../base/strbuf.o ../base/hash.o ../base/uuid.o ../base/unittest.o tests/ftable_unittest.cc testing/factories/paramlist_factory.cc -o ftable_unittest.test
 
 ttable.o: ttable.h ttable.c
 	$(CC) $(CFLAGS) -c ttable.c ttable.h
 
-ttable_unittest.test: ttable.o vtable.o ftable.o tests/ttable_unittest.cc
-	$(CXX) $(LIBGTEST) ttable.o vtable.o ftable.o ../base/hashmap.o ../base/strbuf.o ../base/hash.o ../base/unittest.o tests/ttable_unittest.cc -o ttable_unittest.test
+ttable_unittest.test: ttable.o vtable.o ftable.o ../base/uuid.o tests/ttable_unittest.cc
+	$(CXX) $(LIBGTEST) ttable.o vtable.o ftable.o ../base/uuid.o ../base/hashmap.o ../base/strbuf.o ../base/hash.o ../base/unittest.o tests/ttable_unittest.cc -o ttable_unittest.test
+
+symtable.o: symtable.h symtable.c
+	$(CC) $(CFLAGS) -c symtable.c symtable.h
+
+symtable_unittest.test: symtable.o ttable.o vtable.o ftable.o tests/symtable_unittest.cc
+	$(CXX) $(LIBGTEST) symtable.o ttable.o vtable.o ftable.o ../base/utils.o ../base/hashmap.o ../base/strbuf.o ../base/hash.o ../base/uuid.o ../base/unittest.o tests/symtable_unittest.cc -o symtable_unittest.test
 
 ast_to_text.o: ast_to_text.c ast_to_text.h
 	$(CC) $(CFLAGS) -c ast_to_text.c ast_to_text.h

@@ -29,9 +29,12 @@ extern "C" {
 #endif
 
 typedef struct HexVtableEntry {
-  hex_scope_type_t scope_type;
+  hash_t id;
+  hash_t parent_id;
+  char *module_name;
   char *name;
   char *mingled_name;
+  hex_scope_type_t scope_type;
   hex_type_t type;
   hex_type_qualifier_t type_qualifier;
   unsigned int indent_level;
@@ -48,12 +51,34 @@ size_t vtable_size(Vtable vtable);
 
 size_t vtable_capacity(Vtable vtable);
 
-void* vtable_put(Vtable vtable, hex_scope_type_t scope_type, char *name,
-  hex_type_t type, hex_type_qualifier_t type_qualifier, unsigned int indent_level);
+void* vtable_put(
+  Vtable vtable,
+  hash_t parent_id,
+  char *module_name,
+  char *name,
+  hex_scope_type_t scope_type,
+  hex_type_t type,
+  hex_type_qualifier_t type_qualifier,
+  unsigned int indent_level);
 
-VtableEntry vtable_lookup(Vtable vtable, char *name, unsigned int indent_level);
+VtableEntry vtable_lookup(
+  Vtable vtable,
+  char *module_name,
+  char *name,
+  unsigned int indent_level);
+
+VtableEntry vtable_lookup_by_parent_id(
+  Vtable vtable,
+  hash_t parent_id,
+  char *name
+);
+
+VtableEntry vtable_lookup_by_id(Vtable vtable, hash_t id);
+
+int vtable_compare(VtableEntry entry1, VtableEntry entry2);
 
 void vtable_free(Vtable *vtable);
+
 
 #ifdef __cplusplus
 }
