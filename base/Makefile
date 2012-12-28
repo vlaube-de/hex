@@ -97,6 +97,12 @@ array.o: array.c array.h
 array_unittest.test: array.o unittest.o tests/array_unittest.cc
 	$(CXX) $(LIBGTEST) array.o unittest.o tests/array_unittest.cc -o array_unittest.test
 
+bitmap.o: bitmap.h bitmap.c
+	$(CC) $(CFLAGS) -c bitmap.h bitmap.c
+
+bitmap_unittest.test: bitmap.o unittest.o tests/bitmap_unittest.cc
+	$(CXX) $(LIBGTEST) bitmap.o utils.o unittest.o tests/bitmap_unittest.cc -o bitmap_unittest.test
+
 bst.o: bst.h bst.c
 	$(CC) $(CFLAGS) -c bst.h bst.c
 
