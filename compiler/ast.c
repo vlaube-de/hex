@@ -42,7 +42,7 @@ void hex_ast_set_parse_tree_root(void *p, int root_type)
 }
 
 Integer
-hex_ast_create_integer(int type, int is_signed, int value)
+hex_ast_create_integer(int type, int is_signed, int value, AstErr err)
 {
   Integer integer = HEX_MALLOC(struct HexInteger);
 
@@ -59,7 +59,7 @@ hex_ast_create_integer(int type, int is_signed, int value)
 }
 
 Literal
-hex_ast_create_literal(int type, void *value)
+hex_ast_create_literal(int type, void *value, AstErr err)
 {
   HEX_ASSERT(value);
 
@@ -102,7 +102,7 @@ hex_ast_create_literal(int type, void *value)
 }
 
 Expr
-hex_ast_create_primary_expr(int type, void *value)
+hex_ast_create_primary_expr(int type, void *value, AstErr err)
 {
   HEX_ASSERT(value);
 
@@ -129,13 +129,14 @@ hex_ast_create_primary_expr(int type, void *value)
       break;
   }
 
-  Expr expr = hex_ast_create_expr(expr_type_primary, primary_expr);
+  Expr expr = hex_ast_create_expr(expr_type_primary, primary_expr, err);
 
   return expr;
 }
 
 PostfixIndexExpr
-hex_ast_create_postfix_index_expr(int type, void *value, ExprList indeces_list) 
+hex_ast_create_postfix_index_expr(
+  int type, void *value, ExprList indeces_list, AstErr err) 
 {
   HEX_ASSERT(value);
   HEX_ASSERT(indeces_list);
@@ -169,7 +170,7 @@ hex_ast_create_postfix_index_expr(int type, void *value, ExprList indeces_list)
 }
 
 PostfixAccessorExpr
-hex_ast_create_postfix_accessor_expr(Expr caller, char *accessor)
+hex_ast_create_postfix_accessor_expr(Expr caller, char *accessor, AstErr err)
 {
   HEX_ASSERT(caller);
   HEX_ASSERT(accessor);
@@ -185,7 +186,8 @@ hex_ast_create_postfix_accessor_expr(Expr caller, char *accessor)
 }
 
 PostfixInvocationWithArgsExpr
-hex_ast_create_postfix_invocation_with_args_expr(int type, void *value, TupleInitializer arg_list_tuple)
+hex_ast_create_postfix_invocation_with_args_expr(
+  int type, void *value, TupleInitializer arg_list_tuple, AstErr err)
 {
   HEX_ASSERT(value);
   HEX_ASSERT(arg_list_tuple);
@@ -219,7 +221,7 @@ hex_ast_create_postfix_invocation_with_args_expr(int type, void *value, TupleIni
 }
 
 PostfixInvocationExpr
-hex_ast_create_postfix_invocation_expr(int type, void *invocation_src)
+hex_ast_create_postfix_invocation_expr(int type, void *invocation_src, AstErr err)
 {
   HEX_ASSERT(invocation_src);
 
@@ -250,7 +252,8 @@ hex_ast_create_postfix_invocation_expr(int type, void *invocation_src)
 }
 
 Expr
-hex_ast_create_postfix_expr(int type, int type2, void *value, void *value1)
+hex_ast_create_postfix_expr(
+  int type, int type2, void *value, void *value1, AstErr err)
 {
   HEX_ASSERT(value);
 
@@ -265,7 +268,12 @@ hex_ast_create_postfix_expr(int type, int type2, void *value, void *value1)
         postfix_expr->postfix_expr_type = postfix_expr_type_index;
         ListInitializer list_initializer = (ListInitializer)value1;
         HEX_ASSERT(list_initializer);
-        PostfixIndexExpr postfix_index_expr = hex_ast_create_postfix_index_expr(type2, value, list_initializer->expr_list); 
+        PostfixIndexExpr postfix_index_expr = hex_ast_create_postfix_index_expr(
+          type2,
+          value,
+          list_initializer->expr_list,
+          err
+        ); 
         postfix_expr->postfix_expr_index_expr = postfix_index_expr;
       }
       break;
@@ -284,21 +292,30 @@ hex_ast_create_postfix_expr(int type, int type2, void *value, void *value1)
     case postfix_expr_type_accessor:
       {
         postfix_expr->postfix_expr_type = postfix_expr_type_accessor;
-        PostfixAccessorExpr postfix_accessor_expr = hex_ast_create_postfix_accessor_expr((Expr)value, (char*)value1);
+        PostfixAccessorExpr postfix_accessor_expr = hex_ast_create_postfix_accessor_expr(
+          (Expr)value,
+          (char*)value1,
+          err
+        );
         postfix_expr->postfix_expr_accessor_expr = postfix_accessor_expr;
       }
       break;
     case postfix_expr_type_invocation:
       {
         postfix_expr->postfix_expr_type = postfix_expr_type_invocation;
-        PostfixInvocationExpr postfix_invocation_expr = hex_ast_create_postfix_invocation_expr(type2, value);
+        PostfixInvocationExpr postfix_invocation_expr = hex_ast_create_postfix_invocation_expr(type2, value, err);
         postfix_expr->postfix_expr_invocation_expr = postfix_invocation_expr;
       }
       break;
     case postfix_expr_type_invocation_with_args:
       {
         postfix_expr->postfix_expr_type = postfix_expr_type_invocation_with_args;
-        PostfixInvocationWithArgsExpr postfix_invocation_with_args_expr = hex_ast_create_postfix_invocation_with_args_expr(type2, value, value1);
+        PostfixInvocationWithArgsExpr postfix_invocation_with_args_expr = hex_ast_create_postfix_invocation_with_args_expr(
+          type2,
+          value,
+          value1,
+          err
+        );
         postfix_expr->postfix_expr_invocation_with_args_expr = postfix_invocation_with_args_expr;
       }
       break;
@@ -307,13 +324,13 @@ hex_ast_create_postfix_expr(int type, int type2, void *value, void *value1)
       break;
   }
 
-  Expr expr = hex_ast_create_expr(expr_type_postfix, postfix_expr);
+  Expr expr = hex_ast_create_expr(expr_type_postfix, postfix_expr, err);
 
   return expr;
 }
 
 Expr
-hex_ast_create_unary_expr(int type, Expr expr)
+hex_ast_create_unary_expr(int type, Expr expr, AstErr err)
 {
   HEX_ASSERT(expr);
 
@@ -358,13 +375,13 @@ hex_ast_create_unary_expr(int type, Expr expr)
       break;
   }
 
-  Expr _expr = hex_ast_create_expr(expr_type_unary, unary_expr);
+  Expr _expr = hex_ast_create_expr(expr_type_unary, unary_expr, err);
 
   return _expr;
 }
 
 Expr
-hex_ast_create_cast_expr(int type, void *value, Expr expr)
+hex_ast_create_cast_expr(int type, void *value, Expr expr, AstErr err)
 {
   HEX_ASSERT(value);
   HEX_ASSERT(expr);
@@ -394,13 +411,14 @@ hex_ast_create_cast_expr(int type, void *value, Expr expr)
       break;
   }
 
-  Expr _expr = hex_ast_create_expr(expr_type_cast, cast_expr);
+  Expr _expr = hex_ast_create_expr(expr_type_cast, cast_expr, err);
 
   return _expr;
 }
 
 Expr
-hex_ast_create_multiplicative_expr(int type, Expr left_expr, Expr right_expr)
+hex_ast_create_multiplicative_expr(
+  int type, Expr left_expr, Expr right_expr, AstErr err)
 {
   HEX_ASSERT(left_expr);
   HEX_ASSERT(right_expr);
@@ -434,15 +452,19 @@ hex_ast_create_multiplicative_expr(int type, Expr left_expr, Expr right_expr)
   multi_expr->left_expr = left_expr;
   multi_expr->right_expr = right_expr;
 
-  ArithmeticExpr arithmetic_expr = hex_ast_create_arithmetic_expr(arithmetic_expr_type_multiplicative, multi_expr);
+  ArithmeticExpr arithmetic_expr = hex_ast_create_arithmetic_expr(
+    arithmetic_expr_type_multiplicative,
+    multi_expr,
+    err
+  );
 
-  Expr expr = hex_ast_create_expr(expr_type_arithmetic, arithmetic_expr);
+  Expr expr = hex_ast_create_expr(expr_type_arithmetic, arithmetic_expr, err);
 
   return expr;
 }
 
 Expr
-hex_ast_create_additive_expr(int type, Expr left_expr, Expr right_expr)
+hex_ast_create_additive_expr(int type, Expr left_expr, Expr right_expr, AstErr err)
 {
   HEX_ASSERT(left_expr);
   HEX_ASSERT(right_expr);
@@ -471,15 +493,19 @@ hex_ast_create_additive_expr(int type, Expr left_expr, Expr right_expr)
   additive_expr->left_expr = left_expr;
   additive_expr->right_expr = right_expr;
 
-  ArithmeticExpr arithmetic_expr = hex_ast_create_arithmetic_expr(arithmetic_expr_type_additive, additive_expr);
+  ArithmeticExpr arithmetic_expr = hex_ast_create_arithmetic_expr(
+    arithmetic_expr_type_additive,
+    additive_expr,
+    err
+  );
 
-  Expr expr = hex_ast_create_expr(expr_type_arithmetic, arithmetic_expr);
+  Expr expr = hex_ast_create_expr(expr_type_arithmetic, arithmetic_expr, err);
 
   return expr;
 }
 
 ArithmeticExpr
-hex_ast_create_arithmetic_expr(int type, void *expr)
+hex_ast_create_arithmetic_expr(int type, void *expr, AstErr err)
 {
   HEX_ASSERT(expr);
 
@@ -510,7 +536,7 @@ hex_ast_create_arithmetic_expr(int type, void *expr)
 }
 
 Expr
-hex_ast_create_equality_expr(int type, Expr left_expr, Expr right_expr)
+hex_ast_create_equality_expr(int type, Expr left_expr, Expr right_expr, AstErr err)
 {
   HEX_ASSERT(left_expr);
   HEX_ASSERT(right_expr);
@@ -569,13 +595,13 @@ hex_ast_create_equality_expr(int type, Expr left_expr, Expr right_expr)
   equality_expr->left_expr = left_expr;
   equality_expr->right_expr = right_expr;
 
-  Expr expr = hex_ast_create_expr(expr_type_equality, equality_expr);
+  Expr expr = hex_ast_create_expr(expr_type_equality, equality_expr, err);
 
   return expr;
 }
 
 Expr
-hex_ast_create_logic_expr(int type, Expr left_expr, Expr right_expr)
+hex_ast_create_logic_expr(int type, Expr left_expr, Expr right_expr, AstErr err)
 {
   HEX_ASSERT(left_expr);
   HEX_ASSERT(right_expr);
@@ -604,13 +630,13 @@ hex_ast_create_logic_expr(int type, Expr left_expr, Expr right_expr)
   logic_expr->left_expr = left_expr;
   logic_expr->right_expr = right_expr;
 
-  Expr expr = hex_ast_create_expr(expr_type_logic, logic_expr);
+  Expr expr = hex_ast_create_expr(expr_type_logic, logic_expr, err);
 
   return expr;
 }
 
 Expr
-hex_ast_create_bitwise_expr(int type, Expr left_expr, Expr right_expr)
+hex_ast_create_bitwise_expr(int type, Expr left_expr, Expr right_expr, AstErr err)
 {
   HEX_ASSERT(left_expr);
   HEX_ASSERT(right_expr);
@@ -654,13 +680,14 @@ hex_ast_create_bitwise_expr(int type, Expr left_expr, Expr right_expr)
   bitwise_expr->left_expr = left_expr;
   bitwise_expr->right_expr = right_expr;
 
-  Expr expr = hex_ast_create_expr(expr_type_bitwise, bitwise_expr);
+  Expr expr = hex_ast_create_expr(expr_type_bitwise, bitwise_expr, err);
 
   return expr;
 }
 
 Expr
-hex_ast_create_conditional_expr(Expr predicate_expr, Expr consequent_expr, Expr alternative_expr)
+hex_ast_create_conditional_expr(
+  Expr predicate_expr, Expr consequent_expr, Expr alternative_expr, AstErr err)
 {
   HEX_ASSERT(predicate_expr);
   HEX_ASSERT(consequent_expr);
@@ -674,13 +701,13 @@ hex_ast_create_conditional_expr(Expr predicate_expr, Expr consequent_expr, Expr 
   conditional_expr->predicate_expr = predicate_expr;
   conditional_expr->alternative_expr = alternative_expr;
 
-  Expr expr = hex_ast_create_expr(expr_type_conditional, conditional_expr);
+  Expr expr = hex_ast_create_expr(expr_type_conditional, conditional_expr, err);
 
   return expr;
 }
 
 Expr
-hex_ast_create_range_expr(Expr left_expr, Expr right_expr)
+hex_ast_create_range_expr(Expr left_expr, Expr right_expr, AstErr err)
 {
   HEX_ASSERT(left_expr);
   HEX_ASSERT(right_expr);
@@ -692,13 +719,13 @@ hex_ast_create_range_expr(Expr left_expr, Expr right_expr)
   range_expr->left_expr = left_expr;
   range_expr->right_expr = right_expr;
 
-  Expr expr = hex_ast_create_expr(expr_type_range, range_expr);
+  Expr expr = hex_ast_create_expr(expr_type_range, range_expr, err);
 
   return expr;
 }
 
 Expr
-hex_ast_create_lock_expr(int is_lock, Expr expr)
+hex_ast_create_lock_expr(int is_lock, Expr expr, AstErr err)
 {
   HEX_ASSERT(expr);
 
@@ -709,13 +736,13 @@ hex_ast_create_lock_expr(int is_lock, Expr expr)
   lock_expr->is_lock = is_lock;
   lock_expr->expr = expr;
 
-  Expr _expr = hex_ast_create_expr(expr_type_lock, lock_expr);
+  Expr _expr = hex_ast_create_expr(expr_type_lock, lock_expr, err);
 
   return _expr;
 }
 
 Expr
-hex_ast_create_weakref_expr(Expr expr)
+hex_ast_create_weakref_expr(Expr expr, AstErr err)
 {
   HEX_ASSERT(expr);
 
@@ -725,13 +752,13 @@ hex_ast_create_weakref_expr(Expr expr)
 
   weakref_expr->expr = expr;
 
-  Expr _expr = hex_ast_create_expr(expr_type_weakref, weakref_expr);
+  Expr _expr = hex_ast_create_expr(expr_type_weakref, weakref_expr, err);
 
   return _expr;
 }
 
 Expr
-hex_ast_create_this_expr(Expr expr)
+hex_ast_create_this_expr(Expr expr, AstErr err)
 {
   HEX_ASSERT(expr);
 
@@ -741,13 +768,13 @@ hex_ast_create_this_expr(Expr expr)
 
   this_expr->expr = expr;
 
-  Expr _expr = hex_ast_create_expr(expr_type_this, this_expr);
+  Expr _expr = hex_ast_create_expr(expr_type_this, this_expr, err);
 
   return _expr;
 }
 
 Expr
-hex_ast_create_base_expr(Expr expr)
+hex_ast_create_base_expr(Expr expr, AstErr err)
 {
   HEX_ASSERT(expr);
 
@@ -757,13 +784,13 @@ hex_ast_create_base_expr(Expr expr)
 
   base_expr->expr = expr;
 
-  Expr _expr = hex_ast_create_expr(expr_type_base, base_expr);
+  Expr _expr = hex_ast_create_expr(expr_type_base, base_expr, err);
 
   return _expr;
 }
 
 Expr
-hex_ast_create_expr(int type, void *value)
+hex_ast_create_expr(int type, void *value, AstErr err)
 {
   Expr expr = HEX_MALLOC(struct HexExpr);
   memset(expr, 0, sizeof(struct HexExpr));
@@ -863,7 +890,7 @@ hex_ast_create_expr(int type, void *value)
 }
 
 ExprList
-hex_ast_create_expr_list(Expr expr, ExprList parent_list)
+hex_ast_create_expr_list(Expr expr, ExprList parent_list, AstErr err)
 {
   HEX_ASSERT(expr);
 
@@ -883,7 +910,8 @@ hex_ast_create_expr_list(Expr expr, ExprList parent_list)
 }
 
 TypeQualifierList
-hex_ast_create_type_qualifier_list(TypeQualifier qualifier, TypeQualifierList parent_list)
+hex_ast_create_type_qualifier_list(
+  TypeQualifier qualifier, TypeQualifierList parent_list, AstErr err)
 {
   TypeQualifierList type_qualifier_list = HEX_MALLOC(struct HexTypeQualifierList);
   HEX_ASSERT(type_qualifier_list);
@@ -902,8 +930,13 @@ hex_ast_create_type_qualifier_list(TypeQualifier qualifier, TypeQualifierList pa
 }
 
 Declaration
-hex_ast_create_declaration(TypeQualifierList type_qualifier_list,
-  int type_specifier, char *custom_type, ExprList expr_list, char *alias)
+hex_ast_create_declaration(
+  TypeQualifierList type_qualifier_list,
+  int type_specifier,
+  char *custom_type,
+  ExprList expr_list,
+  char *alias,
+  AstErr err)
 {
   Declaration declaration = HEX_MALLOC(struct HexDeclaration);
   HEX_ASSERT(declaration);
@@ -919,8 +952,14 @@ hex_ast_create_declaration(TypeQualifierList type_qualifier_list,
 }
 
 Parameter
-hex_ast_create_parameter(TypeQualifierList type_qualifier_list, int type_specifier,
-  char *custom_type, char *parameter_name, char *alias, int is_ref)
+hex_ast_create_parameter(
+  TypeQualifierList type_qualifier_list,
+  int type_specifier,
+  char *custom_type,
+  char *parameter_name,
+  char *alias,
+  int is_ref,
+  AstErr err)
 {
   Parameter parameter = HEX_MALLOC(struct HexParameter);
   HEX_ASSERT(parameter);
@@ -937,7 +976,8 @@ hex_ast_create_parameter(TypeQualifierList type_qualifier_list, int type_specifi
 }
 
 ParameterList
-hex_ast_create_parameter_list(Parameter parameter, ParameterList parent_list)
+hex_ast_create_parameter_list(
+  Parameter parameter, ParameterList parent_list, AstErr err)
 {
   HEX_ASSERT(parameter);
 
@@ -958,7 +998,7 @@ hex_ast_create_parameter_list(Parameter parameter, ParameterList parent_list)
 }
 
 ListInitializer
-hex_ast_create_list_initializer(ExprList expr_list)
+hex_ast_create_list_initializer(ExprList expr_list, AstErr err)
 {
   HEX_ASSERT(expr_list);
 
@@ -972,7 +1012,7 @@ hex_ast_create_list_initializer(ExprList expr_list)
 }
 
 ArrayInitializer
-hex_ast_create_array_initializer(ExprList expr_list)
+hex_ast_create_array_initializer(ExprList expr_list, AstErr err)
 {
   HEX_ASSERT(expr_list);
 
@@ -986,7 +1026,7 @@ hex_ast_create_array_initializer(ExprList expr_list)
 }
 
 TupleInitializer
-hex_ast_create_tuple_initializer(ExprList expr_list)
+hex_ast_create_tuple_initializer(ExprList expr_list, AstErr err)
 {
   HEX_ASSERT(expr_list);
 
@@ -1000,7 +1040,7 @@ hex_ast_create_tuple_initializer(ExprList expr_list)
 }
 
 StructInitializer
-hex_ast_create_struct_initializer(AssignmentStmtList assignment_stmt_list)
+hex_ast_create_struct_initializer(AssignmentStmtList assignment_stmt_list, AstErr err)
 {
   HEX_ASSERT(assignment_stmt_list);
 
@@ -1014,7 +1054,7 @@ hex_ast_create_struct_initializer(AssignmentStmtList assignment_stmt_list)
 }
 
 SetInitializer
-hex_ast_create_set_initializer(ExprList expr_list)
+hex_ast_create_set_initializer(ExprList expr_list, AstErr err)
 {
   HEX_ASSERT(expr_list);
 
@@ -1028,7 +1068,7 @@ hex_ast_create_set_initializer(ExprList expr_list)
 }
 
 MapInitializerSingle
-hex_ast_create_map_initializer_single(Expr key, Expr value)
+hex_ast_create_map_initializer_single(Expr key, Expr value, AstErr err)
 {
   HEX_ASSERT(key);
   HEX_ASSERT(value);
@@ -1042,7 +1082,9 @@ hex_ast_create_map_initializer_single(Expr key, Expr value)
 
 MapInitializerList
 hex_ast_create_map_initializer_list(
-  MapInitializerSingle map_initializer_single, MapInitializerList parent_list)
+  MapInitializerSingle map_initializer_single,
+  MapInitializerList parent_list,
+  AstErr err)
 {
   HEX_ASSERT(map_initializer_single);
 
@@ -1063,7 +1105,8 @@ hex_ast_create_map_initializer_list(
 }
 
 MapInitializer
-hex_ast_create_map_initializer(MapInitializerList map_initializer_list)
+hex_ast_create_map_initializer(
+  MapInitializerList map_initializer_list, AstErr err)
 {
   HEX_ASSERT(map_initializer_list);
 
@@ -1077,7 +1120,7 @@ hex_ast_create_map_initializer(MapInitializerList map_initializer_list)
 }
 
 Initializer
-hex_ast_create_initializer(int type, void *value)
+hex_ast_create_initializer(int type, void *value, AstErr err)
 {
   HEX_ASSERT(value);
 
@@ -1132,7 +1175,8 @@ hex_ast_create_initializer(int type, void *value)
 }
 
 Assignment
-hex_ast_create_assignment(AssignmentOp assignment_op, int type, void *target)
+hex_ast_create_assignment(
+  AssignmentOp assignment_op, int type, void *target, AstErr err)
 {
   HEX_ASSERT(target);
 
@@ -1171,7 +1215,8 @@ hex_ast_create_assignment(AssignmentOp assignment_op, int type, void *target)
 }
 
 AssignmentList
-hex_ast_create_assignment_list(Assignment assignment, AssignmentList parent_list)
+hex_ast_create_assignment_list(
+  Assignment assignment, AssignmentList parent_list, AstErr err)
 {
   HEX_ASSERT(assignment);
 
@@ -1192,7 +1237,8 @@ hex_ast_create_assignment_list(Assignment assignment, AssignmentList parent_list
 }
 
 AssignmentStmt
-hex_ast_create_assignment_stmt(int type, void *value, AssignmentList assignment_list)
+hex_ast_create_assignment_stmt(
+  int type, void *value, AssignmentList assignment_list, AstErr err)
 {
   HEX_ASSERT(value);
   HEX_ASSERT(assignment_list);
@@ -1226,7 +1272,8 @@ hex_ast_create_assignment_stmt(int type, void *value, AssignmentList assignment_
 }
 
 AssignmentStmtList
-hex_ast_create_assignment_stmt_list(AssignmentStmt assignment_stmt, AssignmentStmtList parent_list)
+hex_ast_create_assignment_stmt_list(
+  AssignmentStmt assignment_stmt, AssignmentStmtList parent_list, AstErr err)
 {
   HEX_ASSERT(assignment_stmt);
 
@@ -1247,8 +1294,13 @@ hex_ast_create_assignment_stmt_list(AssignmentStmt assignment_stmt, AssignmentSt
 }
 
 FuncDec
-hex_ast_create_func_dec(TypeQualifierList type_qualifier_list,
-  int type_specifier, char *custom_return_type, char *func_name, ParameterList parameter_list)
+hex_ast_create_func_dec(
+  TypeQualifierList type_qualifier_list,
+  int type_specifier,
+  char *custom_return_type,
+  char *func_name,
+  ParameterList parameter_list,
+  AstErr err)
 {
   HEX_ASSERT(func_name);
 
@@ -1266,7 +1318,8 @@ hex_ast_create_func_dec(TypeQualifierList type_qualifier_list,
 }
 
 FuncDef
-hex_ast_create_func_def(FuncDec func_declaration, Suite func_suite)
+hex_ast_create_func_def(
+  FuncDec func_declaration, Suite func_suite, AstErr err)
 {
   HEX_ASSERT(func_declaration);
   HEX_ASSERT(func_suite);
@@ -1282,7 +1335,8 @@ hex_ast_create_func_def(FuncDec func_declaration, Suite func_suite)
 }
 
 LambdaExpr
-hex_ast_create_lambda_expr(int type, ParameterList param_list, void *body)
+hex_ast_create_lambda_expr(
+  int type, ParameterList param_list, void *body, AstErr err)
 {
   HEX_ASSERT(param_list);
   HEX_ASSERT(body);
@@ -1316,7 +1370,7 @@ hex_ast_create_lambda_expr(int type, ParameterList param_list, void *body)
 }
 
 Attribute
-hex_ast_create_attribute(Expr expr)
+hex_ast_create_attribute(Expr expr, AstErr err)
 {
   HEX_ASSERT(expr);
 
@@ -1330,7 +1384,8 @@ hex_ast_create_attribute(Expr expr)
 }
 
 CompilerProperty
-hex_ast_create_compiler_property(char *compiler_property_name, char *compiler_property_value)
+hex_ast_create_compiler_property(
+  char *compiler_property_name, char *compiler_property_value, AstErr err)
 {
   HEX_ASSERT(compiler_property_name);
   HEX_ASSERT(compiler_property_value);
@@ -1346,7 +1401,7 @@ hex_ast_create_compiler_property(char *compiler_property_name, char *compiler_pr
 }
 
 DecoratorListSingle
-hex_ast_create_decorator_list_single(int type, void *value)
+hex_ast_create_decorator_list_single(int type, void *value, AstErr err)
 {
   HEX_ASSERT(value);
 
@@ -1377,7 +1432,10 @@ hex_ast_create_decorator_list_single(int type, void *value)
 }
 
 DecoratorList
-hex_ast_create_decorator_list(DecoratorListSingle decorator_list_single, DecoratorList parent_list)
+hex_ast_create_decorator_list(
+  DecoratorListSingle decorator_list_single,
+  DecoratorList parent_list,
+  AstErr err)
 {
   HEX_ASSERT(decorator_list_single);
 
@@ -1398,7 +1456,7 @@ hex_ast_create_decorator_list(DecoratorListSingle decorator_list_single, Decorat
 }
 
 Decorator
-hex_ast_create_decorator(DecoratorList decorator_list)
+hex_ast_create_decorator(DecoratorList decorator_list, AstErr err)
 {
   HEX_ASSERT(decorator_list);
 
@@ -1412,7 +1470,7 @@ hex_ast_create_decorator(DecoratorList decorator_list)
 }
 
 ClassDeclaration
-hex_ast_create_class_declaration(char *name, ExprList expr_list)
+hex_ast_create_class_declaration(char *name, ExprList expr_list, AstErr err)
 {
   HEX_ASSERT(name);
 
@@ -1427,7 +1485,7 @@ hex_ast_create_class_declaration(char *name, ExprList expr_list)
 }
 
 ClassSection
-hex_ast_create_class_section(int class_access_specifier, Suite suite)
+hex_ast_create_class_section(int class_access_specifier, Suite suite, AstErr err)
 {
   HEX_ASSERT(suite);
 
@@ -1442,7 +1500,7 @@ hex_ast_create_class_section(int class_access_specifier, Suite suite)
 }
 
 Module
-hex_ast_create_module(char *module_identifier)
+hex_ast_create_module(char *module_identifier, AstErr err)
 {
   HEX_ASSERT(module_identifier);
 
@@ -1456,7 +1514,7 @@ hex_ast_create_module(char *module_identifier)
 }
 
 ModuleList
-hex_ast_create_module_list(Module module, ModuleList parent_list)
+hex_ast_create_module_list(Module module, ModuleList parent_list, AstErr err)
 {
   HEX_ASSERT(module);
 
@@ -1477,7 +1535,7 @@ hex_ast_create_module_list(Module module, ModuleList parent_list)
 }
 
 DirectImportStmt
-hex_ast_create_direct_import_stmt(ModuleList module_list, char *alias)
+hex_ast_create_direct_import_stmt(ModuleList module_list, char *alias, AstErr err)
 {
   HEX_ASSERT(module_list);
 
@@ -1492,7 +1550,8 @@ hex_ast_create_direct_import_stmt(ModuleList module_list, char *alias)
 }
 
 RelativeImportStmt
-hex_ast_create_relative_import_stmt(ModuleList module_list, Module module, char *alias)
+hex_ast_create_relative_import_stmt(
+  ModuleList module_list, Module module, char *alias, AstErr err)
 {
   HEX_ASSERT(module_list);
   HEX_ASSERT(module);
@@ -1509,7 +1568,7 @@ hex_ast_create_relative_import_stmt(ModuleList module_list, Module module, char 
 }
 
 ImportStmt
-hex_ast_create_import_stmt(int type, void *value)
+hex_ast_create_import_stmt(int type, void *value, AstErr err)
 {
   HEX_ASSERT(value);
 
@@ -1540,7 +1599,7 @@ hex_ast_create_import_stmt(int type, void *value)
 }
 
 ElifStmt
-hex_ast_create_elif_stmt(Expr elif_expr, Suite elif_suite)
+hex_ast_create_elif_stmt(Expr elif_expr, Suite elif_suite, AstErr err)
 {
   HEX_ASSERT(elif_expr);
   HEX_ASSERT(elif_suite);
@@ -1556,7 +1615,7 @@ hex_ast_create_elif_stmt(Expr elif_expr, Suite elif_suite)
 }
 
 ElifGroup
-hex_ast_create_elif_group(ElifStmt elif_stmt, ElifGroup parent_list)
+hex_ast_create_elif_group(ElifStmt elif_stmt, ElifGroup parent_list, AstErr err)
 {
   HEX_ASSERT(elif_stmt);
 
@@ -1577,7 +1636,12 @@ hex_ast_create_elif_group(ElifStmt elif_stmt, ElifGroup parent_list)
 }
 
 IfStmt
-hex_ast_create_if_stmt(Expr if_expr, Suite if_suite, ElifGroup elif_group, Suite else_stmt)
+hex_ast_create_if_stmt(
+  Expr if_expr,
+  Suite if_suite,
+  ElifGroup elif_group,
+  Suite else_stmt,
+  AstErr err)
 {
   HEX_ASSERT(if_expr);
   HEX_ASSERT(if_suite);
@@ -1595,7 +1659,7 @@ hex_ast_create_if_stmt(Expr if_expr, Suite if_suite, ElifGroup elif_group, Suite
 }
 
 IfStmtSimple
-hex_ast_create_if_stmt_simple(int type, Expr expr, ExprList expr_list)
+hex_ast_create_if_stmt_simple(int type, Expr expr, ExprList expr_list, AstErr err)
 {
   HEX_ASSERT(expr);
   HEX_ASSERT(expr_list);
@@ -1629,7 +1693,7 @@ hex_ast_create_if_stmt_simple(int type, Expr expr, ExprList expr_list)
 }
 
 WhileStmt
-hex_ast_create_while_stmt(Expr while_expr, Suite while_suite)
+hex_ast_create_while_stmt(Expr while_expr, Suite while_suite, AstErr err)
 {
   HEX_ASSERT(while_expr);
   HEX_ASSERT(while_suite);
@@ -1645,7 +1709,7 @@ hex_ast_create_while_stmt(Expr while_expr, Suite while_suite)
 }
 
 Iterable
-hex_ast_create_iterable(int type, void *value)
+hex_ast_create_iterable(int type, void *value, AstErr err)
 {
   HEX_ASSERT(value);
 
@@ -1676,7 +1740,8 @@ hex_ast_create_iterable(int type, void *value)
 }
 
 ForStmt
-hex_ast_create_for_stmt(Iterable iterable, Expr expr, Expr where_expr, Suite suite)
+hex_ast_create_for_stmt(
+  Iterable iterable, Expr expr, Expr where_expr, Suite suite, AstErr err)
 {
   HEX_ASSERT(iterable);
   HEX_ASSERT(expr);
@@ -1695,7 +1760,7 @@ hex_ast_create_for_stmt(Iterable iterable, Expr expr, Expr where_expr, Suite sui
 }
 
 CatchStmt
-hex_ast_create_catch_stmt(int type, void *value, Suite suite)
+hex_ast_create_catch_stmt(int type, void *value, Suite suite, AstErr err)
 {
   HEX_ASSERT(suite);
 
@@ -1733,7 +1798,8 @@ hex_ast_create_catch_stmt(int type, void *value, Suite suite)
 }
 
 CatchStmtGroup
-hex_ast_create_catch_stmt_group(CatchStmt catch_stmt, CatchStmtGroup parent_group)
+hex_ast_create_catch_stmt_group(
+  CatchStmt catch_stmt, CatchStmtGroup parent_group, AstErr err)
 {
   HEX_ASSERT(catch_stmt);
 
@@ -1754,7 +1820,7 @@ hex_ast_create_catch_stmt_group(CatchStmt catch_stmt, CatchStmtGroup parent_grou
 }
 
 FinallyStmt
-hex_ast_create_finally_stmt(Suite suite)
+hex_ast_create_finally_stmt(Suite suite, AstErr err)
 {
   HEX_ASSERT(suite);
 
@@ -1768,7 +1834,11 @@ hex_ast_create_finally_stmt(Suite suite)
 }
 
 TryStmt
-hex_ast_create_try_stmt(Suite try_suite, CatchStmtGroup catch_stmt_group, FinallyStmt finally_stmt)
+hex_ast_create_try_stmt(
+  Suite try_suite,
+  CatchStmtGroup catch_stmt_group,
+  FinallyStmt finally_stmt,
+  AstErr err)
 {
   HEX_ASSERT(try_suite);
 
@@ -1784,7 +1854,7 @@ hex_ast_create_try_stmt(Suite try_suite, CatchStmtGroup catch_stmt_group, Finall
 }
 
 CompoundStmt
-hex_ast_create_compound_stmt(int type, void *value)
+hex_ast_create_compound_stmt(int type, void *value, AstErr err)
 {
   HEX_ASSERT(value);
 
@@ -1833,7 +1903,7 @@ hex_ast_create_compound_stmt(int type, void *value)
 }
 
 ReturnStmt
-hex_ast_create_return_stmt(int type, ExprList expr_list)
+hex_ast_create_return_stmt(int type, ExprList expr_list, AstErr err)
 {
   ReturnStmt return_stmt = HEX_MALLOC(struct HexReturnStmt);
   HEX_ASSERT(return_stmt);
@@ -1862,7 +1932,7 @@ hex_ast_create_return_stmt(int type, ExprList expr_list)
 }
 
 ControlSimpleStmt
-hex_ast_create_control_simple_stmt(int type, void *value)
+hex_ast_create_control_simple_stmt(int type, void *value, AstErr err)
 {
   ControlSimpleStmt control_simple_stmt = HEX_MALLOC(struct HexControlSimpleStmt);
   HEX_ASSERT(control_simple_stmt);
@@ -1895,7 +1965,7 @@ hex_ast_create_control_simple_stmt(int type, void *value)
 }
 
 SimpleStmt
-hex_ast_create_simple_stmt(int type, void *value)
+hex_ast_create_simple_stmt(int type, void *value, AstErr err)
 {
   HEX_ASSERT(value);
 
@@ -1956,7 +2026,8 @@ hex_ast_create_simple_stmt(int type, void *value)
 }
 
 SimpleStmtList
-hex_ast_create_simple_stmt_list(SimpleStmt simple_stmt, SimpleStmtList parent_list)
+hex_ast_create_simple_stmt_list(
+  SimpleStmt simple_stmt, SimpleStmtList parent_list, AstErr err)
 {
   HEX_ASSERT(simple_stmt);
 
@@ -1977,7 +2048,7 @@ hex_ast_create_simple_stmt_list(SimpleStmt simple_stmt, SimpleStmtList parent_li
 }
 
 Stmt
-hex_ast_create_stmt(int type, void *value)
+hex_ast_create_stmt(int type, void *value, AstErr err)
 {
   HEX_ASSERT(value);
 
@@ -2014,7 +2085,7 @@ hex_ast_create_stmt(int type, void *value)
 }
 
 StmtGroup
-hex_ast_create_stmt_group(Stmt stmt, StmtGroup parent_group)
+hex_ast_create_stmt_group(Stmt stmt, StmtGroup parent_group, AstErr err)
 {
   HEX_ASSERT(stmt);
 
@@ -2035,7 +2106,7 @@ hex_ast_create_stmt_group(Stmt stmt, StmtGroup parent_group)
 }
 
 Suite
-hex_ast_create_suite(StmtGroup stmt_group)
+hex_ast_create_suite(StmtGroup stmt_group, AstErr err)
 {
   HEX_ASSERT(stmt_group);
 
