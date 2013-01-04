@@ -335,8 +335,8 @@ iterable
   ;
 
 if_stmt_simple
-  : IF expr COLON expr_list                                                    { $$ = hex_ast_create_if_stmt_simple(if_stmt_simple_type_expr, $2, $4); }
-  | IF expr RETURN expr_list                                                   { $$ = hex_ast_create_if_stmt_simple(if_stmt_simple_type_return, $2, $4); }
+  : IF expr COLON expr_list                                                     { $$ = hex_ast_create_if_stmt_simple(if_stmt_simple_type_expr, $2, $4); }
+  | IF expr RETURN expr_list                                                    { $$ = hex_ast_create_if_stmt_simple(if_stmt_simple_type_return, $2, $4); }
   ;
 
 if_stmt
@@ -395,7 +395,7 @@ class_access_specifier
 
 class_declaration
   : CLASS IDENTIFIER COLON                                                      { $$ = hex_ast_create_class_declaration($2, 0); }
-  | CLASS IDENTIFIER COLON expr_list COLON                                     { $$ = hex_ast_create_class_declaration($2, $4); }
+  | CLASS IDENTIFIER COLON expr_list COLON                                      { $$ = hex_ast_create_class_declaration($2, $4); }
   ;
 
 decorator
@@ -451,7 +451,7 @@ assignment_stmt_list
 
 assignment_stmt
   : declaration assignment_list                                                 { $$ = hex_ast_create_assignment_stmt(assignment_stmt_type_declaration, $1, $2); }
-  | expr_list assignment_list                                                  { $$ = hex_ast_create_assignment_stmt(assignment_stmt_type_expr_list, $1, $2); }
+  | expr_list assignment_list                                                   { $$ = hex_ast_create_assignment_stmt(assignment_stmt_type_expr_list, $1, $2); }
   ;
 
 assignment_list
@@ -571,19 +571,19 @@ struct_initializer
   ;
 
 set_initializer
-  : LBRACKET LPAREN expr_list RPAREN RBRACKET                                  { $$ = hex_ast_create_set_initializer($3); }
+  : LBRACKET LPAREN expr_list RPAREN RBRACKET                                   { $$ = hex_ast_create_set_initializer($3); }
   ;
 
 array_initializer
-  : LBRACE expr_list RBRACE                                                    { $$ = hex_ast_create_array_initializer($2); }
+  : LBRACE expr_list RBRACE                                                     { $$ = hex_ast_create_array_initializer($2); }
   ;
 
 tuple_initializer
-  : LPAREN expr_list RPAREN                                                    { $$ = hex_ast_create_tuple_initializer($2); }
+  : LPAREN expr_list RPAREN                                                     { $$ = hex_ast_create_tuple_initializer($2); }
   ;
 
 list_initializer
-  : LBRACKET expr_list RBRACKET                                                { $$ = hex_ast_create_list_initializer($2); }
+  : LBRACKET expr_list RBRACKET                                                 { $$ = hex_ast_create_list_initializer($2); }
   ;
 
 parameter_list
