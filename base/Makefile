@@ -61,6 +61,9 @@ dict.o: dict.c dict.h
 stack.o: stack.c stack.h
 	$(CC) $(CFLAGS) -c stack.c stack.h
 
+queue.o: queue.c queue.h
+	$(CC) $(CFLAGS) -c queue.c queue.h
+
 all: unittest.o \
 	 utils.o    \
 	 memory.o   \
@@ -73,7 +76,8 @@ all: unittest.o \
 	 array.o    \
 	 hashmap.o  \
 	 dict.o     \
-	 stack.o
+	 stack.o    \
+	 queue.o
 
 clean:
 	rm *.gch *.o *.a *.out *.test
