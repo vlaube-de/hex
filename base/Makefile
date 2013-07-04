@@ -31,9 +31,13 @@ utils.o: utils.c utils.h
 memory.o: memory.c memory.h
 	$(CC) $(CFLAGS) -c memory.c memory.h
 
+array.o: array.c array.h
+	$(CC) $(CFLAGS) -c array.c array.h
+
 all: unittest.o \
 	 utils.o    \
-	 memory.o
+	 memory.o   \
+	 array.o
 
 clean:
 	rm *.gch *.o *.a *.out *.test
