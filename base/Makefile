@@ -40,6 +40,9 @@ cutils.o: cutils.h cutils.c
 buffer.o: buffer.c buffer.h
 	$(CC) $(CFLAGS) -c buffer.c buffer.h
 
+hash.o: hash.h hash.c utils.h
+	$(CC) $(CFLAGS) -c hash.h hash.c
+
 array.o: array.c array.h
 	$(CC) $(CFLAGS) -c array.c array.h
 
@@ -50,6 +53,7 @@ all: unittest.o \
 	 strutils.o \
 	 cutils.o   \
 	 buffer.o   \
+	 hash.o     \
 	 array.o
 
 clean:
