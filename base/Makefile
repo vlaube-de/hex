@@ -25,9 +25,11 @@ LIBGTEST=/usr/lib/libgtest.a
 unittest.o: unittest.h unittest.cc
 	$(CXX) $(GTEST_INCLUDE) -c unittest.h unittest.cc
 
+utils.o: utils.c utils.h
+	$(CC) $(CFLAGS) -c utils.c utils.h
 
-
-all: unittest.o
+all: unittest.o \
+	 utils.o
 
 clean:
 	rm *.gch *.o *.a *.out *.test
