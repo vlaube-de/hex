@@ -1,0 +1,13 @@
+*.a
+*.o
+*.so
+*.gch
+*.swp
+*.out
+*.test
+*.output
+*.vcg
+
+*.tab.c
+*.tab.h
+*.yy.c
