@@ -1,6 +1,6 @@
 #
 # HEX Programming Language
-# Copyright (C) 2012  Yanzheng Li
+# Copyright (C) 2013  Yanzheng Li
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -43,6 +43,9 @@ buffer.o: buffer.c buffer.h
 hash.o: hash.h hash.c utils.h
 	$(CC) $(CFLAGS) -c hash.h hash.c
 
+strbuf.o: strbuf.c strbuf.h
+	$(CC) $(CFLAGS) -c strbuf.c strbuf.h
+
 array.o: array.c array.h
 	$(CC) $(CFLAGS) -c array.c array.h
 
@@ -54,6 +57,7 @@ all: unittest.o \
 	 cutils.o   \
 	 buffer.o   \
 	 hash.o     \
+	 strbuf.o   \
 	 array.o
 
 clean:
