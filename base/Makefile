@@ -28,8 +28,12 @@ unittest.o: unittest.h unittest.cc
 utils.o: utils.c utils.h
 	$(CC) $(CFLAGS) -c utils.c utils.h
 
+memory.o: memory.c memory.h
+	$(CC) $(CFLAGS) -c memory.c memory.h
+
 all: unittest.o \
-	 utils.o
+	 utils.o    \
+	 memory.o
 
 clean:
 	rm *.gch *.o *.a *.out *.test
