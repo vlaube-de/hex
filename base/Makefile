@@ -67,6 +67,9 @@ queue.o: queue.c queue.h
 bitmap.o: bitmap.h bitmap.c
 	$(CC) $(CFLAGS) -c bitmap.h bitmap.c
 
+bst.o: bst.h bst.c
+	$(CC) $(CFLAGS) -c bst.h bst.c
+
 all: unittest.o \
 	 utils.o    \
 	 memory.o   \
@@ -81,7 +84,8 @@ all: unittest.o \
 	 dict.o     \
 	 stack.o    \
 	 queue.o    \
-	 bitmap.o
+	 bitmap.o   \
+	 bst.o
 
 clean:
 	rm *.gch *.o *.a *.out *.test
