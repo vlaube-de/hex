@@ -58,6 +58,9 @@ hashmap.o: hashmap.c hashmap.h
 dict.o: dict.c dict.h
 	$(CC) $(CFLAGS) -c dict.c dict.h
 
+stack.o: stack.c stack.h
+	$(CC) $(CFLAGS) -c stack.c stack.h
+
 all: unittest.o \
 	 utils.o    \
 	 memory.o   \
@@ -69,7 +72,8 @@ all: unittest.o \
 	 strbuf.o   \
 	 array.o    \
 	 hashmap.o  \
-	 dict.o
+	 dict.o     \
+	 stack.o
 
 clean:
 	rm *.gch *.o *.a *.out *.test
