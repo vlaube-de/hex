@@ -37,14 +37,19 @@ strutils.o: strutils.c strutils.h utils.h
 cutils.o: cutils.h cutils.c 
 	$(CC) $(CFLAGS) -c cutils.c cutils.h
 
+buffer.o: buffer.c buffer.h
+	$(CC) $(CFLAGS) -c buffer.c buffer.h
+
 array.o: array.c array.h
 	$(CC) $(CFLAGS) -c array.c array.h
+
 
 all: unittest.o \
 	 utils.o    \
 	 memory.o   \
 	 strutils.o \
 	 cutils.o   \
+	 buffer.o   \
 	 array.o
 
 clean:
