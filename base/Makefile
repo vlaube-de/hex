@@ -31,12 +31,16 @@ utils.o: utils.c utils.h
 memory.o: memory.c memory.h
 	$(CC) $(CFLAGS) -c memory.c memory.h
 
+strutils.o: strutils.c strutils.h utils.h 
+	$(CC) $(CFLAGS) -c strutils.c strutils.h
+
 array.o: array.c array.h
 	$(CC) $(CFLAGS) -c array.c array.h
 
 all: unittest.o \
 	 utils.o    \
 	 memory.o   \
+	 strutils.o \
 	 array.o
 
 clean:
