@@ -37,6 +37,9 @@ strutils.o: strutils.c strutils.h utils.h
 cutils.o: cutils.h cutils.c 
 	$(CC) $(CFLAGS) -c cutils.c cutils.h
 
+uuid.o: uuid.h uuid.c
+	$(CC) $(CLAFGS) -c uuid.c uuid.h
+
 buffer.o: buffer.c buffer.h
 	$(CC) $(CFLAGS) -c buffer.c buffer.h
 
@@ -61,6 +64,7 @@ all: unittest.o \
 	 strutils.o \
 	 cutils.o   \
 	 buffer.o   \
+	 uuid.o     \
 	 hash.o     \
 	 strbuf.o   \
 	 array.o    \
