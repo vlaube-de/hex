@@ -49,6 +49,9 @@ strbuf.o: strbuf.c strbuf.h
 array.o: array.c array.h
 	$(CC) $(CFLAGS) -c array.c array.h
 
+hashmap.o: hashmap.c hashmap.h
+	$(CC) $(CFLAGS) -c hashmap.c hashmap.h
+
 
 all: unittest.o \
 	 utils.o    \
@@ -58,7 +61,8 @@ all: unittest.o \
 	 buffer.o   \
 	 hash.o     \
 	 strbuf.o   \
-	 array.o
+	 array.o    \
+	 hashmap.o
 
 clean:
 	rm *.gch *.o *.a *.out *.test
