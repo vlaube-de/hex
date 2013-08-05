@@ -35,6 +35,8 @@ yydebug = 0;
 %token <string> AFTER
 %token <string> AND
 %token <string> AS
+%token <string> ASYNC
+%token <string> AWAIT
 %token <string> BEFORE
 %token <string> BREAK
 %token <string> BY
@@ -42,14 +44,12 @@ yydebug = 0;
 %token <string> CATCH
 %token <string> CLASS
 %token <string> CONTINUE
-%token <string> COPY
 %token <string> DEFER
 %token <string> DELAY
 %token <string> DELETE
 %token <string> ELIF
 %token <string> ELSE
 %token <string> EXTENDS
-%token <string> FALSE
 %token <string> FINISH
 %token <string> FINALLY
 %token <string> FOR
@@ -69,9 +69,7 @@ yydebug = 0;
 %token <string> STOP
 %token <string> THEN
 %token <string> THROW
-%token <string> TRUE
 %token <string> TRY
-%token <string> TYPE
 %token <string> UNTIL
 %token <string> USING
 %token <string> WHEN
@@ -139,42 +137,26 @@ yydebug = 0;
 
 %token NEWLINE
 
-%left IDENTIFIER
-%left ELLIPSIS ELLIPSIS_SHORT
-%left LAMBDA_OP
-%left ASSIGN_OP
-%left ASSIGN_PLUS
-%left ASSIGN_MINUS
-%left ASSIGN_MUL
-%left ASSIGN_DIV
-%left ASSIGN_MOD
-%left ASSIGN_BITWISE_AND
-%left ASSIGN_BITWISE_OR
-%left ASSIGN_BITWISE_XOR
-%left ASSIGN_SHIFTLEFT
-%left ASSIGN_SHIFTRIGHT
-%left IF
-%left THEN
-%left ELSE
-%left OR
-%left AND
-%left BITWISE_OR
-%left BITWISE_XOR
-%left BITWISE_AND
-%left SEMICOLON
-%left EQ_OP NEQ_OP NOT IS
-%left GREATER_OP LESS_OP GEQ_OP LEQ_OP
-%left BITWISE_SHIFTLEFT BITWISE_SHIFTRIGHT
-%left PLUS_OP MINUS_OP
-%left MUL_OP DIV_OP MOD_OP
-%left BITWISE_NOT
+%left     IDENTIFIER
+%left     ELLIPSIS ELLIPSIS_SHORT
+%left     LAMBDA_OP ARROW
+%right    ASSIGN_OP
+%left     ASSIGN_PLUS ASSIGN_MINUS
+%left     ASSIGN_MUL ASSIGN_DIV ASSIGN_MOD
+%left     ASSIGN_BITWISE_AND ASSIGN_BITWISE_OR ASSIGN_BITWISE_XOR ASSIGN_SHIFTLEFT ASSIGN_SHIFTRIGHT
+%left     IF THEN ELSE
+%left     OR AND
+%left     BITWISE_NOT BITWISE_AND BITWISE_OR BITWISE_XOR
+%left     EQ_OP NEQ_OP IS NOT
+%left     GREATER_OP LESS_OP GEQ_OP LEQ_OP
+%left     BITWISE_SHIFTLEFT BITWISE_SHIFTRIGHT
+%left     PLUS_OP MINUS_OP
+%left     MUL_OP DIV_OP MOD_OP
 %nonassoc DEC_OP INC_OP
-%left LBRACKET RBRACKET
-%left LBRACE RBRACE
-%right DOT
-%left COMMA
-%left YIELD
-%left LPAREN RPAREN
+%left     LBRACE RBRACE
+%left     LBRACKET RBRACKET
+%left     LPAREN RPAREN
+%left     COMMA
 
 %nonassoc UMINUS
 
@@ -237,13 +219,17 @@ compound_stmt
   | lock_stmt
   | try_stmt
   | for_stmt
+  | await_stmt
   | class_def
-  | task_stmt SEMICOLON
   ;
 
-task_stmt
+await_stmt
+  : AWAIT LBRACE stmt_group RBRACE
+  ;
+
+task_def
   : task_clause
-  | task_stmt COMMA task_clause
+  | task_def COMMA task_clause
   ;
 
 task_clause
@@ -311,8 +297,8 @@ output_stmt
   ;
 
 output_stmt_list
-  : expr_list OUTPUT_OP expr_list
-  | output_stmt_list OUTPUT_OP expr_list
+  : primary OUTPUT_OP primary
+  | output_stmt_list OUTPUT_OP primary
   ;
 
 input_stmt
@@ -320,17 +306,17 @@ input_stmt
   ;
 
 input_stmt_list
-  : expr_list INPUT_OP expr_list
-  | input_stmt_list INPUT_OP expr_list
+  : primary INPUT_OP primary
+  | input_stmt_list INPUT_OP primary
   ;
 
 lambda
-  : LPAREN parameter_list RPAREN LAMBDA_OP LBRACE stmt_group RBRACE
-  | LPAREN RPAREN LAMBDA_OP LBRACE stmt_group RBRACE
-  | LPAREN parameter_list RPAREN LAMBDA_OP simple_stmt
-  | LPAREN RPAREN LAMBDA_OP simple_stmt
-  | LPAREN parameter_list RPAREN LAMBDA_OP LBRACE RBRACE
-  | LPAREN RPAREN LAMBDA_OP LBRACE RBRACE
+  : LPAREN parameter_list RPAREN ARROW LBRACE stmt_group RBRACE
+  | LPAREN RPAREN ARROW LBRACE stmt_group RBRACE
+  | LPAREN parameter_list RPAREN LAMBDA_OP expr_list
+  | LPAREN RPAREN LAMBDA_OP expr_list
+  | LPAREN parameter_list RPAREN ARROW LBRACE RBRACE
+  | LPAREN RPAREN ARROW LBRACE RBRACE
   ;
 
 class_def
@@ -364,12 +350,12 @@ while_stmt
   ;
 
 lock_stmt
-  : LOCK expr LBRACE stmt_group RBRACE
+  : LOCK expr_list LBRACE stmt_group RBRACE
   ;
 
 with_stmt
-  : WITH expr LBRACE stmt_group RBRACE
-  | WITH expr AS IDENTIFIER LBRACE stmt_group RBRACE
+  : WITH expr_list LBRACE stmt_group RBRACE
+  | WITH expr_list AS IDENTIFIER LBRACE stmt_group RBRACE
   ;
 
 for_stmt
@@ -398,28 +384,23 @@ elif_stmt
   ;
 
 using_stmt
-  : USING module_list SEMICOLON
-  | USING module_list AS module SEMICOLON
-  | USING module IN module_list SEMICOLON
-  | USING module IN module_list AS module SEMICOLON
+  : USING name SEMICOLON
+  | USING name AS IDENTIFIER SEMICOLON
+  | USING target_list IN using_src SEMICOLON
+  | USING target_list IN using_src AS IDENTIFIER SEMICOLON
+  | USING MUL_OP IN using_src SEMICOLON
   ;
 
-module_list
-  : module
-  | module_list DOT module
-  ;
-
-module
-  : IDENTIFIER
+using_src
+  : name
+  | DOT
   ;
 
 assignment_stmt
-  : assignment SEMICOLON
-  ;
-
-assignment
-  : target_list ASSIGN_OP expr_list
-  | target_list ASSIGN_OP DEFER expr_list
+  : target_list ASSIGN_OP expr_list SEMICOLON
+  | target_list ASSIGN_OP DEFER expr_list SEMICOLON
+  | target_list ASSIGN_OP lambda SEMICOLON
+  | target_list ASSIGN_OP task_def SEMICOLON
   ;
 
 attribute_def_list
@@ -472,11 +453,6 @@ operator
   | OPERATOR OUTPUT_OP
   ;
 
-field_def_double
-  : IDENTIFIER COLON COLON expr
-  | decorator_list IDENTIFIER COLON COLON lambda
-  ;
-
 decorator_list
   : decorator
   | decorator_list decorator
@@ -489,8 +465,7 @@ decorator
 
 dict_form
   : LBRACE dict_form_list RBRACE
-  | LBRACE expr_list FOR expr_list IN expr_list RBRACE
-  | LBRACE expr_list FOR expr_list IN expr_list IF expr RBRACE
+  | LBRACE comprehension RBRACE
   ;
 
 dict_form_list
@@ -498,33 +473,53 @@ dict_form_list
   | dict_form_list COMMA field_def_single
   ;
 
+field_def_double
+  : IDENTIFIER COLON COLON expr
+  | IDENTIFIER COLON COLON lambda
+  | decorator_list IDENTIFIER COLON COLON lambda
+  ;
+
 field_def_single
   : IDENTIFIER COLON expr
+  | IDENTIFIER COLON lambda
   | decorator_list IDENTIFIER COLON lambda
   ;
 
 list_form
   : LBRACKET expr_list RBRACKET
-  | LBRACKET expr_list FOR expr_list IN expr_list RBRACKET
-  | LBRACKET expr_list FOR expr_list IN expr_list IF expr RBRACKET
+  | LBRACKET comprehension RBRACKET
+  ;
+
+comprehension
+  : FOR target_list IN expr_list
+  | FOR target_list IN expr_list IF expr
+  | expr_list FOR target_list IN expr_list
+  | expr_list FOR target_list IN expr_list IF expr
   ;
 
 arg_list
-  : expr_list
+  : val_list
   | keyword_val_list
   | arg_val
   | kwarg_val
-  | expr_list COMMA keyword_val_list
-  | expr_list COMMA arg_val
-  | expr_list COMMA kwarg_val
-  | expr_list COMMA arg_val COMMA kwarg_val
-  | expr_list COMMA keyword_val_list COMMA arg_val
-  | expr_list COMMA keyword_val_list COMMA kwarg_val
-  | expr_list COMMA keyword_val_list COMMA arg_val COMMA kwarg_val
+  | val_list COMMA keyword_val_list
+  | val_list COMMA arg_val
+  | val_list COMMA kwarg_val
+  | val_list COMMA arg_val COMMA kwarg_val
+  | val_list COMMA keyword_val_list COMMA arg_val
+  | val_list COMMA keyword_val_list COMMA kwarg_val
+  | val_list COMMA keyword_val_list COMMA arg_val COMMA kwarg_val
   | keyword_val_list COMMA arg_val
   | keyword_val_list COMMA kwarg_val
   | keyword_val_list COMMA arg_val COMMA kwarg_val
   | arg_val COMMA kwarg_val
+  ;
+
+val_list
+  : expr
+  | lambda
+  | val_list COMMA expr
+  | val_list COMMA lambda
   ;
 
 parameter_list
@@ -608,16 +603,16 @@ yield_expr
   ;
 
 pseudo_assign_expr
-  : expr ASSIGN_MUL expr
+  : expr ASSIGN_PLUS expr
+  | expr ASSIGN_MINUS expr
+  | expr ASSIGN_MUL expr
   | expr ASSIGN_DIV expr
   | expr ASSIGN_MOD expr
-  | expr ASSIGN_PLUS expr
-  | expr ASSIGN_MINUS expr
-  | expr ASSIGN_SHIFTLEFT expr
-  | expr ASSIGN_SHIFTRIGHT expr
   | expr ASSIGN_BITWISE_AND expr
   | expr ASSIGN_BITWISE_OR expr
   | expr ASSIGN_BITWISE_XOR expr
+  | expr ASSIGN_SHIFTLEFT expr
+  | expr ASSIGN_SHIFTRIGHT expr
   ;
 
 conditional_expr
@@ -635,19 +630,19 @@ logic_expr
   ;
 
 comparison_expr
-  : expr LESS_OP expr
+  : expr EQ_OP expr
+  | expr NEQ_OP expr
+  | expr IS expr
+  | expr LESS_OP expr
   | expr GREATER_OP expr
   | expr LEQ_OP expr
   | expr GEQ_OP expr
-  | expr EQ_OP expr
-  | expr NEQ_OP expr
-  | expr IS expr
   ;
 
 bitwise_expr
   : expr BITWISE_AND expr
-  | expr BITWISE_XOR expr
   | expr BITWISE_OR expr
+  | expr BITWISE_XOR expr
   | expr BITWISE_SHIFTLEFT expr
   | expr BITWISE_SHIFTRIGHT expr
   ;
@@ -667,8 +662,6 @@ unary_expr
   : MINUS_OP expr %prec UMINUS
   | NOT expr
   | BITWISE_NOT expr
-  | TYPE LPAREN expr RPAREN
-  | COPY LPAREN expr RPAREN
   ;
 
 name
@@ -688,15 +681,12 @@ target_tail
 primary
   : IDENTIFIER
   | literal
-  | lambda
   | slicing
   | call
   | attribute_ref
   | list_form
   | dict_form
   | SELF
-  | TRUE
-  | FALSE
   ;
 
 slicing
@@ -722,6 +712,8 @@ attribute_ref
 call
   : primary LPAREN RPAREN
   | primary LPAREN arg_list RPAREN
+  | primary LPAREN RPAREN ASYNC
+  | primary LPAREN arg_list RPAREN ASYNC
   ;
 
 literal
