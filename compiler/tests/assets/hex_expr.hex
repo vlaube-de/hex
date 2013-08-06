@@ -1,0 +1,89 @@
+# HEX Programming Language
+# Copyright (C) 2013  Yanzheng Li
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, version 3 of the License.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
+# This is a test file used for the HEX compiler.
+# Tests HEX expressions.
+
+
+# common definitions
+PI = 3.1415926;
+
+# unary expressions
+u_expr1 = -1;
+u_expr2 = not u_expr1;
+u_expr3 = ~u_expr2;
+
+# additive expressions
+a_expr1 = 100 + 99.99;
+a_expr2 = a_expr1 - u_expr1;
+
+# multiplicative expressions
+m_expr1 = PI * 100 / 10 / 10;
+m_expr2 = PI * (10/10);
+m_expr3 = PI / 1 % 2;
+m_expr4 = PI / (1 % 2);
+
+# power expressions
+p_expr1 = PI * 10**2;
+
+# bitwise expressions
+b_expr1 = 1 & u_expr1;
+b_expr2 = -u_expr1 | u_expr1;
+b_expr3 = 1 ^ 0;
+b_expr4 = 2 << 2**2;
+b_expr5 = 8 >> 2**3;
+
+# comparison expressions
+c_expr1 = u_expr1 is u_expr1;
+c_expr2 = u_expr1 is not u_expr2;
+c_expr3 = u_expr1 == -1;
+c_expr4 = u_expr1 != not u_expr2;
+c_expr5 = u_expr1 < 0;
+c_expr6 = u_expr1 <= 0;
+c_expr7 = not u_expr1 > 0;
+c_expr8 = not u_expr1 >= 0;
+
+# logic expressions
+l_expr1 = u_expr1 and not u_expr1;
+l_expr2 = -u_expr1 or not_expr1;
+
+# range expressions
+r_expr1 = 1..100;
+r_expr2 = -u_expr1...(99+1);
+
+# conditional expression
+cd_expr1 = if PI > 3 then PI else 0;
+cd_expr2 = if if PI > 3 then PI else 0 then PI else 0;
+
+# pseudo assignment expressions
+1+=-1;
+-1-=-1;
+1*=1+=-1;
+1/=-1-=-1;
+1%=1+=-1;
+1&=1+=-1;
+1|-1-=-1;
+1^-1-=-1;
+1<<1+=-1;
+1>>-1-=-1;
+
+# yield expressions
+yield;
+yield (0);
+yield (yield);
+
+# string expression
+s_expr = "Hello world, this is  %s" %  'HEX';

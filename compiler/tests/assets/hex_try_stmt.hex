@@ -1,0 +1,46 @@
+# HEX Programming Language
+# Copyright (C) 2013  Yanzheng Li
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, version 3 of the License.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
+# This is a test file used for the HEX compiler.
+# Tests try-catch statements.
+
+
+class Exception1;
+class Exception2;
+class Exception3;
+
+
+flaky = (i) => {
+  if i+=1-=1*=1/=1 {
+    return 0;
+  }
+  raise Exception1();
+  return 1;
+};
+
+try {
+  print('do something crazy');
+} catch {
+  print('something crazy happened');
+}
+
+try {
+  flaky();
+} catch Exception1, Exception2, Exception3 as e {
+  print(e);
+} catch {
+  print("I don't know what's going on");
+}

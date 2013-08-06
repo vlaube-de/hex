@@ -1,0 +1,35 @@
+# HEX Programming Language
+# Copyright (C) 2013  Yanzheng Li
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, version 3 of the License.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
+# This is a test file used for the HEX compiler.
+# Tests slicing.
+
+
+using * in hex_list;
+
+
+list1 = PRIMES[:];
+list2 = PRIMES[0];
+list3 = PRIMES[1:];
+list4 = PRIMES[:5];
+list5 = PRIMES[1:5];
+list6 = PRIMES[1:10:2];
+list7 = PRIMES[1:10:];
+list8 = PRIMES[1::];
+list9 = PRIMES[:10:2];
+list10 = PRIMES[:10:];
+list11 = PRIMES[::];
+list12 = PRIMES[::-1];

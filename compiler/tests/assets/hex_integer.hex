@@ -1,0 +1,36 @@
+# HEX Programming Language
+# Copyright (C) 2013  Yanzheng Li
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, version 3 of the License.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
+# This is a test file used for the HEX compiler.
+# Declares different types of integers.
+
+
+# decimal integers.
+INT_ZERO = 0;
+INT_POSITIVES = 1,10,99,100,12345,999999;
+INT_NEGATIVES = -999999,-12345,-100,-99,-10,-1;
+
+# binary integers.
+INT_BINARY_UNSIGNED = 0b0, 0b1, 0b01, 0b10, 0b11, 0b100, 0b000, 0b001;
+INT_BINARY_SIGNED   = 0B0, 0B1, OB01, OB10, 0B11, 0B100, 0B000, 0B001;
+
+# octodecimal integers.
+INT_OCTO_UNSIGNED = 0o0, 0o1, 0o7, 0o123, 0o567, 0o01234567;
+INT_OCTO_SIGNED   = 0O0, 0O1, 0O7, 0O123, 0O567, 0O01234567;
+
+# hexidecimal integers.
+INT_HEX_UNSIGNED = 0x00, 0x01, 0x0A, 0x0F, 0x99, 0xAA, 0xFF;
+INT_HEX_SIGNED   = 0X00, 0X01, 0X0A, 0X0F, 0X99, 0XAA, 0XFF;

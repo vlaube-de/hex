@@ -1,0 +1,41 @@
+# HEX Programming Language
+# Copyright (C) 2013  Yanzheng Li
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, version 3 of the License.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
+# This is a test file used for the HEX compiler.
+# Task statement.
+
+
+using hex_lambda as lambda;
+
+
+t1 = lambda.mathy;
+t2 = lambda.mathy;
+t3 = lambda.mathy;
+t4 = lambda.mathy;
+
+workflow1 = start (t1, t2, t3) as tasks,
+            delay tasks by 3,
+            start t4 after all(tasks) start,
+            cancel any(tasks) when any(tasks) stop,
+            pause any(tasks) when any(tasks) pause,
+            resume all(tasks) when any(tasks) resume,
+            stop t4 after all(tasks) finish;
+
+
+workflow2 = start (t1, t2) as tasks1,
+            delay tasks1 by 5,
+            start lambda.hello_world as tasks2 before tasks1 start,
+            stop tasks2 after all(tasks1) finish;

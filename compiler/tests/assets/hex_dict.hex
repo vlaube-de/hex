@@ -1,0 +1,52 @@
+# HEX Programming Language
+# Copyright (C) 2013  Yanzheng Li
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, version 3 of the License.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
+# This is a test file used for the HEX compiler.
+# Declares dicts.
+
+
+PROVINCES = {
+  BC: 'British Columbia',
+  AB: 'Alberta',
+  SK: 'Saskatchewan',
+  MB: 'Manitoba',
+  ON: 'Ontario',
+  QC: 'Quebec',
+  NB: 'New Brunswick',
+  NL: 'Newfoundland and Labrador',
+  PE: 'Prince Edward Isand',
+  NS: 'Nova Scotia'
+};
+
+
+FUNCS = {
+  hello_world: (*args) -> print('Hello World'),
+  square: (x) -> x*x,
+  binary_search: (list, val, min, max) => {
+    return -1 if max < min;
+    mid = (min + max) / 2;
+    if list[mid] > val {
+      return self(list, val, min, mid-1);
+    } elif list[mid] < val {
+      return self(list, val, mid+1, max);
+    } else {
+      return mid;
+    }
+  }
+};
+
+
+SHORT_PROVINCES = {k,v for k,v in PROVINCES if len(v) <= 10};
