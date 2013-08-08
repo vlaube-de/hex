@@ -558,17 +558,11 @@ keyword_val_list
 
 keyword_val
   : IDENTIFIER ASSIGN_OP expr
-  | AT IDENTIFIER ASSIGN_OP expr
   ;
 
 simple_param_list
-  : simple_param
-  | simple_param_list COMMA simple_param
-  ;
-
-simple_param
   : IDENTIFIER
-  | AT IDENTIFIER
+  | simple_param_list COMMA IDENTIFIER
   ;
 
 expr_list
@@ -590,18 +584,7 @@ expr
   | pseudo_assign_expr
   | yield_expr
   | string_expr
-  | LPAREN unary_expr RPAREN
-  | LPAREN additive_expr RPAREN
-  | LPAREN multiplicative_expr RPAREN
-  | LPAREN power_expr RPAREN
-  | LPAREN bitwise_expr RPAREN
-  | LPAREN comparison_expr RPAREN
-  | LPAREN logic_expr RPAREN
-  | LPAREN range_expr RPAREN
-  | LPAREN conditional_expr RPAREN
-  | LPAREN pseudo_assign_expr RPAREN
-  | LPAREN yield_expr RPAREN
-  | LPAREN string_expr RPAREN
+  | LPAREN expr_list RPAREN
   ;
 
 string_expr

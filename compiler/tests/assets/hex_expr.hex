@@ -86,4 +86,7 @@ yield (0);
 yield (yield);
 
 # string expression
-s_expr = "Hello world, this is  %s" %  'HEX';
+s_expr = "Hello world, this is  %s" % 'HEX';
+
+# tuple
+pair = ('a', 'apple');
