@@ -62,15 +62,14 @@ yydebug = 0;
 %token <string> OPERATOR
 %token <string> OR
 %token <string> PAUSE
+%token <string> RAISE
 %token <string> RESUME
 %token <string> RETURN
 %token <string> SELF
 %token <string> START
 %token <string> STOP
 %token <string> THEN
-%token <string> THROW
 %token <string> TRY
-%token <string> UNTIL
 %token <string> USING
 %token <string> WHEN
 %token <string> WHERE
@@ -134,31 +133,31 @@ yydebug = 0;
 %token <string> ELLIPSIS_SHORT
 %token <string> AT
 %token <string> STARS
+%token <string> PERCENT
 
 %token NEWLINE
 
-%left     IDENTIFIER
+%left     IDENTIFIER STRING_LITERAL_SINGLE STRING_LITERAL_DOUBLE
+          DECIMALINTEGER BININTEGER OCTINTEGER HEXINTEGER FLOAT
 %left     ELLIPSIS ELLIPSIS_SHORT
-%left     LAMBDA_OP ARROW
-%right    ASSIGN_OP
-%left     ASSIGN_PLUS ASSIGN_MINUS
-%left     ASSIGN_MUL ASSIGN_DIV ASSIGN_MOD
-%left     ASSIGN_BITWISE_AND ASSIGN_BITWISE_OR ASSIGN_BITWISE_XOR ASSIGN_SHIFTLEFT ASSIGN_SHIFTRIGHT
-%left     IF THEN ELSE
-%left     OR AND
-%left     BITWISE_NOT BITWISE_AND BITWISE_OR BITWISE_XOR
-%left     EQ_OP NEQ_OP IS NOT
-%left     GREATER_OP LESS_OP GEQ_OP LEQ_OP
-%left     BITWISE_SHIFTLEFT BITWISE_SHIFTRIGHT
 %left     PLUS_OP MINUS_OP
 %left     MUL_OP DIV_OP MOD_OP
+%left     STARS
+%left     BITWISE_SHIFTLEFT BITWISE_SHIFTRIGHT
+%left     BITWISE_NOT BITWISE_AND BITWISE_OR BITWISE_XOR
+%left     EQ_OP NEQ_OP IS IN GREATER_OP LESS_OP GEQ_OP LEQ_OP
+%left     OR AND
+%left     NOT
+%left     PERCENT
+%left     ASSIGN_OP ASSIGN_PLUS ASSIGN_MINUS ASSIGN_MUL ASSIGN_DIV ASSIGN_MOD 
+          ASSIGN_BITWISE_AND ASSIGN_BITWISE_OR ASSIGN_BITWISE_XOR ASSIGN_SHIFTLEFT ASSIGN_SHIFTRIGHT
 %nonassoc DEC_OP INC_OP
-%left     LBRACE RBRACE
+%left     IF THEN ELSE
+%left     COMMA
+%nonassoc UMINUS
 %left     LBRACKET RBRACKET
 %left     LPAREN RPAREN
-%left     COMMA
-
-%nonassoc UMINUS
+%left     LBRACE RBRACE
 
 
 %error-verbose
@@ -172,6 +171,7 @@ yydebug = 0;
 
 input
   : stmt_group
+  |
   ;
 
 stmt_group
@@ -190,9 +190,14 @@ simple_stmt
   | using_stmt
   | return_stmt
   | continue_stmt
+  | raise_stmt
   | break_stmt
   | input_stmt
   | output_stmt
+  ;
+
+raise_stmt
+  : RAISE expr SEMICOLON
   ;
 
 continue_stmt
@@ -264,10 +269,11 @@ pause_clause
   ;
 
 start_clause
-  : START IDENTIFIER
+  : START name
   | START LPAREN target_list RPAREN
   | START LPAREN target_list RPAREN AS IDENTIFIER
-  | START IDENTIFIER conditional_clause
+  | START name conditional_clause
+  | START name AS IDENTIFIER conditional_clause
   | START LPAREN target_list RPAREN conditional_clause
   | START LPAREN target_list RPAREN AS IDENTIFIER conditional_clause
   ;
@@ -280,7 +286,6 @@ conditional_preposition
   : BEFORE
   | AFTER
   | WHEN
-  | UNTIL
   ;
 
 task_state
@@ -313,14 +318,16 @@ input_stmt_list
 lambda
   : LPAREN parameter_list RPAREN ARROW LBRACE stmt_group RBRACE
   | LPAREN RPAREN ARROW LBRACE stmt_group RBRACE
-  | LPAREN parameter_list RPAREN LAMBDA_OP expr_list
-  | LPAREN RPAREN LAMBDA_OP expr_list
+  | LPAREN parameter_list RPAREN LAMBDA_OP expr
+  | LPAREN RPAREN LAMBDA_OP expr
   | LPAREN parameter_list RPAREN ARROW LBRACE RBRACE
   | LPAREN RPAREN ARROW LBRACE RBRACE
   ;
 
 class_def
-  : CLASS IDENTIFIER LBRACE attribute_def_list RBRACE
+  : CLASS IDENTIFIER SEMICOLON
+  | CLASS IDENTIFIER EXTENDS name SEMICOLON
+  | CLASS IDENTIFIER LBRACE attribute_def_list RBRACE
   | CLASS IDENTIFIER EXTENDS name LBRACE attribute_def_list RBRACE
   | decorator_list CLASS IDENTIFIER LBRACE attribute_def_list RBRACE
   | decorator_list CLASS IDENTIFIER EXTENDS name LBRACE attribute_def_list RBRACE
@@ -397,10 +404,11 @@ using_src
   ;
 
 assignment_stmt
-  : target_list ASSIGN_OP expr_list SEMICOLON
-  | target_list ASSIGN_OP DEFER expr_list SEMICOLON
-  | target_list ASSIGN_OP lambda SEMICOLON
-  | target_list ASSIGN_OP task_def SEMICOLON
+  : primary ASSIGN_OP expr_list SEMICOLON
+  | primary ASSIGN_OP DEFER expr_list SEMICOLON
+  | primary ASSIGN_OP lambda SEMICOLON
+  | decorator_list primary ASSIGN_OP lambda SEMICOLON
+  | primary ASSIGN_OP task_def SEMICOLON
   ;
 
 attribute_def_list
@@ -409,8 +417,7 @@ attribute_def_list
   ;
 
 attribute_def
-  : field_def_single
-  | field_def_double
+  : field_def
   | operator_def
   ;
 
@@ -464,29 +471,25 @@ decorator
   ;
 
 dict_form
-  : LBRACE dict_form_list RBRACE
+  : LBRACE RBRACE
+  | LBRACE dict_form_list RBRACE
   | LBRACE comprehension RBRACE
   ;
 
 dict_form_list
-  : field_def_single
-  | dict_form_list COMMA field_def_single
+  : field_def
+  | dict_form_list COMMA field_def
   ;
 
-field_def_double
-  : IDENTIFIER COLON COLON expr
-  | IDENTIFIER COLON COLON lambda
-  | decorator_list IDENTIFIER COLON COLON lambda
-  ;
-
-field_def_single
+field_def
   : IDENTIFIER COLON expr
   | IDENTIFIER COLON lambda
   | decorator_list IDENTIFIER COLON lambda
   ;
 
 list_form
-  : LBRACKET expr_list RBRACKET
+  : LBRACKET RBRACKET
+  | LBRACKET expr_list RBRACKET
   | LBRACKET comprehension RBRACKET
   ;
 
@@ -578,6 +581,7 @@ expr
   | unary_expr
   | additive_expr
   | multiplicative_expr
+  | power_expr
   | bitwise_expr
   | comparison_expr
   | logic_expr
@@ -585,9 +589,11 @@ expr
   | conditional_expr
   | pseudo_assign_expr
   | yield_expr
+  | string_expr
   | LPAREN unary_expr RPAREN
   | LPAREN additive_expr RPAREN
   | LPAREN multiplicative_expr RPAREN
+  | LPAREN power_expr RPAREN
   | LPAREN bitwise_expr RPAREN
   | LPAREN comparison_expr RPAREN
   | LPAREN logic_expr RPAREN
@@ -595,6 +601,11 @@ expr
   | LPAREN conditional_expr RPAREN
   | LPAREN pseudo_assign_expr RPAREN
   | LPAREN yield_expr RPAREN
+  | LPAREN string_expr RPAREN
+  ;
+
+string_expr
+  : string PERCENT LPAREN expr_list RPAREN
   ;
 
 yield_expr
@@ -637,6 +648,8 @@ comparison_expr
   | expr GREATER_OP expr
   | expr LEQ_OP expr
   | expr GEQ_OP expr
+  | expr IN expr
+  | expr NOT IN expr
   ;
 
 bitwise_expr
@@ -645,6 +658,10 @@ bitwise_expr
   | expr BITWISE_XOR expr
   | expr BITWISE_SHIFTLEFT expr
   | expr BITWISE_SHIFTRIGHT expr
+  ;
+
+power_expr
+  : expr STARS expr
   ;
 
 multiplicative_expr
@@ -662,6 +679,8 @@ unary_expr
   : MINUS_OP expr %prec UMINUS
   | NOT expr
   | BITWISE_NOT expr
+  | expr INC_OP
+  | expr DEC_OP
   ;
 
 name
@@ -696,6 +715,8 @@ slicing
 slice_item
   : COLON
   | expr
+  | expr COLON
+  | COLON expr
   | expr COLON expr
   | expr COLON expr COLON expr
   | expr COLON expr COLON
@@ -703,6 +724,7 @@ slice_item
   | COLON expr COLON expr
   | COLON expr COLON
   | COLON COLON
+  | COLON COLON expr
   ;
 
 attribute_ref
@@ -739,7 +761,7 @@ integer
 
 int yyerror(char *err) {
   if(err) {
-    fprintf(stderr, "Parsing erorr(%s) %s [line %d]\n", err, __FILE__, __LINE__);
+    fprintf(stderr, "Parsing error: [%s]\n", err);
   }
 }
 

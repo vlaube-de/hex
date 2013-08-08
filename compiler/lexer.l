@@ -61,15 +61,14 @@ int new_line_returned = 0;
 "operator"                          EAT_TOKEN(yytext, OPERATOR);
 "or"                                EAT_TOKEN(yytext, OR);
 "pause"                             EAT_TOKEN(yytext, PAUSE);
+"raise"                             EAT_TOKEN(yytext, RAISE);
 "resume"                            EAT_TOKEN(yytext, RESUME);
 "return"                            EAT_TOKEN(yytext, RETURN);
 "self"                              EAT_TOKEN(yytext, SELF);
 "start"                             EAT_TOKEN(yytext, START);
 "stop"                              EAT_TOKEN(yytext, STOP);
 "then"                              EAT_TOKEN(yytext, THEN);
-"throw"                             EAT_TOKEN(yytext, THROW);
 "try"                               EAT_TOKEN(yytext, TRY);
-"until"                             EAT_TOKEN(yytext, UNTIL);
 "using"                             EAT_TOKEN(yytext, USING);
 "when"                              EAT_TOKEN(yytext, WHEN);
 "where"                             EAT_TOKEN(yytext, WHERE);
@@ -134,6 +133,8 @@ int new_line_returned = 0;
 ".."                                EAT_TOKEN(yytext, ELLIPSIS_SHORT);
 "@"                                 EAT_TOKEN(yytext, AT);
 "**"                                EAT_TOKEN(yytext, STARS);
+"%"                                 EAT_TOKEN(yytext, PERCENT);
+
 
 <INITIAL>\n                         {
                                         if(!new_line_returned)
