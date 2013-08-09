@@ -481,6 +481,19 @@ dict_form_list
   | dict_form_list COMMA field_def
   ;
 
+map_form
+  : LBRACE map_field_list RBRACE
+  ;
+
+map_field_list
+  : map_field
+  | map_field_list COMMA map_field
+  ;
+
+map_field
+  : expr ARROW expr
+  ;
+
 field_def
   : IDENTIFIER COLON expr
   | IDENTIFIER COLON lambda
@@ -689,6 +702,7 @@ primary
   | attribute_ref
   | list_form
   | dict_form
+  | map_form
   | SELF
   ;
 
