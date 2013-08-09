@@ -35,7 +35,7 @@ int new_line_returned = 0;
 "after"                             EAT_TOKEN(yytext, AFTER);
 "and"                               EAT_TOKEN(yytext, AND);
 "as"                                EAT_TOKEN(yytext, AS);
-"async"								EAT_TOKEN(yytext, ASYNC);
+"async"                             EAT_TOKEN(yytext, ASYNC);
 "await"                             EAT_TOKEN(yytext, AWAIT);
 "before"                            EAT_TOKEN(yytext, BEFORE);
 "break"                             EAT_TOKEN(yytext, BREAK);
