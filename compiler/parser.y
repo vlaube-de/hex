@@ -558,6 +558,7 @@ keyword_val_list
 
 keyword_val
   : IDENTIFIER ASSIGN_OP expr
+  | IDENTIFIER ASSIGN_OP lambda
   ;
 
 simple_param_list

@@ -25,6 +25,8 @@ hello_world();
 
 sum([1...100]);
 
+s = sum([i for i in 1...100]) async;
+
 person = Person('Yanzheng Li', 'Canada');
 person.hobbies.append('swimming');
 person.set_age(sum([10,10]));
@@ -42,3 +44,13 @@ await {
     fibanacci(i) async;
   }
 }
+
+
+args_and_kwargs(
+  [('a', 'apple'), ('b', 'banana'), ('c', 'coconut')],
+  {a: 'apple', b: 'banana', c: 'coconut'},
+  l=(a,b,c) -> args_and_kwargs(a,b,c),
+  a='airplane',
+  b='boat',
+  c='car'
+);

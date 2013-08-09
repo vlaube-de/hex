@@ -40,7 +40,7 @@ args_and_kwargs = (*args, **kwargs) => {
   }
 
   for k,v in kwargs {
-    print('%s = %s', k, v);
+    print('%s = %s' % (k, v));
   }
 };
 
