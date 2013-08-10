@@ -119,6 +119,7 @@ yydebug = 0;
 %token <string> OUTPUT_OP
 %token <string> LAMBDA_OP
 %token <string> ARROW
+%token <string> EXISTENTIAL_OP
 %token <string> DOT
 %token <string> COMMA
 %token <string> SEMICOLON
@@ -149,6 +150,7 @@ yydebug = 0;
 %left     OR AND
 %left     NOT
 %left     PERCENT
+%left     EXISTENTIAL_OP
 %left     ASSIGN_OP ASSIGN_PLUS ASSIGN_MINUS ASSIGN_MUL ASSIGN_DIV ASSIGN_MOD 
           ASSIGN_BITWISE_AND ASSIGN_BITWISE_OR ASSIGN_BITWISE_XOR ASSIGN_SHIFTLEFT ASSIGN_SHIFTRIGHT
 %nonassoc DEC_OP INC_OP
@@ -598,7 +600,12 @@ expr
   | pseudo_assign_expr
   | yield_expr
   | string_expr
+  | existential_expr
   | LPAREN expr_list RPAREN
+  ;
+
+existential_expr
+  : expr EXISTENTIAL_OP
   ;
 
 string_expr

@@ -90,3 +90,10 @@ s_expr = "Hello world, this is  %s" % 'HEX';
 
 # tuple
 pair = ('a', 'apple');
+
+# existential
+a = 'apple';
+b = null;
+
+c = if a? and not b? then a else b;
+d = if a ? then 'airplane' else null;

@@ -119,6 +119,7 @@ int new_line_returned = 0;
 ">>>"                               EAT_TOKEN(yytext, OUTPUT_OP);
 "->"                                EAT_TOKEN(yytext, LAMBDA_OP);
 "=>"                                EAT_TOKEN(yytext, ARROW);
+"?"                                 EAT_TOKEN(yytext, EXISTENTIAL_OP);
 "."                                 EAT_TOKEN(yytext, DOT);
 ","                                 EAT_TOKEN(yytext, COMMA);
 ";"                                 EAT_TOKEN(yytext, SEMICOLON);
