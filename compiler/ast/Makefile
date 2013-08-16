@@ -94,6 +94,15 @@ ast_attribute_def.o: ast_node.o ast_attribute_def.h ast_attribute_def.cpp
 ast_assignment_stmt.o: ast_node.o ast_assignment_stmt.h ast_assignment_stmt.cpp
 	$(CXX) -c ast_assignment_stmt.cpp
 
+ast_using_src.o: ast_node.o ast_using_src.h ast_using_src.cpp
+	$(CXX) -c ast_using_src.cpp
+
+ast_using_stmt.o: ast_node.o ast_using_stmt.h ast_using_stmt.cpp
+	$(CXX) -c ast_using_stmt.cpp
+
+ast_stmt_group.o: ast_node.o ast_stmt.h ast_stmt_group.h ast_stmt_group.cpp
+	$(CXX) -c ast_stmt_group.cpp
+
 ast_lambda.o: ast_node.o ast_lambda.h ast_lambda.cpp
 	$(CXX) -c ast_lambda.cpp
 
@@ -294,6 +303,9 @@ all:	ast_unparsed.o		\
 			ast_operator_def.o	\
 			ast_attribute_def.o	\
 			ast_assignment_stmt.o	\
+			ast_using_src.o	\
+			ast_using_stmt.o	\
+			ast_stmt_group.o	\
 			ast_lambda.o	\
 			ast_expr_list.o		\
 			ast_binary_expr.o	\
