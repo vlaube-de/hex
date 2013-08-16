@@ -16,13 +16,37 @@
  */
 
 #include "ast_node.h"
+#include "ast_parameter_list.h"
+#include "ast_stmt_group.h"
+#include "ast_expr.h"
 
 #ifndef _AST_LAMBDA_H_
 #define _AST_LAMBDA_H_
 
 typedef class _HexAstLambda : public _HexAstNode {
 public:
-  _HexAstLambda();
+  _HexAstLambda(HexAstParameterList);
+
+protected:
+  HexAstParameterList _params;
 } * HexAstLambda;
+
+typedef class _HexAstLambdaSimple : public _HexAstLambda {
+public:
+  _HexAstLambdaSimple(HexAstParameterList, HexAstExpr);
+
+  virtual bool reprOK();
+private:
+  HexAstExpr _expr;
+} * HexAstLambdaSimple;
+
+typedef class _HexAstLambdaComplex : public _HexAstLambda {
+public:
+  _HexAstLambdaComplex(HexAstParameterList, HexAstStmtGroup);
+
+  virtual bool reprOK();
+private:
+  HexAstStmtGroup _stmts;
+} * HexAstLambdaComplex;
 
 #endif /* _AST_LAMBDA_H_ */

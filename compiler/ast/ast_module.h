@@ -16,13 +16,17 @@
  */
 
 #include "ast_node.h"
+#include "ast_stmt_group.h"
 
-#ifndef _AST_ATTRIBUTE_DEF_H_
-#define _AST_ATTRIBUTE_DEF_H_
+#ifndef _AST_MODULE_H_
+#define _AST_MODULE_H_
 
-typedef class _HexAstAttributeDef : public _HexAstNode {
+typedef class _HexAstModule : public _HexAstNode {
 public:
-  _HexAstAttributeDef();
-} * HexAstAttributeDef;
+  _HexAstModule(HexAstStmtGroup stmts);
 
-#endif /* _AST_ATTRIBUTE_DEF_H_ */
+private:
+  HexAstStmtGroup _stmts;
+} * HexAstModule;
+
+#endif /* _AST_MODULE_H_ */

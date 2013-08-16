@@ -17,17 +17,18 @@
 
 #include "ast_node.h"
 #include "ast_val_atom.h"
+#include "ast_identifier.h"
 
 #ifndef _AST_FIELD_DEF_H_
 #define _AST_FIELD_DEF_H_
 
 typedef class _HexAstFieldDef : public _HexAstNode {
 public:
-  _HexAstFieldDef(char*, HexAstValAtom);
+  _HexAstFieldDef(HexAstIdentifier, HexAstValAtom);
 
   virtual bool reprOK();
 private:
-  char *_name;
+  HexAstIdentifier _name;
   HexAstValAtom _val;
 } * HexAstFieldDef;
 

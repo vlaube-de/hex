@@ -19,12 +19,13 @@
 #include "ast_field_def.h"
 #include "ast_node.h"
 #include "ast_val_atom.h"
+#include "ast_identifier.h"
 #include "../../base/assert.h"
 
 _HexAstFieldDef::_HexAstFieldDef(
-  char *name,
+  HexAstIdentifier name,
   HexAstValAtom val
-):_name(strdup(name)), _val(val)
+):_name(name), _val(val)
 {
 }
 

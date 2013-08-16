@@ -15,14 +15,23 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "ast_node.h"
+#include "ast_task_clause.h"
+#include "ast_task_state.h"
+#include "ast_expr_list.h"
+#include "ast_conditional_clause.h"
 
-#ifndef _AST_ATTRIBUTE_DEF_H_
-#define _AST_ATTRIBUTE_DEF_H_
+#ifndef _AST_RESUME_CLAUSE_H_
+#define _AST_RESUME_CLAUSE_H_
 
-typedef class _HexAstAttributeDef : public _HexAstNode {
+typedef class _HexAstResumeClause : public _HexAstTaskClause {
 public:
-  _HexAstAttributeDef();
-} * HexAstAttributeDef;
+  _HexAstResumeClause(HexAstTaskState, HexAstExprList, HexAstConditionalClause);
 
-#endif /* _AST_ATTRIBUTE_DEF_H_ */
+  virtual bool reprOK();
+private:
+  HexAstTaskState _state;
+  HexAstExprList _exprs;
+  HexAstConditionalClause _condition;
+} * HexAstResumeClause;
+
+#endif /* _AST_RESUME_CLAUSE_H_ */

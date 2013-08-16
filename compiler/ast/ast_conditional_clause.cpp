@@ -15,14 +15,25 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "ast_conditional_clause.h"
 #include "ast_node.h"
+#include "ast_task_state.h"
+#include "ast_expr_list.h"
+#include "../../base/assert.h"
 
-#ifndef _AST_ATTRIBUTE_DEF_H_
-#define _AST_ATTRIBUTE_DEF_H_
+_HexAstConditionalClause::_HexAstConditionalClause(
+  HexAstConditionalPreposition preposition,
+  HexAstExprList exprs,
+  HexAstTaskState state
+):_preposition(preposition), _exprs(exprs), _state(state)
+{
+  this->reprOK();
+}
 
-typedef class _HexAstAttributeDef : public _HexAstNode {
-public:
-  _HexAstAttributeDef();
-} * HexAstAttributeDef;
-
-#endif /* _AST_ATTRIBUTE_DEF_H_ */
+bool
+_HexAstConditionalClause::reprOK()
+{
+  HEX_ASSERT(this->_preposition);
+  HEX_ASSERT(this->_exprs);
+  HEX_ASSERT(this->_state);
+}

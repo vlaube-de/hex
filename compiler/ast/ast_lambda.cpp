@@ -16,7 +16,27 @@
  */
 
 #include "ast_lambda.h"
+#include "ast_parameter_list.h"
+#include "ast_stmt_group.h"
+#include "ast_expr.h"
 
-_HexAstLambda::_HexAstLambda()
+_HexAstLambda::_HexAstLambda(
+  HexAstParameterList params
+):_params(params)
+{
+}
+
+_HexAstLambdaSimple::_HexAstLambdaSimple(
+  HexAstParameterList params,
+  HexAstExpr expr
+):_HexAstLambda(params), _expr(expr)
+{
+  this->reprOK();
+}
+
+_HexAstLambdaComplex::_HexAstLambdaComplex(
+  HexAstParameterList params,
+  HexAstStmtGroup stmts
+):_HexAstLambda(params), _stmts(stmts)
 {
 }

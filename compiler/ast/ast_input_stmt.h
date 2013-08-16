@@ -15,14 +15,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "ast_node.h"
+#include "ast_list_obj.h"
+#include "ast_primary.h"
+#include "ast_simple_stmt.h"
 
-#ifndef _AST_ATTRIBUTE_DEF_H_
-#define _AST_ATTRIBUTE_DEF_H_
+#ifndef _AST_INPUT_STMT_H_
+#define _AST_INPUT_STMT_H_
 
-typedef class _HexAstAttributeDef : public _HexAstNode {
+typedef class _HexAstInputStmt : public AstListObj<HexAstPrimary>, _HexAstSimpleStmt {
 public:
-  _HexAstAttributeDef();
-} * HexAstAttributeDef;
+  _HexAstInputStmt();
+} * HexAstInputStmt;
 
-#endif /* _AST_ATTRIBUTE_DEF_H_ */
+#endif /* _AST_INPUT_STMT_H_ */

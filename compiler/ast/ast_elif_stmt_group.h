@@ -15,14 +15,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "ast_elif_stmt.h"
+#include "ast_list_obj.h"
 #include "ast_node.h"
 
-#ifndef _AST_ATTRIBUTE_DEF_H_
-#define _AST_ATTRIBUTE_DEF_H_
+#ifndef _AST_ELIF_STMT_GROUP_H_
+#define _AST_ELIF_STMT_GROUP_H_
 
-typedef class _HexAstAttributeDef : public _HexAstNode {
+typedef class _HexAstElifStmtGroup : public AstListObj<HexAstElifStmt>, _HexAstNode {
 public:
-  _HexAstAttributeDef();
-} * HexAstAttributeDef;
+  _HexAstElifStmtGroup();
+} * HexAstElifStmtGroup;
 
-#endif /* _AST_ATTRIBUTE_DEF_H_ */
+#endif /* _AST_ELIF_STMT_GROUP_H_ */

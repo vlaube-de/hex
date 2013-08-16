@@ -91,6 +91,9 @@ ast_operator_def.o: ast_node.o ast_operator_def.h ast_operator_def.cpp
 ast_attribute_def.o: ast_node.o ast_attribute_def.h ast_attribute_def.cpp
 	$(CXX) -c ast_attribute_def.cpp
 
+ast_attribute_def_list.o: ast_attribute_def_list.h ast_attribute_def_list.cpp
+	$(CXX) -c ast_attribute_def.cpp
+
 ast_assignment_stmt.o: ast_node.o ast_assignment_stmt.h ast_assignment_stmt.cpp
 	$(CXX) -c ast_assignment_stmt.cpp
 
@@ -103,8 +106,86 @@ ast_using_stmt.o: ast_node.o ast_using_stmt.h ast_using_stmt.cpp
 ast_stmt_group.o: ast_node.o ast_stmt.h ast_stmt_group.h ast_stmt_group.cpp
 	$(CXX) -c ast_stmt_group.cpp
 
+ast_return_stmt.o: ast_node.o ast_return_stmt.h ast_return_stmt.cpp
+	$(CXX) -c ast_return_stmt.cpp
+
+ast_break_stmt.o: ast_node.o ast_break_stmt.h ast_break_stmt.cpp
+	$(CXX) -c ast_break_stmt.cpp
+
+ast_continue_stmt.o: ast_continue_stmt.h ast_continue_stmt.cpp
+	$(CXX) -c ast_continue_stmt.cpp
+
+ast_raise_stmt.o: ast_raise_stmt.h ast_raise_stmt.cpp
+	$(CXX) -c ast_raise_stmt.cpp
+
+ast_input_stmt.o: ast_input_stmt.h ast_input_stmt.cpp
+	$(CXX) -c ast_input_stmt.cpp
+
+ast_output_stmt.o: ast_output_stmt.h ast_output_stmt.cpp
+	$(CXX) -c ast_output_stmt.cpp
+
+ast_expr_list_stmt.o: ast_expr_list_stmt.h ast_expr_list_stmt.cpp
+	$(CXX) -c ast_expr_list_stmt.cpp
+
+ast_compound_stmt.o: ast_compound_stmt.h ast_compound_stmt.cpp
+	$(CXX) -c ast_compound_stmt.cpp
+
+ast_for_stmt.o: ast_for_stmt.h ast_for_stmt.cpp
+	$(CXX) -c ast_for_stmt.cpp
+
+ast_with_stmt.o: ast_with_stmt.h ast_with_stmt.cpp
+	$(CXX) -c ast_with_stmt.cpp
+
+ast_lock_stmt.o: ast_lock_stmt.h ast_lock_stmt.cpp
+	$(CXX) -c ast_lock_stmt.cpp
+
+ast_catch_stmt.o: ast_catch_stmt.h ast_catch_stmt.cpp
+	$(CXX) -c ast_catch_stmt.cpp
+
+ast_catch_stmt_group.o: ast_catch_stmt_group.h ast_catch_stmt_group.cpp
+	$(CXX) -c ast_catch_stmt_group.cpp
+
+ast_try_stmt.o: ast_try_stmt.h ast_try_stmt.cpp
+	$(CXX) -c ast_try_stmt.cpp
+
+ast_while_stmt.o: ast_while_stmt.h ast_while_stmt.cpp
+	$(CXX) -c ast_while_stmt.cpp
+
+ast_else_stmt.o: ast_else_stmt.h ast_else_stmt.cpp
+	$(CXX) -c ast_else_stmt.cpp
+
+ast_elif_stmt.o: ast_elif_stmt.h ast_elif_stmt.cpp
+	$(CXX) -c ast_elif_stmt.cpp
+
+ast_elif_stmt_group.o: ast_elif_stmt_group.h ast_elif_stmt_group.cpp
+	$(CXX) -c ast_elif_stmt_group.cpp
+
+ast_if_stmt.o: ast_if_stmt.h ast_if_stmt.cpp
+	$(CXX) -c ast_if_stmt.cpp
+
 ast_lambda.o: ast_node.o ast_lambda.h ast_lambda.cpp
 	$(CXX) -c ast_lambda.cpp
+
+ast_class_def.o: ast_class_def.h ast_class_def.cpp
+	$(CXX) -c ast_class_def.cpp
+
+ast_conditional_clause.o: ast_conditional_clause.h ast_conditional_clause.cpp
+	$(CXX) -c ast_conditional_clause.cpp
+
+ast_task_clause.o: ast_task_clause.h ast_task_clause.cpp
+	$(CXX) -c ast_task_clause.cpp
+
+ast_start_clause.o: ast_start_clause.h ast_start_clause.cpp
+	$(CXX) -c ast_start_clause.cpp
+
+ast_pause_clause.o: ast_pause_clause.h ast_pause_clause.cpp
+	$(CXX) -c ast_pause_clause.cpp
+
+ast_resume_clause.o: ast_resume_clause.h ast_resume_clause.cpp
+	$(CXX) -c ast_resume_clause.cpp
+
+ast_module.o: ast_module.h ast_module.cpp
+	$(CXX) -c ast_module.cpp
 
 ast_expr_list.o: ast_node.o ast_list_obj.o ast_expr_list.h ast_expr_list.cpp
 	$(CXX) -c ast_expr_list.cpp
@@ -302,11 +383,38 @@ all:	ast_unparsed.o		\
 			ast_decorator_list.o	\
 			ast_operator_def.o	\
 			ast_attribute_def.o	\
+			ast_attribute_def_list.o	\
 			ast_assignment_stmt.o	\
 			ast_using_src.o	\
 			ast_using_stmt.o	\
 			ast_stmt_group.o	\
+			ast_return_stmt.o	\
+			ast_break_stmt.o	\
+			ast_continue_stmt.o	\
+			ast_raise_stmt.o	\
+			ast_input_stmt.o	\
+			ast_output_stmt.o	\
+			ast_expr_list_stmt.o	\
+			ast_compound_stmt.o	\
+			ast_for_stmt.o	\
+			ast_with_stmt.o	\
+			ast_lock_stmt.o	\
+			ast_catch_stmt.o	\
+			ast_catch_stmt_group.o	\
+			ast_try_stmt.o	\
+			ast_while_stmt.o	\
+			ast_else_stmt.o	\
+			ast_elif_stmt.o	\
+			ast_elif_stmt_group.o	\
+			ast_if_stmt.o	\
 			ast_lambda.o	\
+			ast_class_def.o	\
+			ast_conditional_clause.o	\
+			ast_task_clause.o	\
+			ast_start_clause.o	\
+			ast_resume_clause.o	\
+			ast_pause_clause.o	\
+			ast_module.o	\
 			ast_expr_list.o		\
 			ast_binary_expr.o	\
 			ast_commutative_binary_expr.o	\

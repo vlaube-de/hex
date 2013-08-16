@@ -16,19 +16,7 @@
  */
 
 #include "ast_attribute_def.h"
-#include "../../base/assert.h"
 
-_HexAstAttributeDef::_HexAstAttributeDef(
-  char type,
-  void* val
-):_type(type), _val(val)
+_HexAstAttributeDef::_HexAstAttributeDef()
 {
-  this->reprOK();
-}
-
-bool
-_HexAstAttributeDef::reprOK()
-{
-  HEX_ASSERT(this->_type);
-  HEX_ASSERT(this->_val);
 }

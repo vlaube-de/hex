@@ -15,14 +15,20 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "ast_node.h"
+#include "ast_compound_stmt.h"
+#include "ast_expr.h"
+#include "ast_stmt_group.h"
 
-#ifndef _AST_ATTRIBUTE_DEF_H_
-#define _AST_ATTRIBUTE_DEF_H_
+#ifndef _AST_WHILE_STMT_H_
+#define _AST_WHILE_STMT_H_
 
-typedef class _HexAstAttributeDef : public _HexAstNode {
+typedef class _HexAstWhileStmt : public _HexAstCompoundStmt {
 public:
-  _HexAstAttributeDef();
-} * HexAstAttributeDef;
+  _HexAstWhileStmt(HexAstExpr, HexAstStmtGroup);
 
-#endif /* _AST_ATTRIBUTE_DEF_H_ */
+  virtual bool reprOK();
+private:
+  HexAstExpr _expr;
+} * HexAstWhileStmt;
+
+#endif /* _AST_WHILE_STMT_H_ */

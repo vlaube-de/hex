@@ -17,12 +17,10 @@
 
 #include "ast_node.h"
 
-#ifndef _AST_ATTRIBUTE_DEF_H_
-#define _AST_ATTRIBUTE_DEF_H_
+#ifndef _AST_TASK_CLAUSE_H_
+#define _AST_TASK_CLAUSE_H_
 
-typedef class _HexAstAttributeDef : public _HexAstNode {
-public:
-  _HexAstAttributeDef();
-} * HexAstAttributeDef;
+typedef class _HexAstTaskClause : public _HexAstNode {
+} * HexAstTaskClasue;
 
-#endif /* _AST_ATTRIBUTE_DEF_H_ */
+#endif /* _AST_TASK_CLAUSE_H_ */

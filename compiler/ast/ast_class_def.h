@@ -15,14 +15,31 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "ast_node.h"
+#include "ast_compound_stmt.h"
+#include "ast_name.h"
+#include "ast_decorator_list.h"
+#include "ast_attribute_def_list.h"
+#include "ast_identifier.h"
 
-#ifndef _AST_ATTRIBUTE_DEF_H_
-#define _AST_ATTRIBUTE_DEF_H_
+#ifndef _AST_CLASS_DEF_H_
+#define _AST_CLASS_DEF_H_
 
-typedef class _HexAstAttributeDef : public _HexAstNode {
+typedef class _HexAstClassDef : public _HexAstCompoundStmt {
 public:
-  _HexAstAttributeDef();
-} * HexAstAttributeDef;
+  _HexAstClassDef(
+    HexAstDecoratorList,
+    HexAstIdentifier,
+    HexAstName,
+    HexAstAttributeDefList
+  );
 
-#endif /* _AST_ATTRIBUTE_DEF_H_ */
+  virtual bool reprOK();
+
+private:
+  HexAstDecoratorList _decorators;
+  HexAstIdentifier _name;
+  HexAstName _parent;
+  HexAstAttributeDefList _attributes;
+} * HexAstClassDef;
+
+#endif /* _AST_CLASS_DEF_H_ */

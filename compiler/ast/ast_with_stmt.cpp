@@ -15,14 +15,22 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "ast_node.h"
+#include "ast_with_stmt.h"
+#include "ast_expr_list.h"
+#include "ast_compound_stmt.h"
+#include "../../base/assert.h"
 
-#ifndef _AST_ATTRIBUTE_DEF_H_
-#define _AST_ATTRIBUTE_DEF_H_
+_HexAstWithStmt::_HexAstWithStmt(
+  HexAstExprList exprs,
+  char* alias,
+  HexAstStmtGroup stmts
+):_exprs(exprs), _alias(alias), _HexAstCompoundStmt(stmts)
+{
+  this->reprOK();
+}
 
-typedef class _HexAstAttributeDef : public _HexAstNode {
-public:
-  _HexAstAttributeDef();
-} * HexAstAttributeDef;
-
-#endif /* _AST_ATTRIBUTE_DEF_H_ */
+bool
+_HexAstWithStmt::reprOK()
+{
+  HEX_ASSERT(this->_exprs);
+}

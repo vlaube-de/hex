@@ -16,13 +16,15 @@
  */
 
 #include "ast_node.h"
+#include "ast_list_obj.h"
+#include "ast_attribute_def.h"
 
-#ifndef _AST_ATTRIBUTE_DEF_H_
-#define _AST_ATTRIBUTE_DEF_H_
+#ifndef _AST_ATTRIBUTE_DEF_LIST_H_
+#define _AST_ATTRIBUTE_DEF_LIST_H_
 
-typedef class _HexAstAttributeDef : public _HexAstNode {
+typedef class _HexAstAttributeDefList : public AstListObj<HexAstAttributeDef>, _HexAstNode {
 public:
-  _HexAstAttributeDef();
-} * HexAstAttributeDef;
+  _HexAstAttributeDefList();
+} * HexAstAttributeDefList;
 
 #endif /* _AST_ATTRIBUTE_DEF_H_ */

@@ -15,14 +15,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "ast_catch_stmt.h"
+#include "ast_list_obj.h"
 #include "ast_node.h"
 
-#ifndef _AST_ATTRIBUTE_DEF_H_
-#define _AST_ATTRIBUTE_DEF_H_
+#ifndef _AST_CATCH_STMT_GROUP_H_
+#define _AST_CATCH_STMT_GROUP_H_
 
-typedef class _HexAstAttributeDef : public _HexAstNode {
+typedef class _HexAstCatchStmtGroup : public AstListObj<HexAstCatchStmt>, _HexAstNode {
 public:
-  _HexAstAttributeDef();
-} * HexAstAttributeDef;
+  _HexAstCatchStmtGroup();
 
-#endif /* _AST_ATTRIBUTE_DEF_H_ */
+  virtual bool reprOK();
+} * HexAstCatchStmtGroup;
+
+#endif /* _AST_CATCH_STMT_GROUP_H_ */

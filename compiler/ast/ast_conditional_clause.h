@@ -16,13 +16,28 @@
  */
 
 #include "ast_node.h"
+#include "ast_task_state.h"
+#include "ast_expr_list.h"
 
-#ifndef _AST_ATTRIBUTE_DEF_H_
-#define _AST_ATTRIBUTE_DEF_H_
+#ifndef _AST_CONDITIONAL_CLAUSE_H_
+#define _AST_CONDITIONAL_CLAUSE_H_
 
-typedef class _HexAstAttributeDef : public _HexAstNode {
+enum HexAstConditionalPreposition {
+  AST_CONDITIONAL_PREPOSITION_BEFORE=0x02,
+  AST_CONDITIONAL_PREPOSITION_AFTER=0x04,
+  AST_CONDITIONAL_PREPOSITION_WHEN=0x08
+};
+
+typedef class _HexAstConditionalClause : public _HexAstNode {
 public:
-  _HexAstAttributeDef();
-} * HexAstAttributeDef;
+  _HexAstConditionalClause(
+    HexAstConditionalPreposition, HexAstExprList, HexAstTaskState);
 
-#endif /* _AST_ATTRIBUTE_DEF_H_ */
+  virtual bool reprOK();
+private:
+  HexAstConditionalPreposition _preposition;
+  HexAstExprList _exprs;
+  HexAstTaskState _state;
+} * HexAstConditionalClause;
+
+#endif /* _AST_CONDITIONAL_CLAUSE_H_ */
