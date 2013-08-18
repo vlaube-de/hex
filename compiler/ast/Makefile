@@ -358,6 +358,9 @@ ast_call.o: ast_primary.o ast_call.h ast_call.cpp
 ast_attribute_ref.o: ast_primary.o ast_attribute_ref.h ast_attribute_ref.cpp
 	$(CXX) -c ast_attribute_ref.cpp
 
+ast.h:
+	cp ../../tools/headergen.py ./ && python headergen.py --path='./' --dest='ast.h' && rm headergen.py
+
 
 all:	ast_unparsed.o		\
 			ast_list_obj.o		\
@@ -472,6 +475,7 @@ all:	ast_unparsed.o		\
 			ast_slicing.o	\
 			ast_attribute_ref.o	\
 			ast_call.o	\
+			ast.h
 
 
 clean:
