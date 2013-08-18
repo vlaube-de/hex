@@ -187,7 +187,7 @@ stmt
   ;
 
 simple_stmt
-  : expr_list SEMICOLON
+  : expr_list_stmt
   | assignment_stmt
   | using_stmt
   | return_stmt
@@ -196,6 +196,10 @@ simple_stmt
   | break_stmt
   | input_stmt
   | output_stmt
+  ;
+
+expr_list_stmt
+  : expr_list SEMICOLON
   ;
 
 raise_stmt
@@ -474,13 +478,13 @@ decorator
 
 dict_form
   : LBRACE RBRACE
-  | LBRACE dict_form_list RBRACE
+  | LBRACE field_def_list RBRACE
   | LBRACE comprehension RBRACE
   ;
 
-dict_form_list
+field_def_list
   : field_def
-  | dict_form_list COMMA field_def
+  | field_def_list COMMA field_def
   ;
 
 map_form
@@ -493,12 +497,11 @@ map_field_list
   ;
 
 map_field
-  : expr ARROW expr
+  : expr ARROW val_atom
   ;
 
 field_def
-  : IDENTIFIER COLON expr
-  | IDENTIFIER COLON lambda
+  : IDENTIFIER COLON val_atom
   | decorator_list IDENTIFIER COLON lambda
   ;
 
@@ -533,11 +536,14 @@ arg_list
   | arg_val COMMA kwarg_val
   ;
 
-val_list
+val_atom
   : expr
   | lambda
-  | val_list COMMA expr
-  | val_list COMMA lambda
+  ;
+
+val_list
+  : val_atom
+  | val_list COMMA val_atom
   ;
 
 parameter_list
@@ -572,8 +578,7 @@ keyword_val_list
   ;
 
 keyword_val
-  : IDENTIFIER ASSIGN_OP expr
-  | IDENTIFIER ASSIGN_OP lambda
+  : IDENTIFIER ASSIGN_OP val_atom
   ;
 
 simple_param_list
