@@ -19,12 +19,11 @@
 %{
 
 #include <stdio.h>
+#include "yacc_extern.h"
+#include "ast.h"
 
 #define YYDEBUG 1
 #define YYERROR_VERBOSE
-
-yydebug = 0;
-
 
 %}
 
@@ -136,7 +135,6 @@ yydebug = 0;
 %token <string> STARS
 %token <string> PERCENT
 
-%token NEWLINE
 
 %left     IDENTIFIER STRING_LITERAL_SINGLE STRING_LITERAL_DOUBLE
           DECIMALINTEGER BININTEGER OCTINTEGER HEXINTEGER FLOAT
@@ -769,7 +767,7 @@ integer
 %%
 
 
-int yyerror(char *err) {
+int yyerror(const char *err) {
   if(err) {
     fprintf(stderr, "Parsing error: [%s]\n", err);
   }

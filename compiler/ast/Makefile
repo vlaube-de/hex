@@ -19,6 +19,9 @@ CC=gcc
 CXX=g++
 CFLAGS=-Wno-implicit -Wall -arch x86_64
 
+ast_examiner.o: ast_examiner.h ast_exaiminer.cpp
+	$(CXX) -c ast_examiner.o
+
 ast_unparsed.o: ast_unparsed.h ast_unparsed.cpp
 	$(CXX) -c ast_unparsed.cpp
 
@@ -358,11 +361,10 @@ ast_call.o: ast_primary.o ast_call.h ast_call.cpp
 ast_attribute_ref.o: ast_primary.o ast_attribute_ref.h ast_attribute_ref.cpp
 	$(CXX) -c ast_attribute_ref.cpp
 
-ast.h:
-	cp ../../tools/headergen.py ./ && python headergen.py --path='./' --dest='ast.h' && rm headergen.py
 
 
-all:	ast_unparsed.o		\
+all:	ast_examiner.o	\
+			ast_unparsed.o		\
 			ast_list_obj.o		\
 			ast_node.o				\
 			ast_target_list.o	\
@@ -475,7 +477,6 @@ all:	ast_unparsed.o		\
 			ast_slicing.o	\
 			ast_attribute_ref.o	\
 			ast_call.o	\
-			ast.h
 
 
 clean:

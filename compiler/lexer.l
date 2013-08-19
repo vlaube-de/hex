@@ -18,8 +18,8 @@
 
 %{
 #include <stdio.h>
-#include "parser.tab.h"
-
+#include "parser.tab.hh"
+#include "yacc_extern.h"
 
 #define EAT_TOKEN(yytext, token_type)   \
   yylval.string = strdup(yytext);       \
@@ -30,7 +30,7 @@ int new_line_returned = 0;
 
 
 %%
-"#".*\n                             yylineno++;
+"#".*                               yylineno++; 
 
 "after"                             EAT_TOKEN(yytext, AFTER);
 "and"                               EAT_TOKEN(yytext, AND);
@@ -136,15 +136,6 @@ int new_line_returned = 0;
 "**"                                EAT_TOKEN(yytext, STARS);
 "%"                                 EAT_TOKEN(yytext, PERCENT);
 
-
-<INITIAL>\n                         {
-                                        if(!new_line_returned)
-                                        {
-                                            new_line_returned = 1;
-                                            return NEWLINE;
-                                        }
-
-                                    }
 
 .                                   {
                                         /* ignore bad characters */
