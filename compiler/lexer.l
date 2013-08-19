@@ -20,9 +20,11 @@
 #include <stdio.h>
 #include "parser.tab.hh"
 
+#ifndef _YACC_EXTERN_H_
 extern "C" {
   int yylex(void);
 }
+#endif
 
 #define EAT_TOKEN(yytext, token_type)   \
   yylval.string = strdup(yytext);       \

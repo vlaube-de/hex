@@ -32,10 +32,10 @@ parser.tab.hh: parser.y
 	$(BISON) -y -d -t -v -g parser.y -o parser.tab.cc
 
 hex_parser.o: ast.h lex.yy.c parser.tab.hh hex_parser.cc
-	$(CXX) $(CFLAGS) -c lex.yy.c parser.tab.hh parser.tab.cc hex_parser.cc
+	$(CXX) $(CFLAGS) -c hex_parser.cc
 
 parser_stub.out: hex_parser.o parser_stub.cc
-	$(CXX) $(CFLAGS) lex.yy.c parser.tab.cc parser_stub.cc hex_parser.o -ly -ll -o parser_stub.out
+	$(CXX) $(CFLAGS) lex.yy.c parser_stub.cc parser.tab.cc hex_parser.o -o parser_stub.out
 
 all: lex.yy.c 			\
 	 parser.tab.hh   	\

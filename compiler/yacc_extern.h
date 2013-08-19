@@ -22,12 +22,12 @@ extern "C"
 {
   typedef void* yyscan_t;
 
-  FILE * yyin;
-  FILE * yyout;
-  int YY_FLUSH_BUFFER;
+  //FILE * yyin;
+  //FILE * yyout;
+  //int YY_FLUSH_BUFFER;
   int yylex_init( yyscan_t* );
   int yylex(void);
-  int yyparse(void*);
+  int yyparse();
   int yywrap();
   int yyerror(char*);
 }

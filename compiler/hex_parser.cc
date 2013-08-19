@@ -23,14 +23,15 @@
 int hex_parse(const char *path)
 {
   int res = 0;
-  if((yyin = fopen(path, "r")) == 0) {
+  FILE *f;
+  if((f = fopen(path, "r")) == 0) {
     printf("Failed opening file %s\n", path);
     return -1;
   }
 
-  YY_FLUSH_BUFFER;
+  //YY_FLUSH_BUFFER;
   yylex();
-  res = yyparse(yyin);
+  res = yyparse();
 
   return res;
 }
