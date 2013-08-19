@@ -18,8 +18,11 @@
 
 %{
 #include <stdio.h>
-#include "parser.tab.h"
+#include "parser.tab.hh"
 
+extern "C" {
+  int yylex(void);
+}
 
 #define EAT_TOKEN(yytext, token_type)   \
   yylval.string = strdup(yytext);       \

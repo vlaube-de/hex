@@ -33,9 +33,9 @@ public:
   static EquivalentExaminer Equivalent;
 };
 
-EqualsExaminer Examiners::Equals = new _EqualsExaminer();
-IsomorphicExaminer Examiners::Isomorphic = new _IsomorphicExaminer();
-EquivalentExaminer Examiners::Equivalent = new _EquivalentExaminer();
+EqualsExaminer Examiners::Equals;
+IsomorphicExaminer Examiners::Isomorphic;
+EquivalentExaminer Examiners::Equivalent;
 
 
 #endif /* _EXAMINER_H_ */

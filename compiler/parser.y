@@ -19,12 +19,11 @@
 %{
 
 #include <stdio.h>
+#include "yacc_extern.h"
+#include "ast.h"
 
 #define YYDEBUG 1
 #define YYERROR_VERBOSE
-
-yydebug = 0;
-
 
 %}
 
