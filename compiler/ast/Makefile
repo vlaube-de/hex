@@ -19,351 +19,351 @@ CC=gcc
 CXX=g++
 CFLAGS=-Wno-implicit -Wall -arch x86_64
 
-ast_examiner.o: ast_examiner.h ast_exaiminer.cpp
-	$(CXX) -c ast_examiner.o
+examiner.o: examiner.h examiner.cc
+	$(CXX) -c examiner.cc
 
-ast_unparsed.o: ast_unparsed.h ast_unparsed.cpp
-	$(CXX) -c ast_unparsed.cpp
+ast_unparsed.o: ast_unparsed.h ast_unparsed.cc
+	$(CXX) -c ast_unparsed.cc
 
-ast_list_obj.o: ast_list_obj.h ast_list_obj.cpp
-	$(CXX) -c ast_list_obj.cpp
+ast_list_obj.o: ast_list_obj.h ast_list_obj.cc
+	$(CXX) -c ast_list_obj.cc
 
-ast_node.o: examinable.h ast_node.h ast_node.cpp
-	$(CXX) -c ast_node.cpp
+ast_node.o: examinable.h ast_node.h ast_node.cc
+	$(CXX) -c ast_node.cc
 
-ast_target_list.o: ast_list_obj.o ast_node.o ast_target_list.h ast_target_list.cpp
-	$(CXX) -c ast_target_list.cpp
+ast_target_list.o: ast_list_obj.o ast_node.o ast_target_list.h ast_target_list.cc
+	$(CXX) -c ast_target_list.cc
 
-ast_val_atom.o: ast_node.o ast_val_atom.h ast_val_atom.cpp
-	$(CXX) -c ast_val_atom.cpp
+ast_val_atom.o: ast_node.o ast_val_atom.h ast_val_atom.cc
+	$(CXX) -c ast_val_atom.cc
 
-ast_val_list.o: ast_node.o ast_list_obj.o ast_val_atom.o ast_val_list.h ast_val_list.cpp
-	$(CXX) -c ast_val_list.cpp
+ast_val_list.o: ast_node.o ast_list_obj.o ast_val_atom.o ast_val_list.h ast_val_list.cc
+	$(CXX) -c ast_val_list.cc
 
-ast_simple_param_list.o: ast_list_obj.o ast_node.o ast_simple_param_list.h ast_simple_param_list.cpp
-	$(CXX) -c ast_simple_param_list.cpp
+ast_simple_param_list.o: ast_list_obj.o ast_node.o ast_simple_param_list.h ast_simple_param_list.cc
+	$(CXX) -c ast_simple_param_list.cc
 
-ast_keyword_val.o: ast_node.o ast_keyword_val.h ast_keyword_val.cpp
-	$(CXX) -c ast_keyword_val.cpp
+ast_keyword_val.o: ast_node.o ast_keyword_val.h ast_keyword_val.cc
+	$(CXX) -c ast_keyword_val.cc
 
-ast_keyword_val_list.o: ast_keyword_val.o ast_list_obj.o ast_node.o ast_keyword_val_list.h ast_keyword_val_list.cpp
-	$(CXX) -c ast_keyword_val_list.cpp
+ast_keyword_val_list.o: ast_keyword_val.o ast_list_obj.o ast_node.o ast_keyword_val_list.h ast_keyword_val_list.cc
+	$(CXX) -c ast_keyword_val_list.cc
 
-ast_parameter_list.o: ast_node.o ast_parameter_list.h ast_parameter_list.cpp
-	$(CXX) -c ast_parameter_list.cpp
+ast_parameter_list.o: ast_node.o ast_parameter_list.h ast_parameter_list.cc
+	$(CXX) -c ast_parameter_list.cc
 
-ast_arg_list.o: ast_node.o ast_arg_list.h ast_arg_list.cpp
-	$(CXX) -c ast_arg_list.cpp
+ast_arg_list.o: ast_node.o ast_arg_list.h ast_arg_list.cc
+	$(CXX) -c ast_arg_list.cc
 
-ast_comprehension.o: ast_node.o ast_comprehension.h ast_comprehension.cpp
-	$(CXX) -c ast_comprehension.cpp
+ast_comprehension.o: ast_node.o ast_comprehension.h ast_comprehension.cc
+	$(CXX) -c ast_comprehension.cc
 
-ast_list_form.o: ast_node.o ast_comprehension.o ast_list_form.h ast_list_form.cpp
-	$(CXX) -c ast_list_form.cpp
+ast_list_form.o: ast_node.o ast_comprehension.o ast_list_form.h ast_list_form.cc
+	$(CXX) -c ast_list_form.cc
 
-ast_map_field.o: ast_node.o ast_val_atom.o ast_map_field.h ast_map_field.cpp
-	$(CXX) -c ast_map_field.cpp
+ast_map_field.o: ast_node.o ast_val_atom.o ast_map_field.h ast_map_field.cc
+	$(CXX) -c ast_map_field.cc
 
-ast_map_field_list.o: ast_node.o ast_list_obj.o ast_map_field_list.h ast_map_field_list.cpp
-	$(CXX) -c ast_map_field_list.cpp
+ast_map_field_list.o: ast_node.o ast_list_obj.o ast_map_field_list.h ast_map_field_list.cc
+	$(CXX) -c ast_map_field_list.cc
 
-ast_map_form.o: ast_node.o ast_map_field_list.o ast_map_form.h ast_map_form.cpp
-	$(CXX) -c ast_map_form.cpp
+ast_map_form.o: ast_node.o ast_map_field_list.o ast_map_form.h ast_map_form.cc
+	$(CXX) -c ast_map_form.cc
 
-ast_field_def.o: ast_node.o ast_val_atom.o ast_field_def.h ast_field_def.cpp
-	$(CXX) -c ast_field_def.cpp
+ast_field_def.o: ast_node.o ast_val_atom.o ast_field_def.h ast_field_def.cc
+	$(CXX) -c ast_field_def.cc
 
-ast_field_def_list.o: ast_field_def.o ast_list_obj.o ast_field_def_list.h ast_field_def_list.cpp
-	$(CXX) -c ast_field_def_list.cpp
+ast_field_def_list.o: ast_field_def.o ast_list_obj.o ast_field_def_list.h ast_field_def_list.cc
+	$(CXX) -c ast_field_def_list.cc
 
-ast_dict_form.o: ast_node.o ast_dict_form.h ast_dict_form.cpp
-	$(CXX) -c ast_dict_form.cpp
+ast_dict_form.o: ast_node.o ast_dict_form.h ast_dict_form.cc
+	$(CXX) -c ast_dict_form.cc
 
-ast_name.o: ast_node.o ast_list_obj.o ast_name.h ast_name.cpp
-	$(CXX) -c ast_name.cpp
+ast_name.o: ast_node.o ast_list_obj.o ast_name.h ast_name.cc
+	$(CXX) -c ast_name.cc
 
-ast_decorator.o: ast_node.o ast_decorator.h ast_decorator.cpp
-	$(CXX) -c ast_decorator.cpp
+ast_decorator.o: ast_node.o ast_decorator.h ast_decorator.cc
+	$(CXX) -c ast_decorator.cc
 
-ast_decorator_list.o: ast_decorator.o ast_decorator_list.h ast_decorator_list.cpp
-	$(CXX) -c ast_decorator_list.cpp
+ast_decorator_list.o: ast_decorator.o ast_decorator_list.h ast_decorator_list.cc
+	$(CXX) -c ast_decorator_list.cc
 
-ast_operator_def.o: ast_node.o ast_operator_def.h ast_operator_def.cpp
-	$(CXX) -c ast_operator_def.cpp
+ast_operator_def.o: ast_node.o ast_operator_def.h ast_operator_def.cc
+	$(CXX) -c ast_operator_def.cc
 
-ast_attribute_def.o: ast_node.o ast_attribute_def.h ast_attribute_def.cpp
-	$(CXX) -c ast_attribute_def.cpp
+ast_attribute_def.o: ast_node.o ast_attribute_def.h ast_attribute_def.cc
+	$(CXX) -c ast_attribute_def.cc
 
-ast_attribute_def_list.o: ast_attribute_def_list.h ast_attribute_def_list.cpp
-	$(CXX) -c ast_attribute_def.cpp
+ast_attribute_def_list.o: ast_attribute_def_list.h ast_attribute_def_list.cc
+	$(CXX) -c ast_attribute_def.cc
 
-ast_assignment_stmt.o: ast_node.o ast_assignment_stmt.h ast_assignment_stmt.cpp
-	$(CXX) -c ast_assignment_stmt.cpp
+ast_assignment_stmt.o: ast_node.o ast_assignment_stmt.h ast_assignment_stmt.cc
+	$(CXX) -c ast_assignment_stmt.cc
 
-ast_using_src.o: ast_node.o ast_using_src.h ast_using_src.cpp
-	$(CXX) -c ast_using_src.cpp
+ast_using_src.o: ast_node.o ast_using_src.h ast_using_src.cc
+	$(CXX) -c ast_using_src.cc
 
-ast_using_stmt.o: ast_node.o ast_using_stmt.h ast_using_stmt.cpp
-	$(CXX) -c ast_using_stmt.cpp
+ast_using_stmt.o: ast_node.o ast_using_stmt.h ast_using_stmt.cc
+	$(CXX) -c ast_using_stmt.cc
 
-ast_stmt_group.o: ast_node.o ast_stmt.h ast_stmt_group.h ast_stmt_group.cpp
-	$(CXX) -c ast_stmt_group.cpp
+ast_stmt_group.o: ast_node.o ast_stmt.h ast_stmt_group.h ast_stmt_group.cc
+	$(CXX) -c ast_stmt_group.cc
 
-ast_return_stmt.o: ast_node.o ast_return_stmt.h ast_return_stmt.cpp
-	$(CXX) -c ast_return_stmt.cpp
+ast_return_stmt.o: ast_node.o ast_return_stmt.h ast_return_stmt.cc
+	$(CXX) -c ast_return_stmt.cc
 
-ast_break_stmt.o: ast_node.o ast_break_stmt.h ast_break_stmt.cpp
-	$(CXX) -c ast_break_stmt.cpp
+ast_break_stmt.o: ast_node.o ast_break_stmt.h ast_break_stmt.cc
+	$(CXX) -c ast_break_stmt.cc
 
-ast_continue_stmt.o: ast_continue_stmt.h ast_continue_stmt.cpp
-	$(CXX) -c ast_continue_stmt.cpp
+ast_continue_stmt.o: ast_continue_stmt.h ast_continue_stmt.cc
+	$(CXX) -c ast_continue_stmt.cc
 
-ast_raise_stmt.o: ast_raise_stmt.h ast_raise_stmt.cpp
-	$(CXX) -c ast_raise_stmt.cpp
+ast_raise_stmt.o: ast_raise_stmt.h ast_raise_stmt.cc
+	$(CXX) -c ast_raise_stmt.cc
 
-ast_input_stmt.o: ast_input_stmt.h ast_input_stmt.cpp
-	$(CXX) -c ast_input_stmt.cpp
+ast_input_stmt.o: ast_input_stmt.h ast_input_stmt.cc
+	$(CXX) -c ast_input_stmt.cc
 
-ast_output_stmt.o: ast_output_stmt.h ast_output_stmt.cpp
-	$(CXX) -c ast_output_stmt.cpp
+ast_output_stmt.o: ast_output_stmt.h ast_output_stmt.cc
+	$(CXX) -c ast_output_stmt.cc
 
-ast_expr_list_stmt.o: ast_expr_list_stmt.h ast_expr_list_stmt.cpp
-	$(CXX) -c ast_expr_list_stmt.cpp
+ast_expr_list_stmt.o: ast_expr_list_stmt.h ast_expr_list_stmt.cc
+	$(CXX) -c ast_expr_list_stmt.cc
 
-ast_compound_stmt.o: ast_compound_stmt.h ast_compound_stmt.cpp
-	$(CXX) -c ast_compound_stmt.cpp
+ast_compound_stmt.o: ast_compound_stmt.h ast_compound_stmt.cc
+	$(CXX) -c ast_compound_stmt.cc
 
-ast_for_stmt.o: ast_for_stmt.h ast_for_stmt.cpp
-	$(CXX) -c ast_for_stmt.cpp
+ast_for_stmt.o: ast_for_stmt.h ast_for_stmt.cc
+	$(CXX) -c ast_for_stmt.cc
 
-ast_with_stmt.o: ast_with_stmt.h ast_with_stmt.cpp
-	$(CXX) -c ast_with_stmt.cpp
+ast_with_stmt.o: ast_with_stmt.h ast_with_stmt.cc
+	$(CXX) -c ast_with_stmt.cc
 
-ast_lock_stmt.o: ast_lock_stmt.h ast_lock_stmt.cpp
-	$(CXX) -c ast_lock_stmt.cpp
+ast_lock_stmt.o: ast_lock_stmt.h ast_lock_stmt.cc
+	$(CXX) -c ast_lock_stmt.cc
 
-ast_catch_stmt.o: ast_catch_stmt.h ast_catch_stmt.cpp
-	$(CXX) -c ast_catch_stmt.cpp
+ast_catch_stmt.o: ast_catch_stmt.h ast_catch_stmt.cc
+	$(CXX) -c ast_catch_stmt.cc
 
-ast_catch_stmt_group.o: ast_catch_stmt_group.h ast_catch_stmt_group.cpp
-	$(CXX) -c ast_catch_stmt_group.cpp
+ast_catch_stmt_group.o: ast_catch_stmt_group.h ast_catch_stmt_group.cc
+	$(CXX) -c ast_catch_stmt_group.cc
 
-ast_try_stmt.o: ast_try_stmt.h ast_try_stmt.cpp
-	$(CXX) -c ast_try_stmt.cpp
+ast_try_stmt.o: ast_try_stmt.h ast_try_stmt.cc
+	$(CXX) -c ast_try_stmt.cc
 
-ast_while_stmt.o: ast_while_stmt.h ast_while_stmt.cpp
-	$(CXX) -c ast_while_stmt.cpp
+ast_while_stmt.o: ast_while_stmt.h ast_while_stmt.cc
+	$(CXX) -c ast_while_stmt.cc
 
-ast_else_stmt.o: ast_else_stmt.h ast_else_stmt.cpp
-	$(CXX) -c ast_else_stmt.cpp
+ast_else_stmt.o: ast_else_stmt.h ast_else_stmt.cc
+	$(CXX) -c ast_else_stmt.cc
 
-ast_elif_stmt.o: ast_elif_stmt.h ast_elif_stmt.cpp
-	$(CXX) -c ast_elif_stmt.cpp
+ast_elif_stmt.o: ast_elif_stmt.h ast_elif_stmt.cc
+	$(CXX) -c ast_elif_stmt.cc
 
-ast_elif_stmt_group.o: ast_elif_stmt_group.h ast_elif_stmt_group.cpp
-	$(CXX) -c ast_elif_stmt_group.cpp
+ast_elif_stmt_group.o: ast_elif_stmt_group.h ast_elif_stmt_group.cc
+	$(CXX) -c ast_elif_stmt_group.cc
 
-ast_if_stmt.o: ast_if_stmt.h ast_if_stmt.cpp
-	$(CXX) -c ast_if_stmt.cpp
+ast_if_stmt.o: ast_if_stmt.h ast_if_stmt.cc
+	$(CXX) -c ast_if_stmt.cc
 
-ast_lambda.o: ast_node.o ast_lambda.h ast_lambda.cpp
-	$(CXX) -c ast_lambda.cpp
+ast_lambda.o: ast_node.o ast_lambda.h ast_lambda.cc
+	$(CXX) -c ast_lambda.cc
 
-ast_class_def.o: ast_class_def.h ast_class_def.cpp
-	$(CXX) -c ast_class_def.cpp
+ast_class_def.o: ast_class_def.h ast_class_def.cc
+	$(CXX) -c ast_class_def.cc
 
-ast_conditional_clause.o: ast_conditional_clause.h ast_conditional_clause.cpp
-	$(CXX) -c ast_conditional_clause.cpp
+ast_conditional_clause.o: ast_conditional_clause.h ast_conditional_clause.cc
+	$(CXX) -c ast_conditional_clause.cc
 
-ast_task_clause.o: ast_task_clause.h ast_task_clause.cpp
-	$(CXX) -c ast_task_clause.cpp
+ast_task_clause.o: ast_task_clause.h ast_task_clause.cc
+	$(CXX) -c ast_task_clause.cc
 
-ast_start_clause.o: ast_start_clause.h ast_start_clause.cpp
-	$(CXX) -c ast_start_clause.cpp
+ast_start_clause.o: ast_start_clause.h ast_start_clause.cc
+	$(CXX) -c ast_start_clause.cc
 
-ast_pause_clause.o: ast_pause_clause.h ast_pause_clause.cpp
-	$(CXX) -c ast_pause_clause.cpp
+ast_pause_clause.o: ast_pause_clause.h ast_pause_clause.cc
+	$(CXX) -c ast_pause_clause.cc
 
-ast_resume_clause.o: ast_resume_clause.h ast_resume_clause.cpp
-	$(CXX) -c ast_resume_clause.cpp
+ast_resume_clause.o: ast_resume_clause.h ast_resume_clause.cc
+	$(CXX) -c ast_resume_clause.cc
 
-ast_module.o: ast_module.h ast_module.cpp
-	$(CXX) -c ast_module.cpp
+ast_module.o: ast_module.h ast_module.cc
+	$(CXX) -c ast_module.cc
 
-ast_expr_list.o: ast_node.o ast_list_obj.o ast_expr_list.h ast_expr_list.cpp
-	$(CXX) -c ast_expr_list.cpp
+ast_expr_list.o: ast_node.o ast_list_obj.o ast_expr_list.h ast_expr_list.cc
+	$(CXX) -c ast_expr_list.cc
 
-ast_unary_expr.o: ast_expr.h ast_unary_expr.h ast_unary_expr.cpp
-	$(CXX) -c ast_unary_expr.cpp
+ast_unary_expr.o: ast_expr.h ast_unary_expr.h ast_unary_expr.cc
+	$(CXX) -c ast_unary_expr.cc
 
-ast_neg_expr.o: ast_unary_expr.o ast_neg_expr.h ast_neg_expr.cpp
-	$(CXX) -c ast_neg_expr.cpp
+ast_neg_expr.o: ast_unary_expr.o ast_neg_expr.h ast_neg_expr.cc
+	$(CXX) -c ast_neg_expr.cc
 
-ast_not_expr.o: ast_unary_expr.o ast_not_expr.h ast_not_expr.cpp
-	$(CXX) -c ast_not_expr.cpp
+ast_not_expr.o: ast_unary_expr.o ast_not_expr.h ast_not_expr.cc
+	$(CXX) -c ast_not_expr.cc
 
-ast_bitwise_not_expr.o: ast_unary_expr.o ast_bitwise_not_expr.h ast_bitwise_not_expr.cpp
-	$(CXX) -c ast_bitwise_not_expr.cpp
+ast_bitwise_not_expr.o: ast_unary_expr.o ast_bitwise_not_expr.h ast_bitwise_not_expr.cc
+	$(CXX) -c ast_bitwise_not_expr.cc
 
-ast_inc_expr.o: ast_unary_expr.o ast_inc_expr.h ast_inc_expr.cpp
-	$(CXX) -c ast_inc_expr.cpp
+ast_inc_expr.o: ast_unary_expr.o ast_inc_expr.h ast_inc_expr.cc
+	$(CXX) -c ast_inc_expr.cc
 
-ast_dec_expr.o: ast_unary_expr.o ast_dec_expr.h ast_dec_expr.cpp
-	$(CXX) -c ast_dec_expr.cpp
+ast_dec_expr.o: ast_unary_expr.o ast_dec_expr.h ast_dec_expr.cc
+	$(CXX) -c ast_dec_expr.cc
 
-ast_exitential_expr.o: ast_unary_expr.o ast_existential_expr.h ast_existential_expr.cpp
-	$(CXX) -c ast_existential_expr.cpp
+ast_exitential_expr.o: ast_unary_expr.o ast_existential_expr.h ast_existential_expr.cc
+	$(CXX) -c ast_existential_expr.cc
 
-ast_binary_expr.o: ast_expr.h ast_binary_expr.h ast_binary_expr.cpp
-	$(CXX) -c ast_binary_expr.cpp
+ast_binary_expr.o: ast_expr.h ast_binary_expr.h ast_binary_expr.cc
+	$(CXX) -c ast_binary_expr.cc
 
-ast_commutative_binary_expr.o: ast_binary_expr.o ast_commutative_binary_expr.h ast_commutative_binary_expr.cpp
-	$(CXX) -c ast_commutative_binary_expr.cpp
+ast_commutative_binary_expr.o: ast_binary_expr.o ast_commutative_binary_expr.h ast_commutative_binary_expr.cc
+	$(CXX) -c ast_commutative_binary_expr.cc
 
-ast_and_expr.o: ast_commutative_binary_expr.o ast_and_expr.h ast_and_expr.cpp
-	$(CXX) -c ast_and_expr.cpp
+ast_and_expr.o: ast_commutative_binary_expr.o ast_and_expr.h ast_and_expr.cc
+	$(CXX) -c ast_and_expr.cc
 
-ast_or_expr.o: ast_commutative_binary_expr.o ast_or_expr.h ast_or_expr.cpp
-	$(CXX) -c ast_or_expr.cpp
+ast_or_expr.o: ast_commutative_binary_expr.o ast_or_expr.h ast_or_expr.cc
+	$(CXX) -c ast_or_expr.cc
 
-ast_bitwise_and_expr.o: ast_commutative_binary_expr.o ast_bitwise_and_expr.h ast_bitwise_and_expr.cpp
-	$(CXX) -c ast_bitwise_and_expr.cpp
+ast_bitwise_and_expr.o: ast_commutative_binary_expr.o ast_bitwise_and_expr.h ast_bitwise_and_expr.cc
+	$(CXX) -c ast_bitwise_and_expr.cc
 
-ast_bitwise_or_expr.o: ast_commutative_binary_expr.o ast_bitwise_or_expr.h ast_bitwise_or_expr.cpp
-	$(CXX) -c ast_bitwise_or_expr.cpp
+ast_bitwise_or_expr.o: ast_commutative_binary_expr.o ast_bitwise_or_expr.h ast_bitwise_or_expr.cc
+	$(CXX) -c ast_bitwise_or_expr.cc
 
-ast_bitwise_xor_expr.o: ast_commutative_binary_expr.o ast_bitwise_xor_expr.h ast_bitwise_xor_expr.cpp
-	$(CXX) -c ast_bitwise_xor_expr.cpp
+ast_bitwise_xor_expr.o: ast_commutative_binary_expr.o ast_bitwise_xor_expr.h ast_bitwise_xor_expr.cc
+	$(CXX) -c ast_bitwise_xor_expr.cc
 
-ast_bitwise_shift_left_expr.o: ast_binary_expr.o ast_bitwise_shift_left_expr.h ast_bitwise_shift_left_expr.cpp
-	$(CXX) -c ast_bitwise_shift_left_expr.cpp
+ast_bitwise_shift_left_expr.o: ast_binary_expr.o ast_bitwise_shift_left_expr.h ast_bitwise_shift_left_expr.cc
+	$(CXX) -c ast_bitwise_shift_left_expr.cc
 
-ast_bitwise_shift_right_expr.o: ast_binary_expr.o ast_bitwise_shift_right_expr.h ast_bitwise_shift_right_expr.cpp
-	$(CXX) -c ast_bitwise_shift_right_expr.cpp
+ast_bitwise_shift_right_expr.o: ast_binary_expr.o ast_bitwise_shift_right_expr.h ast_bitwise_shift_right_expr.cc
+	$(CXX) -c ast_bitwise_shift_right_expr.cc
 
-ast_power_expr.o: ast_binary_expr.o ast_power_expr.h ast_power_expr.cpp
-	$(CXX) -c ast_power_expr.cpp
+ast_power_expr.o: ast_binary_expr.o ast_power_expr.h ast_power_expr.cc
+	$(CXX) -c ast_power_expr.cc
 
-ast_add_expr.o: ast_commutative_binary_expr.o ast_add_expr.h ast_add_expr.cpp
-	$(CXX) -c ast_add_expr.cpp
+ast_add_expr.o: ast_commutative_binary_expr.o ast_add_expr.h ast_add_expr.cc
+	$(CXX) -c ast_add_expr.cc
 
-ast_minus_expr.o: ast_binary_expr.o ast_minus_expr.h ast_minus_expr.cpp
-	$(CXX) -c ast_minus_expr.cpp
+ast_minus_expr.o: ast_binary_expr.o ast_minus_expr.h ast_minus_expr.cc
+	$(CXX) -c ast_minus_expr.cc
 
-ast_multiply_expr.o: ast_commutative_binary_expr.o ast_multiply_expr.h ast_multiply_expr.cpp
-	$(CXX) -c ast_multiply_expr.cpp
+ast_multiply_expr.o: ast_commutative_binary_expr.o ast_multiply_expr.h ast_multiply_expr.cc
+	$(CXX) -c ast_multiply_expr.cc
 
-ast_divide_expr.o: ast_binary_expr.o ast_divide_expr.h ast_divide_expr.cpp
-	$(CXX) -c ast_divide_expr.cpp
+ast_divide_expr.o: ast_binary_expr.o ast_divide_expr.h ast_divide_expr.cc
+	$(CXX) -c ast_divide_expr.cc
 
-ast_mod_expr.o: ast_binary_expr.o ast_mod_expr.h ast_mod_expr.cpp
-	$(CXX) -c ast_mod_expr.cpp
+ast_mod_expr.o: ast_binary_expr.o ast_mod_expr.h ast_mod_expr.cc
+	$(CXX) -c ast_mod_expr.cc
 
-ast_eq_expr.o: ast_commutative_binary_expr.o ast_eq_expr.h ast_eq_expr.cpp
-	$(CXX) -c ast_eq_expr.cpp
+ast_eq_expr.o: ast_commutative_binary_expr.o ast_eq_expr.h ast_eq_expr.cc
+	$(CXX) -c ast_eq_expr.cc
 
-ast_neq_expr.o: ast_commutative_binary_expr.o ast_neq_expr.h ast_neq_expr.cpp
-	$(CXX) -c ast_neq_expr.cpp
+ast_neq_expr.o: ast_commutative_binary_expr.o ast_neq_expr.h ast_neq_expr.cc
+	$(CXX) -c ast_neq_expr.cc
 
-ast_is_expr.o: ast_commutative_binary_expr.o ast_is_expr.h ast_is_expr.cpp
-	$(CXX) -c ast_is_expr.cpp
+ast_is_expr.o: ast_commutative_binary_expr.o ast_is_expr.h ast_is_expr.cc
+	$(CXX) -c ast_is_expr.cc
 
-ast_lt_expr.o: ast_binary_expr.o ast_lt_expr.h ast_lt_expr.cpp
-	$(CXX) -c ast_lt_expr.cpp
+ast_lt_expr.o: ast_binary_expr.o ast_lt_expr.h ast_lt_expr.cc
+	$(CXX) -c ast_lt_expr.cc
 
-ast_le_expr.o: ast_binary_expr.o ast_le_expr.h ast_le_expr.cpp
-	$(CXX) -c ast_le_expr.cpp
+ast_le_expr.o: ast_binary_expr.o ast_le_expr.h ast_le_expr.cc
+	$(CXX) -c ast_le_expr.cc
 
-ast_gt_expr.o: ast_binary_expr.o ast_gt_expr.h ast_gt_expr.cpp
-	$(CXX) -c ast_gt_expr.cpp
+ast_gt_expr.o: ast_binary_expr.o ast_gt_expr.h ast_gt_expr.cc
+	$(CXX) -c ast_gt_expr.cc
 
-ast_ge_expr.o: ast_binary_expr.o ast_ge_expr.h ast_ge_expr.cpp
-	$(CXX) -c ast_ge_expr.cpp
+ast_ge_expr.o: ast_binary_expr.o ast_ge_expr.h ast_ge_expr.cc
+	$(CXX) -c ast_ge_expr.cc
 
-ast_in_expr.o: ast_binary_expr.o ast_in_expr.h ast_in_expr.cpp
-	$(CXX) -c ast_in_expr.cpp
+ast_in_expr.o: ast_binary_expr.o ast_in_expr.h ast_in_expr.cc
+	$(CXX) -c ast_in_expr.cc
 
-ast_not_in_expr.o: ast_binary_expr.o ast_not_in_expr.h ast_not_in_expr.cpp
-	$(CXX) -c ast_not_in_expr.cpp
+ast_not_in_expr.o: ast_binary_expr.o ast_not_in_expr.h ast_not_in_expr.cc
+	$(CXX) -c ast_not_in_expr.cc
 
-ast_in_range_expr.o: ast_binary_expr.o ast_in_range_expr.h ast_in_range_expr.cpp
-	$(CXX) -c ast_in_range_expr.cpp
+ast_in_range_expr.o: ast_binary_expr.o ast_in_range_expr.h ast_in_range_expr.cc
+	$(CXX) -c ast_in_range_expr.cc
 
-ast_ex_range_expr.o: ast_binary_expr.o ast_ex_range_expr.h ast_ex_range_expr.cpp
-	$(CXX) -c ast_ex_range_expr.cpp
+ast_ex_range_expr.o: ast_binary_expr.o ast_ex_range_expr.h ast_ex_range_expr.cc
+	$(CXX) -c ast_ex_range_expr.cc
 
-ast_conditional_expr.o: ast_binary_expr.o ast_conditional_expr.h ast_conditional_expr.cpp
-	$(CXX) -c ast_conditional_expr.cpp
+ast_conditional_expr.o: ast_binary_expr.o ast_conditional_expr.h ast_conditional_expr.cc
+	$(CXX) -c ast_conditional_expr.cc
 
-ast_yield_expr.o: ast_expr.h ast_expr_list.o  ast_yield_expr.h ast_yield_expr.cpp
-	$(CXX) -c ast_yield_expr.cpp
+ast_yield_expr.o: ast_expr.h ast_expr_list.o  ast_yield_expr.h ast_yield_expr.cc
+	$(CXX) -c ast_yield_expr.cc
 
-ast_string_expr.o: ast_expr.h ast_expr_list.o ast_string_expr.h ast_string_expr.cpp
-	$(CXX) -c ast_string_expr.cpp
+ast_string_expr.o: ast_expr.h ast_expr_list.o ast_string_expr.h ast_string_expr.cc
+	$(CXX) -c ast_string_expr.cc
 
-ast_pseudo_assign_expr.o: ast_binary_expr.o ast_pseudo_assign_expr.h ast_pseudo_assign_expr.cpp
-	$(CXX) -c ast_pseudo_assign_expr.cpp
+ast_pseudo_assign_expr.o: ast_binary_expr.o ast_pseudo_assign_expr.h ast_pseudo_assign_expr.cc
+	$(CXX) -c ast_pseudo_assign_expr.cc
 
-ast_pseudo_assign_plus_expr.o: ast_pseudo_assign_expr.o ast_pseudo_assign_plus_expr.h ast_pseudo_assign_plus_expr.cpp
-	$(CXX) -c ast_pseudo_assign_plus_expr.cpp
+ast_pseudo_assign_plus_expr.o: ast_pseudo_assign_expr.o ast_pseudo_assign_plus_expr.h ast_pseudo_assign_plus_expr.cc
+	$(CXX) -c ast_pseudo_assign_plus_expr.cc
 
-ast_pseudo_assign_minus_expr.o: ast_pseudo_assign_expr.o ast_pseudo_assign_minus_expr.h ast_pseudo_assign_minus_expr.cpp
-	$(CXX) -c ast_pseudo_assign_minus_expr.cpp
+ast_pseudo_assign_minus_expr.o: ast_pseudo_assign_expr.o ast_pseudo_assign_minus_expr.h ast_pseudo_assign_minus_expr.cc
+	$(CXX) -c ast_pseudo_assign_minus_expr.cc
 
-ast_pseudo_assign_mul_expr.o: ast_pseudo_assign_expr.o ast_pseudo_assign_mul_expr.h ast_pseudo_assign_mul_expr.cpp
-	$(CXX) -c ast_pseudo_assign_mul_expr.cpp
+ast_pseudo_assign_mul_expr.o: ast_pseudo_assign_expr.o ast_pseudo_assign_mul_expr.h ast_pseudo_assign_mul_expr.cc
+	$(CXX) -c ast_pseudo_assign_mul_expr.cc
 
-ast_pseudo_assign_div_expr.o: ast_pseudo_assign_expr.o ast_pseudo_assign_div_expr.h ast_pseudo_assign_div_expr.cpp
-	$(CXX) -c ast_pseudo_assign_div_expr.cpp
+ast_pseudo_assign_div_expr.o: ast_pseudo_assign_expr.o ast_pseudo_assign_div_expr.h ast_pseudo_assign_div_expr.cc
+	$(CXX) -c ast_pseudo_assign_div_expr.cc
 
-ast_pseudo_assign_mod_expr.o: ast_pseudo_assign_expr.o ast_pseudo_assign_mod_expr.h ast_pseudo_assign_mod_expr.cpp
-	$(CXX) -c ast_pseudo_assign_mod_expr.cpp
+ast_pseudo_assign_mod_expr.o: ast_pseudo_assign_expr.o ast_pseudo_assign_mod_expr.h ast_pseudo_assign_mod_expr.cc
+	$(CXX) -c ast_pseudo_assign_mod_expr.cc
 
-ast_pseudo_assign_bitwise_and_expr.o: ast_pseudo_assign_expr.o ast_pseudo_assign_bitwise_and_expr.h ast_pseudo_assign_bitwise_and_expr.cpp
-	$(CXX) -c ast_pseudo_assign_bitwise_and_expr.cpp
+ast_pseudo_assign_bitwise_and_expr.o: ast_pseudo_assign_expr.o ast_pseudo_assign_bitwise_and_expr.h ast_pseudo_assign_bitwise_and_expr.cc
+	$(CXX) -c ast_pseudo_assign_bitwise_and_expr.cc
 
-ast_pseudo_assign_bitwise_or_expr.o: ast_pseudo_assign_expr.o ast_pseudo_assign_bitwise_or_expr.h ast_pseudo_assign_bitwise_or_expr.cpp
-	$(CXX) -c ast_pseudo_assign_bitwise_or_expr.cpp
+ast_pseudo_assign_bitwise_or_expr.o: ast_pseudo_assign_expr.o ast_pseudo_assign_bitwise_or_expr.h ast_pseudo_assign_bitwise_or_expr.cc
+	$(CXX) -c ast_pseudo_assign_bitwise_or_expr.cc
 
-ast_pseudo_assign_bitwise_xor_expr.o: ast_pseudo_assign_expr.o ast_pseudo_assign_bitwise_xor_expr.h ast_pseudo_assign_bitwise_xor_expr.cpp
-	$(CXX) -c ast_pseudo_assign_bitwise_xor_expr.cpp
+ast_pseudo_assign_bitwise_xor_expr.o: ast_pseudo_assign_expr.o ast_pseudo_assign_bitwise_xor_expr.h ast_pseudo_assign_bitwise_xor_expr.cc
+	$(CXX) -c ast_pseudo_assign_bitwise_xor_expr.cc
 
-ast_pseudo_assign_bitwise_left_shift_expr.o: ast_pseudo_assign_expr.o ast_pseudo_assign_bitwise_left_shift_expr.h ast_pseudo_assign_bitwise_left_shift_expr.cpp
-	$(CXX) -c ast_pseudo_assign_bitwise_left_shift_expr.cpp
+ast_pseudo_assign_bitwise_left_shift_expr.o: ast_pseudo_assign_expr.o ast_pseudo_assign_bitwise_left_shift_expr.h ast_pseudo_assign_bitwise_left_shift_expr.cc
+	$(CXX) -c ast_pseudo_assign_bitwise_left_shift_expr.cc
 
-ast_pseudo_assign_bitwise_right_shift_expr.o: ast_pseudo_assign_expr.o ast_pseudo_assign_bitwise_right_shift_expr.h ast_pseudo_assign_bitwise_right_shift_expr.cpp
-	$(CXX) -c ast_pseudo_assign_bitwise_right_shift_expr.cpp
+ast_pseudo_assign_bitwise_right_shift_expr.o: ast_pseudo_assign_expr.o ast_pseudo_assign_bitwise_right_shift_expr.h ast_pseudo_assign_bitwise_right_shift_expr.cc
+	$(CXX) -c ast_pseudo_assign_bitwise_right_shift_expr.cc
 
-ast_primary.o: ast_expr.h ast_primary.h ast_primary.cpp
-	$(CXX) -c ast_primary.cpp
+ast_primary.o: ast_expr.h ast_primary.h ast_primary.cc
+	$(CXX) -c ast_primary.cc
 
-ast_identifier.o: ast_primary.o ast_identifier.h ast_identifier.cpp
-	$(CXX) -c ast_identifier.cpp
+ast_identifier.o: ast_primary.o ast_identifier.h ast_identifier.cc
+	$(CXX) -c ast_identifier.cc
 
-ast_literal.o: ast_primary.o ast_literal.h ast_literal.cpp
-	$(CXX) -c ast_literal.cpp
+ast_literal.o: ast_primary.o ast_literal.h ast_literal.cc
+	$(CXX) -c ast_literal.cc
 
-ast_integer_literal.o: ast_unparsed.o ast_literal.o ast_integer_literal.h ast_integer_literal.cpp
-	$(CXX) -c ast_integer_literal.cpp
+ast_integer_literal.o: ast_unparsed.o ast_literal.o ast_integer_literal.h ast_integer_literal.cc
+	$(CXX) -c ast_integer_literal.cc
 
-ast_float_literal.o: ast_unparsed.o ast_literal.o ast_float_literal.h ast_float_literal.cpp
-	$(CXX) -c ast_float_literal.cpp
+ast_float_literal.o: ast_unparsed.o ast_literal.o ast_float_literal.h ast_float_literal.cc
+	$(CXX) -c ast_float_literal.cc
 
-ast_string_literal.o: ast_unparsed.o ast_literal.o ast_string_literal.h ast_string_literal.cpp
-	$(CXX) -c ast_string_literal.cpp
+ast_string_literal.o: ast_unparsed.o ast_literal.o ast_string_literal.h ast_string_literal.cc
+	$(CXX) -c ast_string_literal.cc
 
-ast_slicing.o: ast_primary.o ast_slicing.h ast_slicing.cpp
-	$(CXX) -c ast_slicing.cpp
+ast_slicing.o: ast_primary.o ast_slicing.h ast_slicing.cc
+	$(CXX) -c ast_slicing.cc
 
-ast_call.o: ast_primary.o ast_call.h ast_call.cpp
-	$(CXX) -c ast_call.cpp
+ast_call.o: ast_primary.o ast_call.h ast_call.cc
+	$(CXX) -c ast_call.cc
 
-ast_attribute_ref.o: ast_primary.o ast_attribute_ref.h ast_attribute_ref.cpp
-	$(CXX) -c ast_attribute_ref.cpp
+ast_attribute_ref.o: ast_primary.o ast_attribute_ref.h ast_attribute_ref.cc
+	$(CXX) -c ast_attribute_ref.cc
 
 
 
-all:	ast_examiner.o	\
+all:	examiner.o	\
 			ast_unparsed.o		\
 			ast_list_obj.o		\
 			ast_node.o				\
