@@ -27,15 +27,14 @@ public:
 
 class Examiners {
 public:
-
   static EqualsExaminer Equals;
   static IsomorphicExaminer Isomorphic;
   static EquivalentExaminer Equivalent;
 };
 
-EqualsExaminer Examiners::Equals;
-IsomorphicExaminer Examiners::Isomorphic;
-EquivalentExaminer Examiners::Equivalent;
+EqualsExaminer Examiners::Equals = new _EqualsExaminer();
+IsomorphicExaminer Examiners::Isomorphic = new _IsomorphicExaminer();
+EquivalentExaminer Examiners::Equivalent = new _EquivalentExaminer();
 
 
 #endif /* _EXAMINER_H_ */
