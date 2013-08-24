@@ -20,8 +20,8 @@
 
 _HexAstListForm::_HexAstListForm(
   void* core,
-  char type
-):_core(core), _type(type)
+  ast_type_t type
+):_core(core), AstTyped(type)
 {
   this->reprOK();
 }
@@ -30,7 +30,18 @@ bool
 _HexAstListForm::reprOK()
 {
   HEX_ASSERT(
+    this->_type==AST_LIST_FORM_EMPTY ||
     this->_type==AST_LIST_FORM_EXPR_LIST ||
     this->_type==AST_LIST_FORM_COMPREHENSION
   );
+}
+
+HexAstListForm
+_HexAstListForm::create(
+  void* core, ast_type_t type
+)
+{
+  HexAstListForm obj = new _HexAstListForm(core, type);
+  HEX_ASSERT(obj);
+  return obj;
 }

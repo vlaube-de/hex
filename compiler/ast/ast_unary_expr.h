@@ -28,18 +28,27 @@ public:
   _HexAstUnaryExpr(HexAstExpr);
 
   virtual bool reprOK();
-  virtual bool examine();
-  virtual int hash();
 
-  virtual bool equals(void*);
-  virtual bool isomorphic(void*);
-  virtual bool equivalent(void*);
+  //virtual bool equals(void*);
+  //virtual bool isomorphic(void*);
+  //virtual bool equivalent(void*);
 
   HexAstExpr expr();
+
+  template<typename T>
+  static T* create(HexAstExpr);
 protected:
   HexAstExpr _expr;
 
-  bool examine(Examiner, void*);
+//  bool examine(Examiner, void*);
 } * HexAstUnaryExpr;
+
+template<typename T>
+T*
+_HexAstUnaryExpr::create(HexAstExpr expr)
+{
+  T* obj = new T(expr);
+  return obj;
+}
 
 #endif /* _AST_UNARY_EXPR_H_ */

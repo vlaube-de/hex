@@ -22,11 +22,10 @@
 #ifndef _AST_KEYWORD_VAL_LIST_H_
 #define _AST_KEYWORD_VAL_LIST_H_
 
-typedef class _HexAstKeywordValList : public AstListObj<HexAstKeywordVal>, _HexAstNode {
+typedef class _HexAstKeywordValList : public AstListObj<_HexAstKeywordValList, HexAstKeywordVal>, _HexAstNode {
 public:
   _HexAstKeywordValList();
 
-  virtual bool append(HexAstKeywordVal);
   virtual bool reprOK();
 } * HexAstKeywordValList;
 

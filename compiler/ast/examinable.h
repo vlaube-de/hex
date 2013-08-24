@@ -25,15 +25,13 @@
 
 class Examinable {
 public:
-  Examinable();
-
   /*
    * Compares two objects for equality based on their computation.
    *
    * Two objects are considered equal if any computation that uses
    * either one will produce idential results.
    */
-  virtual bool equal(void*);
+  virtual bool equal(void*)=0;
 
   /*
    * Compares two objects for equality based on their elements.
@@ -43,7 +41,7 @@ public:
    *
    * Any objects that are equal are also isomorphic.
    */
-  virtual bool isomorphic(void*);
+  virtual bool isomorphic(void*)=0;
 
   /*
    * Compares two objects for equality based on their underlying
@@ -59,7 +57,7 @@ public:
    *
    * Any objects that are isomorphic are also equivalent.
    */
-  virtual bool equivalent(void*);
+  virtual bool equivalent(void*)=0;
 };
 
 #endif /* _EXAMINABLE_H_ */

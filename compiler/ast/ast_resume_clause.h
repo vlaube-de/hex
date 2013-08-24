@@ -16,7 +16,6 @@
  */
 
 #include "ast_task_clause.h"
-#include "ast_task_state.h"
 #include "ast_expr_list.h"
 #include "ast_conditional_clause.h"
 
@@ -25,11 +24,12 @@
 
 typedef class _HexAstResumeClause : public _HexAstTaskClause {
 public:
-  _HexAstResumeClause(HexAstTaskState, HexAstExprList, HexAstConditionalClause);
+  _HexAstResumeClause(HexAstExprList, HexAstConditionalClause);
 
   virtual bool reprOK();
+
+  static _HexAstResumeClause* create(HexAstExprList, HexAstConditionalClause);
 private:
-  HexAstTaskState _state;
   HexAstExprList _exprs;
   HexAstConditionalClause _condition;
 } * HexAstResumeClause;

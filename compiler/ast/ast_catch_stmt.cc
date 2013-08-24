@@ -19,11 +19,12 @@
 #include "ast_compound_stmt.h"
 #include "ast_target_list.h"
 #include "ast_stmt_group.h"
+#include "ast_identifier.h"
 #include "../../base/assert.h"
 
 _HexAstCatchStmt::_HexAstCatchStmt(
   HexAstTargetList targets,
-  char *alias,
+  HexAstIdentifier alias,
   HexAstStmtGroup stmts
 ):_targets(targets), _alias(alias), _HexAstCompoundStmt(stmts)
 {
@@ -34,4 +35,24 @@ bool
 _HexAstCatchStmt::reprOK()
 {
   HEX_ASSERT(this->_targets);
+}
+
+HexAstCatchStmt
+_HexAstCatchStmt::create(
+  HexAstTargetList targets,
+  HexAstIdentifier alias,
+  HexAstStmtGroup stmts
+)
+{
+  HEX_ASSERT(targets);
+
+  HexAstCatchStmt obj = new _HexAstCatchStmt(
+    targets,
+    alias,
+    stmts
+  );
+
+  HEX_ASSERT(obj);
+
+  return obj;
 }

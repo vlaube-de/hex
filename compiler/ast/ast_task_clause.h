@@ -21,6 +21,10 @@
 #define _AST_TASK_CLAUSE_H_
 
 typedef class _HexAstTaskClause : public _HexAstNode {
-} * HexAstTaskClasue;
+public:
+  _HexAstTaskClause();
+
+  virtual bool reprOK();
+} * HexAstTaskClause;
 
 #endif /* _AST_TASK_CLAUSE_H_ */

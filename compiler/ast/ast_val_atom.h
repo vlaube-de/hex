@@ -16,6 +16,7 @@
  */
 
 #include "ast_node.h"
+#include "ast_typed.h"
 
 #ifndef _AST_VAL_ATOM_H_
 #define _AST_VAL_ATOM_H_
@@ -25,14 +26,15 @@ enum {
   AST_VAL_ATOM_LAMBDA=0x04
 };
 
-typedef class _HexAstValAtom : public _HexAstNode {
+typedef class _HexAstValAtom : public AstTyped, _HexAstNode {
 public:
-  _HexAstValAtom(void*, char);
+  _HexAstValAtom(void*, ast_type_t);
 
   virtual bool reprOK();
+
+  static _HexAstValAtom* create(void*, ast_type_t);
 private:
   void* _val;
-  char _type;
 } * HexAstValAtom;
 
 #endif /* _AST_VAL_ATOM_H_ */

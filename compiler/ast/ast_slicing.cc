@@ -15,13 +15,34 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "ast_expr.h"
 #include "ast_slicing.h"
+#include "ast_primary.h"
+#include "ast_slice_item.h"
+#include "../../base/assert.h"
+
 
 _HexAstSlicing::_HexAstSlicing(
-  HexAstExpr start,
-  HexAstExpr end,
-  HexAstExpr step
-):_start(start), _end(end), _step(step)
+  HexAstPrimary source,
+  HexAstSliceItem slice
+):_source(source), _slice(slice)
 {
+  this->reprOK();
+}
+
+bool
+_HexAstSlicing::reprOK()
+{
+  HEX_ASSERT(this->_source);
+  HEX_ASSERT(this->_slice);
+}
+
+HexAstSlicing
+_HexAstSlicing::create(
+  HexAstPrimary source,
+  HexAstSliceItem slice
+)
+{
+  HexAstSlicing obj = new _HexAstSlicing(source, slice);
+  HEX_ASSERT(obj);
+  return obj;
 }

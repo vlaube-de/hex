@@ -25,6 +25,9 @@ typedef class _HexAstContinueStmt : public _HexAstSimpleStmt {
 public:
   _HexAstContinueStmt(HexAstExpr);
 
+  virtual bool reprOK();
+
+  static _HexAstContinueStmt* create(HexAstExpr);
 private:
   HexAstExpr _predicate;
 } * HexAstContinueStmt;

@@ -21,9 +21,3 @@ _HexAstStmtGroup::_HexAstStmtGroup()
 {
   this->reprOK();
 }
-
-bool
-_HexAstStmtGroup::reprOK()
-{
-  return true;
-}

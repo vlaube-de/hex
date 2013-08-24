@@ -29,23 +29,34 @@ public:
 
   virtual bool reprOK();
 
-  virtual int hash();
-
   HexAstExpr left();
   HexAstExpr right();
 
-  virtual bool equals(void*);
-  virtual bool isomorphic(void*);
-  virtual bool equivalent(void*);
+  //virtual bool equals(void*);
+  //virtual bool isomorphic(void*);
+  //virtual bool equivalent(void*);
+
+  template<typename T>
+  static T* create(HexAstExpr, HexAstExpr);
 
 protected:
   HexAstExpr _lexpr;
   HexAstExpr _rexpr;
 
 private:
-  bool examine(Examiner, void*);
+  //bool examine(Examiner, void*);
 
 } * HexAstBinaryExpr;
 
+template<typename T>
+T*
+_HexAstBinaryExpr::create(
+  HexAstExpr l,
+  HexAstExpr r
+)
+{
+  T* obj = new T(l,r);
+  return obj;
+}
 
 #endif /* _HEX_AST_BINARY_EXPR_H_ */

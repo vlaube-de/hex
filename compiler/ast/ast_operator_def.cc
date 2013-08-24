@@ -16,14 +16,15 @@
  */
 
 #include "ast_operator_def.h"
+#include "ast_operator.h"
 #include "ast_lambda.h"
 #include "ast_operator.h"
 #include "../../base/assert.h"
 
 _HexAstOperatorDef::_HexAstOperatorDef(
-  unsigned short operator_,
+  HexAstOperator op,
   HexAstLambda lambda
-):_operator(operator_), _lambda(lambda)
+):_op(op), _lambda(lambda)
 {
   this->reprOK();
 }
@@ -31,6 +32,22 @@ _HexAstOperatorDef::_HexAstOperatorDef(
 bool
 _HexAstOperatorDef::reprOK()
 {
-  HEX_ASSERT(this->_operator);
+  HEX_ASSERT(this->_op);
   HEX_ASSERT(this->_lambda);
+}
+
+HexAstOperatorDef
+_HexAstOperatorDef::create(
+  HexAstOperator op,
+  HexAstLambda lambda
+)
+{
+  HEX_ASSERT(op);
+  HEX_ASSERT(lambda);
+
+  HexAstOperatorDef obj = new _HexAstOperatorDef(op, lambda);
+
+  HEX_ASSERT(obj);
+
+  return obj;
 }

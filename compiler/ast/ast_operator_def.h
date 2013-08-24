@@ -15,19 +15,22 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "ast_node.h"
+#include "ast_attribute_def.h"
+#include "ast_operator.h"
 #include "ast_lambda.h"
 
 #ifndef _AST_OPERATOR_DEF_H_
 #define _AST_OPERATOR_DEF_H_
 
-typedef class _HexAstOperatorDef : public _HexAstNode {
+typedef class _HexAstOperatorDef : public _HexAstAttributeDef {
 public:
-  _HexAstOperatorDef(unsigned short, HexAstLambda);
+  _HexAstOperatorDef(HexAstOperator op, HexAstLambda);
 
   virtual bool reprOK();
+
+  static _HexAstOperatorDef* create(HexAstOperator, HexAstLambda);
 private:
-  unsigned short _operator;
+  HexAstOperator _op;
   HexAstLambda _lambda;
 } * HexAstOperatorDef;
 

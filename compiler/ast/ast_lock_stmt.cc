@@ -34,3 +34,16 @@ _HexAstLockStmt::reprOK()
 {
   HEX_ASSERT(this->_exprs);
 }
+
+HexAstLockStmt
+_HexAstLockStmt::create(
+  HexAstExprList exprs,
+  HexAstStmtGroup stmts
+)
+{
+  HEX_ASSERT(exprs);
+
+  HexAstLockStmt obj = new _HexAstLockStmt(exprs, stmts);
+  HEX_ASSERT(obj);
+  return obj;
+}

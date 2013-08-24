@@ -17,9 +17,27 @@
 
 #include "ast_continue_stmt.h"
 #include "ast_expr.h"
+#include "../../base/assert.h"
 
 _HexAstContinueStmt::_HexAstContinueStmt(
   HexAstExpr predicate
 ):_predicate(predicate)
 {
+  this->reprOK();
+}
+
+bool
+_HexAstContinueStmt::reprOK()
+{
+  return true;
+}
+
+HexAstContinueStmt
+_HexAstContinueStmt::create(
+  HexAstExpr expr
+)
+{
+  HexAstContinueStmt obj = new _HexAstContinueStmt(expr);
+  HEX_ASSERT(obj);
+  return obj;
 }

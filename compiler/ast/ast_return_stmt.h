@@ -26,6 +26,8 @@ public:
   _HexAstReturnStmt(HexAstExprList, HexAstExpr);
 
   virtual bool reprOK();
+
+  static _HexAstReturnStmt* create(HexAstExprList, HexAstExpr);
 private:
   HexAstExprList _return_vals;
   HexAstExpr _predicate;

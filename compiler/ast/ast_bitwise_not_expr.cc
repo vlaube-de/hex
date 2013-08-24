@@ -17,10 +17,22 @@
 
 
 #include "ast_bitwise_not_expr.h"
-
+#include "../../base/assert.h"
 
 _HexAstBitwiseNotExpr::_HexAstBitwiseNotExpr(
   HexAstExpr expr
 ): _HexAstUnaryExpr(expr)
 {
+}
+
+void*
+_HexAstBitwiseNotExpr::create(
+  HexAstExpr expr
+)
+{
+  HEX_ASSERT(expr);
+
+  HexAstBitwiseNotExpr obj = new _HexAstBitwiseNotExpr(expr);
+  HEX_ASSERT(obj);
+  return obj;
 }

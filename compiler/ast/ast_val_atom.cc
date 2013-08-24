@@ -16,12 +16,13 @@
  */
 
 #include "ast_val_atom.h"
+#include "ast_typed.h"
 #include "../../base/assert.h"
 
 _HexAstValAtom::_HexAstValAtom(
   void *val,
-  char type
-): _val(val), _type(type)
+  ast_type_t type
+): _val(val), AstTyped(type)
 {
   this->reprOK();
 }
@@ -33,4 +34,18 @@ _HexAstValAtom::reprOK()
     this->_type==AST_VAL_ATOM_EXPR ||
     this->_type==AST_VAL_ATOM_LAMBDA
   );
+}
+
+HexAstValAtom
+_HexAstValAtom::create(
+  void* val,
+  ast_type_t type
+)
+{
+  HEX_ASSERT(val);
+  HEX_ASSERT(type);
+
+  HexAstValAtom obj = new _HexAstValAtom(val, type);
+  HEX_ASSERT(obj);
+  return obj;
 }

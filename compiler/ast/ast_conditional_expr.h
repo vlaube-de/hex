@@ -27,6 +27,7 @@ public:
 
   virtual bool reprOK();
 
+  static _HexAstConditionalExpr* create(HexAstExpr, HexAstExpr, HexAstExpr);
 private:
   HexAstExpr _predicate;
   HexAstExpr _consequent;

@@ -17,15 +17,13 @@
 
 #include "ast_node.h"
 #include "ast_list_obj.h"
+#include "ast_identifier.h"
 
 #ifndef _AST_NAME_H_
 #define _AST_NAME_H_
 
-typedef class _HexAstName : public AstListObj<char*>, _HexAstNode {
-public:
-  _HexAstName();
 
-  virtual bool reprOK();
+typedef class _HexAstName : public AstListObj<_HexAstName, HexAstIdentifier>, _HexAstNode {
 } * HexAstName;
 
 #endif /* _AST_NAME_H_ */

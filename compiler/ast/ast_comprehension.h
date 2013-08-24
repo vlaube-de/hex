@@ -28,6 +28,8 @@ public:
   _HexAstComprehension(HexAstExprList, HexAstTargetList, HexAstExprList, HexAstExpr);
 
   virtual bool reprOK();
+
+  static _HexAstComprehension* create(HexAstExprList, HexAstTargetList, HexAstExprList, HexAstExpr);
 private:
   HexAstExprList _dst;
   HexAstTargetList _candidates;

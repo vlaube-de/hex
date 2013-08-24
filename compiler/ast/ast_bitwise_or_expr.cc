@@ -17,6 +17,7 @@
 
 
 #include "ast_bitwise_or_expr.h"
+#include "../../base/assert.h"
 
 
 _HexAstBitwiseOrExpr::_HexAstBitwiseOrExpr(
@@ -24,4 +25,18 @@ _HexAstBitwiseOrExpr::_HexAstBitwiseOrExpr(
   HexAstExpr right
 ): _HexAstCommutativeBinaryExpr(left, right)
 {
+}
+
+void*
+_HexAstBitwiseOrExpr::create(
+  HexAstExpr left,
+  HexAstExpr right
+)
+{
+  HEX_ASSERT(left);
+  HEX_ASSERT(right);
+
+  HexAstBitwiseOrExpr obj = new _HexAstBitwiseOrExpr(left, right);
+  HEX_ASSERT(obj);
+  return obj;
 }

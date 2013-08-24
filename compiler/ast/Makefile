@@ -28,6 +28,9 @@ examiner.o: examiner.h examiner.cc
 ast_unparsed.o: ast_unparsed.h ast_unparsed.cc
 	$(CXX) -c ast_unparsed.cc
 
+ast_typed.o: ast_typed.h ast_typed.cc
+	$(CXX) -c  ast_typed.cc
+
 ast_list_obj.o: ast_list_obj.h ast_list_obj.cc
 	$(CXX) -c ast_list_obj.cc
 
@@ -91,6 +94,9 @@ ast_decorator.o: ast_node.o ast_decorator.h ast_decorator.cc
 ast_decorator_list.o: ast_decorator.o ast_decorator_list.h ast_decorator_list.cc
 	$(CXX) -c ast_decorator_list.cc
 
+ast_operator.o: ast_operator.h ast_operator.cc
+	$(CXX) -c ast_operator.cc
+
 ast_operator_def.o: ast_node.o ast_operator_def.h ast_operator_def.cc
 	$(CXX) -c ast_operator_def.cc
 
@@ -112,6 +118,9 @@ ast_using_stmt.o: ast_node.o ast_using_stmt.h ast_using_stmt.cc
 ast_stmt_group.o: ast_node.o ast_stmt.h ast_stmt_group.h ast_stmt_group.cc
 	$(CXX) -c ast_stmt_group.cc
 
+ast_await_stmt.o: ast_await_stmt.h ast_await_stmt.cc
+	$(CXX) -c ast_await_stmt.cc
+
 ast_return_stmt.o: ast_node.o ast_return_stmt.h ast_return_stmt.cc
 	$(CXX) -c ast_return_stmt.cc
 
@@ -132,6 +141,9 @@ ast_output_stmt.o: ast_output_stmt.h ast_output_stmt.cc
 
 ast_expr_list_stmt.o: ast_expr_list_stmt.h ast_expr_list_stmt.cc
 	$(CXX) -c ast_expr_list_stmt.cc
+
+ast_simple_stmt.o: ast_simple_stmt.h ast_simple_stmt.cc
+	$(CXX) -c ast_simple_stmt.cc
 
 ast_compound_stmt.o: ast_compound_stmt.h ast_compound_stmt.cc
 	$(CXX) -c ast_compound_stmt.cc
@@ -175,6 +187,12 @@ ast_lambda.o: ast_node.o ast_lambda.h ast_lambda.cc
 ast_class_def.o: ast_class_def.h ast_class_def.cc
 	$(CXX) -c ast_class_def.cc
 
+ast_task_state.o: ast_task_state.h ast_task_state.cc
+	$(CXX) -c ast_task_state.cc
+
+ast_conditional_preposition.o: ast_conditional_preposition.h ast_conditional_preposition.cc
+	$(CXX) -c ast_conditional_preposition.cc
+
 ast_conditional_clause.o: ast_conditional_clause.h ast_conditional_clause.cc
 	$(CXX) -c ast_conditional_clause.cc
 
@@ -187,13 +205,22 @@ ast_start_clause.o: ast_start_clause.h ast_start_clause.cc
 ast_pause_clause.o: ast_pause_clause.h ast_pause_clause.cc
 	$(CXX) -c ast_pause_clause.cc
 
+ast_delay_clause.o: ast_delay_clause.h ast_delay_clause.cc
+	$(CXX) -c ast_delay_clause.cc
+
 ast_resume_clause.o: ast_resume_clause.h ast_resume_clause.cc
 	$(CXX) -c ast_resume_clause.cc
+
+ast_cancel_clause.o: ast_cancel_clause.h ast_cancel_clause.cc
+	$(CXX) -c ast_cancel_clause.cc
+
+ast_stop_clause.o: ast_stop_clause.h ast_stop_clause.cc
+	$(CXX) -c ast_stop_clause.cc
 
 ast_module.o: ast_module.h ast_module.cc
 	$(CXX) -c ast_module.cc
 
-ast_expr_list.o: ast_node.o ast_list_obj.o ast_expr_list.h ast_expr_list.cc
+ast_expr_list.o: ast_expr_list.h ast_expr_list.cc
 	$(CXX) -c ast_expr_list.cc
 
 ast_unary_expr.o: ast_expr.h ast_unary_expr.h ast_unary_expr.cc
@@ -304,6 +331,9 @@ ast_yield_expr.o: ast_expr.h ast_expr_list.o  ast_yield_expr.h ast_yield_expr.cc
 ast_string_expr.o: ast_expr.h ast_expr_list.o ast_string_expr.h ast_string_expr.cc
 	$(CXX) -c ast_string_expr.cc
 
+ast_paren_form.o: ast_paren_form.o ast_paren_form.cc
+	$(CXX) -c ast_paren_form.cc
+
 ast_pseudo_assign_expr.o: ast_binary_expr.o ast_pseudo_assign_expr.h ast_pseudo_assign_expr.cc
 	$(CXX) -c ast_pseudo_assign_expr.cc
 
@@ -355,7 +385,10 @@ ast_float_literal.o: ast_unparsed.o ast_literal.o ast_float_literal.h ast_float_
 ast_string_literal.o: ast_unparsed.o ast_literal.o ast_string_literal.h ast_string_literal.cc
 	$(CXX) -c ast_string_literal.cc
 
-ast_slicing.o: ast_primary.o ast_slicing.h ast_slicing.cc
+ast_slice_item.o: ast_slice_item.h ast_slice_item.cc
+	$(CXX) -c ast_slice_item.cc
+
+ast_slicing.o: ast_slicing.h ast_slicing.cc
 	$(CXX) -c ast_slicing.cc
 
 ast_call.o: ast_primary.o ast_call.h ast_call.cc
@@ -364,8 +397,12 @@ ast_call.o: ast_primary.o ast_call.h ast_call.cc
 ast_attribute_ref.o: ast_primary.o ast_attribute_ref.h ast_attribute_ref.cc
 	$(CXX) -c ast_attribute_ref.cc
 
+ast_hex_program.o: ast_hex_program.h ast_hex_program.cc
+	$(CXX) -c ast_hex_program.cc
+
 obj:	examiner.o	\
 			ast_unparsed.o		\
+			ast_typed.o				\
 			ast_list_obj.o		\
 			ast_node.o				\
 			ast_target_list.o	\
@@ -387,6 +424,7 @@ obj:	examiner.o	\
 			ast_name.o	\
 			ast_decorator.o	\
 			ast_decorator_list.o	\
+			ast_operator.o	\
 			ast_operator_def.o	\
 			ast_attribute_def.o	\
 			ast_attribute_def_list.o	\
@@ -394,6 +432,7 @@ obj:	examiner.o	\
 			ast_using_src.o	\
 			ast_using_stmt.o	\
 			ast_stmt_group.o	\
+			ast_await_stmt.o	\
 			ast_return_stmt.o	\
 			ast_break_stmt.o	\
 			ast_continue_stmt.o	\
@@ -401,6 +440,7 @@ obj:	examiner.o	\
 			ast_input_stmt.o	\
 			ast_output_stmt.o	\
 			ast_expr_list_stmt.o	\
+			ast_simple_stmt.o	\
 			ast_compound_stmt.o	\
 			ast_for_stmt.o	\
 			ast_with_stmt.o	\
@@ -415,11 +455,16 @@ obj:	examiner.o	\
 			ast_if_stmt.o	\
 			ast_lambda.o	\
 			ast_class_def.o	\
+			ast_task_state.o	\
+			ast_conditional_preposition.o	\
 			ast_conditional_clause.o	\
 			ast_task_clause.o	\
 			ast_start_clause.o	\
+			ast_stop_clause.o	\
+			ast_cancel_clause.o	\
 			ast_resume_clause.o	\
 			ast_pause_clause.o	\
+			ast_delay_clause.o	\
 			ast_module.o	\
 			ast_expr_list.o		\
 			ast_binary_expr.o	\
@@ -458,6 +503,7 @@ obj:	examiner.o	\
 			ast_conditional_expr.o	\
 			ast_yield_expr.o	\
 			ast_string_expr.o	\
+			ast_paren_form.o	\
 			ast_pseudo_assign_expr.o	\
 			ast_pseudo_assign_plus_expr.o	\
 			ast_pseudo_assign_minus_expr.o	\
@@ -475,9 +521,11 @@ obj:	examiner.o	\
 			ast_integer_literal.o	\
 			ast_float_literal.o	\
 			ast_string_literal.o	\
+			ast_slice_item.o	\
 			ast_slicing.o	\
 			ast_attribute_ref.o	\
 			ast_call.o	\
+			ast_hex_program.o
 
 libast.a: obj
 	$(AR) $(ARFLAGS) libast.a *.o

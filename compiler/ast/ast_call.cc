@@ -18,6 +18,7 @@
 #include "ast_call.h"
 #include "ast_primary.h"
 #include "ast_arg_list.h"
+#include "../../base/assert.h"
 
 _HexAstCall::_HexAstCall(
   HexAstPrimary source,
@@ -25,4 +26,23 @@ _HexAstCall::_HexAstCall(
   bool isAsync
 ):_source(source), _arglist(arglist), _isAsync(isAsync)
 {
+  this->reprOK();
+}
+
+bool
+_HexAstCall::reprOK()
+{
+  HEX_ASSERT(this->_source);
+}
+
+HexAstCall
+_HexAstCall::create(
+  HexAstPrimary source,
+  HexAstArgList arglist,
+  bool isAsync
+)
+{
+  HexAstCall obj = new _HexAstCall(source, arglist, isAsync);
+  HEX_ASSERT(obj);
+  return obj;
 }

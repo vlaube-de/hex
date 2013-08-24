@@ -33,3 +33,21 @@ _HexAstTryStmt::reprOK()
 {
   HEX_ASSERT(this->_catch_stmt_group);
 }
+
+HexAstTryStmt
+_HexAstTryStmt::create(
+  HexAstStmtGroup stmts,
+  HexAstCatchStmtGroup catch_stmt_group
+)
+{
+  HEX_ASSERT(catch_stmt_group);
+
+  HexAstTryStmt obj = new _HexAstTryStmt(
+    stmts,
+    catch_stmt_group
+  );
+
+  HEX_ASSERT(obj);
+
+  return obj;
+}

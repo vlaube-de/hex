@@ -15,28 +15,31 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "ast_node.h"
+#include "ast_simple_stmt.h"
 #include "ast_primary.h"
 #include "ast_decorator_list.h"
+#include "ast_typed.h"
 
 #ifndef _AST_ASSIGNMENT_STMT_H_
 #define _AST_ASSIGNMENT_STMT_H_
 
 enum {
   AST_ASSIGNMENT_STMT_EXPR_LIST=0x0A,
-  AST_ASSIGNMENT_STMT_LAMBDA=0x0F
+  AST_ASSIGNMENT_STMT_LAMBDA=0x0C,
+  AST_ASSIGNMENT_STMT_TASK=0x0F
 };
 
-typedef class _HexAstAssignmentStmt : public _HexAstNode {
+typedef class _HexAstAssignmentStmt : public AstTyped, public _HexAstSimpleStmt {
 public:
-  _HexAstAssignmentStmt(HexAstDecoratorList, HexAstPrimary, void*, char, bool);
+  _HexAstAssignmentStmt(HexAstDecoratorList, HexAstPrimary, void*, ast_type_t, bool);
 
   virtual bool reprOK();
+
+  static _HexAstAssignmentStmt* create(HexAstDecoratorList, HexAstPrimary, void*, ast_type_t, bool);
 private:
   HexAstDecoratorList _decorators;
   HexAstPrimary _dst;
   void* _src;
-  char _type;
   bool _defer;
 } * HexAstAssignmentStmt;
 

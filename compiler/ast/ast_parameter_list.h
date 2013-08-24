@@ -18,20 +18,33 @@
 #include "ast_simple_param_list.h"
 #include "ast_keyword_val_list.h"
 #include "ast_node.h"
+#include "ast_identifier.h"
 
 #ifndef _AST_PARAMETER_LIST_H_
 #define _AST_PARAMETER_LIST_H_
 
 typedef class _HexAstParameterList : public _HexAstNode {
 public:
-  _HexAstParameterList(HexAstSimpleParamList, HexAstKeywordValList, char*, char*);
+  _HexAstParameterList(
+    HexAstSimpleParamList,
+    HexAstKeywordValList,
+    HexAstIdentifier,
+    HexAstIdentifier
+  );
 
   virtual bool reprOK();
+
+  static _HexAstParameterList* create(
+    HexAstSimpleParamList,
+    HexAstKeywordValList,
+    HexAstIdentifier,
+    HexAstIdentifier
+  );
 private:
   HexAstSimpleParamList _simple_params;
   HexAstKeywordValList _keyword_vals;
-  char *_args;
-  char *_kwargs;
+  HexAstIdentifier _args;
+  HexAstIdentifier _kwargs;
 } * HexAstParameterList;
 
 #endif /* _AST_PARAMETER_LIST_H_ */

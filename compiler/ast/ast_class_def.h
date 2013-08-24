@@ -35,6 +35,13 @@ public:
 
   virtual bool reprOK();
 
+  static _HexAstClassDef* create(
+    HexAstDecoratorList,
+    HexAstIdentifier,
+    HexAstName,
+    HexAstAttributeDefList
+  );
+
 private:
   HexAstDecoratorList _decorators;
   HexAstIdentifier _name;

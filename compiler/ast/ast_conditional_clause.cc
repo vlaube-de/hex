@@ -33,7 +33,35 @@ _HexAstConditionalClause::_HexAstConditionalClause(
 bool
 _HexAstConditionalClause::reprOK()
 {
-  HEX_ASSERT(this->_preposition);
   HEX_ASSERT(this->_exprs);
   HEX_ASSERT(this->_state);
+  /*
+  HEX_ASSERT(
+    this->_preposition==AST_TASK_CONDITIONAL_PREPOSITION_BEFORE ||
+    this->_preposition==AST_TASK_CONDITIONAL_PREPOSITION_AFTER ||
+    this->_preposition==AST_TASK_CONDITIONAL_PREPOSITION_WHEN
+  );
+  */
+}
+
+HexAstConditionalClause
+_HexAstConditionalClause::create(
+  HexAstConditionalPreposition preposition,
+  HexAstExprList exprs,
+  HexAstTaskState state
+)
+{
+  HEX_ASSERT(preposition);
+  HEX_ASSERT(exprs);
+  HEX_ASSERT(state);
+
+  HexAstConditionalClause obj = new _HexAstConditionalClause(
+    preposition,
+    exprs,
+    state
+  );
+
+  HEX_ASSERT(obj);
+
+  return obj;
 }

@@ -24,6 +24,8 @@
 typedef class _HexAstElseStmt : public _HexAstCompoundStmt {
 public:
   _HexAstElseStmt(HexAstStmtGroup);
+
+  static _HexAstElseStmt* create(HexAstStmtGroup);
 } * HexAstElseStmt;
 
 #endif /* _AST_ELSE_STMT_H_ */

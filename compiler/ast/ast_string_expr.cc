@@ -17,10 +17,34 @@
 
 #include "ast_expr_list.h"
 #include "ast_string_expr.h"
+#include "ast_string_literal.h"
+#include "../../base/assert.h"
 
 _HexAstStringExpr::_HexAstStringExpr(
-  char *string,
-  HexAstExprList exprlist
-):_string(strdup(string)), _exprlist(exprlist)
+  HexAstStringLiteral string,
+  HexAstExprList exprs
+):_string(string), _exprs(exprs)
 {
+  this->reprOK(); 
+}
+
+bool
+_HexAstStringExpr::reprOK()
+{
+  HEX_ASSERT(this->_string);
+  HEX_ASSERT(this->_exprs);
+}
+
+HexAstStringExpr
+_HexAstStringExpr::create(
+  HexAstStringLiteral string,
+  HexAstExprList exprs
+)
+{
+  HEX_ASSERT(string);
+  HEX_ASSERT(exprs);
+
+  HexAstStringExpr obj = new _HexAstStringExpr(string, exprs);
+  HEX_ASSERT(obj);
+  return obj;
 }

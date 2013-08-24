@@ -21,10 +21,11 @@
 #include "../../base/assert.h"
 
 
-_HexAstBinaryExpr::_HexAstBinaryExpr(HexAstExpr lexpr, HexAstExpr rexpr)
+_HexAstBinaryExpr::_HexAstBinaryExpr(
+  HexAstExpr lexpr,
+  HexAstExpr rexpr
+):_lexpr(lexpr), _rexpr(rexpr)
 {
-  this->_lexpr = lexpr;
-  this->_rexpr = rexpr;
   this->reprOK();
 }
 
@@ -47,15 +48,7 @@ _HexAstBinaryExpr::reprOK()
   HEX_ASSERT(this->_rexpr);
 }
 
-int
-_HexAstBinaryExpr::hash()
-{
-  int hash = 17;
-  hash = hash*13 + this->_lexpr->hash();
-  hash = hash*13 + this->_rexpr->hash();
-  return hash;
-}
-
+/*
 bool
 _HexAstBinaryExpr::equals(void* obj)
 {
@@ -86,3 +79,19 @@ _HexAstBinaryExpr::examine(Examiner e, void* obj)
 
   return true;
 }
+
+template<typename T>
+T*
+_HexAstBinaryExpr::create(
+  HexAstExpr left,
+  HexAstExpr right
+)
+{
+  HEX_ASSERT(left);
+  HEX_ASSERT(right);
+
+  T* obj = new T(left, right);
+  HEX_ASSERT(obj);
+  return obj;
+}
+*/

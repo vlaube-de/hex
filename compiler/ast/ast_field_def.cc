@@ -20,12 +20,14 @@
 #include "ast_node.h"
 #include "ast_val_atom.h"
 #include "ast_identifier.h"
+#include "ast_decorator_list.h"
 #include "../../base/assert.h"
 
 _HexAstFieldDef::_HexAstFieldDef(
+  HexAstDecoratorList decorators,
   HexAstIdentifier name,
   HexAstValAtom val
-):_name(name), _val(val)
+):_decorators(decorators), _name(name), _val(val)
 {
 }
 
@@ -34,4 +36,20 @@ _HexAstFieldDef::reprOK()
 {
   HEX_ASSERT(this->_name);
   HEX_ASSERT(this->_val);
+}
+
+HexAstFieldDef
+_HexAstFieldDef::create(
+  HexAstDecoratorList decorators,
+  HexAstIdentifier name,
+  HexAstValAtom val
+)
+{
+  HEX_ASSERT(decorators);
+  HEX_ASSERT(name);
+  HEX_ASSERT(val);
+
+  HexAstFieldDef obj = new _HexAstFieldDef(decorators, name, val);
+  HEX_ASSERT(obj);
+  return obj;
 }

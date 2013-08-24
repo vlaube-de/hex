@@ -16,18 +16,97 @@
  */
 
 #include <list>
+#include "../../base/assert.h"
 
 #ifndef _AST_LIST_OBJ_
 #define _AST_LIST_OBJ_
 
-template<typename T>
+template<typename C, typename T>
 class AstListObj {
 public:
   AstListObj();
 
   virtual bool append(T);
+
+  static C* create(T);
+  static C* create(T, T);
+  static C* expand(C*, T); 
+  static C* create_or_expand(T, C*);
 protected:
   std::list<T> *_list;
 };
+
+template<typename C, typename T>
+AstListObj<C, T>::AstListObj():
+  _list(new std::list<T>())
+{
+  HEX_ASSERT(this->_list);
+}
+
+template<typename C, typename T>
+bool
+AstListObj<C, T>::append(T obj)
+{
+  HEX_ASSERT(obj);
+
+  this->_list->push_back(obj);
+
+  return true;
+}
+
+template<typename C, typename T>
+C*
+AstListObj<C, T>::create(T child)
+{
+  HEX_ASSERT(child);
+
+  C* obj = new C();
+  HEX_ASSERT(obj);
+
+  obj->append(child);
+
+  return obj;
+}
+
+template<typename C, typename T>
+C*
+AstListObj<C, T>::create(T child1, T child2)
+{
+  HEX_ASSERT(child1);
+  HEX_ASSERT(child2);
+
+  C* obj = new C();
+  HEX_ASSERT(obj);
+
+  obj->append(child1);
+  obj->append(child2);
+
+  return obj;
+}
+
+template<typename C, typename T>
+C*
+AstListObj<C, T>::expand(C* list, T child)
+{
+  HEX_ASSERT(list);
+  HEX_ASSERT(child);
+
+  list->append(child);
+
+  return list;
+}
+
+template<typename C, typename T>
+C*
+AstListObj<C, T>::create_or_expand(T child, C* list)
+{
+  HEX_ASSERT(child);
+
+  if(list) {
+    return AstListObj::expand(list, child);
+  } else {
+    return AstListObj::create(child);
+  }
+}
 
 #endif /* _AST_LIST_OBJ_ */

@@ -25,6 +25,8 @@
 typedef class _HexAstBitwiseNotExpr : public _HexAstUnaryExpr {
 public:
   _HexAstBitwiseNotExpr(HexAstExpr);
+
+  static void* create(HexAstExpr);
 } * HexAstBitwiseNotExpr;
 
 

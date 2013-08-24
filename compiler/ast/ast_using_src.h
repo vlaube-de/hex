@@ -17,6 +17,7 @@
 
 #include "ast_node.h"
 #include "ast_name.h"
+#include "ast_typed.h"
 
 #ifndef _AST_USING_SRC_H_
 #define _AST_USING_SRC_H_
@@ -26,14 +27,15 @@ enum {
   AST_USING_SRC_DOT=0x0F
 };
 
-typedef class _HexAstUsingSrc : public _HexAstNode {
+typedef class _HexAstUsingSrc : public AstTyped, _HexAstNode {
 public:
-  _HexAstUsingSrc(HexAstName, char);
+  _HexAstUsingSrc(HexAstName, ast_type_t);
 
   virtual bool reprOK();
+
+  static _HexAstUsingSrc* create(HexAstName, ast_type_t);
 private:
   HexAstName _name;
-  char _type;
 } * HexAstUsingSrc;
 
 #endif /* _AST_USING_SRC_H_ */

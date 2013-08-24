@@ -26,8 +26,7 @@ typedef class _HexAstBitwiseShiftRightExpr : public _HexAstBinaryExpr {
 public:
   _HexAstBitwiseShiftRightExpr(HexAstExpr, HexAstExpr);
 
-  virtual bool reprOK();
-
+  static void* create(HexAstExpr, HexAstExpr);
 } * HexAstBitwiseShiftRightExpr;
 
 #endif /* _AST_BITWISE_SHIFT_RIGHT_EXPR_H_ */

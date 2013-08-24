@@ -26,9 +26,8 @@ public:
   _HexAstFloatLiteral(char *value);
 
   virtual bool reprOK();
-private:
-  float _floatval;
 
+  static _HexAstFloatLiteral* create(char*);
 } * HexAstFloatLiteral;
 
 #endif /* _AST_FLOAT_LITERAL_H_ */

@@ -15,20 +15,23 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+
 #include "ast_primary.h"
-#include "ast_expr.h"
+#include "ast_slice_item.h"
 
 #ifndef _AST_SLICING_H_
 #define _AST_SLICING_H_
 
 typedef class _HexAstSlicing : public _HexAstPrimary {
 public:
-  _HexAstSlicing(HexAstExpr, HexAstExpr, HexAstExpr);
+  _HexAstSlicing(HexAstPrimary, HexAstSliceItem);
 
+  virtual bool reprOK();
+
+  static _HexAstSlicing* create(HexAstPrimary, HexAstSliceItem);
 private:
-  HexAstExpr _start;
-  HexAstExpr _end;
-  HexAstExpr _step;
+  HexAstPrimary _source;
+  HexAstSliceItem _slice;
 } * HexAstSlicing;
 
 #endif /* _AST_SLICING_H_ */

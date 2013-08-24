@@ -17,13 +17,47 @@
 
 #include "ast_arg_list.h"
 #include "ast_val_list.h"
+#include "ast_identifier.h"
 #include "ast_keyword_val_list.h"
+#include "../../base/assert.h"
 
 _HexAstArgList::_HexAstArgList(
   HexAstValList valList,
   HexAstKeywordValList keywordValList,
-  char *args,
-  char *kwargs
+  HexAstIdentifier args,
+  HexAstIdentifier kwargs
 ):_valList(valList), _keywordValList(keywordValList), _args(args), _kwargs(kwargs)
 {
+  this->reprOK();
+}
+
+bool
+_HexAstArgList::reprOK()
+{
+  HEX_ASSERT(
+    this->_valList ||
+    this->_keywordValList ||
+    this->_args ||
+    this->_kwargs
+  );
+}
+
+HexAstArgList
+_HexAstArgList::create(
+  HexAstValList vallist,
+  HexAstKeywordValList keywordValList,
+  HexAstIdentifier args,
+  HexAstIdentifier kwargs
+)
+{
+  HexAstArgList obj = new _HexAstArgList(
+    vallist,
+    keywordValList,
+    args,
+    kwargs
+  );
+
+  HEX_ASSERT(obj);
+
+  return obj;
 }

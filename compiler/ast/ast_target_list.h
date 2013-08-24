@@ -17,11 +17,12 @@
 
 #include "ast_list_obj.h"
 #include "ast_node.h"
+#include "ast_identifier.h"
 
 #ifndef _AST_TARGET_LIST_H_
 #define _AST_TARGET_LIST_H_
 
-typedef class _HexAstTargetList : public AstListObj<char*>, _HexAstNode {
+typedef class _HexAstTargetList : public AstListObj<_HexAstTargetList, HexAstIdentifier>, _HexAstNode {
 public:
   _HexAstTargetList();
 

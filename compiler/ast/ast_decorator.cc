@@ -34,3 +34,21 @@ _HexAstDecorator::reprOK()
   HEX_ASSERT(this->_name);
   HEX_ASSERT(this->_args);
 }
+
+HexAstDecorator
+_HexAstDecorator::create(
+  HexAstName name,
+  HexAstArgList args
+)
+{
+  HEX_ASSERT(name);
+
+  HexAstDecorator obj = new _HexAstDecorator(
+    name,
+    args
+  );
+
+  HEX_ASSERT(obj);
+
+  return obj;
+}

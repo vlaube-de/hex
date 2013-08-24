@@ -17,6 +17,7 @@
 
 
 #include "ast_power_expr.h"
+#include "../../base/assert.h"
 
 
 _HexAstPowerExpr::_HexAstPowerExpr(
@@ -24,4 +25,18 @@ _HexAstPowerExpr::_HexAstPowerExpr(
   HexAstExpr right
 ): _HexAstBinaryExpr(left, right)
 {
+}
+
+void*
+_HexAstPowerExpr::create(
+  HexAstExpr left,
+  HexAstExpr right
+)
+{
+  HEX_ASSERT(left);
+  HEX_ASSERT(right);
+
+  HexAstPowerExpr obj = new _HexAstPowerExpr(left, right);
+  HEX_ASSERT(obj);
+  return obj;
 }

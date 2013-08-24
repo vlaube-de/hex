@@ -17,10 +17,22 @@
 
 
 #include "ast_dec_expr.h"
-
+#include "../../base/assert.h"
 
 _HexAstDecrementExpr::_HexAstDecrementExpr(
   HexAstExpr expr
 ): _HexAstUnaryExpr(expr)
 {
+}
+
+void*
+_HexAstDecrementExpr::create(
+  HexAstExpr expr
+)
+{
+  HEX_ASSERT(expr);
+
+  HexAstDecrementExpr obj = new _HexAstDecrementExpr(expr);
+  HEX_ASSERT(obj);
+  return obj;
 }

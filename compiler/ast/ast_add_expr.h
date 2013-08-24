@@ -25,6 +25,8 @@
 typedef class _HexAstAddExpr : public _HexAstCommutativeBinaryExpr {
 public:
   _HexAstAddExpr(HexAstExpr, HexAstExpr);
+
+  static void* create(HexAstExpr, HexAstExpr);
 } * HexAstAddExpr;
 
 

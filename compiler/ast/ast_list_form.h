@@ -15,24 +15,27 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "ast_node.h"
+#include "ast_primary.h"
+#include "ast_typed.h"
 
 #ifndef _AST_LIST_FORM_H_
 #define _AST_LIST_FORM_H_
 
 enum {
+  AST_LIST_FORM_EMPTY=0x01,
   AST_LIST_FORM_EXPR_LIST=0x02,
   AST_LIST_FORM_COMPREHENSION=0x04
 };
 
-typedef class _HexAstListForm : public _HexAstNode {
+typedef class _HexAstListForm : public AstTyped, public _HexAstPrimary {
 public:
-  _HexAstListForm(void*, char);
+  _HexAstListForm(void*, ast_type_t);
 
   virtual bool reprOK();
+
+  static _HexAstListForm* create(void*, ast_type_t);
 private:
   void* _core;
-  char _type;
 } * HexAstListForm;
 
 #endif /* _AST_LIST_FORM_H_ */

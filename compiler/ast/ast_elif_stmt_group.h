@@ -22,9 +22,7 @@
 #ifndef _AST_ELIF_STMT_GROUP_H_
 #define _AST_ELIF_STMT_GROUP_H_
 
-typedef class _HexAstElifStmtGroup : public AstListObj<HexAstElifStmt>, _HexAstNode {
-public:
-  _HexAstElifStmtGroup();
+typedef class _HexAstElifStmtGroup : public AstListObj<_HexAstElifStmtGroup, HexAstElifStmt>, _HexAstNode {
 } * HexAstElifStmtGroup;
 
 #endif /* _AST_ELIF_STMT_GROUP_H_ */

@@ -27,6 +27,8 @@ public:
   _HexAstDecorator(HexAstName, HexAstArgList);
 
   virtual bool reprOK();
+
+  static _HexAstDecorator* create(HexAstName, HexAstArgList);
 private:
   HexAstName _name;
   HexAstArgList _args;

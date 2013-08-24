@@ -37,3 +37,25 @@ _HexAstConditionalExpr::reprOK()
   HEX_ASSERT(this->_consequent);
   HEX_ASSERT(this->_alternate);
 }
+
+HexAstConditionalExpr
+_HexAstConditionalExpr::create(
+  HexAstExpr predicate,
+  HexAstExpr consequent,
+  HexAstExpr alternate
+)
+{
+  HEX_ASSERT(predicate);
+  HEX_ASSERT(consequent);
+  HEX_ASSERT(alternate);
+
+  HexAstConditionalExpr obj = new _HexAstConditionalExpr(
+    predicate,
+    consequent,
+    alternate
+  );
+
+  HEX_ASSERT(obj);
+
+  return obj;
+}

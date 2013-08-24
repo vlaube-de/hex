@@ -38,3 +38,25 @@ _HexAstClassDef::reprOK()
 {
   HEX_ASSERT(this->_name);
 }
+
+HexAstClassDef
+_HexAstClassDef::create(
+  HexAstDecoratorList decorators,
+  HexAstIdentifier name,
+  HexAstName parent,
+  HexAstAttributeDefList attributes
+)
+{
+  HEX_ASSERT(name);
+
+  HexAstClassDef obj = new _HexAstClassDef(
+    decorators,
+    name,
+    parent,
+    attributes
+  );
+
+  HEX_ASSERT(obj);
+
+  return obj;
+}

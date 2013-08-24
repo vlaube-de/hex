@@ -15,16 +15,3 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "ast_name.h"
-#include "../../base/assert.h"
-
-_HexAstName::_HexAstName()
-{
-  this->reprOK();
-}
-
-bool
-_HexAstName::reprOK()
-{
-  HEX_ASSERT(this->_list);
-}

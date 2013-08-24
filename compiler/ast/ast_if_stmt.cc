@@ -38,3 +38,25 @@ _HexAstIfStmt::reprOK()
 {
   HEX_ASSERT(this->_predicate);
 }
+
+HexAstIfStmt
+_HexAstIfStmt::create(
+  HexAstExpr predicate,
+  HexAstStmtGroup stmts,
+  HexAstElifStmtGroup elif_stmts,
+  HexAstElseStmt else_stmt
+)
+{
+  HEX_ASSERT(predicate);
+
+  HexAstIfStmt obj = new _HexAstIfStmt(
+    predicate,
+    stmts,
+    elif_stmts,
+    else_stmt
+  );
+
+  HEX_ASSERT(obj);
+
+  return obj;
+}

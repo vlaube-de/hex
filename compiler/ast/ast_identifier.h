@@ -26,6 +26,8 @@ public:
   _HexAstIdentifier(char *);
 
   virtual bool reprOK();
+
+  static _HexAstIdentifier* create(char*);
 private:
   char *_identifier;
 } * HexAstIdentifier;

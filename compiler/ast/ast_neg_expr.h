@@ -25,6 +25,8 @@
 typedef class _HexAstNegateExpr : public _HexAstUnaryExpr {
 public:
   _HexAstNegateExpr(HexAstExpr);
+
+  static void* create(HexAstExpr);
 } * HexAstNegateExpr;
 
 

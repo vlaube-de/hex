@@ -25,6 +25,8 @@
 typedef class _HexAstDivideExpr : public _HexAstBinaryExpr {
 public:
   _HexAstDivideExpr(HexAstExpr, HexAstExpr);
+
+  static void* create(HexAstExpr, HexAstExpr);
 } * HexAstDivideExpr;
 
 

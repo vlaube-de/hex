@@ -34,3 +34,16 @@ _HexAstElifStmt::reprOK()
 {
   HEX_ASSERT(this->_predicate);
 }
+
+HexAstElifStmt
+_HexAstElifStmt::create(
+  HexAstExpr predicate,
+  HexAstStmtGroup stmts
+)
+{
+  HEX_ASSERT(predicate);
+
+  HexAstElifStmt obj = new _HexAstElifStmt(predicate, stmts);
+  HEX_ASSERT(obj);
+  return obj;
+}

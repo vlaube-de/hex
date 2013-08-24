@@ -16,16 +16,17 @@
  */
 
 #include "ast_using_src.h"
-#include "ast_node.h"
+#include "ast_simple_stmt.h"
 #include "ast_target_list.h"
 #include "ast_identifier.h"
+#include "ast_typed.h"
 #include "ast_name.h"
 
 #ifndef _AST_USING_STMT_H_
 #define _AST_USING_STMT_H_
 
 
-typedef class _HexAstUsingStmt : public _HexAstNode {
+typedef class _HexAstUsingStmt : public _HexAstSimpleStmt {
 } * HexAstUsingStmt;
 
 
@@ -34,6 +35,8 @@ public:
   _HexAstUsingStmtDirect(HexAstName, HexAstIdentifier);
 
   virtual bool reprOK();
+
+  static _HexAstUsingStmtDirect* create(HexAstName, HexAstIdentifier);
 private:
   HexAstName _target;
   HexAstIdentifier _alias;
@@ -44,16 +47,17 @@ enum {
   AST_USING_STMT_RELATIVE_ALL=0x0F
 };
 
-typedef class _HexAstUsingStmtRelative : public _HexAstUsingStmt {
+typedef class _HexAstUsingStmtRelative : public AstTyped, public _HexAstUsingStmt {
 public:
-  _HexAstUsingStmtRelative(HexAstTargetList, HexAstUsingSrc, HexAstIdentifier, char);
+  _HexAstUsingStmtRelative(HexAstTargetList, HexAstUsingSrc, HexAstIdentifier, ast_type_t);
 
   virtual bool reprOK();
+
+  static _HexAstUsingStmtRelative* create(HexAstTargetList, HexAstUsingSrc, HexAstIdentifier, ast_type_t);
 private:
-  HexAstTargetList _target;
+  HexAstTargetList _targets;
   HexAstUsingSrc _src;
   HexAstIdentifier _alias;
-  char _type;
 } * HexAstUsingStmtRelative;
 
 

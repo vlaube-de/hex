@@ -37,7 +37,7 @@ _HexAstUnaryExpr::expr()
 {
   return this->_expr;
 }
-
+/*
 bool
 _HexAstUnaryExpr::equals(void* obj)
 {
@@ -67,3 +67,4 @@ _HexAstUnaryExpr::examine(Examiner e, void* obj)
 
   return e->examine(this->expr(), that->expr());
 }
+*/

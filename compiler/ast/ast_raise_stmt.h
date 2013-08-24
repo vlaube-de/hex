@@ -25,8 +25,11 @@ typedef class _HexAstRaiseStmt : public _HexAstSimpleStmt {
 public:
   _HexAstRaiseStmt(HexAstExpr);
 
+  virtual bool reprOK();
+
+  static _HexAstRaiseStmt* create(HexAstExpr);
 private:
-  HexAstExpr _val;
+  HexAstExpr _expr;
 } * HexAstRaiseStmt;
 
 #endif /* _AST_RAISE_STMT_H_ */

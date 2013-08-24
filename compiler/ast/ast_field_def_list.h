@@ -22,7 +22,7 @@
 #ifndef _AST_FIELD_DEF_LIST_H_
 #define _AST_FIELD_DEF_LIST_H_
 
-typedef class _HexAstFieldDefList : public AstListObj<HexAstFieldDef>, _HexAstNode {
+typedef class _HexAstFieldDefList : public AstListObj<_HexAstFieldDefList, HexAstFieldDef>, _HexAstNode {
 public:
   _HexAstFieldDefList();
 

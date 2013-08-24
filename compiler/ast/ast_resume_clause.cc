@@ -17,16 +17,14 @@
 
 #include "ast_resume_clause.h"
 #include "ast_task_clause.h"
-#include "ast_task_state.h"
 #include "ast_expr_list.h"
 #include "ast_conditional_clause.h"
 #include "../../base/assert.h"
 
 _HexAstResumeClause::_HexAstResumeClause(
-  HexAstTaskState state,
   HexAstExprList exprs,
   HexAstConditionalClause condition
-):_state(state), _exprs(exprs), _condition(condition)
+):_exprs(exprs), _condition(condition)
 {
   this->reprOK();
 }
@@ -34,7 +32,25 @@ _HexAstResumeClause::_HexAstResumeClause(
 bool
 _HexAstResumeClause::reprOK()
 {
-  HEX_ASSERT(this->_state);
   HEX_ASSERT(this->_exprs);
   HEX_ASSERT(this->_condition);
+}
+
+HexAstResumeClause
+_HexAstResumeClause::create(
+  HexAstExprList exprs,
+  HexAstConditionalClause condition
+)
+{
+  HEX_ASSERT(exprs);
+  HEX_ASSERT(condition);
+
+  HexAstResumeClause obj = new _HexAstResumeClause(
+    exprs,
+    condition
+  );
+
+  HEX_ASSERT(obj);
+
+  return obj;
 }

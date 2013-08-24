@@ -22,11 +22,7 @@
 #ifndef _AST_CATCH_STMT_GROUP_H_
 #define _AST_CATCH_STMT_GROUP_H_
 
-typedef class _HexAstCatchStmtGroup : public AstListObj<HexAstCatchStmt>, _HexAstNode {
-public:
-  _HexAstCatchStmtGroup();
-
-  virtual bool reprOK();
+typedef class _HexAstCatchStmtGroup : public AstListObj<_HexAstCatchStmtGroup, HexAstCatchStmt>, _HexAstNode {
 } * HexAstCatchStmtGroup;
 
 #endif /* _AST_CATCH_STMT_GROUP_H_ */

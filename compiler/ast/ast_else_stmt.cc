@@ -17,9 +17,18 @@
 
 #include "ast_else_stmt.h"
 #include "ast_stmt_group.h"
+#include "../../base/assert.h"
 
 _HexAstElseStmt::_HexAstElseStmt(
   HexAstStmtGroup stmts
 ):_HexAstCompoundStmt(stmts)
 {
+}
+
+HexAstElseStmt
+_HexAstElseStmt::create(HexAstStmtGroup stmts)
+{
+  HexAstElseStmt obj = new _HexAstElseStmt(stmts);
+  HEX_ASSERT(obj);
+  return obj;
 }

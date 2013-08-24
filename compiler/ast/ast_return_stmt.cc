@@ -18,10 +18,34 @@
 #include "ast_return_stmt.h"
 #include "ast_expr_list.h"
 #include "ast_expr.h"
+#include "../../base/assert.h"
 
 _HexAstReturnStmt::_HexAstReturnStmt(
   HexAstExprList return_vals,
   HexAstExpr predicate
 ):_return_vals(return_vals), _predicate(predicate)
 {
+  this->reprOK();
+}
+
+bool
+_HexAstReturnStmt::reprOK()
+{
+  return true;
+}
+
+HexAstReturnStmt
+_HexAstReturnStmt::create(
+  HexAstExprList return_val,
+  HexAstExpr predicate
+)
+{
+  HexAstReturnStmt obj = new _HexAstReturnStmt(
+    return_val,
+    predicate
+  );
+
+  HEX_ASSERT(obj);
+
+  return obj;
 }

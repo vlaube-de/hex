@@ -27,6 +27,7 @@ _HexAstCommutativeBinaryExpr::_HexAstCommutativeBinaryExpr(
 {
 }
 
+/*
 bool
 _HexAstCommutativeBinaryExpr::equals(void* obj)
 {
@@ -64,3 +65,4 @@ _HexAstCommutativeBinaryExpr::examine(Examiner e, void* obj)
 
   return false;
 }
+*/

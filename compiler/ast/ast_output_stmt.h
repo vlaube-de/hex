@@ -22,9 +22,7 @@
 #ifndef _AST_OUTPUT_STMT_H_
 #define _AST_OUTPUT_STMT_H_
 
-typedef class _HexAstOutputStmt : public AstListObj<HexAstPrimary>, _HexAstSimpleStmt {
-public:
-  _HexAstOutputStmt();
+typedef class _HexAstOutputStmt : public AstListObj<_HexAstOutputStmt, HexAstPrimary>, public _HexAstSimpleStmt {
 } * HexAstOutputStmt;
 
 #endif /* _AST_OUTPUT_STMT_H_ */

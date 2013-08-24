@@ -21,6 +21,7 @@
 #include "ast_target_list.h"
 #include "ast_identifier.h"
 #include "ast_name.h"
+#include "ast_typed.h"
 #include "../../base/assert.h"
 
 _HexAstUsingStmtDirect::_HexAstUsingStmtDirect(
@@ -37,13 +38,25 @@ _HexAstUsingStmtDirect::reprOK()
   HEX_ASSERT(this->_target);
 }
 
+HexAstUsingStmtDirect
+_HexAstUsingStmtDirect::create(
+  HexAstName target,
+  HexAstIdentifier alias
+)
+{
+  HEX_ASSERT(target);
+
+  HexAstUsingStmtDirect obj = new _HexAstUsingStmtDirect(target, alias);
+  HEX_ASSERT(obj);
+  return obj;
+}
 
 _HexAstUsingStmtRelative::_HexAstUsingStmtRelative(
-  HexAstTargetList target,
+  HexAstTargetList targets,
   HexAstUsingSrc src,
   HexAstIdentifier alias,
-  char type
-):_target(target), _src(src), _alias(alias), _type(type)
+  ast_type_t type
+):_targets(targets), _src(src), _alias(alias), AstTyped(type)
 {
   this->reprOK();
 }
@@ -54,6 +67,29 @@ _HexAstUsingStmtRelative::reprOK()
   HEX_ASSERT(this->_src);
   HEX_ASSERT(this->_type);
   if(this->_type==AST_USING_STMT_RELATIVE_TARGET) {
-    HEX_ASSERT(this->_target);
+    HEX_ASSERT(this->_targets);
   }
+}
+
+HexAstUsingStmtRelative
+_HexAstUsingStmtRelative::create(
+  HexAstTargetList targets,
+  HexAstUsingSrc src,
+  HexAstIdentifier alias,
+  ast_type_t type
+)
+{
+  HEX_ASSERT(src);
+  HEX_ASSERT(type);
+
+  HexAstUsingStmtRelative obj = new _HexAstUsingStmtRelative(
+    targets,
+    src,
+    alias,
+    type
+  );
+
+  HEX_ASSERT(obj);
+
+  return obj;
 }

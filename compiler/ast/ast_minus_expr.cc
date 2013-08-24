@@ -17,11 +17,25 @@
 
 
 #include "ast_minus_expr.h"
-
+#include "../../base/assert.h"
 
 _HexAstMinusExpr::_HexAstMinusExpr(
   HexAstExpr left,
   HexAstExpr right
 ): _HexAstBinaryExpr(left, right)
 {
+}
+
+void*
+_HexAstMinusExpr::create(
+  HexAstExpr left,
+  HexAstExpr right
+)
+{
+  HEX_ASSERT(left);
+  HEX_ASSERT(right);
+
+  HexAstMinusExpr obj = new _HexAstMinusExpr(left, right);
+  HEX_ASSERT(obj);
+  return obj;
 }

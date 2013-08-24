@@ -15,25 +15,27 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "ast_field_def_list.h"
-#include "ast_node.h"
+#include "ast_primary.h"
+#include "ast_typed.h"
 
 #ifndef _AST_DICT_FORM_H_
 #define _AST_DICT_FORM_H_
 
 enum {
-  AST_DICT_FORM_EXPR_LIST=0x02,
+  AST_DICT_FORM_EMPTY=0x01,
+  AST_DICT_FORM_EXPLICIT=0x02,
   AST_DICT_FORM_COMPREHENSION=0x04
 };
 
-typedef class _HexAstDictForm : public _HexAstNode {
+typedef class _HexAstDictForm : public AstTyped, public _HexAstPrimary {
 public:
-  _HexAstDictForm(void*, char);
+  _HexAstDictForm(void*, ast_type_t);
 
   virtual bool reprOK();
+
+  static _HexAstDictForm* create(void*, ast_type_t);
 private:
   void* _core;
-  char _type;
 } * HexAstDictForm;
 
 #endif /* _AST_DICT_FORM_H_ */

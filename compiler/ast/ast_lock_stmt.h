@@ -27,6 +27,8 @@ public:
   _HexAstLockStmt(HexAstExprList, HexAstStmtGroup);
 
   virtual bool reprOK();
+
+  static _HexAstLockStmt* create(HexAstExprList, HexAstStmtGroup);
 private:
   HexAstExprList _exprs;
 } * HexAstLockStmt;

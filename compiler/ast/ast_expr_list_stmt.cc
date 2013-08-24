@@ -31,3 +31,15 @@ _HexAstExprListStmt::reprOK()
 {
   HEX_ASSERT(this->_exprlist);
 }
+
+HexAstExprListStmt
+_HexAstExprListStmt::create(
+  HexAstExprList exprlist
+)
+{
+  HEX_ASSERT(exprlist);
+
+  HexAstExprListStmt obj = new _HexAstExprListStmt(exprlist);
+  HEX_ASSERT(obj);
+  return obj;
+}

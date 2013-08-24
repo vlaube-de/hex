@@ -17,16 +17,11 @@
 
 
 #include "ast_node.h"
-#include "../../base/uuid.h"
 #include "../../base/assert.h"
 
 
 _HexAstNode::_HexAstNode()
 {
-  hex_uuid_t uuid;
-  int res = uuid_create(&uuid);
-  HEX_ASSERT(res);
-  this->_id = uuid;
 }
 
 void*
@@ -39,4 +34,28 @@ void*
 _HexAstNode::standardize()
 {
   return this;
+}
+
+bool
+_HexAstNode::reprOK()
+{
+  return true;
+}
+
+bool
+_HexAstNode::equal(void*)
+{
+  return false;
+}
+
+bool
+_HexAstNode::isomorphic(void*)
+{
+  return false;
+}
+
+bool
+_HexAstNode::equivalent(void*)
+{
+  return  false;
 }

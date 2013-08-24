@@ -17,25 +17,26 @@
 
 #include "ast_literal.h"
 #include "ast_unparsed.h"
+#include "ast_typed.h"
 
 #ifndef _AST_INTEGER_LITERAL_H_
 #define _AST_INTEGER_LITERAL_H_
 
 enum {
-  INTEGER_LITERAL_DECIMAL=0x02,
-  INTEGER_LITERAL_BINARY=0x04,
-  INTEGER_LITERAL_OCTAL=0x08,
-  INTEGER_LITERAL_HEXADECIMAL=0x10
+  AST_INTEGER_LITERAL_DECIMAL=0x02,
+  AST_INTEGER_LITERAL_BINARY=0x04,
+  AST_INTEGER_LITERAL_OCTAL=0x08,
+  AST_INTEGER_LITERAL_HEXADECIMAL=0x10
 };
 
-typedef class _HexAstIntegerLiteral : public _HexAstLiteral, AstUnparsed {
+typedef class _HexAstIntegerLiteral : public _HexAstLiteral, AstTyped, AstUnparsed {
 public:
-  _HexAstIntegerLiteral(char type, char *value);
+  _HexAstIntegerLiteral(ast_type_t, char*);
 
   virtual bool reprOK();
-private:
-  long long int _intval;
-  char _type;
+
+  static _HexAstIntegerLiteral* create(ast_type_t, char*);
 } * HexAstIntegerLiteral;
+
 
 #endif /* _AST_INTEGER_LITERAL_H_ */

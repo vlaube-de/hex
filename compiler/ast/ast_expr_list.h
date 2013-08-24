@@ -23,12 +23,7 @@
 #ifndef _AST_EXPR_LIST_H_
 #define _AST_EXPR_LIST_H_
 
-typedef class _HexAstExprList : public AstListObj<HexAstExpr>, _HexAstNode {
-public:
-  _HexAstExprList();
-
-  virtual bool reprOK();
-private:
+typedef class _HexAstExprList : public AstListObj<_HexAstExprList, HexAstExpr>, _HexAstNode {
 } * HexAstExprList;
 
 #endif /*_AST_EXPR_LIST_H_ */

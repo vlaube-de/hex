@@ -39,6 +39,8 @@ public:
   _HexAstStartClauseSingle(HexAstName, HexAstIdentifier, HexAstConditionalClause);
 
   virtual bool reprOK();
+
+  static _HexAstStartClauseSingle* create(HexAstName, HexAstIdentifier, HexAstConditionalClause);
 private:
   HexAstName _target;
 } * HexAstStartClauseSingle;
@@ -49,6 +51,8 @@ public:
   _HexAstStartClauseMultiple(HexAstTargetList, HexAstIdentifier, HexAstConditionalClause);
 
   virtual bool reprOK();
+
+  static _HexAstStartClauseMultiple* create(HexAstTargetList, HexAstIdentifier, HexAstConditionalClause);
 private:
   HexAstTargetList _targets;
 } * HexAstStartClauseMultiple;

@@ -34,3 +34,17 @@ _HexAstMapField::reprOK()
   HEX_ASSERT(this->_key);
   HEX_ASSERT(this->_val);
 }
+
+HexAstMapField
+_HexAstMapField::create(
+  HexAstExpr key,
+  HexAstValAtom val
+)
+{
+  HEX_ASSERT(key);
+  HEX_ASSERT(val);
+
+  HexAstMapField obj = new _HexAstMapField(key, val);
+  HEX_ASSERT(obj);
+  return obj;
+}

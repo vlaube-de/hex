@@ -23,9 +23,7 @@
 #ifndef _AST_VAL_LIST_H_
 #define _AST_VAL_LIST_H_
 
-typedef class _HexAstValList : public AstListObj<HexAstValAtom>, _HexAstNode {
-public:
-  _HexAstValList();
+typedef class _HexAstValList : public AstListObj<_HexAstValList, HexAstValAtom>, _HexAstNode {
 } * HexAstValList;
 
 #endif /* _AST_VAL_LIST_H_ */

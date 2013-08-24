@@ -25,6 +25,9 @@ typedef class _HexAstBreakStmt : public _HexAstSimpleStmt {
 public:
   _HexAstBreakStmt(HexAstExpr);
 
+  virtual bool reprOK();
+
+  static _HexAstBreakStmt* create(HexAstExpr);
 private:
   HexAstExpr _predicate;
 } * HexAstBreakStmt;

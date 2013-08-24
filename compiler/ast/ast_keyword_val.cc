@@ -16,14 +16,15 @@
  */
 
 #include "ast_keyword_val.h"
+#include "ast_identifier.h"
 #include "ast_val_atom.h"
 #include "../../base/assert.h"
 
 
 _HexAstKeywordVal::_HexAstKeywordVal(
-  char* key,
+  HexAstIdentifier key,
   HexAstValAtom val
-):_key(strdup(key)), _val(val)
+):_key(key), _val(val)
 {
   this->reprOK();
 }
@@ -33,4 +34,19 @@ _HexAstKeywordVal::reprOK()
 {
   HEX_ASSERT(this->_key);
   HEX_ASSERT(this->_val);
+}
+
+HexAstKeywordVal
+_HexAstKeywordVal::create(
+  HexAstIdentifier key,
+  HexAstValAtom val
+)
+{
+  HEX_ASSERT(key);
+  HEX_ASSERT(val);
+
+  HexAstKeywordVal obj = new _HexAstKeywordVal(key, val);
+  HEX_ASSERT(obj);
+
+  return obj;
 }

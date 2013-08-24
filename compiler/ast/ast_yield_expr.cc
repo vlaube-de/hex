@@ -19,10 +19,18 @@
 #include "ast_expr.h"
 #include "ast_expr_list.h"
 #include "ast_yield_expr.h"
-
+#include "../../base/assert.h"
 
 _HexAstYieldExpr::_HexAstYieldExpr(
-  HexAstExprList exprlist
-): _exprlist(exprlist)
+  HexAstExprList exprs
+): _exprs(exprs)
 {
+}
+
+HexAstYieldExpr
+_HexAstYieldExpr::create(HexAstExprList exprs)
+{
+  HexAstYieldExpr obj = new _HexAstYieldExpr(exprs);
+  HEX_ASSERT(obj);
+  return obj;
 }

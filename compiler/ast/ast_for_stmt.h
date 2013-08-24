@@ -29,6 +29,8 @@ public:
   _HexAstForStmt(HexAstTargetList, HexAstExprList, HexAstExpr, HexAstStmtGroup);
 
   virtual bool reprOK();
+
+  static _HexAstForStmt* create(HexAstTargetList, HexAstExprList, HexAstExpr, HexAstStmtGroup);
 private:
   HexAstTargetList _targets;
   HexAstExprList _exprs;

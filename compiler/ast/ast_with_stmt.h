@@ -18,18 +18,21 @@
 #include "ast_compound_stmt.h"
 #include "ast_expr_list.h"
 #include "ast_stmt_group.h"
+#include "ast_identifier.h"
 
 #ifndef _AST_WITH_STMT_H_
 #define _AST_WITH_STMT_H_
 
 typedef class _HexAstWithStmt : public _HexAstCompoundStmt {
 public:
-  _HexAstWithStmt(HexAstExprList, char*, HexAstStmtGroup);
+  _HexAstWithStmt(HexAstExprList, HexAstIdentifier, HexAstStmtGroup);
 
   virtual bool reprOK();
+
+  static _HexAstWithStmt* create(HexAstExprList, HexAstIdentifier, HexAstStmtGroup);
 private:
   HexAstExprList _exprs;
-  char* _alias;
+  HexAstIdentifier _alias;
 } * HexAstWithStmt;
 
 #endif /* _AST_WITH_STMT_H_ */

@@ -22,7 +22,7 @@
 
 _HexAstFloatLiteral::_HexAstFloatLiteral(
   char *value
-):_floatval(0.0), AstUnparsed(value)
+):AstUnparsed(value)
 {
   this->reprOK();
 }
@@ -31,4 +31,12 @@ bool
 _HexAstFloatLiteral::reprOK()
 {
   HEX_ASSERT(this->_value);
+}
+
+HexAstFloatLiteral
+_HexAstFloatLiteral::create(char* value)
+{
+  HexAstFloatLiteral obj = new _HexAstFloatLiteral(value);
+  HEX_ASSERT(obj);
+  return obj;
 }

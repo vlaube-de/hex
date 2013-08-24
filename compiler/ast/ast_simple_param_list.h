@@ -17,11 +17,12 @@
 
 #include "ast_list_obj.h"
 #include "ast_node.h"
+#include "ast_identifier.h"
 
 #ifndef _AST_SIMPLE_PARAM_LIST_H_
 #define _AST_SIMPLE_PARAM_LIST_H_
 
-typedef class _HexAstSimpleParamList : public AstListObj<char*>, _HexAstNode {
+typedef class _HexAstSimpleParamList : public AstListObj<_HexAstSimpleParamList, HexAstIdentifier>, _HexAstNode {
 public:
   _HexAstSimpleParamList();
 

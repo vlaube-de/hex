@@ -17,11 +17,25 @@
 
 
 #include "ast_add_expr.h"
-
+#include "../../base/assert.h"
 
 _HexAstAddExpr::_HexAstAddExpr(
   HexAstExpr left,
   HexAstExpr right
 ): _HexAstCommutativeBinaryExpr(left, right)
 {
+}
+
+void*
+_HexAstAddExpr::create(
+  HexAstExpr left,
+  HexAstExpr right
+)
+{
+  HEX_ASSERT(left);
+  HEX_ASSERT(right);
+
+  HexAstAddExpr obj = new _HexAstAddExpr(left, right);
+  HEX_ASSERT(obj);
+  return obj;
 }

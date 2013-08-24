@@ -36,6 +36,8 @@ public:
   _HexAstLambdaSimple(HexAstParameterList, HexAstExpr);
 
   virtual bool reprOK();
+
+  static _HexAstLambdaSimple* create(HexAstParameterList, HexAstExpr);
 private:
   HexAstExpr _expr;
 } * HexAstLambdaSimple;
@@ -45,6 +47,8 @@ public:
   _HexAstLambdaComplex(HexAstParameterList, HexAstStmtGroup);
 
   virtual bool reprOK();
+
+  static _HexAstLambdaComplex* create(HexAstParameterList, HexAstStmtGroup);
 private:
   HexAstStmtGroup _stmts;
 } * HexAstLambdaComplex;

@@ -22,9 +22,7 @@
 #ifndef _AST_INPUT_STMT_H_
 #define _AST_INPUT_STMT_H_
 
-typedef class _HexAstInputStmt : public AstListObj<HexAstPrimary>, _HexAstSimpleStmt {
-public:
-  _HexAstInputStmt();
+typedef class _HexAstInputStmt : public AstListObj<_HexAstInputStmt, HexAstPrimary>, public _HexAstSimpleStmt {
 } * HexAstInputStmt;
 
 #endif /* _AST_INPUT_STMT_H_ */

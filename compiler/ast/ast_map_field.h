@@ -27,6 +27,8 @@ public:
   _HexAstMapField(HexAstExpr, HexAstValAtom);
 
   virtual bool reprOK();
+
+  static _HexAstMapField* create(HexAstExpr, HexAstValAtom);
 private:
   HexAstExpr _key;
   HexAstValAtom _val;

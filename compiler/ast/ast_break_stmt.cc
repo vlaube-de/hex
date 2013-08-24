@@ -17,9 +17,27 @@
 
 #include "ast_break_stmt.h"
 #include "ast_expr.h"
+#include "../../base/assert.h"
 
 _HexAstBreakStmt::_HexAstBreakStmt(
   HexAstExpr predicate
 ):_predicate(predicate)
 {
+  this->reprOK();
+}
+
+bool
+_HexAstBreakStmt::reprOK()
+{
+  return true;
+}
+
+HexAstBreakStmt
+_HexAstBreakStmt::create(
+  HexAstExpr expr
+)
+{
+  HexAstBreakStmt obj = new _HexAstBreakStmt(expr);
+  HEX_ASSERT(obj);
+  return obj;
 }

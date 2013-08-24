@@ -16,12 +16,13 @@
  */
 
 #include "ast_dict_form.h"
+#include "ast_typed.h"
 #include "../../base/assert.h"
 
 _HexAstDictForm::_HexAstDictForm(
   void* core,
-  char type
-):_core(core), _type(type)
+  ast_type_t type
+):_core(core), AstTyped(type)
 {
   this->reprOK();
 }
@@ -30,7 +31,19 @@ bool
 _HexAstDictForm::reprOK()
 {
   HEX_ASSERT(
-    this->_type==AST_DICT_FORM_EXPR_LIST ||
+    this->_type==AST_DICT_FORM_EMPTY ||
+    this->_type==AST_DICT_FORM_EXPLICIT ||
     this->_type==AST_DICT_FORM_COMPREHENSION
   );
+}
+
+HexAstDictForm
+_HexAstDictForm::create(
+  void* core,
+  ast_type_t type
+)
+{
+  HexAstDictForm obj = new _HexAstDictForm(core, type);
+  HEX_ASSERT(obj);
+  return obj;
 }

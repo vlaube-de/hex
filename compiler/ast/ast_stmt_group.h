@@ -22,11 +22,9 @@
 #ifndef _AST_STMT_GROUP_H_
 #define _AST_STMT_GROUP_H_
 
-typedef class _HexAstStmtGroup : public AstListObj<HexAstStmt>, _HexAstNode {
+typedef class _HexAstStmtGroup : public AstListObj<_HexAstStmtGroup, HexAstStmt>, _HexAstNode {
 public:
   _HexAstStmtGroup();
-
-  virtual bool reprOK();
 } * HexAstStmtGroup;
 
 #endif /* _AST_STMT_GROUP_H_ */

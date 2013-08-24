@@ -18,12 +18,14 @@
 #include "ast_parameter_list.h"
 #include "ast_simple_param_list.h"
 #include "ast_keyword_val_list.h"
+#include "ast_identifier.h"
+#include "../../base/assert.h"
 
 _HexAstParameterList::_HexAstParameterList(
   HexAstSimpleParamList simple_params,
   HexAstKeywordValList keyword_vals,
-  char *args,
-  char *kwargs
+  HexAstIdentifier args,
+  HexAstIdentifier kwargs
 ):_simple_params(simple_params), _keyword_vals(keyword_vals), _args(args), _kwargs(kwargs)
 {
   this->reprOK();
@@ -33,4 +35,24 @@ bool
 _HexAstParameterList::reprOK()
 {
   return true;
+}
+
+HexAstParameterList
+_HexAstParameterList::create(
+  HexAstSimpleParamList simple_params,
+  HexAstKeywordValList keyword_vals,
+  HexAstIdentifier args,
+  HexAstIdentifier kwargs
+)
+{
+  HexAstParameterList obj = new _HexAstParameterList(
+    simple_params,
+    keyword_vals,
+    args,
+    kwargs
+  );
+
+  HEX_ASSERT(obj);
+
+  return obj;
 }

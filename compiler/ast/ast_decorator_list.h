@@ -16,12 +16,13 @@
  */
 
 #include "ast_node.h"
+#include "ast_list_obj.h"
 #include "ast_decorator.h"
 
 #ifndef _AST_DECORATOR_LIST_H_
 #define _AST_DECORATOR_LIST_H_
 
-typedef class _HexAstDecoratorList : public AstListObj<HexAstDecorator>, _HexAstNode {
+typedef class _HexAstDecoratorList : public AstListObj<_HexAstDecoratorList, HexAstDecorator>, _HexAstNode {
 public:
   _HexAstDecoratorList();
 

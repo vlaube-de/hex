@@ -17,10 +17,23 @@
 
 
 #include "ast_not_expr.h"
+#include "../../base/assert.h"
 
 
 _HexAstNotExpr::_HexAstNotExpr(
   HexAstExpr expr
 ): _HexAstUnaryExpr(expr)
 {
+}
+
+void*
+_HexAstNotExpr::create(
+  HexAstExpr expr
+)
+{
+  HEX_ASSERT(expr);
+
+  HexAstNotExpr obj = new _HexAstNotExpr(expr);
+  HEX_ASSERT(obj);
+  return obj;
 }

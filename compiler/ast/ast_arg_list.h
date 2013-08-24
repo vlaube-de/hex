@@ -18,20 +18,23 @@
 #include "ast_val_list.h"
 #include "ast_keyword_val_list.h"
 #include "ast_node.h"
+#include "ast_identifier.h"
 
 #ifndef _AST_ARG_LIST_H_
 #define _AST_ARG_LIST_H_
 
 typedef class _HexAstArgList : public _HexAstNode {
 public:
-  _HexAstArgList(HexAstValList, HexAstKeywordValList, char*, char*);
+  _HexAstArgList(HexAstValList, HexAstKeywordValList, HexAstIdentifier, HexAstIdentifier);
 
   virtual bool reprOK();
+
+  static _HexAstArgList* create(HexAstValList, HexAstKeywordValList, HexAstIdentifier, HexAstIdentifier);
 private:
   HexAstValList _valList;
   HexAstKeywordValList _keywordValList;
-  char *_args;
-  char *_kwargs;
+  HexAstIdentifier _args;
+  HexAstIdentifier _kwargs;
 } * HexAstArgList;
 
 #endif /* _AST_ARG_LIST_H_ */

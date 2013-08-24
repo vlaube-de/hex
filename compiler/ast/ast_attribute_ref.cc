@@ -18,10 +18,30 @@
 #include <list>
 #include "ast_primary.h"
 #include "ast_attribute_ref.h"
+#include "../../base/assert.h"
 
 _HexAstAttributeRef::_HexAstAttributeRef(
   HexAstPrimary source,
   char *attribute
 ): _source(source), _attribute(strdup(attribute))
 {
+  this->reprOK();
+}
+
+bool
+_HexAstAttributeRef::reprOK()
+{
+  HEX_ASSERT(this->_source);
+  HEX_ASSERT(this->_attribute);
+}
+
+HexAstAttributeRef
+_HexAstAttributeRef::create(
+  HexAstPrimary source,
+  char *attribute
+)
+{
+  HexAstAttributeRef obj = new _HexAstAttributeRef(source, attribute);
+  HEX_ASSERT(obj);
+  return obj;
 }

@@ -27,6 +27,8 @@ public:
   _HexAstElifStmt(HexAstExpr, HexAstStmtGroup);
 
   virtual bool reprOK();
+
+  static _HexAstElifStmt* create(HexAstExpr, HexAstStmtGroup);
 private:
   HexAstExpr _predicate;
 } * HexAstElifStmt;

@@ -31,3 +31,13 @@ _HexAstIdentifier::reprOK()
 {
   HEX_ASSERT(this->_identifier);
 }
+
+HexAstIdentifier
+_HexAstIdentifier::create(char* identifier)
+{
+  HEX_ASSERT(identifier);
+
+  HexAstIdentifier obj = new _HexAstIdentifier(identifier);
+  HEX_ASSERT(obj);
+  return obj;
+}

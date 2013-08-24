@@ -17,6 +17,7 @@
 
 
 #include "ast_divide_expr.h"
+#include "../../base/assert.h"
 
 
 _HexAstDivideExpr::_HexAstDivideExpr(
@@ -24,4 +25,18 @@ _HexAstDivideExpr::_HexAstDivideExpr(
   HexAstExpr right
 ): _HexAstBinaryExpr(left, right)
 {
+}
+
+void*
+_HexAstDivideExpr::create(
+  HexAstExpr left,
+  HexAstExpr right
+)
+{
+  HEX_ASSERT(left);
+  HEX_ASSERT(right);
+
+  HexAstDivideExpr obj = new _HexAstDivideExpr(left, right);
+  HEX_ASSERT(obj);
+  return obj;
 }

@@ -19,15 +19,16 @@
 #include "ast_node.h"
 #include "ast_primary.h"
 #include "ast_decorator_list.h"
+#include "ast_typed.h"
 #include "../../base/assert.h"
 
 _HexAstAssignmentStmt::_HexAstAssignmentStmt(
   HexAstDecoratorList decorators,
   HexAstPrimary dst,
   void* src,
-  char type,
+  ast_type_t type,
   bool defer
-):_decorators(decorators), _dst(dst), _src(src), _type(type), _defer(defer)
+):_decorators(decorators), _dst(dst), _src(src), AstTyped(type), _defer(defer)
 {
   this->reprOK();
 }
@@ -39,6 +40,33 @@ _HexAstAssignmentStmt::reprOK()
   HEX_ASSERT(this->_dst);
   HEX_ASSERT(
     this->_type==AST_ASSIGNMENT_STMT_EXPR_LIST ||
-    this->_type==AST_ASSIGNMENT_STMT_LAMBDA
+    this->_type==AST_ASSIGNMENT_STMT_LAMBDA ||
+    this->_type==AST_ASSIGNMENT_STMT_TASK
   );
+}
+
+HexAstAssignmentStmt
+_HexAstAssignmentStmt::create(
+  HexAstDecoratorList decorators,
+  HexAstPrimary dst,
+  void* src,
+  ast_type_t type,
+  bool defer
+)
+{
+  HEX_ASSERT(src);
+  HEX_ASSERT(dst);
+  HEX_ASSERT(type);
+
+  HexAstAssignmentStmt obj = new _HexAstAssignmentStmt(
+    decorators,
+    dst,
+    src,
+    type,
+    defer
+  );
+
+  HEX_ASSERT(obj);
+
+  return obj;
 }

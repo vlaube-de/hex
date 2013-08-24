@@ -19,6 +19,7 @@
 #include "ast_parameter_list.h"
 #include "ast_stmt_group.h"
 #include "ast_expr.h"
+#include "../../base/assert.h"
 
 _HexAstLambda::_HexAstLambda(
   HexAstParameterList params
@@ -34,9 +35,56 @@ _HexAstLambdaSimple::_HexAstLambdaSimple(
   this->reprOK();
 }
 
+bool
+_HexAstLambdaSimple::reprOK()
+{
+  HEX_ASSERT(this->_expr);
+}
+
+HexAstLambdaSimple
+_HexAstLambdaSimple::create(
+  HexAstParameterList params,
+  HexAstExpr expr
+)
+{
+  HEX_ASSERT(expr);
+
+  HexAstLambdaSimple obj = new _HexAstLambdaSimple(
+    params,
+    expr
+  );
+
+  HEX_ASSERT(obj);
+
+  return obj;
+}
+
 _HexAstLambdaComplex::_HexAstLambdaComplex(
   HexAstParameterList params,
   HexAstStmtGroup stmts
 ):_HexAstLambda(params), _stmts(stmts)
 {
+  this->reprOK();
+}
+
+bool
+_HexAstLambdaComplex::reprOK()
+{
+  return true;
+}
+
+HexAstLambdaComplex
+_HexAstLambdaComplex::create(
+  HexAstParameterList params,
+  HexAstStmtGroup stmts
+)
+{
+  HexAstLambdaComplex obj = new _HexAstLambdaComplex(
+    params,
+    stmts
+  );
+
+  HEX_ASSERT(obj);
+
+  return obj;
 }

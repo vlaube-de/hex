@@ -22,9 +22,7 @@
 #ifndef _AST_ATTRIBUTE_DEF_LIST_H_
 #define _AST_ATTRIBUTE_DEF_LIST_H_
 
-typedef class _HexAstAttributeDefList : public AstListObj<HexAstAttributeDef>, _HexAstNode {
-public:
-  _HexAstAttributeDefList();
+typedef class _HexAstAttributeDefList : public AstListObj<_HexAstAttributeDefList, HexAstAttributeDef>, _HexAstNode {
 } * HexAstAttributeDefList;
 
 #endif /* _AST_ATTRIBUTE_DEF_H_ */

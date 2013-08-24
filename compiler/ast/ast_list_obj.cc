@@ -20,9 +20,3 @@
 #include "ast_list_obj.h"
 #include "../../base/assert.h"
 
-template<typename T>
-AstListObj<T>::AstListObj(
-):_list(new std::list<T>())
-{
-  HEX_ASSERT(this->_list);
-}

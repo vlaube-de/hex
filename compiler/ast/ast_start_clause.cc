@@ -45,6 +45,26 @@ _HexAstStartClauseSingle::reprOK()
   HEX_ASSERT(this->_target);
 }
 
+HexAstStartClauseSingle
+_HexAstStartClauseSingle::create(
+  HexAstName target,
+  HexAstIdentifier alias,
+  HexAstConditionalClause condition
+)
+{
+  HEX_ASSERT(target);
+
+  HexAstStartClauseSingle obj = new _HexAstStartClauseSingle(
+    target,
+    alias,
+    condition
+  );
+
+  HEX_ASSERT(obj);
+
+  return obj;
+}
+
 _HexAstStartClauseMultiple::_HexAstStartClauseMultiple(
   HexAstTargetList targets,
   HexAstIdentifier alias,
@@ -58,4 +78,24 @@ bool
 _HexAstStartClauseMultiple::reprOK()
 {
   HEX_ASSERT(this->_targets);
+}
+
+HexAstStartClauseMultiple
+_HexAstStartClauseMultiple::create(
+  HexAstTargetList targets,
+  HexAstIdentifier alias,
+  HexAstConditionalClause condition
+)
+{
+  HEX_ASSERT(targets);
+
+  HexAstStartClauseMultiple obj = new _HexAstStartClauseMultiple(
+    targets,
+    alias,
+    condition
+  );
+
+  HEX_ASSERT(obj);
+
+  return obj;
 }

@@ -17,12 +17,14 @@
 
 #include "ast_string_literal.h"
 #include "ast_unparsed.h"
+#include "ast_typed.h"
 #include "../../base/assert.h"
 
 
 _HexAstStringLiteral::_HexAstStringLiteral(
-  char *value, char quote
-):_quote(quote), AstUnparsed(value)
+  ast_type_t type,
+  char *value 
+):AstTyped(type), AstUnparsed(value)
 {
   this->reprOK();
 }
@@ -32,8 +34,15 @@ _HexAstStringLiteral::reprOK()
 {
   HEX_ASSERT(this->_value);
   HEX_ASSERT(
-    this->_quote==STRING_LITERAL_SINGLE_QUOTE
-    ||
-    this->_quote==STRING_LITERAL_DOUBLE_QUOTE
+    this->_type==AST_STRING_LITERAL_SINGLE_QUOTE ||
+    this->_type==AST_STRING_LITERAL_DOUBLE_QUOTE
   );
+}
+
+HexAstStringLiteral
+_HexAstStringLiteral::create(ast_type_t type, char *value)
+{
+  HexAstStringLiteral obj = new _HexAstStringLiteral(type, value);
+  HEX_ASSERT(obj);
+  return obj;
 }

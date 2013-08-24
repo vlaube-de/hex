@@ -31,3 +31,13 @@ _HexAstMapForm::reprOK()
 {
   HEX_ASSERT(this->_list);
 }
+
+HexAstMapForm
+_HexAstMapForm::create(
+  HexAstMapFieldList list
+)
+{
+  HexAstMapForm obj = new _HexAstMapForm(list);
+  HEX_ASSERT(obj);
+  return obj;
+}

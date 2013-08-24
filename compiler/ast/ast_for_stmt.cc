@@ -39,3 +39,27 @@ _HexAstForStmt::reprOK()
   HEX_ASSERT(this->_exprs);
   HEX_ASSERT(this->_stmts);
 }
+
+HexAstForStmt
+_HexAstForStmt::create(
+  HexAstTargetList targets,
+  HexAstExprList exprs,
+  HexAstExpr predicate,
+  HexAstStmtGroup stmts
+)
+{
+  HEX_ASSERT(targets);
+  HEX_ASSERT(exprs);
+  HEX_ASSERT(stmts);
+
+  HexAstForStmt obj = new _HexAstForStmt(
+    targets,
+    exprs,
+    predicate,
+    stmts
+  );
+
+  HEX_ASSERT(obj);
+
+  return obj;
+}

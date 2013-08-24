@@ -25,6 +25,8 @@
 typedef class _HexAstDecrementExpr : public _HexAstUnaryExpr {
 public:
   _HexAstDecrementExpr(HexAstExpr);
+
+  static void* create(HexAstExpr);
 } * HexAstDecrementExpr;
 
 

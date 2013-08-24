@@ -17,17 +17,20 @@
 
 #include "ast_node.h"
 #include "ast_val_atom.h"
+#include "ast_identifier.h"
 
 #ifndef _AST_KEYWORD_VAL_H_
 #define _AST_KEYWORD_VAL_H_
 
 typedef class _HexAstKeywordVal : public _HexAstNode {
 public:
-  _HexAstKeywordVal(char*, HexAstValAtom);
+  _HexAstKeywordVal(HexAstIdentifier, HexAstValAtom);
 
   virtual bool reprOK();
+
+  static _HexAstKeywordVal* create(HexAstIdentifier, HexAstValAtom);
 private:
-  char* _key;
+  HexAstIdentifier _key;
   HexAstValAtom _val;
 } * HexAstKeywordVal;
 

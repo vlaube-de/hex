@@ -25,6 +25,9 @@ typedef class _HexAstAttributeRef : public _HexAstPrimary {
 public:
   _HexAstAttributeRef(HexAstPrimary, char*);
 
+  virtual bool reprOK();
+
+  static _HexAstAttributeRef* create(HexAstPrimary, char*);
 private:
   HexAstPrimary _source;
   char *_attribute;

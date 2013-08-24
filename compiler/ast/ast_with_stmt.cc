@@ -18,11 +18,12 @@
 #include "ast_with_stmt.h"
 #include "ast_expr_list.h"
 #include "ast_compound_stmt.h"
+#include "ast_identifier.h"
 #include "../../base/assert.h"
 
 _HexAstWithStmt::_HexAstWithStmt(
   HexAstExprList exprs,
-  char* alias,
+  HexAstIdentifier alias,
   HexAstStmtGroup stmts
 ):_exprs(exprs), _alias(alias), _HexAstCompoundStmt(stmts)
 {
@@ -33,4 +34,24 @@ bool
 _HexAstWithStmt::reprOK()
 {
   HEX_ASSERT(this->_exprs);
+}
+
+HexAstWithStmt
+_HexAstWithStmt::create(
+  HexAstExprList exprs,
+  HexAstIdentifier alias,
+  HexAstStmtGroup stmts
+)
+{
+  HEX_ASSERT(exprs);
+
+  HexAstWithStmt obj = new _HexAstWithStmt(
+    exprs,
+    alias,
+    stmts
+  );
+
+  HEX_ASSERT(obj);
+
+  return obj;
 }

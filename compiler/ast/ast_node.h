@@ -55,10 +55,9 @@ public:
    */
   virtual bool reprOK();
 
-  /*
-   * Generate a hash code for this instance.
-   */
-  virtual int hash();
+  virtual bool equal(void*);
+  virtual bool isomorphic(void*);
+  virtual bool equivalent(void*);
 
 protected:
   hex_uuid_t _id;

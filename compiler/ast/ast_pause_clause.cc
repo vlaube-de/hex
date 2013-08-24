@@ -17,16 +17,14 @@
 
 #include "ast_pause_clause.h"
 #include "ast_task_clause.h"
-#include "ast_task_state.h"
 #include "ast_expr_list.h"
 #include "ast_conditional_clause.h"
 #include "../../base/assert.h"
 
 _HexAstPauseClause::_HexAstPauseClause(
-  HexAstTaskState state,
   HexAstExprList exprs,
   HexAstConditionalClause condition
-):_state(state), _exprs(exprs), _condition(condition)
+):_exprs(exprs), _condition(condition)
 {
   this->reprOK();
 }
@@ -34,7 +32,25 @@ _HexAstPauseClause::_HexAstPauseClause(
 bool
 _HexAstPauseClause::reprOK()
 {
-  HEX_ASSERT(this->_state);
   HEX_ASSERT(this->_exprs);
   HEX_ASSERT(this->_condition);
+}
+
+HexAstPauseClause
+_HexAstPauseClause::create(
+  HexAstExprList exprs,
+  HexAstConditionalClause condition
+)
+{
+  HEX_ASSERT(exprs);
+  HEX_ASSERT(condition);
+
+  HexAstPauseClause obj = new _HexAstPauseClause(
+    exprs,
+    condition
+  );
+
+  HEX_ASSERT(obj);
+
+  return obj;
 }

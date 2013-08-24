@@ -25,9 +25,6 @@
 #define _AST_EXPR_H_
 
 typedef class _HexAstExpr : public _HexAstNode {
-public:
-  _HexAstExpr();
-
 } * HexAstExpr;
 
 #endif /* _AST_EXPR_H_ */

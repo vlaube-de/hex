@@ -17,6 +17,7 @@
 
 
 #include "ast_mod_expr.h"
+#include "../../base/assert.h"
 
 
 _HexAstModulusExpr::_HexAstModulusExpr(
@@ -24,4 +25,18 @@ _HexAstModulusExpr::_HexAstModulusExpr(
   HexAstExpr right
 ): _HexAstBinaryExpr(left, right)
 {
+}
+
+void*
+_HexAstModulusExpr::create(
+  HexAstExpr left,
+  HexAstExpr right
+)
+{
+  HEX_ASSERT(left);
+  HEX_ASSERT(right);
+
+  HexAstModulusExpr obj = new _HexAstModulusExpr(left, right);
+  HEX_ASSERT(obj);
+  return obj;
 }

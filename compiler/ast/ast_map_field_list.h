@@ -21,7 +21,7 @@
 #ifndef _AST_MAP_FIELD_LIST_H_
 #define _AST_MAP_FIELD_LIST_H_
 
-typedef class _HexAstMapFieldList : public AstListObj<HexAstMapField>, _HexAstNode {
+typedef class _HexAstMapFieldList : public AstListObj<_HexAstMapFieldList, HexAstMapField>, _HexAstNode {
 public:
   _HexAstMapFieldList();
 

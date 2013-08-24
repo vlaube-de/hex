@@ -24,7 +24,7 @@ public:
   bool examine(Examinable*a, Examinable* b);
 } * IsomorphicExaminer;
 
-
+/*
 class Examiners {
 public:
   static EqualsExaminer Equals;
@@ -32,9 +32,9 @@ public:
   static EquivalentExaminer Equivalent;
 };
 
+
 EqualsExaminer Examiners::Equals = new _EqualsExaminer();
 IsomorphicExaminer Examiners::Isomorphic = new _IsomorphicExaminer();
 EquivalentExaminer Examiners::Equivalent = new _EquivalentExaminer();
-
-
+*/
 #endif /* _EXAMINER_H_ */

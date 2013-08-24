@@ -27,6 +27,7 @@ public:
 
   virtual bool reprOK();
 
+  static _HexAstTryStmt* create(HexAstStmtGroup, HexAstCatchStmtGroup);
 private:
   HexAstCatchStmtGroup _catch_stmt_group;
 } * HexAstTryStmt;

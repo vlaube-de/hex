@@ -25,12 +25,12 @@ typedef class _HexAstCommutativeBinaryExpr : public _HexAstBinaryExpr {
 public:
   _HexAstCommutativeBinaryExpr(HexAstExpr left, HexAstExpr right);
 
-  virtual bool equals(void*);
-  virtual bool isomorphic(void*);
-  virtual bool equivalent(void*);
+  //virtual bool equals(void*);
+  //virtual bool isomorphic(void*);
+  //virtual bool equivalent(void*);
 
 private:
-  bool examine(Examiner, void* obj);
+ // bool examine(Examiner, void* obj);
 
 } * HexAstCommutativeBinaryExpr;
 

@@ -15,10 +15,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "ast_node.h"
+
 #ifndef _AST_OPERATOR_H_
 #define _AST_OPERATOR_H_
 
-enum {
+enum HexAstOperatorEnum {
   AST_OPERATOR_PLUS=0x01,
   AST_OPERATOR_MINUS=0x02,
   AST_OPERATOR_MUL=0x03,
@@ -49,8 +51,19 @@ enum {
   AST_OPERATOR_ASSIGN_BITWISE_XOR=0x1C,
   AST_OPERATOR_ASSIGN_SHIFTLEFT=0x1D,
   AST_OPERATOR_ASSIGN_SHIFTRIGHT=0x1E,
-  AST_OPERATOR_INPUT_OP=0x1F,
-  AST_OPERATOR_OUTPUT_OP=0x20
+  AST_OPERATOR_INPUT=0x1F,
+  AST_OPERATOR_OUTPUT=0x20
 };
+
+typedef class _HexAstOperator : public _HexAstNode {
+public:
+  _HexAstOperator(HexAstOperatorEnum);
+
+  virtual bool reprOK();
+
+  static _HexAstOperator* create(HexAstOperatorEnum);
+private:
+  HexAstOperatorEnum _op;
+} * HexAstOperator;
 
 #endif /* _AST_OPERATOR_H_ */

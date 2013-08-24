@@ -17,6 +17,7 @@
 
 
 #include "ast_bitwise_shift_left_expr.h"
+#include "../../base/assert.h"
 
 
 _HexAstBitwiseShiftLeftExpr::_HexAstBitwiseShiftLeftExpr(
@@ -24,4 +25,18 @@ _HexAstBitwiseShiftLeftExpr::_HexAstBitwiseShiftLeftExpr(
   HexAstExpr right
 ): _HexAstBinaryExpr(left, right)
 {
+}
+
+void*
+_HexAstBitwiseShiftLeftExpr::create(
+  HexAstExpr left,
+  HexAstExpr right
+)
+{
+  HEX_ASSERT(left);
+  HEX_ASSERT(right);
+
+  HexAstBitwiseShiftLeftExpr obj = new _HexAstBitwiseShiftLeftExpr(left, right);
+  HEX_ASSERT(obj);
+  return obj;
 }

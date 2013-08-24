@@ -25,6 +25,8 @@
 typedef class _HexAstBitwiseOrExpr : public _HexAstCommutativeBinaryExpr {
 public:
   _HexAstBitwiseOrExpr(HexAstExpr, HexAstExpr);
+
+  static void* create(HexAstExpr, HexAstExpr);
 } * HexAstBitwiseOrExpr;
 
 #endif /* _AST_BITWISE_OR_EXPR_H_ */

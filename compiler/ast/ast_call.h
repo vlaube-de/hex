@@ -25,6 +25,9 @@ typedef class _HexAstCall : public _HexAstPrimary {
 public:
   _HexAstCall(HexAstPrimary, HexAstArgList, bool);
 
+  virtual bool reprOK();
+
+  static _HexAstCall* create(HexAstPrimary, HexAstArgList, bool);
 private:
   HexAstPrimary _source;
   HexAstArgList _arglist;

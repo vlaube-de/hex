@@ -17,12 +17,14 @@
 
 #include "ast_integer_literal.h"
 #include "ast_unparsed.h"
+#include "ast_typed.h"
 #include "../../base/assert.h"
 
 
 _HexAstIntegerLiteral::_HexAstIntegerLiteral(
-  char type, char *value
-):_intval(0), _type(type), AstUnparsed(value)
+  ast_type_t type,
+  char *value
+):AstTyped(type), AstUnparsed(value)
 {
   this->reprOK();
 }
@@ -32,9 +34,17 @@ _HexAstIntegerLiteral::reprOK()
 {
   HEX_ASSERT(this->_value);
   HEX_ASSERT(
-    this->_type==INTEGER_LITERAL_DECIMAL ||
-    this->_type==INTEGER_LITERAL_BINARY  ||
-    this->_type==INTEGER_LITERAL_OCTAL   ||
-    this->_type==INTEGER_LITERAL_HEXADECIMAL
+    this->_type==AST_INTEGER_LITERAL_DECIMAL ||
+    this->_type==AST_INTEGER_LITERAL_BINARY  ||
+    this->_type==AST_INTEGER_LITERAL_OCTAL   ||
+    this->_type==AST_INTEGER_LITERAL_HEXADECIMAL
   );
+}
+
+HexAstIntegerLiteral
+_HexAstIntegerLiteral::create(ast_type_t type, char* value)
+{
+  HexAstIntegerLiteral obj = new _HexAstIntegerLiteral(type, value);
+  HEX_ASSERT(obj);
+  return obj;
 }

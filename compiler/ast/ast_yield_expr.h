@@ -21,13 +21,13 @@
 #ifndef _AST_YIELD_EXPR_H_
 #define _AST_YIELD_EXPR_H_
 
-
 typedef class _HexAstYieldExpr : public _HexAstExpr {
 public:
   _HexAstYieldExpr(HexAstExprList);
 
+  static _HexAstYieldExpr* create(HexAstExprList);
 private:
-  HexAstExprList _exprlist;
+  HexAstExprList _exprs;
 } * HexAstYieldExpr;
 
 #endif /* _AST_YIELD_EXPR_H_ */

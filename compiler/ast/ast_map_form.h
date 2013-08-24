@@ -16,16 +16,18 @@
  */
 
 #include "ast_map_field_list.h"
-#include "ast_node.h"
+#include "ast_primary.h"
 
 #ifndef _AST_MAP_FORM_H_
 #define _AST_MAP_FORM_H_
 
-typedef class _HexAstMapForm : public _HexAstNode {
+typedef class _HexAstMapForm : public _HexAstPrimary {
 public:
   _HexAstMapForm(HexAstMapFieldList);
 
   virtual bool reprOK();
+
+  static _HexAstMapForm* create(HexAstMapFieldList);
 
 private:
   HexAstMapFieldList _list;

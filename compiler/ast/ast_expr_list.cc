@@ -15,18 +15,3 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
-#include "ast_expr_list.h"
-#include "../../base/assert.h"
-
-
-_HexAstExprList::_HexAstExprList()
-{
-  this->reprOK();
-}
-
-bool
-_HexAstExprList::reprOK()
-{
-  HEX_ASSERT(this->_list);
-}

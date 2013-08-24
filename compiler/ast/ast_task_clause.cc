@@ -15,3 +15,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "ast_task_clause.h"
+
+_HexAstTaskClause::_HexAstTaskClause()
+{
+  this->reprOK();
+}
+
+bool
+_HexAstTaskClause::reprOK()
+{
+  return true;
+}

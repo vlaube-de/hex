@@ -17,9 +17,29 @@
 
 #include "ast_raise_stmt.h"
 #include "ast_expr.h"
+#include "../../base/assert.h"
 
 _HexAstRaiseStmt::_HexAstRaiseStmt(
-  HexAstExpr val
-):_val(val)
+  HexAstExpr expr
+):_expr(expr)
 {
+  this->reprOK();
+}
+
+bool
+_HexAstRaiseStmt::reprOK()
+{
+  HEX_ASSERT(this->_expr);
+}
+
+HexAstRaiseStmt
+_HexAstRaiseStmt::create(
+  HexAstExpr expr
+)
+{
+  HEX_ASSERT(expr);
+
+  HexAstRaiseStmt obj = new _HexAstRaiseStmt(expr);
+  HEX_ASSERT(obj);
+  return obj;
 }

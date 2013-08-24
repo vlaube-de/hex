@@ -19,6 +19,8 @@
 #include "ast_expr.h"
 #include "ast_target_list.h"
 #include "ast_comprehension.h"
+#include "../../base/assert.h"
+
 
 _HexAstComprehension::_HexAstComprehension(
   HexAstExprList dst,
@@ -27,4 +29,35 @@ _HexAstComprehension::_HexAstComprehension(
   HexAstExpr predicate
 ):_dst(dst), _candidates(candidates), _src(src), _predicate(predicate)
 {
+  this->reprOK();
+}
+
+bool
+_HexAstComprehension::reprOK()
+{
+  HEX_ASSERT(this->_candidates);
+  HEX_ASSERT(this->_src);
+}
+
+HexAstComprehension
+_HexAstComprehension::create(
+  HexAstExprList dst,
+  HexAstTargetList candidates,
+  HexAstExprList src,
+  HexAstExpr predicate
+)
+{
+  HEX_ASSERT(candidates);
+  HEX_ASSERT(src);
+
+  HexAstComprehension obj = new _HexAstComprehension(
+    dst,
+    candidates,
+    src,
+    predicate
+  );
+
+  HEX_ASSERT(obj);
+
+  return obj;
 }

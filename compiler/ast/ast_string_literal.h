@@ -17,22 +17,23 @@
 
 #include "ast_literal.h"
 #include "ast_unparsed.h"
+#include "ast_typed.h"
 
 #ifndef _AST_STRING_LITERAL_H_
 #define _AST_STRING_LITERAL_H_
 
 enum {
-  STRING_LITERAL_SINGLE_QUOTE=0x01,
-  STRING_LITERAL_DOUBLE_QUOTE=0x02
+  AST_STRING_LITERAL_SINGLE_QUOTE=0x01,
+  AST_STRING_LITERAL_DOUBLE_QUOTE=0x02
 };
 
-typedef class _HexAstStringLiteral : public _HexAstLiteral, AstUnparsed {
+typedef class _HexAstStringLiteral : public _HexAstLiteral, AstTyped, AstUnparsed {
 public:
-  _HexAstStringLiteral(char *value, char quote);
+  _HexAstStringLiteral(ast_type_t, char*);
 
   virtual bool reprOK();
-private:
-  char _quote;
+
+  static _HexAstStringLiteral* create(ast_type_t, char*);
 } * HexAstStringLiteral;
 
 #endif /* _AST_STRING_LITERAL_H_ */
