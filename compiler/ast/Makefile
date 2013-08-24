@@ -19,6 +19,9 @@ CC=gcc
 CXX=g++
 CFLAGS=-Wno-implicit -Wall -arch x86_64
 
+AR=ar
+ARFLAGS=rvs
+
 examiner.o: examiner.h examiner.cc
 	$(CXX) -c examiner.cc
 
@@ -361,9 +364,7 @@ ast_call.o: ast_primary.o ast_call.h ast_call.cc
 ast_attribute_ref.o: ast_primary.o ast_attribute_ref.h ast_attribute_ref.cc
 	$(CXX) -c ast_attribute_ref.cc
 
-
-
-all:	examiner.o	\
+obj:	examiner.o	\
 			ast_unparsed.o		\
 			ast_list_obj.o		\
 			ast_node.o				\
@@ -478,6 +479,11 @@ all:	examiner.o	\
 			ast_attribute_ref.o	\
 			ast_call.o	\
 
+libast.a: obj
+	$(AR) $(ARFLAGS) libast.a *.o
+
+all: libast.a
+
 
 clean:
-	rm *.gch *.o *.a *.out *.test
+	rm *.gch *.o *.a *.out *.test *.a
