@@ -15,8 +15,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-CC=gcc
-CXX=g++
+CC=cc
+CXX=c++
 CFLAGS=-Wno-implicit -Wall -arch x86_64
 
 GTEST_INCLUDE=-I/usr/local/gtest-1.6.0/include

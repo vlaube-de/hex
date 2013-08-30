@@ -16,7 +16,7 @@
 #
 
 CC=gcc
-CXX=g++
+CXX=c++
 CFLAGS=-Wno-implicit -Wall -arch x86_64
 
 GTEST_INCLUDE=-I/usr/local/gtest-1.6.0/include

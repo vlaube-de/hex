@@ -15,11 +15,12 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-CXX=g++
+CXX=c++
 CFLAGS=-Wno-implicit -w -g -arch x86_64
 
 LEX=lex
 BISON=bison
+BFLAGS=-y -d -t -v -g
 
 ast:
 	cd ast/ && make all
@@ -31,7 +32,7 @@ lex.yy.c: lexer.l
 	$(LEX) lexer.l
 
 parser.tab.hh: parser.y
-	$(BISON) -y -d -t -v -g parser.y -o parser.tab.cc
+	$(BISON) $(BFLAGS) parser.y -o parser.tab.cc
 
 hex_parser.o: ast.h lex.yy.c parser.tab.hh hex_parser.cc
 	$(CXX) $(CFLAGS) -c hex_parser.cc
