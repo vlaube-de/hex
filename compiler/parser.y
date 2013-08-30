@@ -145,7 +145,6 @@
 %token <string> RAISE
 %token <string> RESUME
 %token <string> RETURN
-%token <string> SELF
 %token <string> START
 %token <string> STOP
 %token <string> THEN

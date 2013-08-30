@@ -18,7 +18,7 @@
 #ifndef _AST_TYPED_H_
 #define _AST_TYPED_H_
 
-typedef unsigned char ast_type_t;
+typedef unsigned int ast_type_t;
 
 class AstTyped {
 public:

@@ -34,7 +34,7 @@ _HexAstCatchStmt::_HexAstCatchStmt(
 bool
 _HexAstCatchStmt::reprOK()
 {
-  HEX_ASSERT(this->_targets);
+  return true;
 }
 
 HexAstCatchStmt
@@ -44,8 +44,6 @@ _HexAstCatchStmt::create(
   HexAstStmtGroup stmts
 )
 {
-  HEX_ASSERT(targets);
-
   HexAstCatchStmt obj = new _HexAstCatchStmt(
     targets,
     alias,

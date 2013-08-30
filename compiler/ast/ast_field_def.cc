@@ -45,7 +45,6 @@ _HexAstFieldDef::create(
   HexAstValAtom val
 )
 {
-  HEX_ASSERT(decorators);
   HEX_ASSERT(name);
   HEX_ASSERT(val);
 

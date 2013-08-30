@@ -64,7 +64,6 @@ int new_line_returned = 0;
 "raise"                             EAT_TOKEN(yytext, RAISE);
 "resume"                            EAT_TOKEN(yytext, RESUME);
 "return"                            EAT_TOKEN(yytext, RETURN);
-"self"                              EAT_TOKEN(yytext, SELF);
 "start"                             EAT_TOKEN(yytext, START);
 "stop"                              EAT_TOKEN(yytext, STOP);
 "then"                              EAT_TOKEN(yytext, THEN);

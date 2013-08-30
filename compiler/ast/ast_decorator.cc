@@ -32,7 +32,6 @@ bool
 _HexAstDecorator::reprOK()
 {
   HEX_ASSERT(this->_name);
-  HEX_ASSERT(this->_args);
 }
 
 HexAstDecorator
