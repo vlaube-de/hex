@@ -26,6 +26,9 @@ LIBGTEST=/usr/lib/libgtest.a
 base:
 	cd ../ && make all
 
+assert_unittest.test: base assert_unittest.cc
+	$(CXX) $(LIBGTEST) ../unittest.o assert_unittest.cc -o assert_unittest.test
+
 utils_unittest.test: base utils_unittest.cc
 	$(CXX) $(LIBGTEST) ../utils.o ../unittest.o utils_unittest.cc -o utils_unittest.test
 
@@ -71,7 +74,8 @@ bitmap_unittest.test: base bitmap_unittest.cc
 bst_unittest.test: base bst_unittest.cc
 	$(CXX) $(LIBGTEST) ../bst.o ../unittest.o bst_unittest.cc -o bst_unittest.test
 
-all: utils_unittest.test	\
+all: assert_unittest.test	\
+	 utils_unittest.test	\
 	 memory_unittest.test	\
 	 strutils_unittest.test	\
 	 cutils_unittest.test  	\
