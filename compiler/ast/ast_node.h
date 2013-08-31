@@ -26,6 +26,9 @@
 #ifndef _AST_NODE_H_
 #define _AST_NODE_H_
 
+// Forward declaration of _AstVisitor.
+typedef class _AstVisitor * AstVisitor;
+
 typedef class _HexAstNode : public Examinable {
 public:
   _HexAstNode();
@@ -59,6 +62,11 @@ public:
   virtual bool isomorphic(void*);
   virtual bool equivalent(void*);
 
+  /* Declare all AST nodes to be friend with AstVisitor
+   * so that the visitor can access protected/private
+   * members of AST nodes.
+   */
+  friend class _AstVisitor;
 protected:
   hex_uuid_t _id;
 } * HexAstNode;
