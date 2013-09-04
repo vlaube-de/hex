@@ -19,6 +19,9 @@ CC=cc
 CXX=c++
 CFLAGS=-Wno-implicit -Wall -arch x86_64
 
+AR=ar
+ARFLAGS=rvs
+
 GTEST_INCLUDE=-I/usr/local/gtest-1.6.0/include
 LIBGTEST=/usr/lib/libgtest.a
 
@@ -70,7 +73,7 @@ bitmap.o: bitmap.h bitmap.c
 bst.o: bst.h bst.c
 	$(CC) $(CFLAGS) -c bst.h bst.c
 
-all: unittest.o \
+obj: unittest.o \
 	 utils.o    \
 	 memory.o   \
 	 strutils.o \
@@ -86,6 +89,11 @@ all: unittest.o \
 	 queue.o    \
 	 bitmap.o   \
 	 bst.o
+
+libbase.a: obj
+	$(AR) $(ARFLAGS) libbase.a *.o
+
+all: libbase.a
 
 clean:
 	rm *.gch *.o *.a *.out *.test
