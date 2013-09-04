@@ -24,7 +24,9 @@
 #include <sstream>
 #include "parser.tab.hh"
 #include "hex_parser.h"
+#include "ast.h"
 #include "../base/assert.h"
+#include "../base/c_str.h"
 
 
 /* Bring out the parser functions that live in C land. */
@@ -37,7 +39,7 @@ extern void yy_switch_to_buffer(YY_BUFFER_STATE);
 
 
 HexParser::HexParser(
-  const char *path
+  const c_str path
 ):_path(path)
 {
   HEX_ASSERT(this->_path);
@@ -47,7 +49,7 @@ int
 HexParser::parse()
 {
   int res;
-  char *content = this->read_file();
+  c_str content = this->_read_file();
 
   // prepare for parsing.
   YY_BUFFER_STATE buffer = yy_scan_string(content);
@@ -62,11 +64,17 @@ HexParser::parse()
 
   delete content;
 
+  // Get the root of the parse tree.
+  HexAstHexProgram root = NULL;
+  _HexAstHexProgram::get_parse_tree_root(&root);
+
+  HEX_ASSERT(root);
+
   return res;
 }
 
-char*
-HexParser::read_file()
+c_str
+HexParser::_read_file()
 {
   std::ifstream file(this->_path);
 
@@ -77,5 +85,5 @@ HexParser::read_file()
 
   std::string str = buffer.str();
 
-  return strdup(str.c_str());
+  return (c_str)strdup(str.c_str());
 }

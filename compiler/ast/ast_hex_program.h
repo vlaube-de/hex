@@ -31,8 +31,14 @@ public:
   virtual bool reprOK();
 
   static _HexAstHexProgram* create(HexAstStmtGroup);
+  static int get_parse_tree_root(_HexAstHexProgram**);
 private:
   HexAstStmtGroup _stmts;
+
+  static _HexAstHexProgram* _root;
+  static void set_parse_tree_root(_HexAstHexProgram**);
+
 } * HexAstHexProgram;
+
 
 #endif /* _AST_HEX_PROGRAM_H_ */

@@ -18,18 +18,20 @@
 
 /* HEX parser. */
 
+#include "../base/c_str.h"
+
 #ifndef _HEX_PARSER_H_
 #define _HEX_PARSER_H_
 
 class HexParser {
 public:
-  HexParser(const char *path);
+  HexParser(const c_str path);
 
   int parse();
 protected:
-  char* read_file();
+  c_str _read_file();
 
-  const char *_path;
+  const c_str _path;
 };
 
 #endif /* _HEX_PARSER_H_ */

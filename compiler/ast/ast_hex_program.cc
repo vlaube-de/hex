@@ -18,6 +18,10 @@
 #include "ast_hex_program.h"
 #include "ast_stmt_group.h"
 #include "../../base/assert.h"
+#include "../../base/memory.h"
+
+
+HexAstHexProgram _HexAstHexProgram::_root = NULL;
 
 _HexAstHexProgram::_HexAstHexProgram(
   HexAstStmtGroup stmts
@@ -39,5 +43,28 @@ _HexAstHexProgram::create(
 {
   HexAstHexProgram obj = new _HexAstHexProgram(stmts);
   HEX_ASSERT(obj);
+
+  _HexAstHexProgram::set_parse_tree_root(&obj);
+
   return obj;
+}
+
+int
+_HexAstHexProgram::get_parse_tree_root(HexAstHexProgram *dst)
+{
+  *dst = _root;
+  return 1;
+}
+
+void
+_HexAstHexProgram::set_parse_tree_root(HexAstHexProgram *root)
+{
+  // Free the root for the previous parse tree.
+  HEX_DELETE(_root);
+
+  // Make sure the root we are setting is not null.
+  HEX_ASSERT(*root);
+
+  // Set the root.
+  _root = *root;
 }
