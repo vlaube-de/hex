@@ -20,343 +20,343 @@
 
 
 HexAstIdentifier
-AstToStringVisitor::visit(HexAstIdentifier identifier)
+AstVisitor::visit(HexAstIdentifier identifier)
 {
   HEX_ASSERT(identifier);
   return identifier;
 }
 
 HexAstLiteral
-AstToStringVisitor::visit(HexAstLiteral literal)
+AstVisitor::visit(HexAstLiteral literal)
 {
   HEX_ASSERT(literal);
   return literal;
 }
 
 HexAstCall
-AstToStringVisitor::visit(HexAstCall call)
+AstVisitor::visit(HexAstCall call)
 {
   HEX_ASSERT(call);
   return call;
 }
 
 HexAstAttributeRef
-AstToStringVisitor::visit(HexAstAttributeRef ref)
+AstVisitor::visit(HexAstAttributeRef ref)
 {
-  HEXT_ASSERT(ref);
+  HEX_ASSERT(ref);
   return ref;
 }
 
 HexAstSliceItem
-AstToStringVisitor::visit(HexAstSliceItem item)
+AstVisitor::visit(HexAstSliceItem item)
 {
   HEX_ASSERT(item);
   return item;
 }
 
 HexAstSlicing
-AstToStringVisitor::visit(HexAstSlicing slicing)
+AstVisitor::visit(HexAstSlicing slicing)
 {
   HEX_ASSERT(slicing);
   return slicing;
 }
 
 HexAstTargetList
-AstToStringVisitor::visit(HexAstTargetList targets)
+AstVisitor::visit(HexAstTargetList targets)
 {
   HEX_ASSERT(targets);
   return targets;
 }
 
 HexAstName
-AstToStringVisitor::visit(HexAstName name)
+AstVisitor::visit(HexAstName name)
 {
   HEX_ASSERT(name);
   return name;
 }
 
 HexAstNegateExpr
-AstToStringVisitor::visit(HexAstNegateExpr expr)
+AstVisitor::visit(HexAstNegateExpr expr)
 {
   HEX_ASSERT(expr);
   return expr;
 }
 
 HexAstNotExpr
-AstToStringVisitor::visit(HexAstNotExpr expr)
+AstVisitor::visit(HexAstNotExpr expr)
 {
   HEX_ASSERT(expr);
   return expr;
 }
 
 HexAstBitwiseNotExpr
-AstToStringVisitor::visit(HexAstBitwiseNotExpr expr)
+AstVisitor::visit(HexAstBitwiseNotExpr expr)
 {
   HEX_ASSERT(expr);
   return expr;
 }
 
 HexAstIncrementExpr
-AstToStringVisitor::visit(HexAstIncrementExpr expr)
+AstVisitor::visit(HexAstIncrementExpr expr)
 {
   HEX_ASSERT(expr);
   return expr;
 }
 
 HexAstDecrementExpr
-AstToStringVisitor::visit(HexAstDecrementExpr expr)
+AstVisitor::visit(HexAstDecrementExpr expr)
 {
   HEX_ASSERT(expr);
   return expr;
 }
 
 HexAstExistentialExpr
-AstToStringVisitor::visit(HexAstExistentialExpr expr)
+AstVisitor::visit(HexAstExistentialExpr expr)
 {
   HEX_ASSERT(expr);
   return expr;
 }
 
 HexAstBinaryExpr
-_AstToStirngVisitor::visit(HexAstBinaryExpr expr)
+AstVisitor::visit(HexAstBinaryExpr expr)
 {
   HEX_ASSERT(expr);
   return expr;
 }
 
 HexAstConditionalExpr
-AstToStringVisitor::visit(HexAstConditionalExpr expr)
+AstVisitor::visit(HexAstConditionalExpr expr)
 {
   HEX_ASSERT(expr);
   return expr;
 }
 
 HexAstYieldExpr
-AstToStringVisitor::visit(HexAstYieldExpr expr)
+AstVisitor::visit(HexAstYieldExpr expr)
 {
   HEX_ASSERT(expr);
   return expr;
 }
 
 HexAstStringExpr
-AstToStringVisitor::visit(HexAstStringExpr expr)
+AstVisitor::visit(HexAstStringExpr expr)
 {
   HEX_ASSERT(expr);
   return expr;
 }
 
 HexAstParenForm
-AstToStringVisitor::visit(HexAstParenForm form)
+AstVisitor::visit(HexAstParenForm form)
 {
   HEX_ASSERT(form);
   return form; 
 }
 
-HexAstExpList
-AstToStringVisitor::visit(HexAstExprList exprlist)
+HexAstExprList
+AstVisitor::visit(HexAstExprList exprlist)
 {
   HEX_ASSERT(exprlist);
   return exprlist;
 }
 
 HexAstSimpleParamList
-AstToStringVisitor::visit(HexAstSimpleParamList params)
+AstVisitor::visit(HexAstSimpleParamList params)
 {
   HEX_ASSERT(params);
   return params;
 }
 
 HexAstKeywordVal
-AstToStringVisitor::visit(HexAstKeywordVal keyval)
+AstVisitor::visit(HexAstKeywordVal keyval)
 {
   HEX_ASSERT(keyval);
   return keyval;
 }
 
 HexAstKeywordValList
-AstToStringVisitor::visit(HexAstKeywordValList list)
+AstVisitor::visit(HexAstKeywordValList list)
 {
   HEX_ASSERT(list);
   return list;
 }
 
 HexAstParameterList
-AstToStringVisitor::visit(HexAstParameterList params)
+AstVisitor::visit(HexAstParameterList params)
 {
   HEX_ASSERT(params);
   return params;
 }
 
 HexAstValList
-AstToStringVisitor::visit(HexAstValList vallist)
+AstVisitor::visit(HexAstValList vallist)
 {
   HEX_ASSERT(vallist);
   return vallist;
 }
 
 HexAstValAtom
-AstToStringVisitor::visit(HexAstValAtom atom)
+AstVisitor::visit(HexAstValAtom atom)
 {
   HEX_ASSERT(atom);
   return atom;
 }
 
 HexAstArgList
-AstToStringVisitor::visit(HexAstArgList arglist)
+AstVisitor::visit(HexAstArgList arglist)
 {
   HEX_ASSERT(arglist);
   return arglist;
 }
 
 HexAstComprehension
-AstToStringVisitor::visit(HexAstComprehension comprehension)
+AstVisitor::visit(HexAstComprehension comprehension)
 {
   HEX_ASSERT(comprehension);
   return comprehension;
 }
 
 HexAstListForm
-AstToStringVisitor::visit(HexAstListForm form)
+AstVisitor::visit(HexAstListForm form)
 {
   HEX_ASSERT(form);
   return form;
 }
 
 HexAstFieldDef
-AstToStringVisitor::visit(HexAstFieldDef def)
+AstVisitor::visit(HexAstFieldDef def)
 {
   HEX_ASSERT(def);
   return def;
 }
 
 HexAstMapField
-AstToStringVisitor::visit(HexAstMapField field)
+AstVisitor::visit(HexAstMapField field)
 {
   HEX_ASSERT(field);
   return field;
 }
 
 HexAstMapFieldList
-AstToStringVisitor::visit(HexAstMapFieldList list)
+AstVisitor::visit(HexAstMapFieldList list)
 {
   HEX_ASSERT(list);
   return list;
 }
 
 HexAstMapForm
-AstToStringVisitor::visit(HexAstMapForm map)
+AstVisitor::visit(HexAstMapForm map)
 {
   HEX_ASSERT(map);
   return map;
 }
 
 HexAstFieldDefList
-AstToStringVisitor::visit(HexAstFieldDefList list)
+AstVisitor::visit(HexAstFieldDefList list)
 {
   HEX_ASSERT(list);
   return list;
 }
 
 HexAstDictForm
-AstToStringVisitor::visit(HexAstDictForm dict)
+AstVisitor::visit(HexAstDictForm dict)
 {
   HEX_ASSERT(dict);
   return dict;
 }
 
 HexAstDecorator
-AstToStringVisitor::visit(HexAstDecorator decorator)
+AstVisitor::visit(HexAstDecorator decorator)
 {
   HEX_ASSERT(decorator);
   return decorator;
 }
 
 HexAstDecoratorList
-AstToStringVisitor::visit(HexAstDecoratorList decorators)
+AstVisitor::visit(HexAstDecoratorList decorators)
 {
   HEX_ASSERT(decorators);
   return decorators;
 }
 
 HexAstOperator
-AstToStringVisitor::visit(HexAstOperator op)
+AstVisitor::visit(HexAstOperator op)
 {
   HEX_ASSERT(op); 
   return op;
 }
 
 HexAstAssignmentStmt
-AstToStringVisitor::visit(HexAstAssignmentStmt stmt)
+AstVisitor::visit(HexAstAssignmentStmt stmt)
 {
   HEX_ASSERT(stmt);
   return stmt;
 }
 
 HexAstUsingSrc
-AstToStringVisitor::visit(HexAstUsingSrc src)
+AstVisitor::visit(HexAstUsingSrc src)
 {
   HEX_ASSERT(src);
   return src;
 }
 
 HexAstUsingStmtDirect
-AstToStringVisitor::visit(HexAstUsingStmtDirect stmt)
+AstVisitor::visit(HexAstUsingStmtDirect stmt)
 {
   HEX_ASSERT(stmt);
   return stmt;
 }
 
 HexAstUsingStmtRelative
-AstToStringVisitor::visit(HexAstUsingStmtRelative stmt)
+AstVisitor::visit(HexAstUsingStmtRelative stmt)
 {
   HEX_ASSERT(stmt);
   return stmt;
 }
 
 HexAstElifStmt
-AstToStringVisitor::visit(HexAstElifStmt stmt)
+AstVisitor::visit(HexAstElifStmt stmt)
 {
   HEX_ASSERT(stmt);
   return stmt;
 }
 
-HexAstElifGroup
-AstToStringVisitor::visit(HexAstElifGroup group)
+HexAstElifStmtGroup
+AstVisitor::visit(HexAstElifStmtGroup group)
 {
   HEX_ASSERT(group);
   return group;
 }
 
 HexAstElseStmt
-AstToStringVisitor::visit(HexAstElseStmt stmt)
+AstVisitor::visit(HexAstElseStmt stmt)
 {
   HEX_ASSERT(stmt);
   return stmt;
 }
 
 HexAstIfStmt
-AstToStringVisitor::visit(HexAstIfStmt stmt)
+AstVisitor::visit(HexAstIfStmt stmt)
 {
   HEX_ASSERT(stmt);
   return stmt;
 }
 
 HexAstForStmt
-AstToStringVisitor::visit(HexAstForStmt stmt)
+AstVisitor::visit(HexAstForStmt stmt)
 {
   HEX_ASSERT(stmt);
   return stmt;
 }
 
 HexAstWithStmt
-AstToStringVisitor::visit(HexAstWithStmt stmt)
+AstVisitor::visit(HexAstWithStmt stmt)
 {
   HEX_ASSERT(stmt);
   return stmt;
 }
 
 HexAstLockStmt
-AstToStringVisitor::visit(HexAstLockStmt stmt)
+AstVisitor::visit(HexAstLockStmt stmt)
 {
   HEX_ASSERT(stmt);
   return stmt;
@@ -364,182 +364,182 @@ AstToStringVisitor::visit(HexAstLockStmt stmt)
 
 
 HexAstWhileStmt
-AstToStringVisitor::visit(HexAstWhileStmt stmt)
+AstVisitor::visit(HexAstWhileStmt stmt)
 {
   HEX_ASSERT(stmt);
   return stmt;
 }
 
 HexAstCatchStmt
-AstToStringVisitor::visit(HexAstCatchStmt stmt)
+AstVisitor::visit(HexAstCatchStmt stmt)
 {
   HEX_ASSERT(stmt);
   return stmt;
 }
 
 HexAstLambdaSimple
-AstToStringVisitor::visit(HexAstLambdaSimple lambda)
+AstVisitor::visit(HexAstLambdaSimple lambda)
 {
   HEX_ASSERT(lambda);
   return lambda;
 }
 
 HexAstLambdaComplex
-AstToStringVisitor::visit(HexAstLambdaComplex lambda)
+AstVisitor::visit(HexAstLambdaComplex lambda)
 {
   HEX_ASSERT(lambda);
   return lambda;
 }
 
 HexAstInputStmt
-AstToStringVisitor::visit(HexAstInputStmt stmt)
+AstVisitor::visit(HexAstInputStmt stmt)
 {
   HEX_ASSERT(stmt);
   return stmt;
 }
 
 HexAstOutputStmt
-AstToStringVisitor::visit(HexAstOutputStmt stmt)
+AstVisitor::visit(HexAstOutputStmt stmt)
 {
   HEX_ASSERT(stmt);
   return stmt;
 }
 
 HexAstTaskState
-AstToStringVisitor::visit(HexAstTaskState state)
+AstVisitor::visit(HexAstTaskState state)
 {
   HEX_ASSERT(state);
   return state;
 }
 
 HexAstConditionalPreposition
-AstToStringVisitor::visit(HexAstConditionalPrepositon preposition)
+AstVisitor::visit(HexAstConditionalPreposition preposition)
 {
   HEX_ASSERT(preposition); 
   return preposition;
 }
 
 HexAstConditionalClause
-AstToStringVisitor::visit(HexAstConditionalClause clause)
+AstVisitor::visit(HexAstConditionalClause clause)
 {
   HEX_ASSERT(clause);
   return clause;
 }
 
 HexAstStartClauseSingle
-AstToStringVisitor::visit(HexAstStartClauseSingle clause)
+AstVisitor::visit(HexAstStartClauseSingle clause)
 {
   HEX_ASSERT(clause);
   return clause;
 }
 
 HexAstStartClauseMultiple
-AstToStringVisitor::visit(HexAstClauseMultiple clause)
+AstVisitor::visit(HexAstStartClauseMultiple clause)
 {
   HEX_ASSERT(clause);
   return clause;
 }
 
 HexAstPauseClause
-AstToStringVisitor::visit(HexAstPauseClause clause)
+AstVisitor::visit(HexAstPauseClause clause)
 {
   HEX_ASSERT(clause);
   return clause;
 }
 
 HexAstResumeClause
-AstToStringVisitor::visit(HexAstResumeClause clause)
+AstVisitor::visit(HexAstResumeClause clause)
 {
   HEX_ASSERT(clause);
   return clause;
 }
 
 HexAstCancelClause
-AstToStringVisitor::visit(HexAstCancelClause clause)
+AstVisitor::visit(HexAstCancelClause clause)
 {
   HEX_ASSERT(clause);
   return clause;
 }
 
 HexAstConditionalDelayClause
-AstToStringVisitor::visit(HexAstDelayClause clause)
+AstVisitor::visit(HexAstConditionalDelayClause clause)
 {
   HEX_ASSERT(clause);
   return clause;
 }
 
 HexAstFixedDelayClause
-AstToStringVisitor::visit(HexAstFixedDelayClause clause)
+AstVisitor::visit(HexAstFixedDelayClause clause)
 {
   HEX_ASSERT(clause);
   return clause;
 }
 
 HexAstStopClause
-AstToStringVisitor::visit(HexAstStopClause clause)
+AstVisitor::visit(HexAstStopClause clause)
 {
   HEX_ASSERT(clause);
   return clause;
 }
 
 HexAstTaskDef
-AstToStringVisitor::visit(HexAstTaskDef def)
+AstVisitor::visit(HexAstTaskDef def)
 {
   HEX_ASSERT(def);
   return def;
 }
 
 HexAstAwaitStmt
-AstToStringVisitor::visit(HexAstAwaitStmt stmt)
+AstVisitor::visit(HexAstAwaitStmt stmt)
 {
   HEX_ASSERT(stmt);
   return stmt;
 }
 
 HexAstReturnStmt
-AstToStringVisitor::visit(HexAstReturnStmt stmt)
+AstVisitor::visit(HexAstReturnStmt stmt)
 {
   HEX_ASSERT(stmt);
   return stmt;
 }
 
 HexAstBreakStmt
-AstToStringVisitor::visit(HexAstBreakStmt stmt)
+AstVisitor::visit(HexAstBreakStmt stmt)
 {
   HEX_ASSERT(stmt);
   return stmt;
 }
 
 HexAstContinueStmt
-AstToStringVisitor::visit(HexAstContinueStmt stmt)
+AstVisitor::visit(HexAstContinueStmt stmt)
 {
   HEX_ASSERT(stmt);
   return stmt;
 }
 
 HexAstRaiseStmt
-AstToStringVisitor::visit(HexAstRaiseStmt stmt)
+AstVisitor::visit(HexAstRaiseStmt stmt)
 {
   HEX_ASSERT(stmt); 
   return stmt;
 }
 
 HexAstExprListStmt
-AstToStringVisitor::visit(HexAstExprListStmt stmt)
+AstVisitor::visit(HexAstExprListStmt stmt)
 {
   HEX_ASSERT(stmt);
   return stmt;
 }
 
 HexAstStmtGroup
-AstToStringVisitor::visit(HexAstStmtGroup group)
+AstVisitor::visit(HexAstStmtGroup group)
 {
   HEX_ASSERT(group);
   return group;
 }
 
 HexAstHexProgram
-AstToStringVisitor::visit(HexAstHexProgram program)
+AstVisitor::visit(HexAstHexProgram program)
 {
   HEX_ASSERT(program);
   return program;

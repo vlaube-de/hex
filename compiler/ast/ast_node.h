@@ -26,8 +26,8 @@
 #ifndef _AST_NODE_H_
 #define _AST_NODE_H_
 
-// Forward declaration of _AstVisitor.
-typedef class _AstVisitor * AstVisitor;
+// Forward declaration of AstVisitor.
+class AstVisitor;
 
 typedef class _HexAstNode : public Examinable {
 public:
@@ -66,7 +66,7 @@ public:
    * so that the visitor can access protected/private
    * members of AST nodes.
    */
-  friend class _AstVisitor;
+  friend class AstVisitor;
 protected:
   hex_uuid_t _id;
 } * HexAstNode;

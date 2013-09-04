@@ -27,7 +27,7 @@ public:
   virtual HexAstIdentifier visit(HexAstIdentifier);
   virtual HexAstLiteral visit(HexAstLiteral);
   virtual HexAstCall visit(HexAstCall);
-  virtual HexAstAttributeDef visit(HexAstAttributeDef);
+  virtual HexAstAttributeRef visit(HexAstAttributeRef);
   virtual HexAstSliceItem visit(HexAstSliceItem);
   virtual HexAstSlicing visit(HexAstSlicing);
   virtual HexAstTargetList visit(HexAstTargetList);
@@ -43,7 +43,7 @@ public:
   virtual HexAstYieldExpr visit(HexAstYieldExpr);
   virtual HexAstStringExpr visit(HexAstStringExpr);
   virtual HexAstParenForm visit(HexAstParenForm);
-  virtual HexAstExpList visit(HexAstExprList);
+  virtual HexAstExprList visit(HexAstExprList);
   virtual HexAstSimpleParamList visit(HexAstSimpleParamList);
   virtual HexAstKeywordVal visit(HexAstKeywordVal);
   virtual HexAstKeywordValList visit(HexAstKeywordValList);
@@ -70,7 +70,7 @@ public:
   virtual HexAstUsingStmtDirect visit(HexAstUsingStmtDirect);
   virtual HexAstUsingStmtRelative visit(HexAstUsingStmtRelative);
   virtual HexAstElifStmt visit(HexAstElifStmt);
-  virtual HexAstElifGroup visit(HexAstElifGroup);
+  virtual HexAstElifStmtGroup visit(HexAstElifStmtGroup);
   virtual HexAstElseStmt visit(HexAstElseStmt);
   virtual HexAstIfStmt visit(HexAstIfStmt);
   virtual HexAstForStmt visit(HexAstForStmt);
@@ -86,14 +86,15 @@ public:
   virtual HexAstInputStmt visit(HexAstInputStmt);
   virtual HexAstOutputStmt visit(HexAstOutputStmt);
   virtual HexAstTaskState visit(HexAstTaskState);
-  virtual HexAstConditionalPreposition visit(HexAstConditionalPrepositon);
+  virtual HexAstConditionalPreposition visit(HexAstConditionalPreposition);
   virtual HexAstConditionalClause visit(HexAstConditionalClause);
   virtual HexAstStartClauseSingle visit(HexAstStartClauseSingle);
   virtual HexAstStartClauseMultiple visit(HexAstStartClauseMultiple);
   virtual HexAstPauseClause visit(HexAstPauseClause);
   virtual HexAstResumeClause visit(HexAstResumeClause);
   virtual HexAstCancelClause visit(HexAstCancelClause);
-  virtual HexAstDelayClause visit(HexAstDelayClause);
+  virtual HexAstConditionalDelayClause visit(HexAstConditionalDelayClause);
+  virtual HexAstFixedDelayClause visit(HexAstFixedDelayClause);
   virtual HexAstStopClause visit(HexAstStopClause);
   virtual HexAstTaskDef visit(HexAstTaskDef);
   virtual HexAstAwaitStmt visit(HexAstAwaitStmt);
