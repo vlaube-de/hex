@@ -17,6 +17,7 @@
 
 #include "ast_node.h"
 #include "ast_typed.h"
+#include "visitor/ast_visitor.h"
 
 #ifndef _AST_VAL_ATOM_H_
 #define _AST_VAL_ATOM_H_
@@ -32,9 +33,13 @@ public:
 
   virtual bool reprOK();
 
+  void* core();
+
+  virtual void accept(AstVisitor*);
+
   static _HexAstValAtom* create(void*, ast_type_t);
 private:
-  void* _val;
+  void* _core;
 } * HexAstValAtom;
 
 #endif /* _AST_VAL_ATOM_H_ */

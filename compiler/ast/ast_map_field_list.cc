@@ -16,6 +16,7 @@
  */
 
 #include "ast_map_field_list.h"
+#include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
 
 _HexAstMapFieldList::_HexAstMapFieldList()
@@ -27,4 +28,10 @@ bool
 _HexAstMapFieldList::reprOK()
 {
   HEX_ASSERT(this->_list);
+}
+
+void
+_HexAstMapFieldList::accept(AstVisitor* visitor)
+{
+  visitor->visit(this);
 }

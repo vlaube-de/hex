@@ -17,6 +17,7 @@
 
 #include "ast_map_field.h"
 #include "ast_list_obj.h"
+#include "visitor/ast_visitor.h"
 
 #ifndef _AST_MAP_FIELD_LIST_H_
 #define _AST_MAP_FIELD_LIST_H_
@@ -26,6 +27,8 @@ public:
   _HexAstMapFieldList();
 
   virtual bool reprOK();
+
+  virtual void accept(AstVisitor*);
 } * HexAstMapFieldList;
 
 #endif /* _AST_MAP_FIELD_LIST_H_ */

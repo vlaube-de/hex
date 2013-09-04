@@ -16,6 +16,7 @@
  */
 
 #include "ast_keyword_val_list.h"
+#include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
 
 _HexAstKeywordValList::_HexAstKeywordValList()
@@ -27,4 +28,10 @@ bool
 _HexAstKeywordValList::reprOK()
 {
   HEX_ASSERT(this->_list);
+}
+
+void
+_HexAstKeywordValList::accept(AstVisitor* visitor)
+{
+  visitor->visit(this);
 }

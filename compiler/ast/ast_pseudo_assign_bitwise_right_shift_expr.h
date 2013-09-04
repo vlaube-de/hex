@@ -17,6 +17,7 @@
 
 #include "ast_expr.h"
 #include "ast_pseudo_assign_expr.h"
+#include "visitor/ast_visitor.h"
 
 #ifndef _AST_PSEUDO_ASSIGN_BITWISE_RIGHT_SHIFT_EXPR_H_
 #define _AST_PSEUDO_ASSIGN_BITWISE_RIGHT_SHIFT_EXPR_H_
@@ -24,6 +25,8 @@
 typedef class _HexAstPseudoAssignBitwiseRightShiftExpr : public _HexAstPseudoAssignExpr {
 public:
   _HexAstPseudoAssignBitwiseRightShiftExpr(HexAstExpr, HexAstExpr);
+
+  virtual void accept(AstVisitor*);
 } * HexAstPseudoAssignBitwiseRightShiftExpr;
 
 #endif /* _AST_PSEUDO_ASSIGN_BITWISE_RIGHT_SHIFT_EXPR_H_ */

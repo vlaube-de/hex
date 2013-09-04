@@ -17,6 +17,7 @@
 
 
 #include "ast_not_in_expr.h"
+#include "visitor/ast_visitor.h"
 
 
 _HexAstNotInExpr::_HexAstNotInExpr(
@@ -24,4 +25,10 @@ _HexAstNotInExpr::_HexAstNotInExpr(
   HexAstExpr right
 ): _HexAstBinaryExpr(left, right)
 {
+}
+
+void
+_HexAstNotInExpr::accept(AstVisitor* visitor)
+{
+  visitor->visit(this);
 }

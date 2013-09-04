@@ -17,6 +17,7 @@
 
 
 #include "ast_minus_expr.h"
+#include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
 
 _HexAstMinusExpr::_HexAstMinusExpr(
@@ -26,16 +27,8 @@ _HexAstMinusExpr::_HexAstMinusExpr(
 {
 }
 
-void*
-_HexAstMinusExpr::create(
-  HexAstExpr left,
-  HexAstExpr right
-)
+void
+_HexAstMinusExpr::accept(AstVisitor* visitor)
 {
-  HEX_ASSERT(left);
-  HEX_ASSERT(right);
-
-  HexAstMinusExpr obj = new _HexAstMinusExpr(left, right);
-  HEX_ASSERT(obj);
-  return obj;
+  visitor->visit(this);
 }

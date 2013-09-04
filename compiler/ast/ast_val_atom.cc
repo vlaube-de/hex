@@ -17,12 +17,13 @@
 
 #include "ast_val_atom.h"
 #include "ast_typed.h"
+#include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
 
 _HexAstValAtom::_HexAstValAtom(
-  void *val,
+  void *core,
   ast_type_t type
-): _val(val), AstTyped(type)
+): _core(core), AstTyped(type)
 {
   this->reprOK();
 }
@@ -36,16 +37,28 @@ _HexAstValAtom::reprOK()
   );
 }
 
+void*
+_HexAstValAtom::core()
+{
+  return this->_core;
+}
+
+void
+_HexAstValAtom::accept(AstVisitor* visitor)
+{
+  visitor->visit(this);
+}
+
 HexAstValAtom
 _HexAstValAtom::create(
-  void* val,
+  void* core,
   ast_type_t type
 )
 {
-  HEX_ASSERT(val);
+  HEX_ASSERT(core);
   HEX_ASSERT(type);
 
-  HexAstValAtom obj = new _HexAstValAtom(val, type);
+  HexAstValAtom obj = new _HexAstValAtom(core, type);
   HEX_ASSERT(obj);
   return obj;
 }

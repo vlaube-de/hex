@@ -17,6 +17,7 @@
 
 #include "ast_compound_stmt.h"
 #include "ast_stmt_group.h"
+#include "visitor/ast_visitor.h"
 
 #ifndef _AST_AWAIT_STMT_H_
 #define _AST_AWAIT_STMT_H_
@@ -26,6 +27,8 @@ public:
   _HexAstAwaitStmt(HexAstStmtGroup);
 
   virtual bool reprOK();
+
+  virtual void accept(AstVisitor*);
 
   static _HexAstAwaitStmt* create(HexAstStmtGroup);
 } * HexAstAwaitStmt;

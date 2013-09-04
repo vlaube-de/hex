@@ -15,32 +15,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <functional>
-#include "ast_visitor.h"
-#include "../../base/strbuf.h"
-#include "../../base/c_str.h"
+#include "ast_task_def.h"
+#include "visitor/ast_visitor.h"
 
-#ifndef _AST_TOSTRING_VISITOR_H_
-#define _AST_TOSTRING_VISITOR_H_
+_HexAstTaskDef::_HexAstTaskDef()
+{
+}
 
-class AstToStringVisitor : public AstVisitor {
-public:
-  AstToStringVisitor();
-
-protected:
-  Strbuf _strbuf;
-
-  void append(c_str);
-
-  template<typename C, typename T>
-  void visit(AstListObj<C, T>, std::functional<void()>);
-
-  std::functional<void()> _commaF;
-  std::functional<void()> _dotF;
-  std::functional<void()> _newlineF;
-  std::functional<void()> _inputF;
-  std::functional<void()> _outputF;
-
-};
-
-#endif /* _AST_TOSTRING_VISITOR_H_ */
+void
+_HexAstTaskDef::accept(AstVisitor* visitor)
+{
+  visitor->visit(this);
+}

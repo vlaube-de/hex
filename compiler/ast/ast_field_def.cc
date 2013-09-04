@@ -21,7 +21,9 @@
 #include "ast_val_atom.h"
 #include "ast_identifier.h"
 #include "ast_decorator_list.h"
+#include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
+
 
 _HexAstFieldDef::_HexAstFieldDef(
   HexAstDecoratorList decorators,
@@ -36,6 +38,30 @@ _HexAstFieldDef::reprOK()
 {
   HEX_ASSERT(this->_name);
   HEX_ASSERT(this->_val);
+}
+
+HexAstDecoratorList
+_HexAstFieldDef::decorators()
+{
+  return this->_decorators;
+}
+
+HexAstIdentifier
+_HexAstFieldDef::name()
+{
+  return this->_name;
+}
+
+HexAstValAtom
+_HexAstFieldDef::val()
+{
+  return this->_val;
+}
+
+void
+_HexAstFieldDef::accept(AstVisitor* visitor)
+{
+  visitor->visit(this);
 }
 
 HexAstFieldDef

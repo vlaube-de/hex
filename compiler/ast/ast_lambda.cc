@@ -19,12 +19,19 @@
 #include "ast_parameter_list.h"
 #include "ast_stmt_group.h"
 #include "ast_expr.h"
+#include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
 
 _HexAstLambda::_HexAstLambda(
   HexAstParameterList params
 ):_params(params)
 {
+}
+
+HexAstParameterList
+_HexAstLambda::params()
+{
+  return this->_params;
 }
 
 _HexAstLambdaSimple::_HexAstLambdaSimple(
@@ -39,6 +46,18 @@ bool
 _HexAstLambdaSimple::reprOK()
 {
   HEX_ASSERT(this->_expr);
+}
+
+HexAstExpr
+_HexAstLambdaSimple::expr()
+{
+  return this->_expr;
+}
+
+void
+_HexAstLambdaSimple::accept(AstVisitor* visitor)
+{
+  visitor->visit(this);
 }
 
 HexAstLambdaSimple
@@ -71,6 +90,18 @@ bool
 _HexAstLambdaComplex::reprOK()
 {
   return true;
+}
+
+HexAstStmtGroup
+_HexAstLambdaComplex::stmts()
+{
+  return this->_stmts;
+}
+
+void
+_HexAstLambdaComplex::accept(AstVisitor* visitor)
+{
+  visitor->visit(this);
 }
 
 HexAstLambdaComplex

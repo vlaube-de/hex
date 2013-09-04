@@ -16,6 +16,7 @@
  */
 
 #include "ast_node.h"
+#include "visitor/ast_visitor.h"
 
 #ifndef _AST_CONDITIONAL_PREPOSITION_H_
 #define _AST_CONDITIONAL_PREPOSITION_H_
@@ -31,6 +32,10 @@ public:
   _HexAstConditionalPreposition(HexAstConditionalPrepositionEnum);
 
   virtual bool reprOK();
+
+  HexAstConditionalPrepositionEnum preposition();
+
+  virtual void accept(AstVisitor*);
 
   static _HexAstConditionalPreposition* create(HexAstConditionalPrepositionEnum);
 private:

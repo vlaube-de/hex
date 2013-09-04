@@ -17,6 +17,7 @@
 
 
 #include "ast_commutative_binary_expr.h"
+#include "visitor/ast_visitor.h"
 
 #ifndef _AST_AND_EXPR_H_
 #define _AST_AND_EXPR_H_
@@ -25,6 +26,8 @@
 typedef class _HexAstAndExpr : public _HexAstCommutativeBinaryExpr {
 public:
   _HexAstAndExpr(HexAstExpr, HexAstExpr);
+
+  virtual void accept(AstVisitor*);
 } * HexAstAndExpr;
 
 #endif /* _AST_AND_EXPR_H_ */

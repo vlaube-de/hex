@@ -19,6 +19,7 @@
 #include "ast_expr.h"
 #include "ast_target_list.h"
 #include "ast_comprehension.h"
+#include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
 
 
@@ -37,6 +38,36 @@ _HexAstComprehension::reprOK()
 {
   HEX_ASSERT(this->_candidates);
   HEX_ASSERT(this->_src);
+}
+
+HexAstExprList
+_HexAstComprehension::dst()
+{
+  return this->_dst;
+}
+
+HexAstTargetList
+_HexAstComprehension::candidates()
+{
+  return this->_candidates;
+}
+
+HexAstExprList
+_HexAstComprehension::src()
+{
+  return this->_src;
+}
+
+HexAstExpr
+_HexAstComprehension::predicate()
+{
+  return this->_predicate;
+}
+
+void
+_HexAstComprehension::accept(AstVisitor* visitor)
+{
+  visitor->visit(this);
 }
 
 HexAstComprehension

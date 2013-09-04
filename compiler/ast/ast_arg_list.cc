@@ -19,7 +19,9 @@
 #include "ast_val_list.h"
 #include "ast_identifier.h"
 #include "ast_keyword_val_list.h"
+#include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
+
 
 _HexAstArgList::_HexAstArgList(
   HexAstValList valList,
@@ -40,6 +42,12 @@ _HexAstArgList::reprOK()
     this->_args ||
     this->_kwargs
   );
+}
+
+void
+_HexAstArgList::accept(AstVisitor* visitor)
+{
+  visitor->visit(this);
 }
 
 HexAstArgList

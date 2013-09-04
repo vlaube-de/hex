@@ -18,10 +18,17 @@
 #include "ast_expr.h"
 #include "ast_pseudo_assign_expr.h"
 #include "ast_pseudo_assign_div_expr.h"
+#include "visitor/ast_visitor.h"
 
 _HexAstPseudoAssignDivideExpr::_HexAstPseudoAssignDivideExpr(
   HexAstExpr left,
   HexAstExpr right
 ):_HexAstPseudoAssignExpr(left, right)
 {
+}
+
+void
+_HexAstPseudoAssignDivideExpr::accept(AstVisitor* visitor)
+{
+  visitor->visit(this);
 }

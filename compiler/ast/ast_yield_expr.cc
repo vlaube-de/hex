@@ -19,12 +19,25 @@
 #include "ast_expr.h"
 #include "ast_expr_list.h"
 #include "ast_yield_expr.h"
+#include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
 
 _HexAstYieldExpr::_HexAstYieldExpr(
   HexAstExprList exprs
 ): _exprs(exprs)
 {
+}
+
+HexAstExprList
+_HexAstYieldExpr::exprs()
+{
+  return this->_exprs;
+}
+
+void
+_HexAstYieldExpr::accept(AstVisitor* visitor)
+{
+  visitor->visit(this);
 }
 
 HexAstYieldExpr

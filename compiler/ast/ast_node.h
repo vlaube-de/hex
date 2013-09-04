@@ -22,12 +22,11 @@
 
 #include "examinable.h"
 #include "../../base/uuid.h"
+#include "visitor/ast_visitor.h"
 
 #ifndef _AST_NODE_H_
 #define _AST_NODE_H_
 
-// Forward declaration of AstVisitor.
-class AstVisitor;
 
 typedef class _HexAstNode : public Examinable {
 public:
@@ -62,11 +61,9 @@ public:
   virtual bool isomorphic(void*);
   virtual bool equivalent(void*);
 
-  /* Declare all AST nodes to be friend with AstVisitor
-   * so that the visitor can access protected/private
-   * members of AST nodes.
-   */
-  friend class AstVisitor;
+  /* Visitor pattern. */
+  virtual void accept(AstVisitor*)=0;
+
 protected:
   hex_uuid_t _id;
 } * HexAstNode;

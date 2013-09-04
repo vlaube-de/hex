@@ -18,6 +18,7 @@
 #include "ast_node.h"
 #include "ast_expr.h"
 #include "ast_val_atom.h"
+#include "visitor/ast_visitor.h"
 
 #ifndef _AST_MAP_FIELD_H_
 #define _AST_MAP_FIELD_H_
@@ -27,6 +28,11 @@ public:
   _HexAstMapField(HexAstExpr, HexAstValAtom);
 
   virtual bool reprOK();
+
+  HexAstExpr key();
+  HexAstValAtom val();
+
+  virtual void accept(AstVisitor*);
 
   static _HexAstMapField* create(HexAstExpr, HexAstValAtom);
 private:

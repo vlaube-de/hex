@@ -17,6 +17,7 @@
 
 #include "ast_continue_stmt.h"
 #include "ast_expr.h"
+#include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
 
 _HexAstContinueStmt::_HexAstContinueStmt(
@@ -30,6 +31,18 @@ bool
 _HexAstContinueStmt::reprOK()
 {
   return true;
+}
+
+HexAstExpr
+_HexAstContinueStmt::predicate()
+{
+  return this->_predicate;
+}
+
+void
+_HexAstContinueStmt::accept(AstVisitor* visitor)
+{
+  visitor->visit(this);
 }
 
 HexAstContinueStmt

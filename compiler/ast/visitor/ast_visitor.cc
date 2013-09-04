@@ -16,7 +16,8 @@
  */
 
 #include "ast_visitor.h"
-#include "../../base/assert.h"
+#include "../ast.h"
+#include "../../../base/assert.h"
 
 
 HexAstIdentifier
@@ -26,8 +27,22 @@ AstVisitor::visit(HexAstIdentifier identifier)
   return identifier;
 }
 
-HexAstLiteral
-AstVisitor::visit(HexAstLiteral literal)
+HexAstIntegerLiteral
+AstVisitor::visit(HexAstIntegerLiteral literal)
+{
+  HEX_ASSERT(literal);
+  return literal;
+}
+
+HexAstFloatLiteral
+AstVisitor::visit(HexAstFloatLiteral literal)
+{
+  HEX_ASSERT(literal);
+  return literal;
+}
+
+HexAstStringLiteral
+AstVisitor::visit(HexAstStringLiteral literal)
 {
   HEX_ASSERT(literal);
   return literal;
@@ -117,8 +132,169 @@ AstVisitor::visit(HexAstExistentialExpr expr)
   return expr;
 }
 
-HexAstBinaryExpr
-AstVisitor::visit(HexAstBinaryExpr expr)
+HexAstAddExpr
+AstVisitor::visit(HexAstAddExpr expr)
+{
+  HEX_ASSERT(expr);
+  return expr;
+}
+
+HexAstMinusExpr
+AstVisitor::visit(HexAstMinusExpr expr)
+{
+  HEX_ASSERT(expr);
+  return expr;
+}
+
+HexAstMultiplyExpr
+AstVisitor::visit(HexAstMultiplyExpr expr)
+{
+  HEX_ASSERT(expr);
+  return expr;
+}
+
+HexAstDivideExpr
+AstVisitor::visit(HexAstDivideExpr expr)
+{
+  HEX_ASSERT(expr);
+  return expr;
+}
+
+HexAstModulusExpr
+AstVisitor::visit(HexAstModulusExpr expr)
+{
+  HEX_ASSERT(expr);
+  return expr;
+}
+
+HexAstPowerExpr
+AstVisitor::visit(HexAstPowerExpr expr)
+{
+  HEX_ASSERT(expr);
+  return expr; 
+}
+
+HexAstBitwiseAndExpr
+AstVisitor::visit(HexAstBitwiseAndExpr expr)
+{
+  HEX_ASSERT(expr);
+  return expr;
+}
+
+HexAstBitwiseOrExpr
+AstVisitor::visit(HexAstBitwiseOrExpr expr)
+{
+  HEX_ASSERT(expr);
+  return expr;
+}
+
+HexAstBitwiseXorExpr
+AstVisitor::visit(HexAstBitwiseXorExpr expr)
+{
+  HEX_ASSERT(expr);
+  return expr;
+}
+
+HexAstBitwiseShiftLeftExpr
+AstVisitor::visit(HexAstBitwiseShiftLeftExpr expr)
+{
+  HEX_ASSERT(expr);
+  return expr;
+}
+
+HexAstBitwiseShiftRightExpr
+AstVisitor::visit(HexAstBitwiseShiftRightExpr expr)
+{
+  HEX_ASSERT(expr);
+  return expr;
+}
+
+HexAstEqualsExpr
+AstVisitor::visit(HexAstEqualsExpr expr)
+{
+  HEX_ASSERT(expr);
+  return expr;
+}
+
+HexAstNotEqualExpr
+AstVisitor::visit(HexAstNotEqualExpr expr)
+{
+  HEX_ASSERT(expr);
+  return expr;
+}
+
+HexAstIsExpr
+AstVisitor::visit(HexAstIsExpr expr)
+{
+  HEX_ASSERT(expr);
+  return expr;
+}
+
+HexAstLessThanExpr
+AstVisitor::visit(HexAstLessThanExpr expr)
+{
+  HEX_ASSERT(expr);
+  return expr;
+}
+
+HexAstGreaterThanExpr
+AstVisitor::visit(HexAstGreaterThanExpr expr)
+{
+  HEX_ASSERT(expr);
+  return expr;
+}
+
+HexAstGreaterOrEqualsExpr
+AstVisitor::visit(HexAstGreaterOrEqualsExpr expr)
+{
+  HEX_ASSERT(expr);
+  return expr;
+}
+
+HexAstLessOrEqualsExpr
+AstVisitor::visit(HexAstLessOrEqualsExpr expr)
+{
+  HEX_ASSERT(expr);
+  return expr;
+}
+
+HexAstInExpr
+AstVisitor::visit(HexAstInExpr expr)
+{
+  HEX_ASSERT(expr);
+  return expr;
+}
+
+HexAstNotInExpr
+AstVisitor::visit(HexAstNotInExpr expr)
+{
+  HEX_ASSERT(expr);
+  return expr;
+}
+
+HexAstAndExpr
+AstVisitor::visit(HexAstAndExpr expr)
+{
+  HEX_ASSERT(expr);
+  return expr;
+}
+
+HexAstOrExpr
+AstVisitor::visit(HexAstOrExpr expr)
+{
+  HEX_ASSERT(expr);
+  return expr;
+}
+
+HexAstInclusiveRangeExpr
+AstVisitor::visit(HexAstInclusiveRangeExpr expr)
+{
+  HEX_ASSERT(expr);
+  return expr;
+}
+
+HexAstExclusiveRangeExpr
+AstVisitor::visit(HexAstExclusiveRangeExpr expr)
 {
   HEX_ASSERT(expr);
   return expr;
@@ -126,6 +302,76 @@ AstVisitor::visit(HexAstBinaryExpr expr)
 
 HexAstConditionalExpr
 AstVisitor::visit(HexAstConditionalExpr expr)
+{
+  HEX_ASSERT(expr);
+  return expr;
+}
+
+HexAstPseudoAssignPlusExpr
+AstVisitor::visit(HexAstPseudoAssignPlusExpr expr)
+{
+  HEX_ASSERT(expr);
+  return expr;
+}
+
+HexAstPseudoAssignMinusExpr
+AstVisitor::visit(HexAstPseudoAssignMinusExpr expr)
+{
+  HEX_ASSERT(expr);
+  return expr;
+}
+
+HexAstPseudoAssignMultiplyExpr
+AstVisitor::visit(HexAstPseudoAssignMultiplyExpr expr)
+{
+  HEX_ASSERT(expr);
+  return expr;
+}
+
+HexAstPseudoAssignDivideExpr
+AstVisitor::visit(HexAstPseudoAssignDivideExpr expr)
+{
+  HEX_ASSERT(expr);
+  return expr;
+}
+
+HexAstPseudoAssignModulusExpr
+AstVisitor::visit(HexAstPseudoAssignModulusExpr expr)
+{
+  HEX_ASSERT(expr);
+  return expr;
+}
+
+HexAstPseudoAssignBitwiseAndExpr
+AstVisitor::visit(HexAstPseudoAssignBitwiseAndExpr expr)
+{
+  HEX_ASSERT(expr);
+  return expr;
+}
+
+HexAstPseudoAssignBitwiseOrExpr
+AstVisitor::visit(HexAstPseudoAssignBitwiseOrExpr expr)
+{
+  HEX_ASSERT(expr);
+  return expr;
+}
+
+HexAstPseudoAssignBitwiseXorExpr
+AstVisitor::visit(HexAstPseudoAssignBitwiseXorExpr expr)
+{
+  HEX_ASSERT(expr);
+  return expr;
+}
+
+HexAstPseudoAssignBitwiseLeftShiftExpr
+AstVisitor::visit(HexAstPseudoAssignBitwiseLeftShiftExpr expr)
+{
+  HEX_ASSERT(expr);
+  return expr;
+}
+
+HexAstPseudoAssignBitwiseRightShiftExpr
+AstVisitor::visit(HexAstPseudoAssignBitwiseRightShiftExpr expr)
 {
   HEX_ASSERT(expr);
   return expr;

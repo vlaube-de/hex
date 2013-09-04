@@ -20,6 +20,7 @@
 #include "ast_task_state.h"
 #include "ast_expr_list.h"
 #include "ast_conditional_clause.h"
+#include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
 
 _HexAstCancelClause::_HexAstCancelClause(
@@ -35,6 +36,24 @@ _HexAstCancelClause::reprOK()
 {
   HEX_ASSERT(this->_exprs);
   HEX_ASSERT(this->_condition);
+}
+
+HexAstExprList
+_HexAstCancelClause::exprs()
+{
+  return this->_exprs;
+}
+
+HexAstConditionalClause
+_HexAstCancelClause::condition()
+{
+  return this->_condition;
+}
+
+void
+_HexAstCancelClause::accept(AstVisitor* visitor)
+{
+  visitor->visit(this);
 }
 
 HexAstCancelClause

@@ -18,10 +18,17 @@
 #include "ast_expr.h"
 #include "ast_pseudo_assign_expr.h"
 #include "ast_pseudo_assign_bitwise_xor_expr.h"
+#include "visitor/ast_visitor.h"
 
 _HexAstPseudoAssignBitwiseXorExpr::_HexAstPseudoAssignBitwiseXorExpr(
   HexAstExpr left,
   HexAstExpr right
 ):_HexAstPseudoAssignExpr(left, right)
 {
+}
+
+void
+_HexAstPseudoAssignBitwiseXorExpr::accept(AstVisitor* visitor)
+{
+  visitor->visit(this);
 }

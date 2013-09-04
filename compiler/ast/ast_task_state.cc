@@ -16,6 +16,7 @@
  */
 
 #include "ast_task_state.h"
+#include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
 
 
@@ -30,6 +31,18 @@ bool
 _HexAstTaskState::reprOK()
 {
   HEX_ASSERT(this->_state);
+}
+
+HexAstTaskStateEnum
+_HexAstTaskState::state()
+{
+  return this->_state;
+}
+
+void
+_HexAstTaskState::accept(AstVisitor* visitor)
+{
+  visitor->visit(this);
 }
 
 HexAstTaskState

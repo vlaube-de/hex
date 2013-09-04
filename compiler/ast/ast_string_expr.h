@@ -18,6 +18,7 @@
 #include "ast_expr.h"
 #include "ast_expr_list.h"
 #include "ast_string_literal.h"
+#include "visitor/ast_visitor.h"
 
 #ifndef _AST_STRING_EXPR_H_
 #define _AST_STRING_EXPR_H_
@@ -27,6 +28,11 @@ public:
   _HexAstStringExpr(HexAstStringLiteral, HexAstExprList);
 
   virtual bool reprOK();
+
+  HexAstStringLiteral string();
+  HexAstExprList exprs();
+
+  virtual void accept(AstVisitor*);
 
   static _HexAstStringExpr* create(HexAstStringLiteral, HexAstExprList);
 private:

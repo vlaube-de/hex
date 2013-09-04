@@ -19,6 +19,7 @@
 #include "ast_compound_stmt.h"
 #include "ast_expr_list.h"
 #include "ast_stmt_group.h"
+#include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
 
 _HexAstLockStmt::_HexAstLockStmt(
@@ -33,6 +34,18 @@ bool
 _HexAstLockStmt::reprOK()
 {
   HEX_ASSERT(this->_exprs);
+}
+
+HexAstExprList
+_HexAstLockStmt::exprs()
+{
+  return this->_exprs;
+}
+
+void
+_HexAstLockStmt::accept(AstVisitor* visitor)
+{
+  visitor->visit(this);
 }
 
 HexAstLockStmt

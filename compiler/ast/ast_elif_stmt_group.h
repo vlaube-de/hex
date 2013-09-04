@@ -18,11 +18,16 @@
 #include "ast_elif_stmt.h"
 #include "ast_list_obj.h"
 #include "ast_node.h"
+#include "visitor/ast_visitor.h"
 
 #ifndef _AST_ELIF_STMT_GROUP_H_
 #define _AST_ELIF_STMT_GROUP_H_
 
 typedef class _HexAstElifStmtGroup : public AstListObj<_HexAstElifStmtGroup, HexAstElifStmt>, _HexAstNode {
+public:
+  _HexAstElifStmtGroup();
+
+  virtual void accept(AstVisitor*);
 } * HexAstElifStmtGroup;
 
 #endif /* _AST_ELIF_STMT_GROUP_H_ */

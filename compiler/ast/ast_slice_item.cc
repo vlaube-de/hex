@@ -17,6 +17,7 @@
 
 #include "ast_expr.h"
 #include "ast_slice_item.h"
+#include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
 
 _HexAstSliceItem::_HexAstSliceItem(
@@ -27,6 +28,11 @@ _HexAstSliceItem::_HexAstSliceItem(
 {
 }
 
+void
+_HexAstSliceItem::accept(AstVisitor* visitor)
+{
+  visitor->visit(this);
+}
 
 HexAstSliceItem
 _HexAstSliceItem::create(

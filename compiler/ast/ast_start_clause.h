@@ -20,6 +20,7 @@
 #include "ast_target_list.h"
 #include "ast_conditional_clause.h"
 #include "ast_identifier.h"
+#include "visitor/ast_visitor.h"
 
 #ifndef _AST_START_CLAUSE_H_
 #define _AST_START_CLAUSE_H_
@@ -27,6 +28,9 @@
 typedef class _HexAstStartClause : public _HexAstTaskClause {
 public:
   _HexAstStartClause(HexAstIdentifier, HexAstConditionalClause);
+
+  HexAstIdentifier alias();
+  HexAstConditionalClause condition();
 
 protected:
   HexAstIdentifier _alias;
@@ -40,6 +44,10 @@ public:
 
   virtual bool reprOK();
 
+  HexAstName target();
+
+  virtual void accept(AstVisitor*);
+
   static _HexAstStartClauseSingle* create(HexAstName, HexAstIdentifier, HexAstConditionalClause);
 private:
   HexAstName _target;
@@ -51,6 +59,10 @@ public:
   _HexAstStartClauseMultiple(HexAstTargetList, HexAstIdentifier, HexAstConditionalClause);
 
   virtual bool reprOK();
+
+  HexAstTargetList targets();
+
+  virtual void accept(AstVisitor*);
 
   static _HexAstStartClauseMultiple* create(HexAstTargetList, HexAstIdentifier, HexAstConditionalClause);
 private:

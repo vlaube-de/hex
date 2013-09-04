@@ -20,12 +20,22 @@
 #ifndef _AST_VISITOR_H_
 #define _AST_VISITOR_H_
 
-#include "../ast.h"
+// forward declaration.
+class AstVisitor;
+
+#ifdef _HEX_AST_
+  #include "../ast.h"
+#endif /* _HEX_AST_ */
 
 class AstVisitor {
 public:
+
+#ifdef _HEX_AST_
+
   virtual HexAstIdentifier visit(HexAstIdentifier);
-  virtual HexAstLiteral visit(HexAstLiteral);
+  virtual HexAstIntegerLiteral visit(HexAstIntegerLiteral);
+  virtual HexAstFloatLiteral visit(HexAstFloatLiteral);
+  virtual HexAstStringLiteral visit(HexAstStringLiteral);
   virtual HexAstCall visit(HexAstCall);
   virtual HexAstAttributeRef visit(HexAstAttributeRef);
   virtual HexAstSliceItem visit(HexAstSliceItem);
@@ -38,8 +48,41 @@ public:
   virtual HexAstIncrementExpr visit(HexAstIncrementExpr);
   virtual HexAstDecrementExpr visit(HexAstDecrementExpr);
   virtual HexAstExistentialExpr visit(HexAstExistentialExpr);
-  virtual HexAstBinaryExpr visit(HexAstBinaryExpr);
+  virtual HexAstAddExpr visit(HexAstAddExpr);
+  virtual HexAstMinusExpr visit(HexAstMinusExpr);
+  virtual HexAstMultiplyExpr visit(HexAstMultiplyExpr);
+  virtual HexAstDivideExpr visit(HexAstDivideExpr);
+  virtual HexAstModulusExpr visit(HexAstModulusExpr);
+  virtual HexAstPowerExpr visit(HexAstPowerExpr);
+  virtual HexAstBitwiseAndExpr visit(HexAstBitwiseAndExpr);
+  virtual HexAstBitwiseOrExpr visit(HexAstBitwiseOrExpr);
+  virtual HexAstBitwiseXorExpr visit(HexAstBitwiseXorExpr);
+  virtual HexAstBitwiseShiftLeftExpr visit(HexAstBitwiseShiftLeftExpr);
+  virtual HexAstBitwiseShiftRightExpr visit(HexAstBitwiseShiftRightExpr);
+  virtual HexAstEqualsExpr visit(HexAstEqualsExpr);
+  virtual HexAstNotEqualExpr visit(HexAstNotEqualExpr);
+  virtual HexAstIsExpr visit(HexAstIsExpr);
+  virtual HexAstLessThanExpr visit(HexAstLessThanExpr);
+  virtual HexAstGreaterThanExpr visit(HexAstGreaterThanExpr);
+  virtual HexAstGreaterOrEqualsExpr visit(HexAstGreaterOrEqualsExpr);
+  virtual HexAstLessOrEqualsExpr visit(HexAstLessOrEqualsExpr);
+  virtual HexAstInExpr visit(HexAstInExpr);
+  virtual HexAstNotInExpr visit(HexAstNotInExpr);
+  virtual HexAstAndExpr visit(HexAstAndExpr);
+  virtual HexAstOrExpr visit(HexAstOrExpr);
+  virtual HexAstInclusiveRangeExpr visit(HexAstInclusiveRangeExpr);
+  virtual HexAstExclusiveRangeExpr visit(HexAstExclusiveRangeExpr);
   virtual HexAstConditionalExpr visit(HexAstConditionalExpr);
+  virtual HexAstPseudoAssignPlusExpr visit(HexAstPseudoAssignPlusExpr);
+  virtual HexAstPseudoAssignMinusExpr visit(HexAstPseudoAssignMinusExpr);
+  virtual HexAstPseudoAssignMultiplyExpr visit(HexAstPseudoAssignMultiplyExpr);
+  virtual HexAstPseudoAssignDivideExpr visit(HexAstPseudoAssignDivideExpr);
+  virtual HexAstPseudoAssignModulusExpr visit(HexAstPseudoAssignModulusExpr);
+  virtual HexAstPseudoAssignBitwiseAndExpr visit(HexAstPseudoAssignBitwiseAndExpr);
+  virtual HexAstPseudoAssignBitwiseOrExpr visit(HexAstPseudoAssignBitwiseOrExpr);
+  virtual HexAstPseudoAssignBitwiseXorExpr visit(HexAstPseudoAssignBitwiseXorExpr);
+  virtual HexAstPseudoAssignBitwiseLeftShiftExpr visit(HexAstPseudoAssignBitwiseLeftShiftExpr);
+  virtual HexAstPseudoAssignBitwiseRightShiftExpr visit(HexAstPseudoAssignBitwiseRightShiftExpr);
   virtual HexAstYieldExpr visit(HexAstYieldExpr);
   virtual HexAstStringExpr visit(HexAstStringExpr);
   virtual HexAstParenForm visit(HexAstParenForm);
@@ -105,6 +148,11 @@ public:
   virtual HexAstExprListStmt visit(HexAstExprListStmt);
   virtual HexAstStmtGroup visit(HexAstStmtGroup);
   virtual HexAstHexProgram visit(HexAstHexProgram);
+
+#else
+  virtual void* visit(void*);
+
+#endif /* _HEX_AST_ */
 };
 
 #endif /* _AST_VISITOR_H_ */

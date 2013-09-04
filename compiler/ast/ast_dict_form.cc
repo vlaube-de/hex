@@ -17,6 +17,7 @@
 
 #include "ast_dict_form.h"
 #include "ast_typed.h"
+#include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
 
 _HexAstDictForm::_HexAstDictForm(
@@ -35,6 +36,18 @@ _HexAstDictForm::reprOK()
     this->_type==AST_DICT_FORM_EXPLICIT ||
     this->_type==AST_DICT_FORM_COMPREHENSION
   );
+}
+
+void*
+_HexAstDictForm::core()
+{
+  return this->_core;
+}
+
+void
+_HexAstDictForm::accept(AstVisitor* visitor)
+{
+  visitor->visit(this);
 }
 
 HexAstDictForm

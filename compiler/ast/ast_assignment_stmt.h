@@ -19,6 +19,7 @@
 #include "ast_primary.h"
 #include "ast_decorator_list.h"
 #include "ast_typed.h"
+#include "visitor/ast_visitor.h"
 
 #ifndef _AST_ASSIGNMENT_STMT_H_
 #define _AST_ASSIGNMENT_STMT_H_
@@ -34,6 +35,13 @@ public:
   _HexAstAssignmentStmt(HexAstDecoratorList, HexAstPrimary, void*, ast_type_t, bool);
 
   virtual bool reprOK();
+
+  HexAstDecoratorList decorators();
+  HexAstPrimary dst();
+  void* src();
+  bool defer();
+
+  virtual void accept(AstVisitor*);
 
   static _HexAstAssignmentStmt* create(HexAstDecoratorList, HexAstPrimary, void*, ast_type_t, bool);
 private:

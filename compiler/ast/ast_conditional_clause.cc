@@ -19,6 +19,7 @@
 #include "ast_node.h"
 #include "ast_task_state.h"
 #include "ast_expr_list.h"
+#include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
 
 _HexAstConditionalClause::_HexAstConditionalClause(
@@ -33,15 +34,33 @@ _HexAstConditionalClause::_HexAstConditionalClause(
 bool
 _HexAstConditionalClause::reprOK()
 {
+  HEX_ASSERT(this->_preposition);
   HEX_ASSERT(this->_exprs);
   HEX_ASSERT(this->_state);
-  /*
-  HEX_ASSERT(
-    this->_preposition==AST_TASK_CONDITIONAL_PREPOSITION_BEFORE ||
-    this->_preposition==AST_TASK_CONDITIONAL_PREPOSITION_AFTER ||
-    this->_preposition==AST_TASK_CONDITIONAL_PREPOSITION_WHEN
-  );
-  */
+}
+
+HexAstConditionalPreposition
+_HexAstConditionalClause::preposition()
+{
+  return this->_preposition;
+}
+
+HexAstExprList
+_HexAstConditionalClause::exprs()
+{
+  return this->_exprs;
+}
+
+HexAstTaskState
+_HexAstConditionalClause::state()
+{
+  return this->_state;
+}
+
+void
+_HexAstConditionalClause::accept(AstVisitor* visitor)
+{
+  visitor->visit(this);
 }
 
 HexAstConditionalClause

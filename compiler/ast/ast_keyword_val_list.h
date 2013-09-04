@@ -18,6 +18,7 @@
 #include "ast_node.h"
 #include "ast_keyword_val.h"
 #include "ast_list_obj.h"
+#include "visitor/ast_visitor.h"
 
 #ifndef _AST_KEYWORD_VAL_LIST_H_
 #define _AST_KEYWORD_VAL_LIST_H_
@@ -27,6 +28,8 @@ public:
   _HexAstKeywordValList();
 
   virtual bool reprOK();
+
+  virtual void accept(AstVisitor*);
 } * HexAstKeywordValList;
 
 #endif /* _AST_KEYWORD_VAL_LIST_H_ */

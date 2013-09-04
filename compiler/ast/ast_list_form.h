@@ -17,6 +17,7 @@
 
 #include "ast_primary.h"
 #include "ast_typed.h"
+#include "visitor/ast_visitor.h"
 
 #ifndef _AST_LIST_FORM_H_
 #define _AST_LIST_FORM_H_
@@ -32,6 +33,10 @@ public:
   _HexAstListForm(void*, ast_type_t);
 
   virtual bool reprOK();
+
+  void* core();
+
+  virtual void accept(AstVisitor*);
 
   static _HexAstListForm* create(void*, ast_type_t);
 private:

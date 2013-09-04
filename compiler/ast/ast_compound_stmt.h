@@ -25,6 +25,7 @@ typedef class _HexAstCompoundStmt : public _HexAstStmt {
 public:
   _HexAstCompoundStmt(HexAstStmtGroup);
 
+  HexAstStmtGroup stmts();
 protected:
   HexAstStmtGroup _stmts;
 } * HexAstCompoundStmt;

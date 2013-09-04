@@ -18,6 +18,7 @@
 #include "ast_task_clause.h"
 #include "ast_expr_list.h"
 #include "ast_conditional_clause.h"
+#include "visitor/ast_visitor.h"
 
 #ifndef _AST_STOP_CLAUSE_H_
 #define _AST_STOP_CLAUSE_H_
@@ -27,6 +28,11 @@ public:
   _HexAstStopClause(HexAstExprList, HexAstConditionalClause);
 
   virtual bool reprOK();
+
+  HexAstExprList exprs();
+  HexAstConditionalClause condition();
+
+  virtual void accept(AstVisitor* visitor);
 
   static _HexAstStopClause* create(HexAstExprList, HexAstConditionalClause);
 private:

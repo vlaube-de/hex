@@ -18,6 +18,7 @@
 #include "ast_decorator.h"
 #include "ast_name.h"
 #include "ast_arg_list.h"
+#include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
 
 _HexAstDecorator::_HexAstDecorator(
@@ -32,6 +33,24 @@ bool
 _HexAstDecorator::reprOK()
 {
   HEX_ASSERT(this->_name);
+}
+
+HexAstName
+_HexAstDecorator::name()
+{
+  return this->_name;
+}
+
+HexAstArgList
+_HexAstDecorator::args()
+{
+  return this->_args;
+}
+
+void
+_HexAstDecorator::accept(AstVisitor* visitor)
+{
+  visitor->visit(this);
 }
 
 HexAstDecorator

@@ -22,6 +22,7 @@
 #include "ast_identifier.h"
 #include "ast_name.h"
 #include "ast_typed.h"
+#include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
 
 _HexAstUsingStmtDirect::_HexAstUsingStmtDirect(
@@ -36,6 +37,24 @@ bool
 _HexAstUsingStmtDirect::reprOK()
 {
   HEX_ASSERT(this->_target);
+}
+
+HexAstName
+_HexAstUsingStmtDirect::target()
+{
+  return this->_target;
+}
+
+HexAstIdentifier
+_HexAstUsingStmtDirect::alias()
+{
+  return this->_alias;
+}
+
+void
+_HexAstUsingStmtDirect::accept(AstVisitor* visitor)
+{
+  visitor->visit(this);
 }
 
 HexAstUsingStmtDirect
@@ -69,6 +88,30 @@ _HexAstUsingStmtRelative::reprOK()
   if(this->_type==AST_USING_STMT_RELATIVE_TARGET) {
     HEX_ASSERT(this->_targets);
   }
+}
+
+HexAstTargetList
+_HexAstUsingStmtRelative::targets()
+{
+  return this->_targets;
+}
+
+HexAstUsingSrc
+_HexAstUsingStmtRelative::src()
+{
+  return this->_src;
+}
+
+HexAstIdentifier
+_HexAstUsingStmtRelative::alias()
+{
+  return this->_alias;
+}
+
+void
+_HexAstUsingStmtRelative::accept(AstVisitor* visitor)
+{
+  visitor->visit(this);
 }
 
 HexAstUsingStmtRelative

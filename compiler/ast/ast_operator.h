@@ -16,6 +16,7 @@
  */
 
 #include "ast_node.h"
+#include "visitor/ast_visitor.h"
 
 #ifndef _AST_OPERATOR_H_
 #define _AST_OPERATOR_H_
@@ -60,6 +61,10 @@ public:
   _HexAstOperator(HexAstOperatorEnum);
 
   virtual bool reprOK();
+
+  HexAstOperatorEnum op();
+
+  virtual void accept(AstVisitor*);
 
   static _HexAstOperator* create(HexAstOperatorEnum);
 private:

@@ -1,3 +1,6 @@
+compiler/ast/ast.h
+compiler/parser.tab.cc
+compiler/parser.tab.hh
 *.a
 *.o
 *.so
@@ -7,7 +10,7 @@
 *.test
 *.output
 *.vcg
-
+*.dot
 *.tab.c
 *.tab.h
 *.yy.c

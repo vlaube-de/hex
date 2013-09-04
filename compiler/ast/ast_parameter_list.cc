@@ -19,6 +19,7 @@
 #include "ast_simple_param_list.h"
 #include "ast_keyword_val_list.h"
 #include "ast_identifier.h"
+#include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
 
 _HexAstParameterList::_HexAstParameterList(
@@ -35,6 +36,36 @@ bool
 _HexAstParameterList::reprOK()
 {
   return true;
+}
+
+HexAstSimpleParamList
+_HexAstParameterList::simple_params()
+{
+  return this->_simple_params;
+}
+
+HexAstKeywordValList
+_HexAstParameterList::keyword_vals()
+{
+  return this->_keyword_vals;
+}
+
+HexAstIdentifier
+_HexAstParameterList::args()
+{
+  return this->_args;
+}
+
+HexAstIdentifier
+_HexAstParameterList::kwargs()
+{
+  return this->_kwargs;
+}
+
+void
+_HexAstParameterList::accept(AstVisitor* visitor)
+{
+  visitor->visit(this);
 }
 
 HexAstParameterList

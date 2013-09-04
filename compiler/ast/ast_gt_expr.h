@@ -18,6 +18,7 @@
 
 #include "ast_binary_expr.h"
 #include "ast_expr.h"
+#include "visitor/ast_visitor.h"
 
 #ifndef _AST_GT_EXPR_H_
 #define _AST_GT_EXPR_H_
@@ -25,6 +26,8 @@
 typedef class _HexAstGreaterThanExpr : public _HexAstBinaryExpr {
 public:
   _HexAstGreaterThanExpr(HexAstExpr, HexAstExpr);
+
+  virtual void accept(AstVisitor*);
 } * HexAstGreaterThanExpr;
 
 

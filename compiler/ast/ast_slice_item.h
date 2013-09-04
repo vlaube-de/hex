@@ -17,6 +17,7 @@
 
 #include "ast_node.h"
 #include "ast_expr.h"
+#include "visitor/ast_visitor.h"
 
 #ifndef _AST_SLICE_ITEM_H_
 #define _AST_SLICE_ITEM_H_
@@ -24,6 +25,8 @@
 typedef class _HexAstSliceItem : public _HexAstNode {
 public:
   _HexAstSliceItem(HexAstExpr, HexAstExpr, HexAstExpr);
+
+  virtual void accept(AstVisitor*);
 
   static _HexAstSliceItem* create(HexAstExpr, HexAstExpr, HexAstExpr); 
 private:

@@ -20,6 +20,7 @@
 #include "ast_expr_list.h"
 #include "ast_expr.h"
 #include "ast_stmt_group.h"
+#include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
 
 _HexAstForStmt::_HexAstForStmt(
@@ -38,6 +39,30 @@ _HexAstForStmt::reprOK()
   HEX_ASSERT(this->_targets);
   HEX_ASSERT(this->_exprs);
   HEX_ASSERT(this->_stmts);
+}
+
+HexAstTargetList
+_HexAstForStmt::targets()
+{
+  return this->_targets;
+}
+
+HexAstExprList
+_HexAstForStmt::exprs()
+{
+  return this->_exprs;
+}
+
+HexAstExpr
+_HexAstForStmt::predicate()
+{
+  return this->_predicate;
+}
+
+void
+_HexAstForStmt::accept(AstVisitor* visitor)
+{
+  visitor->visit(this);
 }
 
 HexAstForStmt

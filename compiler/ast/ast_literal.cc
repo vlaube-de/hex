@@ -17,7 +17,6 @@
 
 #include "ast_literal.h"
 
-
 _HexAstLiteral::_HexAstLiteral()
 {
 }

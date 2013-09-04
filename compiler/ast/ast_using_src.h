@@ -18,6 +18,7 @@
 #include "ast_node.h"
 #include "ast_name.h"
 #include "ast_typed.h"
+#include "visitor/ast_visitor.h"
 
 #ifndef _AST_USING_SRC_H_
 #define _AST_USING_SRC_H_
@@ -32,6 +33,10 @@ public:
   _HexAstUsingSrc(HexAstName, ast_type_t);
 
   virtual bool reprOK();
+
+  HexAstName name();
+
+  virtual void accept(AstVisitor*);
 
   static _HexAstUsingSrc* create(HexAstName, ast_type_t);
 private:

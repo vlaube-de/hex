@@ -20,6 +20,7 @@
 #include "ast_target_list.h"
 #include "ast_stmt_group.h"
 #include "ast_identifier.h"
+#include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
 
 _HexAstCatchStmt::_HexAstCatchStmt(
@@ -35,6 +36,24 @@ bool
 _HexAstCatchStmt::reprOK()
 {
   return true;
+}
+
+HexAstTargetList
+_HexAstCatchStmt::targets()
+{
+  return this->_targets;
+}
+
+HexAstIdentifier
+_HexAstCatchStmt::alias()
+{
+  return this->_alias;
+}
+
+void
+_HexAstCatchStmt::accept(AstVisitor* visitor)
+{
+  visitor->visit(this);
 }
 
 HexAstCatchStmt

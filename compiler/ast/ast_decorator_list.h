@@ -18,6 +18,7 @@
 #include "ast_node.h"
 #include "ast_list_obj.h"
 #include "ast_decorator.h"
+#include "visitor/ast_visitor.h"
 
 #ifndef _AST_DECORATOR_LIST_H_
 #define _AST_DECORATOR_LIST_H_
@@ -27,6 +28,8 @@ public:
   _HexAstDecoratorList();
 
   virtual bool reprOK();
+
+  virtual void accept(AstVisitor*);
 } * HexAstDecoratorList;
 
 #endif /* _AST_DECORATOR_LIST_H_ */

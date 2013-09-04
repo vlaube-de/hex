@@ -17,11 +17,17 @@
 
 
 #include "ast_in_range_expr.h"
-
+#include "visitor/ast_visitor.h"
 
 _HexAstInclusiveRangeExpr::_HexAstInclusiveRangeExpr(
   HexAstExpr left,
   HexAstExpr right
 ): _HexAstBinaryExpr(left, right)
 {
+}
+
+void
+_HexAstInclusiveRangeExpr::accept(AstVisitor* visitor)
+{
+  visitor->visit(this);
 }

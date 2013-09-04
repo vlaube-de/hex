@@ -18,6 +18,7 @@
 
 #include "ast_conditional_expr.h"
 #include "ast_expr.h"
+#include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
 
 
@@ -36,6 +37,30 @@ _HexAstConditionalExpr::reprOK()
   HEX_ASSERT(this->_predicate);
   HEX_ASSERT(this->_consequent);
   HEX_ASSERT(this->_alternate);
+}
+
+HexAstExpr
+_HexAstConditionalExpr::predicate()
+{
+  return this->_predicate;
+}
+
+HexAstExpr
+_HexAstConditionalExpr::consequent()
+{
+  return this->_consequent;
+}
+
+HexAstExpr
+_HexAstConditionalExpr::alternate()
+{
+  return this->_alternate;
+}
+
+void
+_HexAstConditionalExpr::accept(AstVisitor* visitor)
+{
+  visitor->visit(this);
 }
 
 HexAstConditionalExpr

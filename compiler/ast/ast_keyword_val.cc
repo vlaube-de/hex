@@ -18,6 +18,7 @@
 #include "ast_keyword_val.h"
 #include "ast_identifier.h"
 #include "ast_val_atom.h"
+#include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
 
 
@@ -34,6 +35,24 @@ _HexAstKeywordVal::reprOK()
 {
   HEX_ASSERT(this->_key);
   HEX_ASSERT(this->_val);
+}
+
+HexAstIdentifier
+_HexAstKeywordVal::key()
+{
+  return this->_key;
+}
+
+HexAstValAtom
+_HexAstKeywordVal::val()
+{
+  return this->_val;
+}
+
+void
+_HexAstKeywordVal::accept(AstVisitor* visitor)
+{
+  visitor->visit(this);
 }
 
 HexAstKeywordVal

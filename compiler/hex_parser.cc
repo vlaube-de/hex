@@ -24,7 +24,7 @@
 #include <sstream>
 #include "parser.tab.hh"
 #include "hex_parser.h"
-#include "ast.h"
+#include "ast/ast.h"
 #include "../base/assert.h"
 #include "../base/c_str.h"
 

@@ -17,6 +17,7 @@
 
 #include "ast_map_form.h"
 #include "ast_map_field_list.h"
+#include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
 
 _HexAstMapForm::_HexAstMapForm(
@@ -30,6 +31,18 @@ bool
 _HexAstMapForm::reprOK()
 {
   HEX_ASSERT(this->_list);
+}
+
+HexAstMapFieldList
+_HexAstMapForm::list()
+{
+  return this->_list;
+}
+
+void
+_HexAstMapForm::accept(AstVisitor* visitor)
+{
+  visitor->visit(this);
 }
 
 HexAstMapForm

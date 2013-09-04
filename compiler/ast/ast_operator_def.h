@@ -18,6 +18,7 @@
 #include "ast_attribute_def.h"
 #include "ast_operator.h"
 #include "ast_lambda.h"
+#include "visitor/ast_visitor.h"
 
 #ifndef _AST_OPERATOR_DEF_H_
 #define _AST_OPERATOR_DEF_H_
@@ -27,6 +28,11 @@ public:
   _HexAstOperatorDef(HexAstOperator op, HexAstLambda);
 
   virtual bool reprOK();
+
+  HexAstOperator op();
+  HexAstLambda lambda();
+
+  virtual void accept(AstVisitor*);
 
   static _HexAstOperatorDef* create(HexAstOperator, HexAstLambda);
 private:

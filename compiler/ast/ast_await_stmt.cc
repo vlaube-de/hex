@@ -17,8 +17,8 @@
 
 #include "ast_await_stmt.h"
 #include "ast_stmt_group.h"
+#include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
-
 
 _HexAstAwaitStmt::_HexAstAwaitStmt(
   HexAstStmtGroup stmts
@@ -31,6 +31,12 @@ bool
 _HexAstAwaitStmt::reprOK()
 {
   return true;
+}
+
+void
+_HexAstAwaitStmt::accept(AstVisitor* visitor)
+{
+  visitor->visit(this);
 }
 
 HexAstAwaitStmt

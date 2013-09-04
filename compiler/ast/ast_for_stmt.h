@@ -20,6 +20,7 @@
 #include "ast_expr_list.h"
 #include "ast_expr.h"
 #include "ast_stmt_group.h"
+#include "visitor/ast_visitor.h"
 
 #ifndef _AST_FOR_STMT_H_
 #define _AST_FOR_STMT_H_
@@ -29,6 +30,12 @@ public:
   _HexAstForStmt(HexAstTargetList, HexAstExprList, HexAstExpr, HexAstStmtGroup);
 
   virtual bool reprOK();
+
+  HexAstTargetList targets();
+  HexAstExprList exprs();
+  HexAstExpr predicate();
+
+  virtual void accept(AstVisitor*);
 
   static _HexAstForStmt* create(HexAstTargetList, HexAstExprList, HexAstExpr, HexAstStmtGroup);
 private:

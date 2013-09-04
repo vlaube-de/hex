@@ -20,7 +20,7 @@
 
 #include <stdio.h>
 #include "yacc_extern.h"
-#include "ast.h"
+#include "ast/ast.h"
 
 #define YYDEBUG 1
 #define YYERROR_VERBOSE
@@ -823,7 +823,7 @@ comparison_expr
   | expr NEQ_OP expr                      { $$ = _HexAstBinaryExpr::create<_HexAstNotEqualExpr>($1, $3); }
   | expr IS expr                          { $$ = _HexAstBinaryExpr::create<_HexAstIsExpr>($1, $3); } 
   | expr LESS_OP expr                     { $$ = _HexAstBinaryExpr::create<_HexAstLessThanExpr>($1, $3); }
-  | expr GREATER_OP expr                  { $$ = _HexAstBinaryExpr::create<_HexAstGreaterOrEqualsExpr>($1, $3); }
+  | expr GREATER_OP expr                  { $$ = _HexAstBinaryExpr::create<_HexAstGreaterThanExpr>($1, $3); }
   | expr LEQ_OP expr                      { $$ = _HexAstBinaryExpr::create<_HexAstLessOrEqualsExpr>($1, $3); }
   | expr GEQ_OP expr                      { $$ = _HexAstBinaryExpr::create<_HexAstGreaterOrEqualsExpr>($1, $3); }
   | expr IN expr                          { $$ = _HexAstBinaryExpr::create<_HexAstInExpr>($1, $3); }

@@ -15,3 +15,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "ast_expr_list.h"
+#include "visitor/ast_visitor.h"
+
+
+_HexAstExprList::_HexAstExprList()
+{
+}
+
+void
+_HexAstExprList::accept(AstVisitor* visitor)
+{
+  visitor->visit(this);
+}

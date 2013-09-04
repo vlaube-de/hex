@@ -17,6 +17,7 @@
 
 #include "ast_raise_stmt.h"
 #include "ast_expr.h"
+#include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
 
 _HexAstRaiseStmt::_HexAstRaiseStmt(
@@ -30,6 +31,18 @@ bool
 _HexAstRaiseStmt::reprOK()
 {
   HEX_ASSERT(this->_expr);
+}
+
+HexAstExpr
+_HexAstRaiseStmt::expr()
+{
+  return this->_expr;
+}
+
+void
+_HexAstRaiseStmt::accept(AstVisitor* visitor)
+{
+  visitor->visit(this);
 }
 
 HexAstRaiseStmt

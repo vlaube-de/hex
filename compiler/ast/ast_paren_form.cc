@@ -18,7 +18,7 @@
 #include "ast_expr_list.h"
 #include "ast_paren_form.h"
 #include "../../base/assert.h"
-
+#include "visitor/ast_visitor.h"
 
 _HexAstParenForm::_HexAstParenForm(
   HexAstExprList exprs
@@ -31,6 +31,18 @@ bool
 _HexAstParenForm::reprOK()
 {
   HEX_ASSERT(this->_exprs);
+}
+
+HexAstExprList
+_HexAstParenForm::exprs()
+{
+  return this->_exprs;
+}
+
+void
+_HexAstParenForm::accept(AstVisitor* visitor)
+{
+  visitor->visit(this);
 }
 
 HexAstParenForm

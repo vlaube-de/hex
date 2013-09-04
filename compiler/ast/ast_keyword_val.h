@@ -18,6 +18,7 @@
 #include "ast_node.h"
 #include "ast_val_atom.h"
 #include "ast_identifier.h"
+#include "visitor/ast_visitor.h"
 
 #ifndef _AST_KEYWORD_VAL_H_
 #define _AST_KEYWORD_VAL_H_
@@ -27,6 +28,11 @@ public:
   _HexAstKeywordVal(HexAstIdentifier, HexAstValAtom);
 
   virtual bool reprOK();
+
+  HexAstIdentifier key();
+  HexAstValAtom val();
+
+  virtual void accept(AstVisitor*);
 
   static _HexAstKeywordVal* create(HexAstIdentifier, HexAstValAtom);
 private:

@@ -19,6 +19,7 @@
 #include "ast_task_state.h"
 #include "ast_expr_list.h"
 #include "ast_conditional_preposition.h"
+#include "visitor/ast_visitor.h"
 
 #ifndef _AST_CONDITIONAL_CLAUSE_H_
 #define _AST_CONDITIONAL_CLAUSE_H_
@@ -30,6 +31,12 @@ public:
     HexAstConditionalPreposition, HexAstExprList, HexAstTaskState);
 
   virtual bool reprOK();
+
+  HexAstConditionalPreposition preposition();
+  HexAstExprList exprs();
+  HexAstTaskState state();
+
+  virtual void accept(AstVisitor*);
 
   static _HexAstConditionalClause* create(HexAstConditionalPreposition, HexAstExprList, HexAstTaskState);
 private:

@@ -16,10 +16,12 @@
 #
 
 CXX=c++
-CFLAGS=-Wno-implicit -Wall -arch x86_64
+CFLAGS=-Wno-implicit -Wno-deprecated-writable-strings -arch x86_64
 
 AR=ar
 ARFLAGS=rvs
+
+PY=python
 
 examiner.o: examiner.h examiner.cc
 	$(CXX) $(CFLAGS) -c examiner.cc
@@ -103,7 +105,7 @@ ast_attribute_def.o: ast_node.o ast_attribute_def.h ast_attribute_def.cc
 	$(CXX) $(CFLAGS) -c ast_attribute_def.cc
 
 ast_attribute_def_list.o: ast_attribute_def_list.h ast_attribute_def_list.cc
-	$(CXX) $(CFLAGS) -c ast_attribute_def.cc
+	$(CXX) $(CFLAGS) -c ast_attribute_def_list.cc
 
 ast_assignment_stmt.o: ast_node.o ast_assignment_stmt.h ast_assignment_stmt.cc
 	$(CXX) $(CFLAGS) -c ast_assignment_stmt.cc
@@ -215,6 +217,9 @@ ast_cancel_clause.o: ast_cancel_clause.h ast_cancel_clause.cc
 
 ast_stop_clause.o: ast_stop_clause.h ast_stop_clause.cc
 	$(CXX) $(CFLAGS) -c ast_stop_clause.cc
+
+ast_task_def.o: ast_task_def.h ast_task_def.cc
+	$(CXX) $(CFLAGS) -c ast_task_def.cc
 
 ast_module.o: ast_module.h ast_module.cc
 	$(CXX) $(CFLAGS) -c ast_module.cc
@@ -399,138 +404,148 @@ ast_attribute_ref.o: ast_primary.o ast_attribute_ref.h ast_attribute_ref.cc
 ast_hex_program.o: ast_hex_program.h ast_hex_program.cc
 	$(CXX) $(CFLAGS) -c ast_hex_program.cc
 
-obj:	examiner.o	\
-			ast_unparsed.o		\
-			ast_typed.o				\
-			ast_list_obj.o		\
-			ast_node.o				\
-			ast_target_list.o	\
-			ast_val_atom.o	\
-			ast_val_list.o	\
-			ast_simple_param_list.o	\
-			ast_keyword_val.o	\
-			ast_keyword_val_list.o	\
-			ast_parameter_list.o	\
-			ast_arg_list.o	\
-			ast_comprehension.o	\
-			ast_list_form.o	\
-			ast_map_field.o	\
-			ast_map_field_list.o	\
-			ast_map_form.o	\
-			ast_field_def.o	\
-			ast_field_def_list.o	\
-			ast_dict_form.o	\
-			ast_name.o	\
-			ast_decorator.o	\
-			ast_decorator_list.o	\
-			ast_operator.o	\
-			ast_operator_def.o	\
-			ast_attribute_def.o	\
-			ast_attribute_def_list.o	\
-			ast_assignment_stmt.o	\
-			ast_using_src.o	\
-			ast_using_stmt.o	\
-			ast_stmt_group.o	\
-			ast_await_stmt.o	\
-			ast_return_stmt.o	\
-			ast_break_stmt.o	\
-			ast_continue_stmt.o	\
-			ast_raise_stmt.o	\
-			ast_input_stmt.o	\
-			ast_output_stmt.o	\
-			ast_expr_list_stmt.o	\
-			ast_simple_stmt.o	\
-			ast_compound_stmt.o	\
-			ast_for_stmt.o	\
-			ast_with_stmt.o	\
-			ast_lock_stmt.o	\
-			ast_catch_stmt.o	\
-			ast_catch_stmt_group.o	\
-			ast_try_stmt.o	\
-			ast_while_stmt.o	\
-			ast_else_stmt.o	\
-			ast_elif_stmt.o	\
-			ast_elif_stmt_group.o	\
-			ast_if_stmt.o	\
-			ast_lambda.o	\
-			ast_class_def.o	\
-			ast_task_state.o	\
-			ast_conditional_preposition.o	\
-			ast_conditional_clause.o	\
-			ast_task_clause.o	\
-			ast_start_clause.o	\
-			ast_stop_clause.o	\
-			ast_cancel_clause.o	\
-			ast_resume_clause.o	\
-			ast_pause_clause.o	\
-			ast_delay_clause.o	\
-			ast_module.o	\
-			ast_expr_list.o		\
-			ast_binary_expr.o	\
-			ast_commutative_binary_expr.o	\
-			ast_and_expr.o	\
-			ast_or_expr.o		\
-			ast_bitwise_and_expr.o	\
-			ast_bitwise_or_expr.o	\
-			ast_bitwise_xor_expr.o	\
-			ast_bitwise_shift_left_expr.o	\
-			ast_bitwise_shift_right_expr.o	\
-			ast_unary_expr.o	\
-			ast_neg_expr.o	\
-			ast_not_expr.o	\
-			ast_bitwise_not_expr.o	\
-			ast_inc_expr.o	\
-			ast_dec_expr.o	\
-			ast_existential_expr.o	\
-			ast_power_expr.o	\
-			ast_add_expr.o	\
-			ast_minus_expr.o	\
-			ast_multiply_expr.o	\
-			ast_divide_expr.o	\
-			ast_mod_expr.o	\
-			ast_eq_expr.o	\
-			ast_neq_expr.o	\
-			ast_is_expr.o	\
-			ast_lt_expr.o	\
-			ast_le_expr.o	\
-			ast_gt_expr.o	\
-			ast_ge_expr.o	\
-			ast_in_expr.o	\
-			ast_not_in_expr.o	\
-			ast_in_range_expr.o	\
-			ast_ex_range_expr.o	\
-			ast_conditional_expr.o	\
-			ast_yield_expr.o	\
-			ast_string_expr.o	\
-			ast_paren_form.o	\
-			ast_pseudo_assign_expr.o	\
-			ast_pseudo_assign_plus_expr.o	\
-			ast_pseudo_assign_minus_expr.o	\
-			ast_pseudo_assign_mul_expr.o	\
-			ast_pseudo_assign_div_expr.o	\
-			ast_pseudo_assign_mod_expr.o	\
-			ast_pseudo_assign_bitwise_and_expr.o	\
-			ast_pseudo_assign_bitwise_or_expr.o	\
-			ast_pseudo_assign_bitwise_xor_expr.o	\
-			ast_pseudo_assign_bitwise_left_shift_expr.o	\
-			ast_pseudo_assign_bitwise_right_shift_expr.o	\
-			ast_primary.o	\
-			ast_identifier.o	\
-			ast_literal.o	\
-			ast_integer_literal.o	\
-			ast_float_literal.o	\
-			ast_string_literal.o	\
-			ast_slice_item.o	\
-			ast_slicing.o	\
-			ast_attribute_ref.o	\
-			ast_call.o	\
-			ast_hex_program.o
+ast.h:
+	$(PY) ../../tools/headergen.py --path='./' --dest='ast.h'
+
+obj:ast.h \
+	examiner.o	\
+	ast_unparsed.o	\
+	ast_typed.o		\
+	ast_list_obj.o	\
+	ast_node.o			\
+	ast_target_list.o	\
+	ast_val_atom.o	\
+	ast_val_list.o	\
+	ast_simple_param_list.o	\
+	ast_keyword_val.o	\
+	ast_keyword_val_list.o	\
+	ast_parameter_list.o	\
+	ast_arg_list.o	\
+	ast_comprehension.o	\
+	ast_list_form.o	\
+	ast_map_field.o	\
+	ast_map_field_list.o	\
+	ast_map_form.o	\
+	ast_field_def.o	\
+	ast_field_def_list.o	\
+	ast_dict_form.o	\
+	ast_name.o	\
+	ast_decorator.o	\
+	ast_decorator_list.o	\
+	ast_operator.o	\
+	ast_operator_def.o	\
+	ast_attribute_def.o	\
+	ast_attribute_def_list.o  \
+	ast_assignment_stmt.o	\
+	ast_using_src.o	\
+	ast_using_stmt.o	\
+	ast_stmt_group.o	\
+	ast_await_stmt.o	\
+	ast_return_stmt.o	\
+	ast_break_stmt.o	\
+	ast_continue_stmt.o	\
+	ast_raise_stmt.o	\
+	ast_input_stmt.o	\
+	ast_output_stmt.o	\
+	ast_expr_list_stmt.o	\
+	ast_simple_stmt.o	\
+	ast_compound_stmt.o	\
+	ast_for_stmt.o	\
+	ast_with_stmt.o	\
+	ast_lock_stmt.o	\
+	ast_catch_stmt.o	\
+	ast_catch_stmt_group.o	\
+	ast_try_stmt.o	\
+	ast_while_stmt.o	\
+	ast_else_stmt.o	\
+	ast_elif_stmt.o	\
+	ast_elif_stmt_group.o	\
+	ast_if_stmt.o	\
+	ast_lambda.o	\
+	ast_class_def.o	\
+	ast_task_state.o	\
+	ast_conditional_preposition.o	\
+	ast_conditional_clause.o	\
+	ast_task_clause.o	\
+	ast_start_clause.o	\
+	ast_stop_clause.o	\
+	ast_cancel_clause.o	\
+	ast_resume_clause.o	\
+	ast_pause_clause.o	\
+	ast_delay_clause.o	\
+	ast_task_def.o 	\
+	ast_module.o	\
+	ast_expr_list.o		\
+	ast_binary_expr.o	\
+	ast_commutative_binary_expr.o	\
+	ast_and_expr.o	\
+	ast_or_expr.o		\
+	ast_bitwise_and_expr.o	\
+	ast_bitwise_or_expr.o	\
+	ast_bitwise_xor_expr.o	\
+	ast_bitwise_shift_left_expr.o	\
+	ast_bitwise_shift_right_expr.o	\
+	ast_unary_expr.o	\
+	ast_neg_expr.o	\
+	ast_not_expr.o	\
+	ast_bitwise_not_expr.o	\
+	ast_inc_expr.o	\
+	ast_dec_expr.o	\
+	ast_existential_expr.o	\
+	ast_power_expr.o	\
+	ast_add_expr.o	\
+	ast_minus_expr.o	\
+	ast_multiply_expr.o	\
+	ast_divide_expr.o	\
+	ast_mod_expr.o	\
+	ast_eq_expr.o	\
+	ast_neq_expr.o	\
+	ast_is_expr.o	\
+	ast_lt_expr.o	\
+	ast_le_expr.o	\
+	ast_gt_expr.o	\
+	ast_ge_expr.o	\
+	ast_in_expr.o	\
+	ast_not_in_expr.o	\
+	ast_in_range_expr.o	\
+	ast_ex_range_expr.o	\
+	ast_conditional_expr.o	\
+	ast_yield_expr.o	\
+	ast_string_expr.o	\
+	ast_paren_form.o	\
+	ast_pseudo_assign_expr.o	\
+	ast_pseudo_assign_plus_expr.o	\
+	ast_pseudo_assign_minus_expr.o	\
+	ast_pseudo_assign_mul_expr.o	\
+	ast_pseudo_assign_div_expr.o	\
+	ast_pseudo_assign_mod_expr.o	\
+	ast_pseudo_assign_bitwise_and_expr.o	\
+	ast_pseudo_assign_bitwise_or_expr.o	\
+	ast_pseudo_assign_bitwise_xor_expr.o	\
+	ast_pseudo_assign_bitwise_left_shift_expr.o	\
+	ast_pseudo_assign_bitwise_right_shift_expr.o	\
+	ast_primary.o	\
+	ast_identifier.o	\
+	ast_literal.o	\
+	ast_integer_literal.o	\
+	ast_float_literal.o	\
+	ast_string_literal.o	\
+	ast_slice_item.o	\
+	ast_slicing.o	\
+	ast_attribute_ref.o	\
+	ast_call.o	\
+	ast_hex_program.o
+
 
 libast.a: obj
 	$(AR) $(ARFLAGS) libast.a *.o
 
-all: libast.a
+visitors:
+	cd visitor/ && make all
+
+all: libast.a \
+	 visitors
 
 
 clean:
-	rm *.gch *.o *.a *.out *.test *.a
+	rm ast.h *.gch *.o *.a *.out *.test *.a

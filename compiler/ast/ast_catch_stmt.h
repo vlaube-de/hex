@@ -19,6 +19,7 @@
 #include "ast_target_list.h"
 #include "ast_stmt_group.h"
 #include "ast_identifier.h"
+#include "visitor/ast_visitor.h"
 
 #ifndef _AST_CATCH_STMT_H_
 #define _AST_CATCH_STMT_H_
@@ -28,6 +29,11 @@ public:
   _HexAstCatchStmt(HexAstTargetList, HexAstIdentifier, HexAstStmtGroup);
 
   virtual bool reprOK();
+
+  HexAstTargetList targets();
+  HexAstIdentifier alias();
+
+  virtual void accept(AstVisitor*);
 
   static _HexAstCatchStmt* create(HexAstTargetList, HexAstIdentifier, HexAstStmtGroup);
 private:

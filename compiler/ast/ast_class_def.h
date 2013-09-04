@@ -20,6 +20,7 @@
 #include "ast_decorator_list.h"
 #include "ast_attribute_def_list.h"
 #include "ast_identifier.h"
+#include "visitor/ast_visitor.h"
 
 #ifndef _AST_CLASS_DEF_H_
 #define _AST_CLASS_DEF_H_
@@ -34,6 +35,13 @@ public:
   );
 
   virtual bool reprOK();
+
+  HexAstDecoratorList decorators();
+  HexAstIdentifier name();
+  HexAstName parent();
+  HexAstAttributeDefList attributes();
+
+  virtual void accept(AstVisitor*);
 
   static _HexAstClassDef* create(
     HexAstDecoratorList,

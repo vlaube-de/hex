@@ -17,6 +17,7 @@
 
 
 #include "ast_primary.h"
+#include "../../base/c_str.h"
 
 #ifndef _AST_LITERAL_H_
 #define _AST_LITERAL_H_
@@ -24,6 +25,8 @@
 typedef class _HexAstLiteral : public _HexAstPrimary {
 public:
   _HexAstLiteral();
+
+  virtual c_str value()=0;
 } * HexAstLiteral;
 
 #endif /* _AST_LITERAL_H */

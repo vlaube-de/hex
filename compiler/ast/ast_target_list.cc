@@ -16,6 +16,7 @@
  */
 
 #include "ast_target_list.h"
+#include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
 
 _HexAstTargetList::_HexAstTargetList()
@@ -27,4 +28,10 @@ bool
 _HexAstTargetList::reprOK()
 {
   HEX_ASSERT(this->_list);
+}
+
+void
+_HexAstTargetList::accept(AstVisitor* visitor)
+{
+  visitor->visit(this);
 }

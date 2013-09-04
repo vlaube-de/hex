@@ -19,6 +19,7 @@
 #include "ast_expr.h"
 #include "ast_compound_stmt.h"
 #include "ast_stmt_group.h"
+#include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
 
 _HexAstWhileStmt::_HexAstWhileStmt(
@@ -33,6 +34,18 @@ bool
 _HexAstWhileStmt::reprOK()
 {
   HEX_ASSERT(this->_expr);
+}
+
+HexAstExpr
+_HexAstWhileStmt::expr()
+{
+  return this->_expr;
+}
+
+void
+_HexAstWhileStmt::accept(AstVisitor* visitor)
+{
+  visitor->visit(this);
 }
 
 HexAstWhileStmt

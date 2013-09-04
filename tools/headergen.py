@@ -47,6 +47,7 @@ def main():
   parser.add_option('-p', '--path', default="./", help='File path to generate header files.')
   parser.add_option('-d', '--dest', default='headers.h', help='Destination header file.')
   parser.add_option('-s', '--prepend-string', default=True, help='Prepend string to the beginning of the file.')
+  parser.add_option('-e', '--end-def', default=None, help='Custom #define at end of file.')
 
   options, args = parser.parse_args()
 
@@ -65,6 +66,12 @@ def main():
     for header_file in header_files:
       f.write("#include \"%s\"\n" % os.path.normpath(header_file))
       count += 1
+
+    if options.end_def:
+      f.write('\n')
+      f.write('#ifndef %s\n' % options.end_def)
+      f.write('\t#define %s\n' % options.end_def)
+      f.write('#endif /* %s */\n' % options.end_def)
 
   print 'Generated header file %s successfully. [%d headers added]' % (dest, count)
 

@@ -18,6 +18,7 @@
 
 #include "ast_primary.h"
 #include "ast_slice_item.h"
+#include "visitor/ast_visitor.h"
 
 #ifndef _AST_SLICING_H_
 #define _AST_SLICING_H_
@@ -27,6 +28,11 @@ public:
   _HexAstSlicing(HexAstPrimary, HexAstSliceItem);
 
   virtual bool reprOK();
+
+  HexAstPrimary source();
+  HexAstSliceItem slice();
+
+  virtual void accept(AstVisitor*);
 
   static _HexAstSlicing* create(HexAstPrimary, HexAstSliceItem);
 private:

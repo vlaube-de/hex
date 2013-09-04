@@ -17,19 +17,26 @@
 
 
 #include "ast_primary.h"
+#include "../../base/c_str.h"
+#include "visitor/ast_visitor.h"
 
 #ifndef _AST_IDENTIFIER_H_
 #define _AST_IDENTIFIER_H_
 
 typedef class _HexAstIdentifier : public _HexAstPrimary {
 public:
-  _HexAstIdentifier(char *);
+  _HexAstIdentifier(c_str);
 
   virtual bool reprOK();
 
-  static _HexAstIdentifier* create(char*);
+  static _HexAstIdentifier* create(c_str);
+
+  c_str identifier();
+
+  virtual void accept(AstVisitor*);
+
 private:
-  char *_identifier;
+  c_str _identifier;
 } * HexAstIdentifier;
 
 #endif /* _AST_IDENTIFIER_H_ */

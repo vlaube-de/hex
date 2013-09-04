@@ -18,11 +18,16 @@
 #include "ast_catch_stmt.h"
 #include "ast_list_obj.h"
 #include "ast_node.h"
+#include "visitor/ast_visitor.h"
 
 #ifndef _AST_CATCH_STMT_GROUP_H_
 #define _AST_CATCH_STMT_GROUP_H_
 
 typedef class _HexAstCatchStmtGroup : public AstListObj<_HexAstCatchStmtGroup, HexAstCatchStmt>, _HexAstNode {
+public:
+  _HexAstCatchStmtGroup();
+
+  virtual void accept(AstVisitor*);
 } * HexAstCatchStmtGroup;
 
 #endif /* _AST_CATCH_STMT_GROUP_H_ */

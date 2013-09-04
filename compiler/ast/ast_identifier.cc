@@ -16,11 +16,13 @@
  */
 
 #include "ast_identifier.h"
+#include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
+#include "../../base/c_str.h"
 
 
 _HexAstIdentifier::_HexAstIdentifier(
-  char *identifier
+  c_str identifier
 ):_identifier(strdup(identifier))
 {
   this->reprOK();
@@ -32,8 +34,20 @@ _HexAstIdentifier::reprOK()
   HEX_ASSERT(this->_identifier);
 }
 
+c_str
+_HexAstIdentifier::identifier()
+{
+  return this->_identifier;
+}
+
+void
+_HexAstIdentifier::accept(AstVisitor* visitor)
+{
+	visitor->visit(this);
+}
+
 HexAstIdentifier
-_HexAstIdentifier::create(char* identifier)
+_HexAstIdentifier::create(c_str identifier)
 {
   HEX_ASSERT(identifier);
 

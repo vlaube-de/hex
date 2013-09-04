@@ -18,6 +18,7 @@
 #include "ast_compound_stmt.h"
 #include "ast_expr_list.h"
 #include "ast_stmt_group.h"
+#include "visitor/ast_visitor.h"
 
 #ifndef _AST_LOCK_STMT_H_
 #define _AST_LOCK_STMT_H_
@@ -27,6 +28,10 @@ public:
   _HexAstLockStmt(HexAstExprList, HexAstStmtGroup);
 
   virtual bool reprOK();
+
+  HexAstExprList exprs();
+
+  virtual void accept(AstVisitor*);
 
   static _HexAstLockStmt* create(HexAstExprList, HexAstStmtGroup);
 private:

@@ -16,8 +16,8 @@
  */
 
 #include "ast_operator.h"
+#include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
-
 
 _HexAstOperator::_HexAstOperator(
   HexAstOperatorEnum op
@@ -30,6 +30,18 @@ bool
 _HexAstOperator::reprOK()
 {
   HEX_ASSERT(this->_op);
+}
+
+HexAstOperatorEnum
+_HexAstOperator::op()
+{
+  return this->_op;
+}
+
+void
+_HexAstOperator::accept(AstVisitor* visitor)
+{
+  visitor->visit(this);
 }
 
 HexAstOperator

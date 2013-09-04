@@ -18,6 +18,7 @@
 
 #include "ast_binary_expr.h"
 #include "ast_expr.h"
+#include "visitor/ast_visitor.h"
 
 #ifndef _AST_IN_RANGE_EXPR_H_
 #define _AST_IN_RANGE_EXPR_H_
@@ -25,6 +26,8 @@
 typedef class _HexAstInclusiveRangeExpr : public _HexAstBinaryExpr {
 public:
   _HexAstInclusiveRangeExpr(HexAstExpr, HexAstExpr);
+
+  virtual void accept(AstVisitor*);
 } * HexAstInclusiveRangeExpr;
 
 

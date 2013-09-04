@@ -18,6 +18,7 @@
 
 #include "ast_unary_expr.h"
 #include "ast_expr.h"
+#include "visitor/ast_visitor.h"
 
 #ifndef _AST_EXISTENTIAL_EXPR_H_
 #define _AST_EXISTENTIAL_EXPR_H_
@@ -25,6 +26,8 @@
 typedef class _HexAstExistentialExpr : public _HexAstUnaryExpr {
 public:
   _HexAstExistentialExpr(HexAstExpr);
+
+  virtual void accept(AstVisitor*);
 } * HexAstExistentialExpr;
 
 

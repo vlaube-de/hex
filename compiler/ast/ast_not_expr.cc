@@ -17,6 +17,7 @@
 
 
 #include "ast_not_expr.h"
+#include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
 
 
@@ -26,14 +27,8 @@ _HexAstNotExpr::_HexAstNotExpr(
 {
 }
 
-void*
-_HexAstNotExpr::create(
-  HexAstExpr expr
-)
+void
+_HexAstNotExpr::accept(AstVisitor* visitor)
 {
-  HEX_ASSERT(expr);
-
-  HexAstNotExpr obj = new _HexAstNotExpr(expr);
-  HEX_ASSERT(obj);
-  return obj;
+  visitor->visit(this);
 }

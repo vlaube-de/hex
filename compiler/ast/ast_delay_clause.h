@@ -19,6 +19,7 @@
 #include "ast_expr_list.h"
 #include "ast_expr.h"
 #include "ast_conditional_clause.h"
+#include "visitor/ast_visitor.h"
 
 #ifndef _AST_DELAY_CLAUSE_H_
 #define _AST_DELAY_CLAUSE_H_
@@ -33,6 +34,11 @@ public:
 
   virtual bool reprOK();
 
+  HexAstExprList exprs();
+  HexAstConditionalClause condition();
+
+  virtual void accept(AstVisitor*);
+
   static _HexAstConditionalDelayClause* create(HexAstExprList, HexAstConditionalClause);
 private:
   HexAstExprList _exprs;
@@ -44,6 +50,11 @@ public:
   _HexAstFixedDelayClause(HexAstExprList, HexAstExpr);
 
   virtual bool reprOK();
+
+  HexAstExprList exprs();
+  HexAstExpr delay();
+
+  virtual void accept(AstVisitor*);
 
   static _HexAstFixedDelayClause* create(HexAstExprList, HexAstExpr);
 private:

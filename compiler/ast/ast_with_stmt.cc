@@ -19,6 +19,7 @@
 #include "ast_expr_list.h"
 #include "ast_compound_stmt.h"
 #include "ast_identifier.h"
+#include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
 
 _HexAstWithStmt::_HexAstWithStmt(
@@ -34,6 +35,24 @@ bool
 _HexAstWithStmt::reprOK()
 {
   HEX_ASSERT(this->_exprs);
+}
+
+HexAstExprList
+_HexAstWithStmt::exprs()
+{
+  return this->_exprs;
+}
+
+HexAstIdentifier
+_HexAstWithStmt::alias()
+{
+  return this->_alias;
+}
+
+void
+_HexAstWithStmt::accept(AstVisitor* visitor)
+{
+  visitor->visit(this);
 }
 
 HexAstWithStmt

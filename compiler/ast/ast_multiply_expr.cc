@@ -17,6 +17,7 @@
 
 
 #include "ast_multiply_expr.h"
+#include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
 
 _HexAstMultiplyExpr::_HexAstMultiplyExpr(
@@ -26,16 +27,8 @@ _HexAstMultiplyExpr::_HexAstMultiplyExpr(
 {
 }
 
-void*
-_HexAstMultiplyExpr::create(
-  HexAstExpr left,
-  HexAstExpr right
-)
+void
+_HexAstMultiplyExpr::accept(AstVisitor* visitor)
 {
-  HEX_ASSERT(left);
-  HEX_ASSERT(right);
-
-  HexAstMultiplyExpr obj = new _HexAstMultiplyExpr(left, right);
-  HEX_ASSERT(obj);
-  return obj;
+  visitor->visit(this);
 }

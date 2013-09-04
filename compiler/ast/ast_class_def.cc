@@ -21,6 +21,7 @@
 #include "ast_decorator_list.h"
 #include "ast_attribute_def_list.h"
 #include "ast_identifier.h"
+#include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
 
 _HexAstClassDef::_HexAstClassDef(
@@ -37,6 +38,36 @@ bool
 _HexAstClassDef::reprOK()
 {
   HEX_ASSERT(this->_name);
+}
+
+HexAstDecoratorList
+_HexAstClassDef::decorators()
+{
+  return this->_decorators;
+}
+
+HexAstIdentifier
+_HexAstClassDef::name()
+{
+  return this->_name;
+}
+
+HexAstName
+_HexAstClassDef::parent()
+{
+  return this->_parent;
+}
+
+HexAstAttributeDefList
+_HexAstClassDef::attributes()
+{
+  return this->_attributes;
+}
+
+void
+_HexAstClassDef::accept(AstVisitor* visitor)
+{
+  visitor->visit(this);
 }
 
 HexAstClassDef

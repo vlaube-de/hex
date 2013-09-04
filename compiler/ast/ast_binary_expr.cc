@@ -48,6 +48,12 @@ _HexAstBinaryExpr::reprOK()
   HEX_ASSERT(this->_rexpr);
 }
 
+char*
+_HexAstBinaryExpr::op()
+{
+  return "+";
+}
+
 /*
 bool
 _HexAstBinaryExpr::equals(void* obj)

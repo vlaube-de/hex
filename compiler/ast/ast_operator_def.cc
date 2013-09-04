@@ -19,6 +19,7 @@
 #include "ast_operator.h"
 #include "ast_lambda.h"
 #include "ast_operator.h"
+#include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
 
 _HexAstOperatorDef::_HexAstOperatorDef(
@@ -34,6 +35,24 @@ _HexAstOperatorDef::reprOK()
 {
   HEX_ASSERT(this->_op);
   HEX_ASSERT(this->_lambda);
+}
+
+HexAstOperator
+_HexAstOperatorDef::op()
+{
+  return this->_op;
+}
+
+HexAstLambda
+_HexAstOperatorDef::lambda()
+{
+  return this->_lambda;
+}
+
+void
+_HexAstOperatorDef::accept(AstVisitor* visitor)
+{
+  visitor->visit(this);
 }
 
 HexAstOperatorDef

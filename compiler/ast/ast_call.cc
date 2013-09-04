@@ -18,6 +18,7 @@
 #include "ast_call.h"
 #include "ast_primary.h"
 #include "ast_arg_list.h"
+#include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
 
 _HexAstCall::_HexAstCall(
@@ -33,6 +34,30 @@ bool
 _HexAstCall::reprOK()
 {
   HEX_ASSERT(this->_source);
+}
+
+HexAstPrimary
+_HexAstCall::source()
+{
+  return this->_source;
+}
+
+HexAstArgList
+_HexAstCall::arglist()
+{
+  return this->_arglist;
+}
+
+bool
+_HexAstCall::isAsync()
+{
+  return this->_isAsync;
+}
+
+void
+_HexAstCall::accept(AstVisitor* visitor)
+{
+  visitor->visit(this);
 }
 
 HexAstCall

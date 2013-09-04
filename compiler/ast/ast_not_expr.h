@@ -17,6 +17,7 @@
 
 
 #include "ast_unary_expr.h"
+#include "visitor/ast_visitor.h"
 
 #ifndef _AST_NOT_EXPR_H_
 #define _AST_NOT_EXPR_H_
@@ -25,7 +26,8 @@ typedef class _HexAstNotExpr : public _HexAstUnaryExpr {
 public:
   _HexAstNotExpr(HexAstExpr);
 
-  static void* create(HexAstExpr);
+  virtual void accept(AstVisitor*);
+
 } * HexAstNotExpr;
 
 #endif /* _AST_NOT_EXPR_H_ */

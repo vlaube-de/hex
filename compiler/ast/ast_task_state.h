@@ -16,6 +16,7 @@
  */
 
 #include "ast_node.h"
+#include "visitor/ast_visitor.h"
 
 #ifndef _AST_TASK_STATE_H_
 #define _AST_TASK_STATE_H_
@@ -34,6 +35,10 @@ public:
   _HexAstTaskState(HexAstTaskStateEnum);
 
   virtual bool reprOK();
+
+  HexAstTaskStateEnum state();
+
+  virtual void accept(AstVisitor*);
 
   static _HexAstTaskState* create(HexAstTaskStateEnum);
 private:

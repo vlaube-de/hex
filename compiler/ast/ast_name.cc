@@ -15,3 +15,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "ast_name.h"
+#include "visitor/ast_visitor.h"
+
+_HexAstName::_HexAstName()
+{
+}
+
+void
+_HexAstName::accept(AstVisitor* visitor)
+{
+  visitor->visit(this);
+}

@@ -18,11 +18,16 @@
 #include "ast_list_obj.h"
 #include "ast_primary.h"
 #include "ast_simple_stmt.h"
+#include "visitor/ast_visitor.h"
 
 #ifndef _AST_OUTPUT_STMT_H_
 #define _AST_OUTPUT_STMT_H_
 
 typedef class _HexAstOutputStmt : public AstListObj<_HexAstOutputStmt, HexAstPrimary>, public _HexAstSimpleStmt {
+public:
+  _HexAstOutputStmt();
+
+  virtual void accept(AstVisitor*);
 } * HexAstOutputStmt;
 
 #endif /* _AST_OUTPUT_STMT_H_ */

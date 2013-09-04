@@ -17,8 +17,8 @@
 
 
 #include "ast_neg_expr.h"
+#include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
-
 
 _HexAstNegateExpr::_HexAstNegateExpr(
   HexAstExpr expr
@@ -26,14 +26,8 @@ _HexAstNegateExpr::_HexAstNegateExpr(
 {
 }
 
-void*
-_HexAstNegateExpr::create(
-  HexAstExpr expr
-)
+void
+_HexAstNegateExpr::accept(AstVisitor* visitor)
 {
-  HEX_ASSERT(expr);
-
-  HexAstNegateExpr obj = new _HexAstNegateExpr(expr);
-  HEX_ASSERT(obj);
-  return obj;
+  visitor->visit(this);
 }

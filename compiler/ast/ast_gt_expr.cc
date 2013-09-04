@@ -17,6 +17,7 @@
 
 
 #include "ast_gt_expr.h"
+#include "visitor/ast_visitor.h"
 
 
 _HexAstGreaterThanExpr::_HexAstGreaterThanExpr(
@@ -24,4 +25,10 @@ _HexAstGreaterThanExpr::_HexAstGreaterThanExpr(
   HexAstExpr right
 ): _HexAstBinaryExpr(left, right)
 {
+}
+
+void
+_HexAstGreaterThanExpr::accept(AstVisitor* visitor)
+{
+  visitor->visit(this);
 }

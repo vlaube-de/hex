@@ -14,3 +14,16 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+#include "ast_catch_stmt_group.h"
+#include "visitor/ast_visitor.h"
+
+_HexAstCatchStmtGroup::_HexAstCatchStmtGroup()
+{
+}
+
+void
+_HexAstCatchStmtGroup::accept(AstVisitor* visitor)
+{
+  visitor->visit(this);
+}

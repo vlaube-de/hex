@@ -15,3 +15,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "ast_elif_stmt_group.h"
+#include "visitor/ast_visitor.h"
+
+_HexAstElifStmtGroup::_HexAstElifStmtGroup()
+{
+}
+
+void
+_HexAstElifStmtGroup::accept(AstVisitor* visitor)
+{
+  visitor->visit(this);
+}

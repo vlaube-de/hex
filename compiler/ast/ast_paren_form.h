@@ -17,6 +17,7 @@
 
 #include "ast_expr.h"
 #include "ast_expr_list.h"
+#include "visitor/ast_visitor.h"
 
 #ifndef _AST_PAREN_FORM_H_
 #define _AST_PAREN_FORM_H_
@@ -26,6 +27,10 @@ public:
   _HexAstParenForm(HexAstExprList);
 
   virtual bool reprOK();
+
+  HexAstExprList exprs();
+
+  virtual void accept(AstVisitor*);
 
   static _HexAstParenForm* create(HexAstExprList);
 private:

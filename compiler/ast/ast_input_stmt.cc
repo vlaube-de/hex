@@ -14,3 +14,16 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+#include "ast_input_stmt.h"
+#include "visitor/ast_visitor.h"
+
+_HexAstInputStmt::_HexAstInputStmt()
+{
+}
+
+void
+_HexAstInputStmt::accept(AstVisitor* visitor)
+{
+  visitor->visit(this);
+}

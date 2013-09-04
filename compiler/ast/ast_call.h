@@ -17,6 +17,7 @@
 
 #include "ast_primary.h"
 #include "ast_arg_list.h"
+#include "visitor/ast_visitor.h"
 
 #ifndef _AST_CALL_H_
 #define _AST_CALL_H_
@@ -26,6 +27,12 @@ public:
   _HexAstCall(HexAstPrimary, HexAstArgList, bool);
 
   virtual bool reprOK();
+
+  HexAstPrimary source();
+  HexAstArgList arglist();
+  bool isAsync();
+
+  virtual void accept(AstVisitor*);
 
   static _HexAstCall* create(HexAstPrimary, HexAstArgList, bool);
 private:

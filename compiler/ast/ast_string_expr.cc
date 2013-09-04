@@ -18,7 +18,9 @@
 #include "ast_expr_list.h"
 #include "ast_string_expr.h"
 #include "ast_string_literal.h"
+#include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
+
 
 _HexAstStringExpr::_HexAstStringExpr(
   HexAstStringLiteral string,
@@ -33,6 +35,24 @@ _HexAstStringExpr::reprOK()
 {
   HEX_ASSERT(this->_string);
   HEX_ASSERT(this->_exprs);
+}
+
+HexAstStringLiteral
+_HexAstStringExpr::string()
+{
+  return this->_string;
+}
+
+HexAstExprList
+_HexAstStringExpr::exprs()
+{
+  return this->_exprs;
+}
+
+void
+_HexAstStringExpr::accept(AstVisitor* visitor)
+{
+  visitor->visit(this);
 }
 
 HexAstStringExpr

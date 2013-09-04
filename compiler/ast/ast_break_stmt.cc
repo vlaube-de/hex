@@ -17,6 +17,7 @@
 
 #include "ast_break_stmt.h"
 #include "ast_expr.h"
+#include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
 
 _HexAstBreakStmt::_HexAstBreakStmt(
@@ -30,6 +31,18 @@ bool
 _HexAstBreakStmt::reprOK()
 {
   return true;
+}
+
+HexAstExpr
+_HexAstBreakStmt::predicate()
+{
+  return this->_predicate;
+}
+
+void
+_HexAstBreakStmt::accept(AstVisitor* visitor)
+{
+  visitor->visit(this);
 }
 
 HexAstBreakStmt

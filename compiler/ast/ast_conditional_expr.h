@@ -17,6 +17,7 @@
 
 
 #include "ast_expr.h"
+#include "visitor/ast_visitor.h"
 
 #ifndef _AST_CONDITIONAL_EXPR_H_
 #define _AST_CONDITIONAL_EXPR_H_
@@ -26,6 +27,12 @@ public:
   _HexAstConditionalExpr(HexAstExpr, HexAstExpr, HexAstExpr);
 
   virtual bool reprOK();
+
+  HexAstExpr predicate();
+  HexAstExpr consequent();
+  HexAstExpr alternate();
+
+  virtual void accept(AstVisitor*);
 
   static _HexAstConditionalExpr* create(HexAstExpr, HexAstExpr, HexAstExpr);
 private:

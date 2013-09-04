@@ -18,6 +18,7 @@
 #include "ast_slicing.h"
 #include "ast_primary.h"
 #include "ast_slice_item.h"
+#include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
 
 
@@ -34,6 +35,24 @@ _HexAstSlicing::reprOK()
 {
   HEX_ASSERT(this->_source);
   HEX_ASSERT(this->_slice);
+}
+
+HexAstPrimary
+_HexAstSlicing::source()
+{
+  return this->_source;
+}
+
+HexAstSliceItem
+_HexAstSlicing::slice()
+{
+  return this->_slice;
+}
+
+void
+_HexAstSlicing::accept(AstVisitor* visitor)
+{
+  visitor->visit(this);
 }
 
 HexAstSlicing

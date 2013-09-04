@@ -21,6 +21,7 @@
 #include "ast_identifier.h"
 #include "ast_typed.h"
 #include "ast_name.h"
+#include "visitor/ast_visitor.h"
 
 #ifndef _AST_USING_STMT_H_
 #define _AST_USING_STMT_H_
@@ -35,6 +36,11 @@ public:
   _HexAstUsingStmtDirect(HexAstName, HexAstIdentifier);
 
   virtual bool reprOK();
+
+  HexAstName target();
+  HexAstIdentifier alias();
+
+  virtual void accept(AstVisitor*);
 
   static _HexAstUsingStmtDirect* create(HexAstName, HexAstIdentifier);
 private:
@@ -52,6 +58,12 @@ public:
   _HexAstUsingStmtRelative(HexAstTargetList, HexAstUsingSrc, HexAstIdentifier, ast_type_t);
 
   virtual bool reprOK();
+
+  HexAstTargetList targets();
+  HexAstUsingSrc src();
+  HexAstIdentifier alias();
+
+  virtual void accept(AstVisitor*);
 
   static _HexAstUsingStmtRelative* create(HexAstTargetList, HexAstUsingSrc, HexAstIdentifier, ast_type_t);
 private:

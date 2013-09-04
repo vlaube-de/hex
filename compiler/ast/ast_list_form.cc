@@ -16,6 +16,7 @@
  */
 
 #include "ast_list_form.h"
+#include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
 
 _HexAstListForm::_HexAstListForm(
@@ -34,6 +35,18 @@ _HexAstListForm::reprOK()
     this->_type==AST_LIST_FORM_EXPR_LIST ||
     this->_type==AST_LIST_FORM_COMPREHENSION
   );
+}
+
+void*
+_HexAstListForm::core()
+{
+  return this->_core;
+}
+
+void
+_HexAstListForm::accept(AstVisitor* visitor)
+{
+  visitor->visit(this);
 }
 
 HexAstListForm

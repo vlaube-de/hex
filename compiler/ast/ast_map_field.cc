@@ -18,6 +18,7 @@
 #include "ast_map_field.h"
 #include "ast_expr.h"
 #include "ast_val_atom.h"
+#include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
 
 _HexAstMapField::_HexAstMapField(
@@ -33,6 +34,24 @@ _HexAstMapField::reprOK()
 {
   HEX_ASSERT(this->_key);
   HEX_ASSERT(this->_val);
+}
+
+HexAstExpr
+_HexAstMapField::key()
+{
+  return this->_key;
+}
+
+HexAstValAtom
+_HexAstMapField::val()
+{
+  return this->_val;
+}
+
+void
+_HexAstMapField::accept(AstVisitor* visitor)
+{
+  visitor->visit(this);
 }
 
 HexAstMapField

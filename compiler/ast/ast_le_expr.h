@@ -18,6 +18,7 @@
 
 #include "ast_binary_expr.h"
 #include "ast_expr.h"
+#include "visitor/ast_visitor.h"
 
 #ifndef _AST_LE_EXPR_H_
 #define _AST_LE_EXPR_H_
@@ -25,6 +26,8 @@
 typedef class _HexAstLessOrEqualsExpr : public _HexAstBinaryExpr {
 public:
   _HexAstLessOrEqualsExpr(HexAstExpr, HexAstExpr);
+
+  virtual void accept(AstVisitor*);
 } * HexAstLessOrEqualsExpr;
 
 

@@ -20,6 +20,7 @@
 #include "ast_stmt_group.h"
 #include "ast_elif_stmt_group.h"
 #include "ast_else_stmt.h"
+#include "visitor/ast_visitor.h"
 
 #ifndef _AST_IF_STMT_H_
 #define _AST_IF_STMT_H_
@@ -29,6 +30,12 @@ public:
   _HexAstIfStmt(HexAstExpr, HexAstStmtGroup, HexAstElifStmtGroup, HexAstElseStmt);
 
   virtual bool reprOK();
+
+  HexAstExpr predicate();
+  HexAstElifStmtGroup elif_stmts();
+  HexAstElseStmt else_stmt();
+
+  virtual void accept(AstVisitor*);
 
   static _HexAstIfStmt* create(HexAstExpr, HexAstStmtGroup, HexAstElifStmtGroup, HexAstElseStmt);
 private:

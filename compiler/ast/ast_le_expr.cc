@@ -17,11 +17,17 @@
 
 
 #include "ast_le_expr.h"
-
+#include "visitor/ast_visitor.h"
 
 _HexAstLessOrEqualsExpr::_HexAstLessOrEqualsExpr(
   HexAstExpr left,
   HexAstExpr right
 ): _HexAstBinaryExpr(left, right)
 {
+}
+
+void
+_HexAstLessOrEqualsExpr::accept(AstVisitor* visitor)
+{
+  visitor->visit(this);
 }

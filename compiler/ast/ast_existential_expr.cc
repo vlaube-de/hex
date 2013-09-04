@@ -17,10 +17,16 @@
 
 
 #include "ast_existential_expr.h"
-
+#include "visitor/ast_visitor.h"
 
 _HexAstExistentialExpr::_HexAstExistentialExpr(
   HexAstExpr expr
 ): _HexAstUnaryExpr(expr)
 {
+}
+
+void
+_HexAstExistentialExpr::accept(AstVisitor* visitor)
+{
+  visitor->visit(this);
 }

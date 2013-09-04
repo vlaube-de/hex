@@ -17,6 +17,7 @@
 
 
 #include "ast_divide_expr.h"
+#include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
 
 
@@ -27,16 +28,8 @@ _HexAstDivideExpr::_HexAstDivideExpr(
 {
 }
 
-void*
-_HexAstDivideExpr::create(
-  HexAstExpr left,
-  HexAstExpr right
-)
+void
+_HexAstDivideExpr::accept(AstVisitor* visitor)
 {
-  HEX_ASSERT(left);
-  HEX_ASSERT(right);
-
-  HexAstDivideExpr obj = new _HexAstDivideExpr(left, right);
-  HEX_ASSERT(obj);
-  return obj;
+  visitor->visit(this);
 }

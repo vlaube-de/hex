@@ -18,11 +18,13 @@
 #include <list>
 #include "ast_primary.h"
 #include "ast_attribute_ref.h"
+#include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
+#include "../../base/c_str.h"
 
 _HexAstAttributeRef::_HexAstAttributeRef(
   HexAstPrimary source,
-  char *attribute
+  c_str attribute
 ): _source(source), _attribute(strdup(attribute))
 {
   this->reprOK();
@@ -35,10 +37,28 @@ _HexAstAttributeRef::reprOK()
   HEX_ASSERT(this->_attribute);
 }
 
+HexAstPrimary
+_HexAstAttributeRef::source()
+{
+  return this->_source;
+}
+
+c_str
+_HexAstAttributeRef::attribute()
+{
+  return this->_attribute;
+}
+
+void
+_HexAstAttributeRef::accept(AstVisitor* visitor)
+{
+  visitor->visit(this);
+}
+
 HexAstAttributeRef
 _HexAstAttributeRef::create(
   HexAstPrimary source,
-  char *attribute
+  c_str attribute
 )
 {
   HexAstAttributeRef obj = new _HexAstAttributeRef(source, attribute);

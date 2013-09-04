@@ -17,6 +17,7 @@
 
 #include "ast_expr.h"
 #include "ast_pseudo_assign_expr.h"
+#include "visitor/ast_visitor.h"
 
 #ifndef _AST_PSEUDO_ASSIGN_PLUS_EXPR_H_
 #define _AST_PSEUDO_ASSIGN_PLUS_EXPR_H_
@@ -24,6 +25,8 @@
 typedef class _HexAstPseudoAssignPlusExpr : public _HexAstPseudoAssignExpr {
 public:
   _HexAstPseudoAssignPlusExpr(HexAstExpr, HexAstExpr);
+
+  virtual void accept(AstVisitor*);
 } * HexAstPseudoAssignPlusExpr;
 
 #endif /* _AST_PSEUDO_ASSIGN_PLUS_EXPR_H_ */

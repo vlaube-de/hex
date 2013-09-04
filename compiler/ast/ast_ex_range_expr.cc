@@ -17,6 +17,7 @@
 
 
 #include "ast_ex_range_expr.h"
+#include "visitor/ast_visitor.h"
 
 
 _HexAstExclusiveRangeExpr::_HexAstExclusiveRangeExpr(
@@ -24,4 +25,10 @@ _HexAstExclusiveRangeExpr::_HexAstExclusiveRangeExpr(
   HexAstExpr right
 ): _HexAstBinaryExpr(left, right)
 {
+}
+
+void
+_HexAstExclusiveRangeExpr::accept(AstVisitor* visitor)
+{
+  visitor->visit(this);
 }

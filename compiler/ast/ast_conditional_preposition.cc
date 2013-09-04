@@ -16,6 +16,7 @@
  */
 
 #include "ast_conditional_preposition.h"
+#include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
 
 
@@ -30,6 +31,18 @@ bool
 _HexAstConditionalPreposition::reprOK()
 {
   HEX_ASSERT(this->_preposition);
+}
+
+HexAstConditionalPrepositionEnum
+_HexAstConditionalPreposition::preposition()
+{
+  return this->_preposition;
+}
+
+void
+_HexAstConditionalPreposition::accept(AstVisitor* visitor)
+{
+  visitor->visit(this);
 }
 
 HexAstConditionalPreposition

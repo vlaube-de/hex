@@ -17,6 +17,7 @@
 
 
 #include "ast_bitwise_not_expr.h"
+#include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
 
 _HexAstBitwiseNotExpr::_HexAstBitwiseNotExpr(
@@ -25,14 +26,8 @@ _HexAstBitwiseNotExpr::_HexAstBitwiseNotExpr(
 {
 }
 
-void*
-_HexAstBitwiseNotExpr::create(
-  HexAstExpr expr
-)
+void
+_HexAstBitwiseNotExpr::accept(AstVisitor* visitor)
 {
-  HEX_ASSERT(expr);
-
-  HexAstBitwiseNotExpr obj = new _HexAstBitwiseNotExpr(expr);
-  HEX_ASSERT(obj);
-  return obj;
+  visitor->visit(this);
 }

@@ -17,6 +17,7 @@
 
 #include "ast_compound_stmt.h"
 #include "ast_stmt_group.h"
+#include "visitor/ast_visitor.h"
 
 #ifndef _AST_ELSE_STMT_H_
 #define _AST_ELSE_STMT_H_
@@ -24,6 +25,8 @@
 typedef class _HexAstElseStmt : public _HexAstCompoundStmt {
 public:
   _HexAstElseStmt(HexAstStmtGroup);
+
+  virtual void accept(AstVisitor*);
 
   static _HexAstElseStmt* create(HexAstStmtGroup);
 } * HexAstElseStmt;

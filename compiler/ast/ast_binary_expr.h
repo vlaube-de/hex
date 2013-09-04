@@ -31,7 +31,7 @@ public:
 
   HexAstExpr left();
   HexAstExpr right();
-
+  char* op();
   //virtual bool equals(void*);
   //virtual bool isomorphic(void*);
   //virtual bool equivalent(void*);

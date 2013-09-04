@@ -19,6 +19,7 @@
 #include "ast_task_clause.h"
 #include "ast_expr_list.h"
 #include "ast_conditional_clause.h"
+#include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
 
 _HexAstPauseClause::_HexAstPauseClause(
@@ -34,6 +35,24 @@ _HexAstPauseClause::reprOK()
 {
   HEX_ASSERT(this->_exprs);
   HEX_ASSERT(this->_condition);
+}
+
+HexAstExprList
+_HexAstPauseClause::exprs()
+{
+  return this->_exprs;
+}
+
+HexAstConditionalClause
+_HexAstPauseClause::condition()
+{
+  return this->_condition;
+}
+
+void
+_HexAstPauseClause::accept(AstVisitor* visitor)
+{
+  visitor->visit(this);
 }
 
 HexAstPauseClause

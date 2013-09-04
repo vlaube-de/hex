@@ -18,6 +18,8 @@
 #include "ast_literal.h"
 #include "ast_unparsed.h"
 #include "ast_typed.h"
+#include "visitor/ast_visitor.h"
+#include "../../base/c_str.h"
 
 #ifndef _AST_STRING_LITERAL_H_
 #define _AST_STRING_LITERAL_H_
@@ -29,11 +31,15 @@ enum {
 
 typedef class _HexAstStringLiteral : public _HexAstLiteral, AstTyped, AstUnparsed {
 public:
-  _HexAstStringLiteral(ast_type_t, char*);
+  _HexAstStringLiteral(ast_type_t, c_str);
 
   virtual bool reprOK();
 
-  static _HexAstStringLiteral* create(ast_type_t, char*);
+  virtual c_str value();
+
+  virtual void accept(AstVisitor*);
+
+  static _HexAstStringLiteral* create(ast_type_t, c_str);
 } * HexAstStringLiteral;
 
 #endif /* _AST_STRING_LITERAL_H_ */

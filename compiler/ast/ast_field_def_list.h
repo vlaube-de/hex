@@ -18,6 +18,7 @@
 #include "ast_node.h"
 #include "ast_field_def.h"
 #include "ast_list_obj.h"
+#include "visitor/ast_visitor.h"
 
 #ifndef _AST_FIELD_DEF_LIST_H_
 #define _AST_FIELD_DEF_LIST_H_
@@ -27,6 +28,8 @@ public:
   _HexAstFieldDefList();
 
   virtual bool reprOK();
+
+  virtual void accept(AstVisitor*);
 } * HexAstFieldDefList;
 
 #endif /* _AST_FIELD_DEF_LIST_H_ */

@@ -20,6 +20,7 @@
 
 #include "ast_stmt_group.h"
 #include "ast_node.h"
+#include "visitor/ast_visitor.h"
 
 #ifndef _AST_HEX_PROGRAM_H_
 #define _AST_HEX_PROGRAM_H_
@@ -29,6 +30,10 @@ public:
   _HexAstHexProgram(HexAstStmtGroup);
 
   virtual bool reprOK();
+
+  HexAstStmtGroup stmts();
+
+  virtual void accept(AstVisitor*);
 
   static _HexAstHexProgram* create(HexAstStmtGroup);
   static int get_parse_tree_root(_HexAstHexProgram**);

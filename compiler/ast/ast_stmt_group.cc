@@ -16,8 +16,15 @@
  */
 
 #include "ast_stmt_group.h"
+#include "visitor/ast_visitor.h"
 
 _HexAstStmtGroup::_HexAstStmtGroup()
 {
   this->reprOK();
+}
+
+void
+_HexAstStmtGroup::accept(AstVisitor* visitor)
+{
+  visitor->visit(this);
 }

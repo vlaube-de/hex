@@ -17,17 +17,23 @@
 
 #include "ast_literal.h"
 #include "ast_unparsed.h"
+#include "visitor/ast_visitor.h"
+#include "../../base/c_str.h"
 
 #ifndef _AST_FLOAT_LITERAL_H_
 #define _AST_FLOAT_LITERAL_H_
 
 typedef class _HexAstFloatLiteral : public _HexAstLiteral, AstUnparsed {
 public:
-  _HexAstFloatLiteral(char *value);
+  _HexAstFloatLiteral(c_str value);
 
   virtual bool reprOK();
 
-  static _HexAstFloatLiteral* create(char*);
+  virtual c_str value();
+
+  virtual void accept(AstVisitor*);
+
+  static _HexAstFloatLiteral* create(c_str);
 } * HexAstFloatLiteral;
 
 #endif /* _AST_FLOAT_LITERAL_H_ */

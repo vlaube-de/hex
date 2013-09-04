@@ -19,11 +19,16 @@
 #include "ast_list_obj.h"
 #include "ast_node.h"
 #include "ast_expr.h"
+#include "visitor/ast_visitor.h"
 
 #ifndef _AST_EXPR_LIST_H_
 #define _AST_EXPR_LIST_H_
 
 typedef class _HexAstExprList : public AstListObj<_HexAstExprList, HexAstExpr>, _HexAstNode {
+public:
+  _HexAstExprList();
+
+  virtual void accept(AstVisitor*);
 } * HexAstExprList;
 
 #endif /*_AST_EXPR_LIST_H_ */

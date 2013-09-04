@@ -17,12 +17,17 @@
 
 
 CXX=c++
-CFLAGS=-Wno-implicit -w -g -arch x86_64
+CFLAGS=-Wno-implicit -Wno-deprecated-writable-strings -arch x86_64
+
 
 ast_visitor.o: ast_visitor.h ast_visitor.cc
-	$(CXX) -c ast_visitor.cc
+	$(CXX $(CFLAGS) -D_HEX_AST_ -c ast_visitor.cc
 
-all: ast_visitor.o
+ast_tostring_visitor.o: ast_tostring_visitor.h ast_tostring_visitor.cc
+	$(CXX) $(CFLAGS) -D_HEX_AST_ -c ast_tostring_visitor.cc
+
+all: ast_visitor.o	\
+	 ast_tostring_visitor.o
 
 clean:
 	rm *.gch *.out *.o *.swp *.a

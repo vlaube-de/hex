@@ -19,6 +19,7 @@
 #include "ast_expr.h"
 #include "ast_target_list.h"
 #include "ast_node.h"
+#include "visitor/ast_visitor.h"
 
 #ifndef _AST_COMPREHENSION_H_
 #define _AST_COMPREHENSION_H_
@@ -28,6 +29,13 @@ public:
   _HexAstComprehension(HexAstExprList, HexAstTargetList, HexAstExprList, HexAstExpr);
 
   virtual bool reprOK();
+
+  HexAstExprList dst();
+  HexAstTargetList candidates();
+  HexAstExprList src();
+  HexAstExpr predicate();
+
+  virtual void accept(AstVisitor*);
 
   static _HexAstComprehension* create(HexAstExprList, HexAstTargetList, HexAstExprList, HexAstExpr);
 private:

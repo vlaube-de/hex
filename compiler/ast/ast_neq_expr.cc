@@ -17,11 +17,17 @@
 
 
 #include "ast_neq_expr.h"
-
+#include "visitor/ast_visitor.h"
 
 _HexAstNotEqualExpr::_HexAstNotEqualExpr(
   HexAstExpr left,
   HexAstExpr right
 ): _HexAstCommutativeBinaryExpr(left, right)
 {
+}
+
+void
+_HexAstNotEqualExpr::accept(AstVisitor* visitor)
+{
+  visitor->visit(this);
 }

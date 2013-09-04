@@ -17,6 +17,7 @@
 
 #include "ast_compound_stmt.h"
 #include "ast_catch_stmt_group.h"
+#include "visitor/ast_visitor.h"
 
 #ifndef _AST_TRY_STMT_H_
 #define _AST_TRY_STMT_H_
@@ -26,6 +27,10 @@ public:
   _HexAstTryStmt(HexAstStmtGroup, HexAstCatchStmtGroup);
 
   virtual bool reprOK();
+
+  HexAstCatchStmtGroup catch_stmt_group();
+
+  virtual void accept(AstVisitor*);
 
   static _HexAstTryStmt* create(HexAstStmtGroup, HexAstCatchStmtGroup);
 private:

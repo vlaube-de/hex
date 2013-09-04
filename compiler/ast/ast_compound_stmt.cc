@@ -23,3 +23,9 @@ _HexAstCompoundStmt::_HexAstCompoundStmt(
 ):_stmts(stmts)
 {
 }
+
+HexAstStmtGroup
+_HexAstCompoundStmt::stmts()
+{
+  return this->_stmts;
+}

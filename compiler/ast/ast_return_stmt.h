@@ -17,6 +17,7 @@
 
 #include "ast_simple_stmt.h"
 #include "ast_expr_list.h"
+#include "visitor/ast_visitor.h"
 
 #ifndef _AST_RETURN_STMT_H_
 #define _AST_RETURN_STMT_H_
@@ -26,6 +27,11 @@ public:
   _HexAstReturnStmt(HexAstExprList, HexAstExpr);
 
   virtual bool reprOK();
+
+  HexAstExprList return_vals();
+  HexAstExpr predicate();
+
+  virtual void accept(AstVisitor*);
 
   static _HexAstReturnStmt* create(HexAstExprList, HexAstExpr);
 private:

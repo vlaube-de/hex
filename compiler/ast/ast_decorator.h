@@ -18,6 +18,7 @@
 #include "ast_node.h"
 #include "ast_arg_list.h"
 #include "ast_name.h"
+#include "visitor/ast_visitor.h"
 
 #ifndef _AST_DECORATOR_H_
 #define _AST_DECORATOR_H_
@@ -27,6 +28,11 @@ public:
   _HexAstDecorator(HexAstName, HexAstArgList);
 
   virtual bool reprOK();
+
+  HexAstName name();
+  HexAstArgList args();
+
+  virtual void accept(AstVisitor*);
 
   static _HexAstDecorator* create(HexAstName, HexAstArgList);
 private:

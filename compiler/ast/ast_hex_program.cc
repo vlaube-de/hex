@@ -17,6 +17,7 @@
 
 #include "ast_hex_program.h"
 #include "ast_stmt_group.h"
+#include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
 #include "../../base/memory.h"
 
@@ -34,6 +35,18 @@ bool
 _HexAstHexProgram::reprOK()
 {
   return true;
+}
+
+HexAstStmtGroup
+_HexAstHexProgram::stmts()
+{
+  return this->_stmts;
+}
+
+void
+_HexAstHexProgram::accept(AstVisitor* visitor)
+{
+  visitor->visit(this);
 }
 
 HexAstHexProgram

@@ -18,6 +18,7 @@
 
 #include "ast_binary_expr.h"
 #include "ast_expr.h"
+#include "visitor/ast_visitor.h"
 
 #ifndef _AST_DIVIDE_EXPR_H_
 #define _AST_DIVIDE_EXPR_H_
@@ -26,7 +27,7 @@ typedef class _HexAstDivideExpr : public _HexAstBinaryExpr {
 public:
   _HexAstDivideExpr(HexAstExpr, HexAstExpr);
 
-  static void* create(HexAstExpr, HexAstExpr);
+  virtual void accept(AstVisitor*);
 } * HexAstDivideExpr;
 
 

@@ -18,6 +18,7 @@
 #include "ast_return_stmt.h"
 #include "ast_expr_list.h"
 #include "ast_expr.h"
+#include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
 
 _HexAstReturnStmt::_HexAstReturnStmt(
@@ -32,6 +33,24 @@ bool
 _HexAstReturnStmt::reprOK()
 {
   return true;
+}
+
+HexAstExprList
+_HexAstReturnStmt::return_vals()
+{
+  return this->_return_vals;
+}
+
+HexAstExpr
+_HexAstReturnStmt::predicate()
+{
+  return this->_predicate;
+}
+
+void
+_HexAstReturnStmt::accept(AstVisitor* visitor)
+{
+  visitor->visit(this);
 }
 
 HexAstReturnStmt

@@ -24,6 +24,7 @@ class AstTyped {
 public:
   AstTyped(ast_type_t);
 
+  ast_type_t type();
 protected:
   ast_type_t _type;
 };

@@ -19,6 +19,7 @@
 #include "ast_val_atom.h"
 #include "ast_identifier.h"
 #include "ast_decorator_list.h"
+#include "visitor/ast_visitor.h"
 
 #ifndef _AST_FIELD_DEF_H_
 #define _AST_FIELD_DEF_H_
@@ -28,6 +29,12 @@ public:
   _HexAstFieldDef(HexAstDecoratorList, HexAstIdentifier, HexAstValAtom);
 
   virtual bool reprOK();
+
+  HexAstDecoratorList decorators();
+  HexAstIdentifier name();
+  HexAstValAtom val();
+
+  virtual void accept(AstVisitor*);
 
   static _HexAstFieldDef* create(HexAstDecoratorList, HexAstIdentifier, HexAstValAtom);
 private:

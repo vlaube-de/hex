@@ -16,6 +16,7 @@
  */
 
 #include "ast_simple_param_list.h"
+#include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
 
 _HexAstSimpleParamList::_HexAstSimpleParamList()
@@ -27,4 +28,10 @@ bool
 _HexAstSimpleParamList::reprOK()
 {
   HEX_ASSERT(this->_list);
+}
+
+void
+_HexAstSimpleParamList::accept(AstVisitor* visitor)
+{
+  visitor->visit(this);
 }

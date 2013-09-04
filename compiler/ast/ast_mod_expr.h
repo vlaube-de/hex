@@ -18,15 +18,16 @@
 
 #include "ast_binary_expr.h"
 #include "ast_expr.h"
+#include "visitor/ast_visitor.h"
 
 #ifndef _AST_MODULUS_EXPR_H_
-#define _AST_MODOLUS_EXPR_H_
+#define _AST_MODULUS_EXPR_H_
 
 typedef class _HexAstModulusExpr : public _HexAstBinaryExpr {
 public:
   _HexAstModulusExpr(HexAstExpr, HexAstExpr);
 
-  static void* create(HexAstExpr, HexAstExpr);
+  virtual void accept(AstVisitor*);
 } * HexAstModulusExpr;
 
 

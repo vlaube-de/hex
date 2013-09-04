@@ -19,6 +19,7 @@
 #include "ast_keyword_val_list.h"
 #include "ast_node.h"
 #include "ast_identifier.h"
+#include "visitor/ast_visitor.h"
 
 #ifndef _AST_PARAMETER_LIST_H_
 #define _AST_PARAMETER_LIST_H_
@@ -33,6 +34,13 @@ public:
   );
 
   virtual bool reprOK();
+
+  HexAstSimpleParamList simple_params();
+  HexAstKeywordValList keyword_vals();
+  HexAstIdentifier args();
+  HexAstIdentifier kwargs();
+
+  virtual void accept(AstVisitor*);
 
   static _HexAstParameterList* create(
     HexAstSimpleParamList,

@@ -17,11 +17,12 @@
 
 #include "ast_expr_list_stmt.h"
 #include "ast_expr_list.h"
+#include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
 
 _HexAstExprListStmt::_HexAstExprListStmt(
-  HexAstExprList exprlist
-):_exprlist(exprlist)
+  HexAstExprList exprs
+):_exprs(exprs)
 {
   this->reprOK();
 }
@@ -29,17 +30,29 @@ _HexAstExprListStmt::_HexAstExprListStmt(
 bool
 _HexAstExprListStmt::reprOK()
 {
-  HEX_ASSERT(this->_exprlist);
+  HEX_ASSERT(this->_exprs);
+}
+
+HexAstExprList
+_HexAstExprListStmt::exprs()
+{
+  return this->_exprs;
+}
+
+void
+_HexAstExprListStmt::accept(AstVisitor* visitor)
+{
+  visitor->visit(this);
 }
 
 HexAstExprListStmt
 _HexAstExprListStmt::create(
-  HexAstExprList exprlist
+  HexAstExprList exprs
 )
 {
-  HEX_ASSERT(exprlist);
+  HEX_ASSERT(exprs);
 
-  HexAstExprListStmt obj = new _HexAstExprListStmt(exprlist);
+  HexAstExprListStmt obj = new _HexAstExprListStmt(exprs);
   HEX_ASSERT(obj);
   return obj;
 }

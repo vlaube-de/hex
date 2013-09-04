@@ -17,6 +17,7 @@
 
 
 #include "ast_binary_expr.h"
+#include "visitor/ast_visitor.h"
 
 #ifndef _AST_BITWISE_SHIFT_RIGHT_EXPR_H_
 #define _AST_BITWISE_SHIFT_RIGHT_EXPR_H_
@@ -26,7 +27,7 @@ typedef class _HexAstBitwiseShiftRightExpr : public _HexAstBinaryExpr {
 public:
   _HexAstBitwiseShiftRightExpr(HexAstExpr, HexAstExpr);
 
-  static void* create(HexAstExpr, HexAstExpr);
+  virtual void accept(AstVisitor*);
 } * HexAstBitwiseShiftRightExpr;
 
 #endif /* _AST_BITWISE_SHIFT_RIGHT_EXPR_H_ */

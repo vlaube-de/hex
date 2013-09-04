@@ -17,6 +17,7 @@
 
 
 #include "ast_and_expr.h"
+#include "visitor/ast_visitor.h"
 
 
 _HexAstAndExpr::_HexAstAndExpr(
@@ -24,4 +25,10 @@ _HexAstAndExpr::_HexAstAndExpr(
   HexAstExpr right
 ): _HexAstCommutativeBinaryExpr(left, right)
 {
+}
+
+void
+_HexAstAndExpr::accept(AstVisitor* visitor)
+{
+  visitor->visit(this);
 }

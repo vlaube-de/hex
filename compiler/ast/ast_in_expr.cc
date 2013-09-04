@@ -17,11 +17,17 @@
 
 
 #include "ast_in_expr.h"
-
+#include "visitor/ast_visitor.h"
 
 _HexAstInExpr::_HexAstInExpr(
   HexAstExpr left,
   HexAstExpr right
 ): _HexAstBinaryExpr(left, right)
 {
+}
+
+void
+_HexAstInExpr::accept(AstVisitor* visitor)
+{
+  visitor->visit(this);
 }

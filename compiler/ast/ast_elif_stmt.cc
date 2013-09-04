@@ -19,6 +19,7 @@
 #include "ast_expr.h"
 #include "ast_compound_stmt.h"
 #include "ast_stmt_group.h"
+#include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
 
 _HexAstElifStmt::_HexAstElifStmt(
@@ -33,6 +34,18 @@ bool
 _HexAstElifStmt::reprOK()
 {
   HEX_ASSERT(this->_predicate);
+}
+
+HexAstExpr
+_HexAstElifStmt::predicate()
+{
+  return this->_predicate;
+}
+
+void
+_HexAstElifStmt::accept(AstVisitor* visitor)
+{
+  visitor->visit(this);
 }
 
 HexAstElifStmt

@@ -19,6 +19,7 @@
 #include "ast_keyword_val_list.h"
 #include "ast_node.h"
 #include "ast_identifier.h"
+#include "visitor/ast_visitor.h"
 
 #ifndef _AST_ARG_LIST_H_
 #define _AST_ARG_LIST_H_
@@ -28,6 +29,8 @@ public:
   _HexAstArgList(HexAstValList, HexAstKeywordValList, HexAstIdentifier, HexAstIdentifier);
 
   virtual bool reprOK();
+
+  virtual void accept(AstVisitor*);
 
   static _HexAstArgList* create(HexAstValList, HexAstKeywordValList, HexAstIdentifier, HexAstIdentifier);
 private:

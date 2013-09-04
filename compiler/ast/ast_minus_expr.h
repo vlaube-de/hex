@@ -17,6 +17,7 @@
 
 #include "ast_binary_expr.h"
 #include "ast_expr.h"
+#include "visitor/ast_visitor.h"
 
 #ifndef _AST_MINUS_EXPR_H_
 #define _AST_MINUS_EXPR_H_
@@ -26,7 +27,7 @@ typedef class _HexAstMinusExpr : public _HexAstBinaryExpr {
 public:
   _HexAstMinusExpr(HexAstExpr, HexAstExpr);
 
-  static void* create(HexAstExpr, HexAstExpr);
+  virtual void accept(AstVisitor*);
 } * HexAstMinusExpr;
 
 

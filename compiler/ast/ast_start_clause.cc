@@ -21,6 +21,7 @@
 #include "ast_target_list.h"
 #include "ast_conditional_clause.h"
 #include "ast_identifier.h"
+#include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
 
 _HexAstStartClause::_HexAstStartClause(
@@ -28,6 +29,18 @@ _HexAstStartClause::_HexAstStartClause(
   HexAstConditionalClause condition
 ):_alias(alias), _condition(condition)
 {
+}
+
+HexAstIdentifier
+_HexAstStartClause::alias()
+{
+  return this->_alias;
+}
+
+HexAstConditionalClause
+_HexAstStartClause::condition()
+{
+  return this->_condition;
 }
 
 _HexAstStartClauseSingle::_HexAstStartClauseSingle(
@@ -43,6 +56,18 @@ bool
 _HexAstStartClauseSingle::reprOK()
 {
   HEX_ASSERT(this->_target);
+}
+
+HexAstName
+_HexAstStartClauseSingle::target()
+{
+  return this->_target;
+}
+
+void
+_HexAstStartClauseSingle::accept(AstVisitor* visitor)
+{
+  visitor->visit(this);
 }
 
 HexAstStartClauseSingle
@@ -78,6 +103,18 @@ bool
 _HexAstStartClauseMultiple::reprOK()
 {
   HEX_ASSERT(this->_targets);
+}
+
+HexAstTargetList
+_HexAstStartClauseMultiple::targets()
+{
+  return this->_targets;
+}
+
+void
+_HexAstStartClauseMultiple::accept(AstVisitor* visitor)
+{
+  visitor->visit(this);
 }
 
 HexAstStartClauseMultiple

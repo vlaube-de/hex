@@ -17,6 +17,7 @@
 
 #include "ast_simple_stmt.h"
 #include "ast_expr.h"
+#include "visitor/ast_visitor.h"
 
 #ifndef _AST_BREAK_STMT_H_
 #define _AST_BREAK_STMT_H_
@@ -26,6 +27,10 @@ public:
   _HexAstBreakStmt(HexAstExpr);
 
   virtual bool reprOK();
+
+  HexAstExpr predicate();
+
+  virtual void accept(AstVisitor*);
 
   static _HexAstBreakStmt* create(HexAstExpr);
 private:

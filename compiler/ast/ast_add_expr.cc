@@ -17,6 +17,7 @@
 
 
 #include "ast_add_expr.h"
+#include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
 
 _HexAstAddExpr::_HexAstAddExpr(
@@ -26,16 +27,8 @@ _HexAstAddExpr::_HexAstAddExpr(
 {
 }
 
-void*
-_HexAstAddExpr::create(
-  HexAstExpr left,
-  HexAstExpr right
-)
+void
+_HexAstAddExpr::accept(AstVisitor* visitor)
 {
-  HEX_ASSERT(left);
-  HEX_ASSERT(right);
-
-  HexAstAddExpr obj = new _HexAstAddExpr(left, right);
-  HEX_ASSERT(obj);
-  return obj;
+  visitor->visit(this);
 }

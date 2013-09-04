@@ -18,6 +18,7 @@
 #include "ast_using_src.h"
 #include "ast_name.h"
 #include "ast_typed.h"
+#include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
 
 _HexAstUsingSrc::_HexAstUsingSrc(
@@ -35,6 +36,18 @@ _HexAstUsingSrc::reprOK()
   if(this->_type == AST_USING_SRC_NAME) {
     HEX_ASSERT(this->_name);
   }
+}
+
+HexAstName
+_HexAstUsingSrc::name()
+{
+  return this->_name;
+}
+
+void
+_HexAstUsingSrc::accept(AstVisitor* visitor)
+{
+  visitor->visit(this);
 }
 
 HexAstUsingSrc

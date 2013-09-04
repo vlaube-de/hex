@@ -21,6 +21,7 @@
 #include "ast_stmt_group.h"
 #include "ast_elif_stmt_group.h"
 #include "ast_else_stmt.h"
+#include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
 
 _HexAstIfStmt::_HexAstIfStmt(
@@ -37,6 +38,30 @@ bool
 _HexAstIfStmt::reprOK()
 {
   HEX_ASSERT(this->_predicate);
+}
+
+HexAstExpr
+_HexAstIfStmt::predicate()
+{
+  return this->_predicate;
+}
+
+HexAstElifStmtGroup
+_HexAstIfStmt::elif_stmts()
+{
+  return this->_elif_stmts;
+}
+
+HexAstElseStmt
+_HexAstIfStmt::else_stmt()
+{
+  return this->_else_stmt;
+}
+
+void
+_HexAstIfStmt::accept(AstVisitor* visitor)
+{
+  visitor->visit(this);
 }
 
 HexAstIfStmt

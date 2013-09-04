@@ -24,3 +24,9 @@ AstTyped::AstTyped(
 {
   HEX_ASSERT(this->_type);
 }
+
+ast_type_t
+AstTyped::type()
+{
+  return this->_type;
+}

@@ -17,6 +17,7 @@
 
 #include "ast_expr.h"
 #include "ast_expr_list.h"
+#include "visitor/ast_visitor.h"
 
 #ifndef _AST_YIELD_EXPR_H_
 #define _AST_YIELD_EXPR_H_
@@ -24,6 +25,10 @@
 typedef class _HexAstYieldExpr : public _HexAstExpr {
 public:
   _HexAstYieldExpr(HexAstExprList);
+
+  HexAstExprList exprs();
+
+  virtual void accept(AstVisitor*);
 
   static _HexAstYieldExpr* create(HexAstExprList);
 private:

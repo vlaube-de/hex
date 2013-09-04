@@ -19,6 +19,7 @@
 #include "ast_expr_list.h"
 #include "ast_stmt_group.h"
 #include "ast_identifier.h"
+#include "visitor/ast_visitor.h"
 
 #ifndef _AST_WITH_STMT_H_
 #define _AST_WITH_STMT_H_
@@ -28,6 +29,11 @@ public:
   _HexAstWithStmt(HexAstExprList, HexAstIdentifier, HexAstStmtGroup);
 
   virtual bool reprOK();
+
+  HexAstExprList exprs();
+  HexAstIdentifier alias();
+
+  virtual void accept(AstVisitor*);
 
   static _HexAstWithStmt* create(HexAstExprList, HexAstIdentifier, HexAstStmtGroup);
 private:

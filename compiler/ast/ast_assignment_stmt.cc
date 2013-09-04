@@ -20,6 +20,7 @@
 #include "ast_primary.h"
 #include "ast_decorator_list.h"
 #include "ast_typed.h"
+#include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
 
 _HexAstAssignmentStmt::_HexAstAssignmentStmt(
@@ -43,6 +44,36 @@ _HexAstAssignmentStmt::reprOK()
     this->_type==AST_ASSIGNMENT_STMT_LAMBDA ||
     this->_type==AST_ASSIGNMENT_STMT_TASK
   );
+}
+
+HexAstDecoratorList
+_HexAstAssignmentStmt::decorators()
+{
+  return this->_decorators;
+}
+
+HexAstPrimary
+_HexAstAssignmentStmt::dst()
+{
+  return this->_dst;
+}
+
+void*
+_HexAstAssignmentStmt::src()
+{
+  return this->_src;
+}
+
+bool
+_HexAstAssignmentStmt::defer()
+{
+  return this->_defer;
+}
+
+void
+_HexAstAssignmentStmt::accept(AstVisitor* visitor)
+{
+  visitor->visit(this);
 }
 
 HexAstAssignmentStmt

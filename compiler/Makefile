@@ -25,16 +25,13 @@ BFLAGS=-y -d -t -v -g
 ast:
 	cd ast/ && make all
 
-ast.h:
-	cp ../tools/headergen.py ./ && python headergen.py --path='./ast/' --dest='ast.h' && rm headergen.py
-
 lex.yy.c: lexer.l
 	$(LEX) lexer.l
 
 parser.tab.hh: parser.y
 	$(BISON) $(BFLAGS) parser.y -o parser.tab.cc
 
-hex_parser.o: ast.h lex.yy.c parser.tab.hh hex_parser.cc
+hex_parser.o: lex.yy.c parser.tab.hh hex_parser.cc
 	$(CXX) $(CFLAGS) -c hex_parser.cc
 
 parser_stub.out: ast hex_parser.o parser_stub.cc
@@ -42,7 +39,6 @@ parser_stub.out: ast hex_parser.o parser_stub.cc
 
 all: lex.yy.c       \
 	 parser.tab.hh    \
-	 ast.h            \
 	 hex_parser.o     \
 	 parser_stub.out
 

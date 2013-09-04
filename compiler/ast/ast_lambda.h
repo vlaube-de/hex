@@ -19,6 +19,7 @@
 #include "ast_parameter_list.h"
 #include "ast_stmt_group.h"
 #include "ast_expr.h"
+#include "visitor/ast_visitor.h"
 
 #ifndef _AST_LAMBDA_H_
 #define _AST_LAMBDA_H_
@@ -26,6 +27,8 @@
 typedef class _HexAstLambda : public _HexAstNode {
 public:
   _HexAstLambda(HexAstParameterList);
+
+  HexAstParameterList params();
 
 protected:
   HexAstParameterList _params;
@@ -37,6 +40,10 @@ public:
 
   virtual bool reprOK();
 
+  HexAstExpr expr();
+
+  virtual void accept(AstVisitor*);
+
   static _HexAstLambdaSimple* create(HexAstParameterList, HexAstExpr);
 private:
   HexAstExpr _expr;
@@ -47,6 +54,10 @@ public:
   _HexAstLambdaComplex(HexAstParameterList, HexAstStmtGroup);
 
   virtual bool reprOK();
+
+  HexAstStmtGroup stmts();
+
+  virtual void accept(AstVisitor*);
 
   static _HexAstLambdaComplex* create(HexAstParameterList, HexAstStmtGroup);
 private:

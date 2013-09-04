@@ -17,6 +17,7 @@
 
 
 #include "ast_bitwise_or_expr.h"
+#include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
 
 
@@ -27,16 +28,8 @@ _HexAstBitwiseOrExpr::_HexAstBitwiseOrExpr(
 {
 }
 
-void*
-_HexAstBitwiseOrExpr::create(
-  HexAstExpr left,
-  HexAstExpr right
-)
+void
+_HexAstBitwiseOrExpr::accept(AstVisitor* visitor)
 {
-  HEX_ASSERT(left);
-  HEX_ASSERT(right);
-
-  HexAstBitwiseOrExpr obj = new _HexAstBitwiseOrExpr(left, right);
-  HEX_ASSERT(obj);
-  return obj;
+  visitor->visit(this);
 }

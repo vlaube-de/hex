@@ -18,6 +18,7 @@
 #include "ast_try_stmt.h"
 #include "ast_compound_stmt.h"
 #include "ast_stmt_group.h"
+#include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
 
 _HexAstTryStmt::_HexAstTryStmt(
@@ -32,6 +33,18 @@ bool
 _HexAstTryStmt::reprOK()
 {
   HEX_ASSERT(this->_catch_stmt_group);
+}
+
+HexAstCatchStmtGroup
+_HexAstTryStmt::catch_stmt_group()
+{
+  return this->_catch_stmt_group;
+}
+
+void
+_HexAstTryStmt::accept(AstVisitor* visitor)
+{
+  visitor->visit(this);
 }
 
 HexAstTryStmt

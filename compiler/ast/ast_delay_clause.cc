@@ -20,8 +20,8 @@
 #include "ast_task_state.h"
 #include "ast_expr_list.h"
 #include "ast_conditional_clause.h"
+#include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
-
 
 _HexAstConditionalDelayClause::_HexAstConditionalDelayClause(
   HexAstExprList exprs,
@@ -36,6 +36,24 @@ _HexAstConditionalDelayClause::reprOK()
 {
   HEX_ASSERT(this->_exprs);
   HEX_ASSERT(this->_condition);
+}
+
+HexAstExprList
+_HexAstConditionalDelayClause::exprs()
+{
+  return this->_exprs;
+}
+
+HexAstConditionalClause
+_HexAstConditionalDelayClause::condition()
+{
+  return this->_condition;
+}
+
+void
+_HexAstConditionalDelayClause::accept(AstVisitor* visitor)
+{
+  visitor->visit(this);
 }
 
 HexAstConditionalDelayClause
@@ -57,7 +75,6 @@ _HexAstConditionalDelayClause::create(
   return obj;
 }
 
-
 _HexAstFixedDelayClause::_HexAstFixedDelayClause(
   HexAstExprList exprs,
   HexAstExpr delay
@@ -70,6 +87,24 @@ bool
 _HexAstFixedDelayClause::reprOK()
 {
   HEX_ASSERT(this->_delay);
+}
+
+HexAstExprList
+_HexAstFixedDelayClause::exprs()
+{
+  return this->_exprs;
+}
+
+HexAstExpr
+_HexAstFixedDelayClause::delay()
+{
+  return this->_delay;
+}
+
+void
+_HexAstFixedDelayClause::accept(AstVisitor* visitor)
+{
+  visitor->visit(this);
 }
 
 HexAstFixedDelayClause

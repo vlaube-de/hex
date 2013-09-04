@@ -17,11 +17,13 @@
 
 #include "ast_float_literal.h"
 #include "ast_unparsed.h"
+#include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
+#include "../../base/c_str.h"
 
 
 _HexAstFloatLiteral::_HexAstFloatLiteral(
-  char *value
+  c_str value
 ):AstUnparsed(value)
 {
   this->reprOK();
@@ -33,8 +35,20 @@ _HexAstFloatLiteral::reprOK()
   HEX_ASSERT(this->_value);
 }
 
+c_str
+_HexAstFloatLiteral::value()
+{
+  return this->_value;
+}
+
+void
+_HexAstFloatLiteral::accept(AstVisitor* visitor)
+{
+  visitor->visit(this);
+}
+
 HexAstFloatLiteral
-_HexAstFloatLiteral::create(char* value)
+_HexAstFloatLiteral::create(c_str value)
 {
   HexAstFloatLiteral obj = new _HexAstFloatLiteral(value);
   HEX_ASSERT(obj);
