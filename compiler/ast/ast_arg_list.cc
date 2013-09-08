@@ -44,6 +44,30 @@ _HexAstArgList::reprOK()
   );
 }
 
+HexAstValList
+_HexAstArgList::simple_args()
+{
+  return this->_valList;
+}
+
+HexAstKeywordValList
+_HexAstArgList::keyword_args()
+{
+  return this->_keywordValList;
+}
+
+HexAstIdentifier
+_HexAstArgList::args()
+{
+  return this->_args;
+}
+
+HexAstIdentifier
+_HexAstArgList::kwargs()
+{
+  return this->_kwargs;
+}
+
 void
 _HexAstArgList::accept(AstVisitor* visitor)
 {

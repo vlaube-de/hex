@@ -531,6 +531,20 @@ AstVisitor::visit(HexAstOperator op)
   return op;
 }
 
+HexAstOperatorDef
+AstVisitor::visit(HexAstOperatorDef def)
+{
+  HEX_ASSERT(def);
+  return def;
+}
+
+HexAstAttributeDefList
+AstVisitor::visit(HexAstAttributeDefList list)
+{
+  HEX_ASSERT(list);
+  return list;
+}
+
 HexAstAssignmentStmt
 AstVisitor::visit(HexAstAssignmentStmt stmt)
 {
@@ -608,7 +622,6 @@ AstVisitor::visit(HexAstLockStmt stmt)
   return stmt;
 }
 
-
 HexAstWhileStmt
 AstVisitor::visit(HexAstWhileStmt stmt)
 {
@@ -621,6 +634,27 @@ AstVisitor::visit(HexAstCatchStmt stmt)
 {
   HEX_ASSERT(stmt);
   return stmt;
+}
+
+HexAstCatchStmtGroup
+AstVisitor::visit(HexAstCatchStmtGroup stmts)
+{
+  HEX_ASSERT(stmts);
+  return stmts;
+}
+
+HexAstTryStmt
+AstVisitor::visit(HexAstTryStmt stmt)
+{
+  HEX_ASSERT(stmt);
+  return stmt;
+}
+
+HexAstClassDef
+AstVisitor::visit(HexAstClassDef def)
+{
+  HEX_ASSERT(def);
+  return def;
 }
 
 HexAstLambdaSimple

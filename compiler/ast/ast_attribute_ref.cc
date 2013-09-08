@@ -16,16 +16,16 @@
  */
 
 #include <list>
+#include "ast_identifier.h"
 #include "ast_primary.h"
 #include "ast_attribute_ref.h"
 #include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
-#include "../../base/c_str.h"
 
 _HexAstAttributeRef::_HexAstAttributeRef(
   HexAstPrimary source,
-  c_str attribute
-): _source(source), _attribute(strdup(attribute))
+  HexAstIdentifier attribute
+): _source(source), _attribute(attribute)
 {
   this->reprOK();
 }
@@ -43,7 +43,7 @@ _HexAstAttributeRef::source()
   return this->_source;
 }
 
-c_str
+HexAstIdentifier
 _HexAstAttributeRef::attribute()
 {
   return this->_attribute;
@@ -58,7 +58,7 @@ _HexAstAttributeRef::accept(AstVisitor* visitor)
 HexAstAttributeRef
 _HexAstAttributeRef::create(
   HexAstPrimary source,
-  c_str attribute
+  HexAstIdentifier attribute
 )
 {
   HexAstAttributeRef obj = new _HexAstAttributeRef(source, attribute);

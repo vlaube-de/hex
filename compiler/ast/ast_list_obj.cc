@@ -17,6 +17,7 @@
 
 
 #include <list>
+#include <algorithm>
 #include "ast_list_obj.h"
 #include "../../base/assert.h"
 

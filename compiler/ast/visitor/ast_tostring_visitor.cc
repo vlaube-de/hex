@@ -15,7 +15,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <functional>
+// #include <stdio.h>
+#include <algorithm>
 #include "../ast.h"
 #include "ast_tostring_visitor.h"
 #include "../../../base/strbuf.h"
@@ -27,33 +28,15 @@ AstToStringVisitor::AstToStringVisitor()
   HEX_ASSERT(_strbuf);
 }
 
-void
-AstToStringVisitor::_commaF()
+AstToStringVisitor::~AstToStringVisitor()
 {
-  this->append(", ");
-}
-void
-AstToStringVisitor::_dotF()
-{
-  this->append(".");
+  strbuf_free(&_strbuf);
 }
 
-void
-AstToStringVisitor::_newlineF()
+c_str
+AstToStringVisitor::str()
 {
-  this->append("\n");
-}
-
-void
-AstToStringVisitor::_inputF()
-{
-  this->append(" <<< ");
-}
-
-void
-AstToStringVisitor::_outputF()
-{
-  this->append(" >>> ");
+  return strbuf_cstr(_strbuf);
 }
 
 void
@@ -62,19 +45,17 @@ AstToStringVisitor::append(const c_str s)
   strbuf_append(this->_strbuf, strdup(s));
 }
 
-// template<typename C, typename T>
-// void
-// AstToStringVisitor::iterate(AstListObj<C, T> obj, auto f)
-// {
-//   HEX_ASSERT(obj);
-
-//   std::list<T>::iterator itr;
-//   for(itr=obj->_list->begin(), itr!=obj->_list->end(); itr++) {
-//     T t = (T)itr;
-//     this->visit(t);
-//     f();
-//   }
-// }
+template<class T, class Function>
+void
+AstToStringVisitor::iterate(std::list<T>* list, Function f, const c_str delimiter, bool breakOnLast)
+{
+  typename std::list<T>::iterator itr;
+  for(itr=list->begin(); itr != list->end();) {
+    f((T)(*itr));
+    if(++itr == list->end() && breakOnLast) break;
+    this->append(delimiter);
+  }
+}
 
 HexAstIdentifier
 AstToStringVisitor::visit(HexAstIdentifier identifier_)
@@ -128,6 +109,10 @@ AstToStringVisitor::visit(HexAstCall call_)
   }
   this->append(")");
 
+  if(call->isAsync()) {
+    this->append(" async");
+  }
+
   return call;
 }
 
@@ -138,7 +123,7 @@ AstToStringVisitor::visit(HexAstAttributeRef ref_)
 
   ref->source()->accept(this);
   this->append(".");
-  this->append(ref->attribute());
+  ref->attribute()->accept(this);
 
   return ref;
 }
@@ -171,7 +156,13 @@ AstToStringVisitor::visit(HexAstTargetList targets_)
 {
   HexAstTargetList targets = AstVisitor::visit(targets_);
 
-  //this->iterate<_HexAstTargetList, _HexAstIdentifier>(targets, this->commaF);
+  this->iterate<HexAstIdentifier>(
+    targets->list(),
+    [this](HexAstIdentifier identifier) {
+      identifier->accept(this);
+    },
+    this->_commaDelimiter
+  );
 
   return targets;
 }
@@ -181,7 +172,13 @@ AstToStringVisitor::visit(HexAstName name_)
 {
   HexAstName name = AstVisitor::visit(name_);
 
-  //this->iterate<_HexAstName, _HexAstIdentifier>(name, this->dotF);
+  this->iterate<HexAstIdentifier>(
+    name->list(),
+    [this](HexAstIdentifier identifier) {
+      identifier->accept(this);
+    },
+    this->_dotDelimiter
+  );
 
   return name;
 }
@@ -637,7 +634,7 @@ AstToStringVisitor::visit(HexAstPseudoAssignBitwiseXorExpr expr_)
 }
 
 HexAstPseudoAssignBitwiseLeftShiftExpr
-AstToStringVisitor::vist(HexAstPseudoAssignBitwiseLeftShiftExpr expr_)
+AstToStringVisitor::visit(HexAstPseudoAssignBitwiseLeftShiftExpr expr_)
 {
   HexAstPseudoAssignBitwiseLeftShiftExpr expr = AstVisitor::visit(expr_);
 
@@ -721,7 +718,13 @@ AstToStringVisitor::visit(HexAstExprList exprlist_)
 {
   HexAstExprList exprlist = AstVisitor::visit(exprlist_);
 
-  //this->iterate<_HexAstExprList, HexAstExpr>(exprlist, this->_commaF);
+  this->iterate<HexAstExpr>(
+    exprlist->list(),
+    [this](HexAstExpr expr) {
+      expr->accept(this);
+    },
+    this->_commaDelimiter
+  );
 
   return exprlist;
 }
@@ -731,7 +734,13 @@ AstToStringVisitor::visit(HexAstSimpleParamList params_)
 {
   HexAstSimpleParamList params = AstVisitor::visit(params_);
 
-  //this->iterate<_HexAstSimpleParamList, HexAstIdentifier>(params, this->_commaF);
+  this->iterate<HexAstIdentifier>(
+    params->list(),
+    [this](HexAstIdentifier identifier) {
+      identifier->accept(this);
+    },
+    this->_commaDelimiter
+  );
 
   return params;
 }
@@ -742,6 +751,7 @@ AstToStringVisitor::visit(HexAstKeywordVal keyval_)
   HexAstKeywordVal keyval = AstVisitor::visit(keyval_);
 
   keyval->key()->accept(this);
+  this->append("=");
   keyval->val()->accept(this);
 
   return keyval;
@@ -752,7 +762,13 @@ AstToStringVisitor::visit(HexAstKeywordValList list_)
 {
   HexAstKeywordValList list = AstVisitor::visit(list_);
 
-  //this->iterate<_HexAstKeywordValList, HexAstKeywordVal>(list, this->_commaF);
+  this->iterate<HexAstKeywordVal>(
+    list->list(),
+    [this](HexAstKeywordVal val) {
+      val->accept(this);
+    },
+    this->_commaDelimiter
+  );
 
   return list;
 }
@@ -777,12 +793,14 @@ AstToStringVisitor::visit(HexAstParameterList params_)
 
   if(params->args()) {
     if(prev) this->append(", ");
+    this->append("*");
     params->args()->accept(this);
     prev = true;
   }
 
   if(params->kwargs()) {
     if(prev) this->append(", ");
+    this->append("**");
     params->kwargs()->accept(this);
     prev = true;
   }
@@ -795,7 +813,13 @@ AstToStringVisitor::visit(HexAstValList vallist_)
 {
   HexAstValList vallist = AstVisitor::visit(vallist_);
 
-  //this->iterate<_HexAstValList, HexAstValAtom>(vallist, this->_commaF);
+  this->iterate<HexAstValAtom>(
+    vallist->list(),
+    [this](HexAstValAtom val) {
+      val->accept(this);
+    },
+    this->_commaDelimiter
+  );
 
   return vallist;
 }
@@ -821,7 +845,32 @@ AstToStringVisitor::visit(HexAstArgList arglist_)
 {
   HexAstArgList arglist = AstVisitor::visit(arglist_);
 
-  // TODO: string here...
+  bool prev = false;
+
+  if(arglist->simple_args()) {
+    arglist->simple_args()->accept(this);
+    prev = true;
+  }
+
+  if(arglist->keyword_args()) {
+    if(prev) this->append(", ");
+    arglist->keyword_args()->accept(this);
+    prev = true;
+  }
+
+  if(arglist->args()) {
+    if(prev) this->append(", ");
+    this->append("*");
+    arglist->args()->accept(this);
+    prev = true;
+  }
+
+  if(arglist->kwargs()) {
+    if(prev) this->append(", ");
+    this->append("**");
+    arglist->kwargs()->accept(this);
+    prev = true;
+  }
 
   return arglist;
 }
@@ -842,7 +891,7 @@ AstToStringVisitor::visit(HexAstComprehension comprehension_)
   comprehension->src()->accept(this);
 
   if(comprehension->predicate()) {
-    this->append(" where ");
+    this->append(" if ");
     comprehension->predicate()->accept(this);
   }
 
@@ -891,7 +940,7 @@ AstToStringVisitor::visit(HexAstMapField field_)
   HexAstMapField field = AstVisitor::visit(field_);
 
   field->key()->accept(this);
-  this->append("=> ");
+  this->append(" => ");
   field->val()->accept(this);
 
   return field;
@@ -902,7 +951,13 @@ AstToStringVisitor::visit(HexAstMapFieldList list_)
 {
   HexAstMapFieldList list = AstVisitor::visit(list_);
 
-  //this->iterate<_HexAstMapFieldList, HexAstMapField>(list, this->_commaF);
+  this->iterate<HexAstMapField>(
+    list->list(),
+    [this](HexAstMapField field) {
+      field->accept(this);
+    },
+    this->_commaDelimiter
+  );
 
   return list;
 }
@@ -926,7 +981,13 @@ AstToStringVisitor::visit(HexAstFieldDefList list_)
 {
   HexAstFieldDefList list = AstVisitor::visit(list_);
 
-  //this->iterate<_HexAstFieldDefList, HexAstFieldDef>(list, this._commaF);
+  this->iterate<HexAstFieldDef>(
+    list->list(),
+    [this](HexAstFieldDef field) {
+      field->accept(this);
+    },
+    this->_commaDelimiter
+  );
 
   return list;
 }
@@ -939,8 +1000,8 @@ AstToStringVisitor::visit(HexAstDictForm dict_)
   this->append("{");
 
   if(dict->type() == AST_DICT_FORM_EXPLICIT) {
-    HexAstExprList exprlist = (HexAstExprList)(dict->core());
-    exprlist->accept(this);
+    HexAstFieldDefList fields = (HexAstFieldDefList)(dict->core());
+    fields->accept(this);
   } else if (dict->type() == AST_DICT_FORM_COMPREHENSION) {
     HexAstComprehension comprehension = (HexAstComprehension)(dict->core());
     comprehension->accept(this);
@@ -961,7 +1022,7 @@ AstToStringVisitor::visit(HexAstDecorator decorator_)
   if(decorator->args()) {
     this->append("(");
     decorator->args()->accept(this);
-    this->append("(");
+    this->append(")");
   }
 
   return decorator;
@@ -972,7 +1033,14 @@ AstToStringVisitor::visit(HexAstDecoratorList decorators_)
 {
   HexAstDecoratorList decorators = AstVisitor::visit(decorators_);
 
-  //this->iterate<_HexAstDecoratorList, HexAstDecorator>(decorators, this->_newlineF);
+  this->iterate<HexAstDecorator>(
+    decorators->list(),
+    [this](HexAstDecorator decorator) {
+      decorator->accept(this);
+    },
+    this->_newlineDelimiter,
+    false
+  );
 
   return decorators;
 }
@@ -1103,19 +1171,17 @@ AstToStringVisitor::visit(HexAstOperatorDef def_)
   return def;
 }
 
-/*
-HexAstAttributeDef
-AstToStringVisitor::visit(HexAstAttributeDef def)
-{
-}
-*/
-
 HexAstAttributeDefList
 AstToStringVisitor::visit(HexAstAttributeDefList defs_)
 {
   HexAstAttributeDefList defs = AstVisitor::visit(defs_);
 
-  //this->iterate<_HexAstAttributeDefList, HexAstAttributeDef>(defs, this->_newlineF);
+  for_each(defs->list()->begin(), defs->list()->end(),
+    [this](HexAstAttributeDef def) {
+      def->accept(this);
+      this->append("\n");
+    }
+  );
 
   return defs;
 }
@@ -1145,6 +1211,8 @@ AstToStringVisitor::visit(HexAstAssignmentStmt stmt_)
     task->accept(this);
   }
 
+  this->append(";");
+
   return stmt;
 }
 
@@ -1170,7 +1238,7 @@ AstToStringVisitor::visit(HexAstUsingStmtDirect stmt_)
 
   this->append("using ");
   stmt->target()->accept(this);
-  this->append(" ");
+
   if(stmt->alias()) {
     this->append(" as ");
     stmt->alias()->accept(this);
@@ -1214,9 +1282,9 @@ AstToStringVisitor::visit(HexAstElifStmt stmt_)
 
   this->append("elif ");
   stmt->predicate()->accept(this);
-  this->append("{\n");
+  this->append(" {");
   stmt->stmts()->accept(this);
-  this->append("\n}");
+  this->append("}");
 
   return stmt;
 }
@@ -1226,7 +1294,12 @@ AstToStringVisitor::visit(HexAstElifStmtGroup group_)
 {
   HexAstElifStmtGroup group = AstVisitor::visit(group_);
 
-  //this->iterate<_HexAstElifStmtGroup, HexAstElifStmt>(group, this->_newlineF);
+  for_each(group->list()->begin(), group->list()->end(),
+    [this](HexAstElifStmt stmt) {
+      stmt->accept(this);
+      this->append("");
+    }
+  );
 
   return group;
 }
@@ -1236,9 +1309,9 @@ AstToStringVisitor::visit(HexAstElseStmt stmt_)
 {
   HexAstElseStmt stmt = AstVisitor::visit(stmt_);
 
-  this->append("else {\n");
+  this->append("else {");
   stmt->stmts()->accept(this);
-  this->append("\n}");
+  this->append("}");
 
   return stmt;
 }
@@ -1248,17 +1321,22 @@ AstToStringVisitor::visit(HexAstIfStmt stmt_)
 {
   HexAstIfStmt stmt = AstVisitor::visit(stmt_);
 
-  this->append("if {\n");
+  this->append("if");
+  if(stmt->predicate()) {
+    this->append(" ");
+    stmt->predicate()->accept(this);
+  }
+  this->append(" {");
   stmt->stmts()->accept(this);
-  this->append("\n}");
+  this->append("}");
 
   if(stmt->elif_stmts()) {
     stmt->elif_stmts()->accept(this);
-    this->append("\n");
+    this->append("");
   }
   if(stmt->else_stmt()) {
     stmt->else_stmt()->accept(this);
-    this->append("\n");
+    this->append("");
   }
 
   return stmt;
@@ -1279,9 +1357,9 @@ AstToStringVisitor::visit(HexAstForStmt stmt_)
     stmt->predicate()->accept(this);
   }
 
-  this->append(" {\n");
+  this->append(" {");
   stmt->stmts()->accept(this);
-  this->append("\n}");
+  this->append("}");
 
   return stmt;
 }
@@ -1292,16 +1370,16 @@ AstToStringVisitor::visit(HexAstWithStmt stmt_)
   HexAstWithStmt stmt = AstVisitor::visit(stmt_);
 
   this->append("with ");
-  stmt->stmts()->accept(this);
+  stmt->exprs()->accept(this);
 
   if(stmt->alias()) {
     this->append(" as ");
     stmt->alias()->accept(this);
   }
 
-  this->append(" {\n");
+  this->append(" {");
   stmt->stmts()->accept(this);
-  this->append("\n}");
+  this->append("}");
 
   return stmt;
 }
@@ -1313,9 +1391,9 @@ AstToStringVisitor::visit(HexAstLockStmt stmt_)
 
   this->append("lock ");
   stmt->exprs()->accept(this);
-  this->append(" {\n");
+  this->append(" {");
   stmt->stmts()->accept(this);
-  this->append("\n}");
+  this->append("}");
 
   return stmt;
 }
@@ -1329,9 +1407,9 @@ AstToStringVisitor::visit(HexAstWhileStmt stmt_)
   this->append("while ");
   stmt->expr()->accept(this);
 
-  this->append(" {\n");
+  this->append(" {");
   stmt->stmts()->accept(this);
-  this->append("\n}");
+  this->append("}");
 
   return stmt;
 }
@@ -1341,31 +1419,37 @@ AstToStringVisitor::visit(HexAstCatchStmt stmt_)
 {
   HexAstCatchStmt stmt = AstVisitor::visit(stmt_);
 
-  this->append("catch ");
+  this->append("catch");
   if(stmt->targets()) {
+    this->append(" ");
     stmt->targets()->accept(this);
     if(stmt->alias()) {
       this->append(" as ");
       stmt->alias()->accept(this);
-      this->append(" ");
     }
   }
 
-  this->append(" {\n");
+  this->append(" {");
   stmt->stmts()->accept(this);
-  this->append("\n}");
+  this->append("}");
 
   return stmt;
 }
 
 HexAstCatchStmtGroup
-AstToStringVisitor::visit(HexAstCatchStmtGroup group_)
+AstToStringVisitor::visit(HexAstCatchStmtGroup stmts_)
 {
-  HexAstCatchStmtGroup group = AstVisitor::visit(group_);
+  HexAstCatchStmtGroup stmts = AstVisitor::visit(stmts_);
 
-  //this->iterate<_HexAstCatchStmtGroup, HexAstCatchStmt>(group, this->_newlineF);
+  this->iterate<HexAstCatchStmt>(
+    stmts->list(),
+    [this](HexAstCatchStmt stmt) {
+      stmt->accept(this);
+    },
+    this->_nullDelimiter
+  );
 
-  return group;
+  return stmts;
 }
 
 HexAstTryStmt
@@ -1373,10 +1457,9 @@ AstToStringVisitor::visit(HexAstTryStmt stmt_)
 {
   HexAstTryStmt stmt = AstVisitor::visit(stmt_);
 
-  this->append("try ");
-  this->append(" {\n");
+  this->append("try {");
   stmt->stmts()->accept(this);
-  this->append("\n}");
+  this->append("}");
 
   stmt->catch_stmt_group()->accept(this);
 
@@ -1393,16 +1476,19 @@ AstToStringVisitor::visit(HexAstClassDef def_)
   }
   this->append("class ");
   def->name()->accept(this);
-  this->append(" ");
 
   if(def->parent()) {
-    this->append("extends ");
+    this->append(" extends ");
     def->parent()->accept(this);
   }
 
-  this->append(" {\n");
-  def->attributes()->accept(this);
-  this->append("}\n");
+  if(def->attributes()) {
+    this->append(" {");
+    def->attributes()->accept(this);
+    this->append("}");
+  } else {
+    this->append(";");
+  }
 
   return def;
 }
@@ -1431,10 +1517,10 @@ AstToStringVisitor::visit(HexAstLambdaComplex lambda_)
   if(lambda->params()) {
     lambda->params()->accept(this);
   }
-  this->append(") => {\n");
 
+  this->append(") => {");
   lambda->stmts()->accept(this);
-  this->append("}\n");
+  this->append("}");
 
   return lambda;
 }
@@ -1444,7 +1530,15 @@ AstToStringVisitor::visit(HexAstInputStmt stmt_)
 {
   HexAstInputStmt stmt = AstVisitor::visit(stmt_);
 
-  //this->iterate<_HexAstInputStmt, HexAstPrimary>(stmt, this->_inputF);
+  this->iterate<HexAstPrimary>(
+    stmt->list(),
+    [this](HexAstPrimary primary) {
+      primary->accept(this);
+    },
+    this->_inputDelimiter
+  );
+
+  this->append(";");
 
   return stmt;
 }
@@ -1454,7 +1548,15 @@ AstToStringVisitor::visit(HexAstOutputStmt stmt_)
 {
   HexAstOutputStmt stmt = AstVisitor::visit(stmt_);
 
-  //this->iterate<_HexAstOutputStmt, HexAstPrimary>(stmt, this->_outputF);
+  this->iterate<HexAstPrimary>(
+    stmt->list(),
+    [this](HexAstPrimary primary) {
+      primary->accept(this);
+    },
+    this->_outputDelimiter
+  );
+
+  this->append(";");
 
   return stmt;
 }
@@ -1660,7 +1762,13 @@ AstToStringVisitor::visit(HexAstTaskDef def_)
 {
   HexAstTaskDef def = AstVisitor::visit(def_);
 
-  //this->iterate<_HexAstTaskDef, HexAstTaskClause>(def, this->_commaF);
+  this->iterate<HexAstTaskClause>(
+    def->list(),
+    [this](HexAstTaskClause clause) {
+      clause->accept(this);
+    },
+    this->_newlineDelimiter
+  );
 
   return def;
 }
@@ -1670,9 +1778,9 @@ AstToStringVisitor::visit(HexAstAwaitStmt stmt_)
 {
   HexAstAwaitStmt stmt = AstVisitor::visit(stmt_);
 
-  this->append("await {\n");
+  this->append("await {");
   stmt->stmts()->accept(this);
-  this->append("}\n");
+  this->append("}");
 
   return stmt;
 }
@@ -1750,13 +1858,19 @@ AstToStringVisitor::visit(HexAstExprListStmt stmt_)
 }
 
 HexAstStmtGroup
-AstToStringVisitor::visit(HexAstStmtGroup group_)
+AstToStringVisitor::visit(HexAstStmtGroup stmts_)
 {
-  HexAstStmtGroup group = AstVisitor::visit(group_);
+  HexAstStmtGroup stmts = AstVisitor::visit(stmts_);
 
-  //this->iterate<_HexAstStmtGroup, HexAstStmt>(group, this->_newlineF);
+  this->iterate<HexAstStmt>(
+    stmts->list(),
+    [this](HexAstStmt stmt) {
+      stmt->accept(this);
+    },
+    this->_nullDelimiter
+  );
 
-  return group;
+  return stmts;
 }
 
 HexAstHexProgram

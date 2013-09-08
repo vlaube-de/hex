@@ -43,7 +43,7 @@ _HexAstIdentifier::identifier()
 void
 _HexAstIdentifier::accept(AstVisitor* visitor)
 {
-	visitor->visit(this);
+  visitor->visit(this);
 }
 
 HexAstIdentifier

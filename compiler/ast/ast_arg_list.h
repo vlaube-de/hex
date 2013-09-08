@@ -30,6 +30,11 @@ public:
 
   virtual bool reprOK();
 
+  HexAstValList simple_args();
+  HexAstKeywordValList keyword_args();
+  HexAstIdentifier args();
+  HexAstIdentifier kwargs();
+
   virtual void accept(AstVisitor*);
 
   static _HexAstArgList* create(HexAstValList, HexAstKeywordValList, HexAstIdentifier, HexAstIdentifier);

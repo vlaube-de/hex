@@ -15,6 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <list>
 #include "ast_visitor.h"
 #include "../../../base/strbuf.h"
 #include "../../../base/c_str.h"
@@ -25,6 +26,9 @@
 class AstToStringVisitor : public AstVisitor {
 public:
   AstToStringVisitor();
+  ~AstToStringVisitor();
+
+  c_str str();
 
   virtual HexAstIdentifier visit(HexAstIdentifier);
   virtual HexAstIntegerLiteral visit(HexAstIntegerLiteral);
@@ -75,7 +79,7 @@ public:
   virtual HexAstPseudoAssignBitwiseAndExpr visit(HexAstPseudoAssignBitwiseAndExpr);
   virtual HexAstPseudoAssignBitwiseOrExpr visit(HexAstPseudoAssignBitwiseOrExpr);
   virtual HexAstPseudoAssignBitwiseXorExpr visit(HexAstPseudoAssignBitwiseXorExpr);
-  virtual HexAstPseudoAssignBitwiseLeftShiftExpr vist(HexAstPseudoAssignBitwiseLeftShiftExpr);
+  virtual HexAstPseudoAssignBitwiseLeftShiftExpr visit(HexAstPseudoAssignBitwiseLeftShiftExpr);
   virtual HexAstPseudoAssignBitwiseRightShiftExpr visit(HexAstPseudoAssignBitwiseRightShiftExpr);
   virtual HexAstYieldExpr visit(HexAstYieldExpr);
   virtual HexAstStringExpr visit(HexAstStringExpr);
@@ -100,7 +104,6 @@ public:
   virtual HexAstDecoratorList visit(HexAstDecoratorList);
   virtual HexAstOperator visit(HexAstOperator);
   virtual HexAstOperatorDef visit(HexAstOperatorDef);
-  virtual HexAstAttributeDef visit(HexAstAttributeDef);
   virtual HexAstAttributeDefList visit(HexAstAttributeDefList);
   virtual HexAstAssignmentStmt visit(HexAstAssignmentStmt);
   virtual HexAstUsingSrc visit(HexAstUsingSrc);
@@ -148,16 +151,15 @@ protected:
 
   void append(c_str);
 
-  template<typename C, typename T>
-  void visit(AstListObj<C, T>, void(*)());
+  template<class T, class Function>
+  void iterate(std::list<T>*, Function, const c_str, bool breakOnLast=true);
 
-
-  void _commaF();
-  void _dotF();
-  void _newlineF();
-  void _inputF();
-  void _outputF();
-
+  const c_str _nullDelimiter = "";
+  const c_str _commaDelimiter = ", ";
+  const c_str _dotDelimiter = ".";
+  const c_str _newlineDelimiter = "\n";
+  const c_str _inputDelimiter = " <<< ";
+  const c_str _outputDelimiter = " >>> ";
 };
 
 #endif /* _AST_TOSTRING_VISITOR_H_ */

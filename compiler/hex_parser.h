@@ -19,19 +19,21 @@
 /* HEX parser. */
 
 #include "../base/c_str.h"
+#include "ast/ast.h"
 
 #ifndef _HEX_PARSER_H_
 #define _HEX_PARSER_H_
 
 class HexParser {
 public:
-  HexParser(const c_str path);
+  HexParser();
 
-  int parse();
+  int parse_from_file(const c_str, HexAstHexProgram*);
+  int parse(const c_str, HexAstHexProgram*);
 protected:
-  c_str _read_file();
+  c_str _read_file(const c_str);
 
-  const c_str _path;
+  int _parse(const c_str, HexAstHexProgram*);
 };
 
 #endif /* _HEX_PARSER_H_ */

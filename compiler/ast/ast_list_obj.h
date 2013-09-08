@@ -27,10 +27,13 @@ public:
   AstListObj();
 
   virtual bool append(T);
+  virtual bool push_front(T);
+
+  std::list<T>* list();
 
   static C* create(T);
   static C* create(T, T);
-  static C* expand(C*, T); 
+  static C* expand(C*, T);
   static C* create_or_expand(T, C*);
 protected:
   std::list<T> *_list;
@@ -52,6 +55,24 @@ AstListObj<C, T>::append(T obj)
   this->_list->push_back(obj);
 
   return true;
+}
+
+template<typename C, typename T>
+bool
+AstListObj<C, T>::push_front(T obj)
+{
+  HEX_ASSERT(obj);
+
+  this->_list->push_front(obj);
+
+  return true;
+}
+
+template<typename C, typename T>
+std::list<T>*
+AstListObj<C, T>::list()
+{
+  return this->_list;
 }
 
 template<typename C, typename T>
@@ -103,7 +124,9 @@ AstListObj<C, T>::create_or_expand(T child, C* list)
   HEX_ASSERT(child);
 
   if(list) {
-    return AstListObj::expand(list, child);
+    list->push_front(child);
+    return list;
+    // return AstListObj::expand(list, child);
   } else {
     return AstListObj::create(child);
   }

@@ -22,7 +22,7 @@
 #include "../../base/memory.h"
 
 
-HexAstHexProgram _HexAstHexProgram::_root = NULL;
+HexAstHexProgram __root__ = NULL;
 
 _HexAstHexProgram::_HexAstHexProgram(
   HexAstStmtGroup stmts
@@ -62,10 +62,16 @@ _HexAstHexProgram::create(
   return obj;
 }
 
+void
+_HexAstHexProgram::clear()
+{
+  HEX_DELETE(__root__);
+}
+
 int
 _HexAstHexProgram::get_parse_tree_root(HexAstHexProgram *dst)
 {
-  *dst = _root;
+  *dst = __root__;
   return 1;
 }
 
@@ -73,11 +79,11 @@ void
 _HexAstHexProgram::set_parse_tree_root(HexAstHexProgram *root)
 {
   // Free the root for the previous parse tree.
-  HEX_DELETE(_root);
+  HEX_DELETE(__root__);
 
   // Make sure the root we are setting is not null.
   HEX_ASSERT(*root);
 
   // Set the root.
-  _root = *root;
+  __root__ = *root;
 }

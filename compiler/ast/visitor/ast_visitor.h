@@ -25,12 +25,12 @@ class AstVisitor;
 
 #ifdef _HEX_AST_
   #include "../ast.h"
+#else
+  #include "fake_ast.h"
 #endif /* _HEX_AST_ */
 
 class AstVisitor {
 public:
-
-#ifdef _HEX_AST_
 
   virtual HexAstIdentifier visit(HexAstIdentifier);
   virtual HexAstIntegerLiteral visit(HexAstIntegerLiteral);
@@ -106,7 +106,6 @@ public:
   virtual HexAstDecoratorList visit(HexAstDecoratorList);
   virtual HexAstOperator visit(HexAstOperator);
   virtual HexAstOperatorDef visit(HexAstOperatorDef);
-  virtual HexAstAttributeDef visit(HexAstAttributeDef);
   virtual HexAstAttributeDefList visit(HexAstAttributeDefList);
   virtual HexAstAssignmentStmt visit(HexAstAssignmentStmt);
   virtual HexAstUsingSrc visit(HexAstUsingSrc);
@@ -149,10 +148,6 @@ public:
   virtual HexAstStmtGroup visit(HexAstStmtGroup);
   virtual HexAstHexProgram visit(HexAstHexProgram);
 
-#else
-  virtual void* visit(void*);
-
-#endif /* _HEX_AST_ */
 };
 
 #endif /* _AST_VISITOR_H_ */

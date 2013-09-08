@@ -15,19 +15,24 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-
 CXX=c++
-CFLAGS=-Wno-implicit -Wno-deprecated-writable-strings -std=c++11 -arch x86_64
+CFLAGS=-Wno-implicit -w -g -arch x86_64
 
+GTEST_INCLUDE=-I/usr/local/gtest-1.6.0/include
+LIBGTEST=/usr/lib/libgtest.a
+LIBBASE=../../base/libbase.a
+LIBAST=../ast/libast.a
 
-ast_visitor.o: ast_visitor.h ast_visitor.cc
-	$(CXX) $(CFLAGS) -D_HEX_AST_ -c ast_visitor.cc
+LIBRARIES=$(LIBGTEST) $(LIBAST) $(LIBBASE)
 
-ast_tostring_visitor.o: ast_tostring_visitor.h ast_tostring_visitor.cc
-	$(CXX) $(CFLAGS) -D_HEX_AST_ -c ast_tostring_visitor.cc
+OBJECTS=../hex_parser.o ../ast/visitor/ast_visitor.o ../ast/visitor/ast_tostring_visitor.o
 
-all: ast_visitor.o	\
-	 ast_tostring_visitor.o
+SOURCES=../lex.yy.c ../parser.tab.cc  parser_repr_test.cc
+
+parser_repr_test.test: parser_repr_test.cc
+	$(CXX) $(CFLAGS) $(LIBRARIES) $(OBJECTS) $(SOURCES) -o parser_repr_test.test
+
+all: parser_repr_test.test
 
 clean:
-	rm *.gch *.out *.o *.swp *.a
+	rm *.gch *.o *.a *.out *.test

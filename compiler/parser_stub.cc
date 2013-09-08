@@ -31,8 +31,8 @@ main(int argc, char **argv)
 {
   printf("Parsing file: %s ...\n", argv[1]);
 
-  HexParser *parser = new HexParser(argv[1]);
-  int res = parser->parse();
+  HexParser *parser = new HexParser();
+  int res = parser->parse_from_file(argv[1], NULL);
 
   delete parser;
 

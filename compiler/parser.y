@@ -507,8 +507,6 @@ class_def
   | CLASS identifier EXTENDS name LBRACE attribute_def_list RBRACE                    { $$ = _HexAstClassDef::create(NULL, $2, $4, $6); }
   | decorator_list CLASS identifier LBRACE attribute_def_list RBRACE                  { $$ = _HexAstClassDef::create($1, $3, NULL, $5); }
   | decorator_list CLASS identifier EXTENDS name LBRACE attribute_def_list RBRACE     { $$ = _HexAstClassDef::create($1, $3, $5, $7); }
-  | CLASS identifier LBRACE RBRACE                                                    { $$ = _HexAstClassDef::create(NULL, $2, NULL, NULL); }
-  | CLASS identifier EXTENDS name LBRACE RBRACE                                       { $$ = _HexAstClassDef::create(NULL, $2, $4, NULL); }
   | decorator_list CLASS identifier LBRACE RBRACE                                     { $$ = _HexAstClassDef::create($1, $3, NULL, NULL); }
   | decorator_list CLASS identifier EXTENDS name LBRACE RBRACE                        { $$ = _HexAstClassDef::create($1, $3, $5, NULL); }
   ;
@@ -911,7 +909,7 @@ slice_item
   ;
 
 attribute_ref
-  : primary DOT IDENTIFIER                { $$ = _HexAstAttributeRef::create($1, $3); }
+  : primary DOT identifier                { $$ = _HexAstAttributeRef::create($1, $3); }
   ;
 
 call

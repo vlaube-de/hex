@@ -16,28 +16,28 @@
  */
 
 
+#include "ast_identifier.h"
 #include "ast_primary.h"
 #include "visitor/ast_visitor.h"
-#include "../../base/c_str.h"
 
 #ifndef _AST_ATTRIBUTE_REF_H_
 #define _AST_ATTRIBUTE_REF_H_
 
 typedef class _HexAstAttributeRef : public _HexAstPrimary {
 public:
-  _HexAstAttributeRef(HexAstPrimary, c_str);
+  _HexAstAttributeRef(HexAstPrimary, HexAstIdentifier);
 
   virtual bool reprOK();
 
   HexAstPrimary source();
-  c_str attribute();
+  HexAstIdentifier attribute();
 
   virtual void accept(AstVisitor*);
 
-  static _HexAstAttributeRef* create(HexAstPrimary, c_str);
+  static _HexAstAttributeRef* create(HexAstPrimary, HexAstIdentifier);
 private:
   HexAstPrimary _source;
-  c_str _attribute;
+  HexAstIdentifier _attribute;
 } * HexAstAttributeRef;
 
 #endif /* _AST_ATTRIBUTE_REF_H_ */

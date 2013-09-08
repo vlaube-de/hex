@@ -37,10 +37,10 @@ public:
 
   static _HexAstHexProgram* create(HexAstStmtGroup);
   static int get_parse_tree_root(_HexAstHexProgram**);
+  static void clear();
 private:
   HexAstStmtGroup _stmts;
 
-  static _HexAstHexProgram* _root;
   static void set_parse_tree_root(_HexAstHexProgram**);
 
 } * HexAstHexProgram;

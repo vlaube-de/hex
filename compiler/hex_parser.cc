@@ -38,22 +38,36 @@ extern void yy_flush_buffer(YY_BUFFER_STATE);
 extern void yy_switch_to_buffer(YY_BUFFER_STATE);
 
 
-HexParser::HexParser(
-  const c_str path
-):_path(path)
+HexParser::HexParser()
 {
-  HEX_ASSERT(this->_path);
 }
 
 int
-HexParser::parse()
+HexParser::parse_from_file(const c_str path, HexAstHexProgram* program)
+{
+  HEX_ASSERT(path);
+  c_str content = this->_read_file(path);
+  return this->_parse(content, program);
+}
+
+int
+HexParser::parse(const c_str content, HexAstHexProgram* program)
+{
+  HEX_ASSERT(content);
+  return this->_parse(content, program);
+}
+
+int
+HexParser::_parse(const c_str content, HexAstHexProgram* program)
 {
   int res;
-  c_str content = this->_read_file();
 
   // prepare for parsing.
   YY_BUFFER_STATE buffer = yy_scan_string(content);
   yy_switch_to_buffer(buffer);
+
+  // Clears the AST.
+  _HexAstHexProgram::clear();
 
   // the real magic happens here.
   res = yyparse();
@@ -62,21 +76,24 @@ HexParser::parse()
   yy_flush_buffer(buffer);
   yy_delete_buffer(buffer);
 
-  delete content;
-
   // Get the root of the parse tree.
   HexAstHexProgram root = NULL;
   _HexAstHexProgram::get_parse_tree_root(&root);
 
   HEX_ASSERT(root);
 
+  if(program) {
+    *program = root;
+    HEX_ASSERT(*program);
+  }
+
   return res;
 }
 
 c_str
-HexParser::_read_file()
+HexParser::_read_file(const c_str path)
 {
-  std::ifstream file(this->_path);
+  std::ifstream file(path);
 
   std::stringstream buffer;
   buffer << file.rdbuf();
