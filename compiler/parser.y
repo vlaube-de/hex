@@ -36,7 +36,6 @@
   class _HexAstLiteral* hex_ast_literal;
   class _HexAstCall* hex_ast_call;
   class _HexAstAttributeRef* hex_ast_attribute_ref;
-  class _HexAstSliceItem* hex_ast_slice_item;
   class _HexAstSlicing* hex_ast_slicing;
   class _HexAstPrimary* hex_ast_primary;
   class _HexAstTargetList* hex_ast_target_list;
@@ -44,6 +43,7 @@
   class _HexAstUnaryExpr* hex_ast_unary_expr;
   class _HexAstBinaryExpr* hex_ast_binary_expr;
   class _HexAstConditionalExpr* hex_ast_conditional_expr;
+  class _HexAstRangeExpr* hex_ast_range_expr;
   class _HexAstYieldExpr* hex_ast_yield_expr;
   class _HexAstStringExpr* hex_ast_string_expr;
   class _HexAstParenForm* hex_ast_paren_form;
@@ -244,7 +244,6 @@
 %type <hex_ast_literal> literal
 %type <hex_ast_call> call
 %type <hex_ast_attribute_ref> attribute_ref
-%type <hex_ast_slice_item> slice_item
 %type <hex_ast_slicing> slicing
 %type <hex_ast_identifier> identifier
 %type <hex_ast_primary> primary
@@ -258,7 +257,8 @@
 %type <hex_ast_binary_expr> bitwise_expr
 %type <hex_ast_binary_expr> comparison_expr
 %type <hex_ast_binary_expr> logic_expr
-%type <hex_ast_binary_expr> range_expr
+%type <hex_ast_expr>       range_expr_tail
+%type <hex_ast_range_expr> range_expr
 %type <hex_ast_conditional_expr> conditional_expr
 %type <hex_ast_binary_expr> pseudo_assign_expr
 %type <hex_ast_yield_expr> yield_expr
@@ -807,8 +807,13 @@ conditional_expr
   ;
 
 range_expr
-  : expr ELLIPSIS expr                    { $$ = _HexAstBinaryExpr::create<_HexAstInclusiveRangeExpr>($1, $3); }
-  | expr ELLIPSIS_SHORT expr              { $$ = _HexAstBinaryExpr::create<_HexAstExclusiveRangeExpr>($1, $3); }
+  : expr ELLIPSIS range_expr_tail         { $$ = _HexAstInclusiveRangeExpr::create($1, $3); }
+  | expr ELLIPSIS_SHORT range_expr_tail   { $$ = _HexAstExclusiveRangeExpr::create($1, $3); }
+  ;
+
+range_expr_tail
+  : expr                                  { $$ = $1; }
+  |                                       { $$ = NULL; }
   ;
 
 logic_expr
@@ -890,22 +895,7 @@ identifier
   ;
 
 slicing
-  : primary LBRACKET slice_item RBRACKET  { $$ = _HexAstSlicing::create($1, $3); }
-  ;
-
-slice_item
-  : COLON                                 { $$ = _HexAstSliceItem::create(NULL, NULL, NULL); }
-  | expr                                  { $$ = _HexAstSliceItem::create($1, $1, NULL); }
-  | expr COLON                            { $$ = _HexAstSliceItem::create($1, NULL, NULL); }
-  | COLON expr                            { $$ = _HexAstSliceItem::create(NULL, $2, NULL); }
-  | expr COLON expr                       { $$ = _HexAstSliceItem::create($1, $3, NULL); }
-  | expr COLON expr COLON expr            { $$ = _HexAstSliceItem::create($1, $3, $5); }
-  | expr COLON expr COLON                 { $$ = _HexAstSliceItem::create($1, $3, NULL); }
-  | expr COLON COLON                      { $$ = _HexAstSliceItem::create($1, NULL, NULL); }
-  | COLON expr COLON expr                 { $$ = _HexAstSliceItem::create($2, $4, NULL); }
-  | COLON expr COLON                      { $$ = _HexAstSliceItem::create(NULL, $2, NULL); }
-  | COLON COLON                           { $$ = _HexAstSliceItem::create(NULL, NULL, NULL); }
-  | COLON COLON expr                      { $$ = _HexAstSliceItem::create(NULL, NULL, $3); }
+  : primary LBRACKET expr RBRACKET        { $$ = _HexAstSlicing::create($1, $3); }
   ;
 
 attribute_ref

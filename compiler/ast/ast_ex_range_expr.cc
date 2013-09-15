@@ -18,17 +18,45 @@
 
 #include "ast_ex_range_expr.h"
 #include "visitor/ast_visitor.h"
+#include "../../base/assert.h"
 
 
 _HexAstExclusiveRangeExpr::_HexAstExclusiveRangeExpr(
-  HexAstExpr left,
-  HexAstExpr right
-): _HexAstBinaryExpr(left, right)
+  HexAstExpr begin,
+  HexAstExpr end
+): _begin(begin), _end(end)
 {
+}
+
+bool
+_HexAstExclusiveRangeExpr::reprOK()
+{
+  return true;
+}
+
+HexAstExpr
+_HexAstExclusiveRangeExpr::begin()
+{
+	return this->_begin;
+}
+
+HexAstExpr
+_HexAstExclusiveRangeExpr::end()
+{
+  return this->_end;
 }
 
 void
 _HexAstExclusiveRangeExpr::accept(AstVisitor* visitor)
 {
   visitor->visit(this);
+}
+
+HexAstExclusiveRangeExpr
+_HexAstExclusiveRangeExpr::create(HexAstExpr begin, HexAstExpr end)
+{
+  HexAstExclusiveRangeExpr obj = new _HexAstExclusiveRangeExpr(begin, end);
+  HEX_ASSERT(obj);
+
+  return obj;
 }

@@ -62,13 +62,6 @@ AstVisitor::visit(HexAstAttributeRef ref)
   return ref;
 }
 
-HexAstSliceItem
-AstVisitor::visit(HexAstSliceItem item)
-{
-  HEX_ASSERT(item);
-  return item;
-}
-
 HexAstSlicing
 AstVisitor::visit(HexAstSlicing slicing)
 {

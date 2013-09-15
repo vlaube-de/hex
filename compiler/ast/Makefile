@@ -389,9 +389,6 @@ ast_float_literal.o: ast_unparsed.o ast_literal.o ast_float_literal.h ast_float_
 ast_string_literal.o: ast_unparsed.o ast_literal.o ast_string_literal.h ast_string_literal.cc
 	$(CXX) $(CFLAGS) -c ast_string_literal.cc
 
-ast_slice_item.o: ast_slice_item.h ast_slice_item.cc
-	$(CXX) $(CFLAGS) -c ast_slice_item.cc
-
 ast_slicing.o: ast_slicing.h ast_slicing.cc
 	$(CXX) $(CFLAGS) -c ast_slicing.cc
 
@@ -530,7 +527,6 @@ obj:ast.h \
 	ast_integer_literal.o	\
 	ast_float_literal.o	\
 	ast_string_literal.o	\
-	ast_slice_item.o	\
 	ast_slicing.o	\
 	ast_attribute_ref.o	\
 	ast_call.o	\

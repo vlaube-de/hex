@@ -18,16 +18,44 @@
 
 #include "ast_in_range_expr.h"
 #include "visitor/ast_visitor.h"
+#include "../../base/assert.h"
 
 _HexAstInclusiveRangeExpr::_HexAstInclusiveRangeExpr(
-  HexAstExpr left,
-  HexAstExpr right
-): _HexAstBinaryExpr(left, right)
+  HexAstExpr begin,
+  HexAstExpr end
+): _begin(begin), _end(end)
 {
+}
+
+bool
+_HexAstInclusiveRangeExpr::reprOK()
+{
+  return true;
+}
+
+HexAstExpr
+_HexAstInclusiveRangeExpr::begin()
+{
+	return this->_begin;
+}
+
+HexAstExpr
+_HexAstInclusiveRangeExpr::end()
+{
+  return this->_end;
 }
 
 void
 _HexAstInclusiveRangeExpr::accept(AstVisitor* visitor)
 {
   visitor->visit(this);
+}
+
+HexAstInclusiveRangeExpr
+_HexAstInclusiveRangeExpr::create(HexAstExpr begin, HexAstExpr end)
+{
+  HexAstInclusiveRangeExpr obj = new _HexAstInclusiveRangeExpr(begin, end);
+  HEX_ASSERT(obj);
+
+  return obj;
 }

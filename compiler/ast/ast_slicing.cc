@@ -17,14 +17,14 @@
 
 #include "ast_slicing.h"
 #include "ast_primary.h"
-#include "ast_slice_item.h"
+#include "ast_expr.h"
 #include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
 
 
 _HexAstSlicing::_HexAstSlicing(
   HexAstPrimary source,
-  HexAstSliceItem slice
+  HexAstExpr slice
 ):_source(source), _slice(slice)
 {
   this->reprOK();
@@ -43,7 +43,7 @@ _HexAstSlicing::source()
   return this->_source;
 }
 
-HexAstSliceItem
+HexAstExpr
 _HexAstSlicing::slice()
 {
   return this->_slice;
@@ -58,7 +58,7 @@ _HexAstSlicing::accept(AstVisitor* visitor)
 HexAstSlicing
 _HexAstSlicing::create(
   HexAstPrimary source,
-  HexAstSliceItem slice
+  HexAstExpr slice
 )
 {
   HexAstSlicing obj = new _HexAstSlicing(source, slice);

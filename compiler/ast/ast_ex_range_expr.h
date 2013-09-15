@@ -16,18 +16,28 @@
  */
 
 
-#include "ast_binary_expr.h"
 #include "ast_expr.h"
+#include "ast_range_expr.h"
 #include "visitor/ast_visitor.h"
 
 #ifndef _AST_EX_RANGE_EXPR_H_
 #define _AST_EX_RANGE_EXPR_H_
 
-typedef class _HexAstExclusiveRangeExpr : public _HexAstBinaryExpr {
+typedef class _HexAstExclusiveRangeExpr : public _HexAstRangeExpr {
 public:
   _HexAstExclusiveRangeExpr(HexAstExpr, HexAstExpr);
 
+  virtual bool reprOK();
+
+  HexAstExpr begin();
+  HexAstExpr end();
+
   virtual void accept(AstVisitor*);
+
+  static _HexAstExclusiveRangeExpr* create(HexAstExpr, HexAstExpr);
+private:
+  HexAstExpr _begin;
+  HexAstExpr _end;
 } * HexAstExclusiveRangeExpr;
 
 

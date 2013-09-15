@@ -17,7 +17,7 @@
 
 
 #include "ast_primary.h"
-#include "ast_slice_item.h"
+#include "ast_expr.h"
 #include "visitor/ast_visitor.h"
 
 #ifndef _AST_SLICING_H_
@@ -25,19 +25,19 @@
 
 typedef class _HexAstSlicing : public _HexAstPrimary {
 public:
-  _HexAstSlicing(HexAstPrimary, HexAstSliceItem);
+  _HexAstSlicing(HexAstPrimary, HexAstExpr);
 
   virtual bool reprOK();
 
   HexAstPrimary source();
-  HexAstSliceItem slice();
+  HexAstExpr slice();
 
   virtual void accept(AstVisitor*);
 
-  static _HexAstSlicing* create(HexAstPrimary, HexAstSliceItem);
+  static _HexAstSlicing* create(HexAstPrimary, HexAstExpr);
 private:
   HexAstPrimary _source;
-  HexAstSliceItem _slice;
+  HexAstExpr _slice;
 } * HexAstSlicing;
 
 #endif /* _AST_SLICING_H_ */

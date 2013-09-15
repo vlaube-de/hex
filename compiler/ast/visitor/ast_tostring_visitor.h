@@ -36,7 +36,6 @@ public:
   virtual HexAstStringLiteral visit(HexAstStringLiteral);
   virtual HexAstCall visit(HexAstCall);
   virtual HexAstAttributeRef visit(HexAstAttributeRef);
-  virtual HexAstSliceItem visit(HexAstSliceItem);
   virtual HexAstSlicing visit(HexAstSlicing);
   virtual HexAstTargetList visit(HexAstTargetList);
   virtual HexAstName visit(HexAstName);

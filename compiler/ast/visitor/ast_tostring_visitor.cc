@@ -128,16 +128,6 @@ AstToStringVisitor::visit(HexAstAttributeRef ref_)
   return ref;
 }
 
-HexAstSliceItem
-AstToStringVisitor::visit(HexAstSliceItem item_)
-{
-  HexAstSliceItem item = AstVisitor::visit(item_);
-
-  // TODO: append string here...
-
-  return item;
-}
-
 HexAstSlicing
 AstToStringVisitor::visit(HexAstSlicing slicing_)
 {
@@ -518,9 +508,9 @@ AstToStringVisitor::visit(HexAstInclusiveRangeExpr expr_)
 {
   HexAstInclusiveRangeExpr expr = AstVisitor::visit(expr_);
 
-  expr->left()->accept(this);
+  if(expr->begin()) expr->begin()->accept(this);
   this->append("...");
-  expr->right()->accept(this);
+  if(expr->end()) expr->end()->accept(this);
 
   return expr;
 }
@@ -530,9 +520,9 @@ AstToStringVisitor::visit(HexAstExclusiveRangeExpr expr_)
 {
   HexAstExclusiveRangeExpr expr = AstVisitor::visit(expr_);
 
-  expr->left()->accept(this);
+  if(expr->begin()) expr->begin()->accept(this);
   this->append("..");
-  expr->right()->accept(this);
+  if(expr->end()) expr->end()->accept(this);
 
   return expr;
 }
