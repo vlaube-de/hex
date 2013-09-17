@@ -15,34 +15,37 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+
 #include <list>
 #include <string>
 #include "../ast.h"
 #include "ast_to_xml_visitor.h"
-#include "../../../base/strbuf.h"
 #include "../../../base/assert.h"
+#include "../../../base/memory.h"
+
 
 AstToXmlVisitor::AstToXmlVisitor()
-  :_strbuf(strbuf_create())
+  :_strbuf(new std::string())
 {
   HEX_ASSERT(_strbuf);
 }
 
 AstToXmlVisitor::~AstToXmlVisitor()
 {
-  strbuf_free(&_strbuf);
+  HEX_DELETE(_strbuf);
 }
 
-c_str
+const c_str
 AstToXmlVisitor::str()
 {
-  return strbuf_cstr(_strbuf);
+  return (const c_str)_strbuf->c_str();
 }
 
 void
 AstToXmlVisitor::append(const c_str s)
 {
-  strbuf_append(this->_strbuf, strdup(s));
+  HEX_ASSERT(s);
+  this->_strbuf->append(s);
 }
 
 void
@@ -99,20 +102,21 @@ template<class T>
 void
 AstToXmlVisitor::double_tag_for_binary_expr(T expr, const c_str tag_)
 {
-  std::string tag(tag_);
+  std::string tag_left(tag_);
+  std::string tag_right(tag_);
 
   this->double_tag(
     tag_,
-    [this, expr, &tag]() {
+    [this, expr, &tag_left, &tag_right]() {
       this->double_tag(
-        (const c_str)tag.append("-left").c_str(),
+        (const c_str)tag_left.append("-left").c_str(),
         [this, expr]() {
           expr->left()->accept(this);
         }
       );
 
       this->double_tag(
-        (const c_str)tag.append("-right").c_str(),
+        (const c_str)tag_right.append("-right").c_str(),
         [this, expr]() {
           expr->right()->accept(this);
         }
@@ -146,7 +150,7 @@ AstToXmlVisitor::visit(HexAstFloatLiteral literal_)
 {
   HexAstFloatLiteral literal = AstVisitor::visit(literal_);
 
-  this->double_tag("floating literal", literal->value());
+  this->double_tag("floating_literal", literal->value());
 
   return literal;
 }
@@ -156,7 +160,7 @@ AstToXmlVisitor::visit(HexAstStringLiteral literal_)
 {
   HexAstStringLiteral literal = AstVisitor::visit(literal_);
 
-  this->double_tag("string literal", literal->value());
+  this->double_tag("string_literal", literal->value());
 
   return literal;
 }
@@ -811,7 +815,7 @@ AstToXmlVisitor::visit(HexAstYieldExpr expr_)
 
       if(expr->exprs()) {
         this->double_tag(
-          "yield_expr.exprs",
+          "yield_expr-exprs",
             [this, expr]() {
               expr->exprs()->accept(this);
             }
@@ -1157,13 +1161,18 @@ AstToXmlVisitor::visit(HexAstListForm form_)
 {
   HexAstListForm form = AstVisitor::visit(form_);
 
-  if(form->type() == AST_LIST_FORM_EXPR_LIST) {
-    HexAstExprList exprlist = (HexAstExprList)(form->core());
-    exprlist->accept(this);
-  } else if(form->type() == AST_LIST_FORM_COMPREHENSION) {
-    HexAstComprehension comprehension = (HexAstComprehension)(form->core());
-    comprehension->accept(this);
-  }
+  this->double_tag(
+    "list_form",
+    [this, form]() {
+      if(form->type() == AST_LIST_FORM_EXPR_LIST) {
+        HexAstExprList exprlist = (HexAstExprList)(form->core());
+        exprlist->accept(this);
+      } else if(form->type() == AST_LIST_FORM_COMPREHENSION) {
+        HexAstComprehension comprehension = (HexAstComprehension)(form->core());
+        comprehension->accept(this);
+      }
+    }
+  );
 
   return form;
 }
@@ -1243,7 +1252,7 @@ AstToXmlVisitor::visit(HexAstMapFieldList list_)
   HexAstMapFieldList list = AstVisitor::visit(list_);
 
   this->double_tag(
-    "map_field",
+    "map_field_list",
     [this, list]() {
       this->iterate<HexAstMapField>(
         list->list(),
@@ -1262,7 +1271,12 @@ AstToXmlVisitor::visit(HexAstMapForm map_)
 {
   HexAstMapForm map = AstVisitor::visit(map_);
 
-  map->list()->accept(this);
+  this->double_tag(
+    "map_form",
+    [this, map]() {
+      map->list()->accept(this);
+    }
+  );
 
   return map;
 }
@@ -1292,13 +1306,18 @@ AstToXmlVisitor::visit(HexAstDictForm dict_)
 {
   HexAstDictForm dict = AstVisitor::visit(dict_);
 
-  if(dict->type() == AST_DICT_FORM_EXPLICIT) {
-    HexAstFieldDefList fields = (HexAstFieldDefList)(dict->core());
-    fields->accept(this);
-  } else if (dict->type() == AST_DICT_FORM_COMPREHENSION) {
-    HexAstComprehension comprehension = (HexAstComprehension)(dict->core());
-    comprehension->accept(this);
-  }
+  this->double_tag(
+    "dict_form",
+    [this, dict]() {
+      if(dict->type() == AST_DICT_FORM_EXPLICIT) {
+        HexAstFieldDefList fields = (HexAstFieldDefList)(dict->core());
+        fields->accept(this);
+      } else if (dict->type() == AST_DICT_FORM_COMPREHENSION) {
+        HexAstComprehension comprehension = (HexAstComprehension)(dict->core());
+        comprehension->accept(this);
+      }
+    }
+  );
 
   return dict;
 }
@@ -2097,7 +2116,7 @@ AstToXmlVisitor::visit(HexAstLambdaSimple lambda_)
       // params
       if(lambda->params()) {
         this->double_tag(
-          "lambda_simple_params",
+          "lambda_simple-params",
           [this, lambda]() {
             lambda->params()->accept(this);
           }
@@ -2130,7 +2149,7 @@ AstToXmlVisitor::visit(HexAstLambdaComplex lambda_)
       // params
       if(lambda->params()) {
         this->double_tag(
-          "lambda_complex_params",
+          "lambda_complex-params",
           [this, lambda]() {
             lambda->params()->accept(this);
           }
@@ -2162,7 +2181,12 @@ AstToXmlVisitor::visit(HexAstInputStmt stmt_)
       this->iterate<HexAstPrimary>(
         stmt->list(),
         [this](HexAstPrimary primary) {
-          primary->accept(this);
+          this->double_tag(
+            "input_stmt-component",
+            [this, primary]() {
+              primary->accept(this);
+            }
+          );
         }
       );
     }
@@ -2182,7 +2206,12 @@ AstToXmlVisitor::visit(HexAstOutputStmt stmt_)
       this->iterate<HexAstPrimary>(
         stmt->list(),
         [this](HexAstPrimary primary) {
-          primary->accept(this);
+          this->double_tag(
+            "output_stmt-component",
+            [this, primary]() {
+              primary->accept(this);
+            }
+          );
         }
       );
     }

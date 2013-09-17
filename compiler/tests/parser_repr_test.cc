@@ -33,7 +33,6 @@ protected:
   }
 
   void test(const c_str);
-  void test(const c_str, const c_str);
 
   HexParser *parser;
 };
@@ -144,14 +143,14 @@ TEST_F(HexParserReprTest, TestAttributeRef) {
   test("obj.attr.field;");
 }
 
-TEST_F(HexParserReprTest, TestName) {
-  test("a.b.c.d.e.f.g.h;");
-  test("name1.name2.name3;");
-}
+// TEST_F(HexParserReprTest, TestName) {
+//   test("a.b.c.d.e.f.g.h;");
+//   test("name1.name2.name3;");
+// }
 
 TEST_F(HexParserReprTest, TestTargetList) {
   test("[for name in names];");
-  test("[for a, b, c in letters];");
+  test("[for a, e, i, o, u in alphabets];");
 }
 
 TEST_F(HexParserReprTest, TestNegateExpr) {

@@ -25,14 +25,22 @@ LIBAST=../ast/libast.a
 
 LIBRARIES=$(LIBGTEST) $(LIBAST) $(LIBBASE)
 
-OBJECTS=../hex_parser.o ../ast/visitor/ast_visitor.o ../ast/visitor/ast_tostring_visitor.o
+OBJECTS=../hex_parser.o \
+		../ast/visitor/ast_visitor.o \
+		../ast/visitor/ast_tostring_visitor.o \
+		../ast/visitor/ast_to_xml_visitor.o
 
-SOURCES=../lex.yy.c ../parser.tab.cc  parser_repr_test.cc
+
+SOURCES=../lex.yy.c ../parser.tab.cc
 
 parser_repr_test.test: parser_repr_test.cc
-	$(CXX) $(CFLAGS) $(LIBRARIES) $(OBJECTS) $(SOURCES) -o parser_repr_test.test
+	$(CXX) $(CFLAGS) $(LIBRARIES) $(OBJECTS) $(SOURCES) parser_repr_test.cc -o parser_repr_test.test
 
-all: parser_repr_test.test
+parser_xml_test.test: parser_xml_test.cc
+	$(CXX) $(CFLAGS) $(LIBRARIES) $(OBJECTS) $(SOURCES) parser_xml_test.cc -o parser_xml_test.test
+
+all: parser_repr_test.test \
+	 parser_xml_test.test
 
 clean:
 	rm *.gch *.o *.a *.out *.test

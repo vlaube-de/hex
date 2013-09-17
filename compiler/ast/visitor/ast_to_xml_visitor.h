@@ -17,7 +17,6 @@
 
 #include <list>
 #include "ast_visitor.h"
-#include "../../../base/strbuf.h"
 #include "../../../base/c_str.h"
 
 #ifndef _AST_TO_XML_VISITOR_H_
@@ -28,7 +27,7 @@ public:
   AstToXmlVisitor();
   ~AstToXmlVisitor();
 
-  c_str str();
+  const c_str str();
 
   virtual HexAstIdentifier visit(HexAstIdentifier);
   virtual HexAstIntegerLiteral visit(HexAstIntegerLiteral);
@@ -146,7 +145,7 @@ public:
   virtual HexAstHexProgram visit(HexAstHexProgram);
 
 protected:
-  Strbuf _strbuf;
+  std::string* _strbuf;
 
   void append(const c_str);
 
