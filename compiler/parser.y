@@ -15,6 +15,25 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/*
+The sky is your limit...
+越过了这一片海洋，我们就能自由飞翔
+天空就在不远前方，你会找到你的梦想。。。
+
+         .----.                                                  .'.
+        |  /   '                                                 |  '
+        |  |    '                                                '  :
+        |  | HEX '             .-~~~-.               .-~-.        \ |
+        |  |      '          .\\   .//'._+_________.'.'  /_________\|
+        |  |___ ...'.__..--~~ .\\__//_.-     . . .' .'  /      :  |  `.
+        |.-"  .'  /                          . .' .'   /.      :_.|__.'
+       <    .'___/                           .' .'    /|.      : .'|\
+        ~~--..                             .' .'     /_|.      : | | \
+          /_.' ~~--..__             .----.'_.'      /. . . . . . | |  |
+                      ~~--.._______'.__.'  .'      /____________.' :  /
+                               .'   .''.._'______.'                '-'
+                               '---'
+*/
 
 %{
 
@@ -216,28 +235,30 @@
 %token <string> PERCENT
 
 
-%left     IDENTIFIER STRING_LITERAL_SINGLE STRING_LITERAL_DOUBLE
-          DECIMALINTEGER BININTEGER OCTINTEGER HEXINTEGER FLOAT
-%left     ELLIPSIS ELLIPSIS_SHORT
-%left     PLUS_OP MINUS_OP
-%left     MUL_OP DIV_OP MOD_OP
-%left     STARS
-%left     BITWISE_SHIFTLEFT BITWISE_SHIFTRIGHT
-%left     BITWISE_NOT BITWISE_AND BITWISE_OR BITWISE_XOR
-%left     EQ_OP NEQ_OP IS IN GREATER_OP LESS_OP GEQ_OP LEQ_OP
-%left     OR AND
-%left     NOT
-%left     PERCENT
-%left     EXISTENTIAL_OP
-%left     ASSIGN_OP ASSIGN_PLUS ASSIGN_MINUS ASSIGN_MUL ASSIGN_DIV ASSIGN_MOD 
-          ASSIGN_BITWISE_AND ASSIGN_BITWISE_OR ASSIGN_BITWISE_XOR ASSIGN_SHIFTLEFT ASSIGN_SHIFTRIGHT
-%nonassoc DEC_OP INC_OP
-%left     IF THEN ELSE
-%left     COMMA
-%nonassoc UMINUS
 %left     LBRACKET RBRACKET
 %left     LPAREN RPAREN
 %left     LBRACE RBRACE
+%left     IF THEN ELSE
+%left     COMMA
+%left     ASSIGN_OP ASSIGN_PLUS ASSIGN_MINUS ASSIGN_MUL ASSIGN_DIV ASSIGN_MOD 
+          ASSIGN_BITWISE_AND ASSIGN_BITWISE_OR ASSIGN_BITWISE_XOR ASSIGN_SHIFTLEFT ASSIGN_SHIFTRIGHT
+%left     EQ_OP NEQ_OP IS IN NOT GREATER_OP LESS_OP GEQ_OP LEQ_OP
+%left     OR
+%left     BITWISE_XOR
+%left     AND
+%left     BITWISE_SHIFTLEFT BITWISE_SHIFTRIGHT
+%left     BITWISE_NOT BITWISE_AND BITWISE_OR
+%left     PLUS_OP MINUS_OP
+%left     MUL_OP DIV_OP MOD_OP
+%left     PERCENT
+%left     EXISTENTIAL_OP
+%nonassoc DEC_OP INC_OP
+%nonassoc UMINUS
+%left     ELLIPSIS ELLIPSIS_SHORT
+%left     STARS
+%left     IDENTIFIER STRING_LITERAL_SINGLE STRING_LITERAL_DOUBLE
+          DECIMALINTEGER BININTEGER OCTINTEGER HEXINTEGER FLOAT
+
 
 %type <hex_ast_integer> integer
 %type <hex_ast_string> string
@@ -257,7 +278,6 @@
 %type <hex_ast_binary_expr> bitwise_expr
 %type <hex_ast_binary_expr> comparison_expr
 %type <hex_ast_binary_expr> logic_expr
-%type <hex_ast_expr>       range_expr_tail
 %type <hex_ast_range_expr> range_expr
 %type <hex_ast_conditional_expr> conditional_expr
 %type <hex_ast_binary_expr> pseudo_assign_expr
@@ -807,14 +827,10 @@ conditional_expr
   ;
 
 range_expr
-  : expr ELLIPSIS range_expr_tail         { $$ = _HexAstInclusiveRangeExpr::create($1, $3); }
-  | expr ELLIPSIS_SHORT range_expr_tail   { $$ = _HexAstExclusiveRangeExpr::create($1, $3); }
+  : expr ELLIPSIS expr         { $$ = _HexAstInclusiveRangeExpr::create($1, $3); }
+  | expr ELLIPSIS_SHORT expr   { $$ = _HexAstExclusiveRangeExpr::create($1, $3); }
   ;
 
-range_expr_tail
-  : expr                                  { $$ = $1; }
-  |                                       { $$ = NULL; }
-  ;
 
 logic_expr
   : expr AND expr                         { $$ = _HexAstBinaryExpr::create<_HexAstAndExpr>($1, $3); }

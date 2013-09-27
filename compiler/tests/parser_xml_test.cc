@@ -38,6 +38,7 @@ enjoy some long XMLs...
 */
 
 
+#include "parser_xml_test.h"
 #include <stdio.h>
 #include <string>
 #include "../../base/unittest.h"
@@ -49,31 +50,6 @@ enjoy some long XMLs...
 
 
 #define MAX_XML_LENGTH 5000
-
-
-class HexParserXmlTest : public ::testing::Test {
-protected:
-  virtual void SetUp() {
-    parser = new HexParser();
-  }
-
-  virtual void TearDown() {
-    delete parser;
-  }
-
-  void test(const c_str, const c_str);
-
-  HexParser *parser;
-
-  const c_str _embed_code_in_xml(const c_str, const c_str);
-
-  const c_str _wrap_single_stmt(const c_str);
-
-  void test_indentifier(const c_str);
-  void test_integer_literal(const c_str);
-  void test_floating_literal(const c_str);
-  void test_string_literal(const c_str);
-};
 
 
 void
