@@ -295,7 +295,7 @@ AstToXmlVisitor::visit(HexAstNegateExpr expr_)
   HexAstNegateExpr expr = AstVisitor::visit(expr_);
 
   this->double_tag(
-    "nagetive_expr",
+    "negative_expr",
     [this, expr]() {
       expr->expr()->accept(this);
     }
