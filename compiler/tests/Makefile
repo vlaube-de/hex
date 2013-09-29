@@ -36,14 +36,17 @@ SOURCES=../lex.yy.c ../parser.tab.cc
 parser_repr_test.test: parser_repr_test.cc
 	$(CXX) $(CFLAGS) $(LIBRARIES) $(OBJECTS) $(SOURCES) parser_repr_test.cc -o parser_repr_test.test
 
-parser_xml_test.test: parser_xml_test.h parser_xml_test.cc
-	$(CXX) $(CFLAGS) $(LIBRARIES) $(OBJECTS) $(SOURCES) parser_xml_test.cc -o parser_xml_test.test
+parser_xml_test_base.o: parser_xml_test_base.h parser_xml_test_base.cc
+	$(CXX) $(CFLAGS) -c parser_xml_test_base.o
 
-parser_expr_precedence_test.test: parser_xml_test.h parser_expr_precedence_test.cc
-	$(CXX) $(CFLAGS) $(LIBRARIES) $(OBJECTS) $(SOURCES) parser_xml_test.cc parser_expr_precedence_test.cc -o parser_expr_precedence_test.test
+parser_xml_test.test: parser_xml_test_base.h parser_xml_test_base.cc
+	$(CXX) $(CFLAGS) $(LIBRARIES) $(OBJECTS) $(SOURCES) parser_xml_test_base.cc parser_xml_test.cc -o parser_xml_test.test
 
-parser_expr_associativity_test.test: parser_xml_test.h parser_expr_associativity_test.cc
-	$(CXX) $(CFLAGS) $(LIBRARIES) $(OBJECTS) $(SOURCES) parser_xml_test.cc parser_expr_associativity_test.cc -o parser_expr_associativity_test.test
+parser_expr_precedence_test.test: parser_xml_test_base.h parser_expr_precedence_test.cc
+	$(CXX) $(CFLAGS) $(LIBRARIES) $(OBJECTS) $(SOURCES) parser_xml_test_base.cc parser_expr_precedence_test.cc -o parser_expr_precedence_test.test
+
+parser_expr_associativity_test.test: parser_xml_test_base.h parser_expr_associativity_test.cc
+	$(CXX) $(CFLAGS) $(LIBRARIES) $(OBJECTS) $(SOURCES) parser_xml_test_base.cc parser_expr_associativity_test.cc -o parser_expr_associativity_test.test
 
 all: parser_repr_test.test \
 	 parser_xml_test.test  \

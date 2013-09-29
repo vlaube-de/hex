@@ -23,10 +23,10 @@
 #include "../ast/visitor/ast_to_xml_visitor.h"
 
 
-#ifndef _HEX_PARSER_XML_TEST_H_
-#define _HEX_PARSER_XML_TEST_H_
+#ifndef _HEX_PARSER_XML_TEST_BASE_H_
+#define _HEX_PARSER_XML_TEST_BASE_H_
 
-class HexParserXmlTest : public ::testing::Test {
+class HexParserXmlTestBase : public ::testing::Test {
 protected:
   virtual void SetUp() {
     parser = new HexParser();
@@ -36,18 +36,12 @@ protected:
     delete parser;
   }
 
-  void test(const c_str, const c_str);
+  virtual void test(const c_str, const c_str);
 
   HexParser *parser;
 
-  const c_str _embed_code_in_xml(const c_str, const c_str);
-
-  const c_str _wrap_single_stmt(const c_str);
-
-  void test_indentifier(const c_str);
-  void test_integer_literal(const c_str);
-  void test_floating_literal(const c_str);
-  void test_string_literal(const c_str);
+  virtual const c_str wrap_single_stmt(const c_str);
+  virtual const c_str wrap_single_expr(const c_str);
 };
 
-#endif /* _HEX_PARSER_XML_TEST_H_ */
+#endif /* _HEX_PARSER_XML_TEST_BASE_H_ */
