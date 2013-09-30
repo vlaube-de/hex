@@ -173,10 +173,21 @@ AstToStringVisitor::visit(HexAstName name_)
   return name;
 }
 
-HexAstNegateExpr
-AstToStringVisitor::visit(HexAstNegateExpr expr_)
+HexAstPositiveExpr
+AstToStringVisitor::visit(HexAstPositiveExpr expr_)
 {
-  HexAstNegateExpr expr = AstVisitor::visit(expr_);
+  HexAstPositiveExpr expr = AstVisitor::visit(expr_);
+
+  this->append("+");
+  expr->expr()->accept(this);
+
+  return expr;
+}
+
+HexAstNegativeExpr
+AstToStringVisitor::visit(HexAstNegativeExpr expr_)
+{
+  HexAstNegativeExpr expr = AstVisitor::visit(expr_);
 
   this->append("-");
   expr->expr()->accept(this);
@@ -402,6 +413,18 @@ AstToStringVisitor::visit(HexAstIsExpr expr_)
 
   expr->left()->accept(this);
   this->append(" is ");
+  expr->right()->accept(this);
+
+  return expr;
+}
+
+HexAstIsNotExpr
+AstToStringVisitor::visit(HexAstIsNotExpr expr_)
+{
+  HexAstIsNotExpr expr = AstVisitor::visit(expr_);
+
+  expr->left()->accept(this);
+  this->append(" is not ");
   expr->right()->accept(this);
 
   return expr;

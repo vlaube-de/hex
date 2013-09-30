@@ -27,4 +27,4 @@
 name = "Yanzheng Li";
 country = 'Canada';
 
-stmt = "My name is %s and I'm from %s." % (name, country);
+stmt = "My name is %s and I'm from %s." %% (name, country);

@@ -289,10 +289,25 @@ AstToXmlVisitor::visit(HexAstName name_)
   return name;
 }
 
-HexAstNegateExpr
-AstToXmlVisitor::visit(HexAstNegateExpr expr_)
+HexAstPositiveExpr
+AstToXmlVisitor::visit(HexAstPositiveExpr expr_)
 {
-  HexAstNegateExpr expr = AstVisitor::visit(expr_);
+  HexAstPositiveExpr expr = AstVisitor::visit(expr_);
+
+  this->double_tag(
+    "positive_expr",
+    [this, expr]() {
+      expr->expr()->accept(this);
+    }
+  );
+
+  return expr;
+}
+
+HexAstNegativeExpr
+AstToXmlVisitor::visit(HexAstNegativeExpr expr_)
+{
+  HexAstNegativeExpr expr = AstVisitor::visit(expr_);
 
   this->double_tag(
     "negative_expr",
@@ -515,6 +530,16 @@ AstToXmlVisitor::visit(HexAstIsExpr expr_)
   HexAstIsExpr expr = AstVisitor::visit(expr_);
 
   this->double_tag_for_binary_expr<HexAstIsExpr>(expr, "is_expr");
+
+  return expr;
+}
+
+HexAstIsNotExpr
+AstToXmlVisitor::visit(HexAstIsNotExpr expr_)
+{
+  HexAstIsNotExpr expr = AstVisitor::visit(expr_);
+
+  this->double_tag_for_binary_expr<HexAstIsNotExpr>(expr, "is_not_expr");
 
   return expr;
 }

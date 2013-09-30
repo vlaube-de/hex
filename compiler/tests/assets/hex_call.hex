@@ -30,7 +30,6 @@ s = sum([i for i in 1...100]) async;
 person = Person('Yanzheng Li', 'Canada');
 person.hobbies.append('swimming');
 person.set_age(sum([10,10]));
-person.skills[:10].sort();
 person.skills.add(
   'sort',
   (list, **kwargs) => {

@@ -156,6 +156,7 @@ The sky is your limit...
 %token <string> IF
 %token <string> IN
 %token <string> IS
+%token <string> IS_NOT
 %token <string> LOCK
 %token <string> NOT
 %token <string> OPERATOR
@@ -232,7 +233,7 @@ The sky is your limit...
 %token <string> ELLIPSIS_SHORT
 %token <string> AT
 %token <string> STARS
-%token <string> PERCENT
+%token <string> STRING_OP
 
 
 %left     LBRACKET RBRACKET
@@ -242,7 +243,7 @@ The sky is your limit...
 %left     COMMA
 %right    ASSIGN_OP ASSIGN_PLUS ASSIGN_MINUS ASSIGN_MUL ASSIGN_DIV ASSIGN_MOD 
           ASSIGN_BITWISE_AND ASSIGN_BITWISE_OR ASSIGN_BITWISE_XOR ASSIGN_SHIFTLEFT ASSIGN_SHIFTRIGHT
-%left     EQ_OP NEQ_OP IS IN NOT GREATER_OP LESS_OP GEQ_OP LEQ_OP
+%left     EQ_OP NEQ_OP IS IS_NOT IN NOT GREATER_OP LESS_OP GEQ_OP LEQ_OP
 %left     OR
 %left     BITWISE_XOR
 %left     AND
@@ -250,9 +251,10 @@ The sky is your limit...
 %left     BITWISE_NOT BITWISE_AND BITWISE_OR
 %left     PLUS_OP MINUS_OP
 %left     MUL_OP DIV_OP MOD_OP
-%left     PERCENT
+%left     STRING_OP
 %left     EXISTENTIAL_OP
 %nonassoc DEC_OP INC_OP
+%nonassoc UPLUS
 %nonassoc UMINUS
 %left     ELLIPSIS ELLIPSIS_SHORT
 %left     STARS
@@ -801,7 +803,7 @@ paren_form
   ;
 
 string_expr
-  : string PERCENT LPAREN expr_list RPAREN  { $$ = _HexAstStringExpr::create($1, $4); }
+  : string STRING_OP LPAREN expr_list RPAREN  { $$ = _HexAstStringExpr::create($1, $4); }
   ;
 
 yield_expr
@@ -831,7 +833,6 @@ range_expr
   | expr ELLIPSIS_SHORT expr   { $$ = _HexAstExclusiveRangeExpr::create($1, $3); }
   ;
 
-
 logic_expr
   : expr AND expr                         { $$ = _HexAstBinaryExpr::create<_HexAstAndExpr>($1, $3); }
   | expr OR expr                          { $$ = _HexAstBinaryExpr::create<_HexAstOrExpr>($1, $3); }
@@ -840,7 +841,8 @@ logic_expr
 comparison_expr
   : expr EQ_OP expr                       { $$ = _HexAstBinaryExpr::create<_HexAstEqualsExpr>($1, $3); }
   | expr NEQ_OP expr                      { $$ = _HexAstBinaryExpr::create<_HexAstNotEqualExpr>($1, $3); }
-  | expr IS expr                          { $$ = _HexAstBinaryExpr::create<_HexAstIsExpr>($1, $3); } 
+  | expr IS expr                          { $$ = _HexAstBinaryExpr::create<_HexAstIsExpr>($1, $3); }
+  | expr IS_NOT expr                      { $$ = _HexAstBinaryExpr::create<_HexAstIsNotExpr>($1, $3); }
   | expr LESS_OP expr                     { $$ = _HexAstBinaryExpr::create<_HexAstLessThanExpr>($1, $3); }
   | expr GREATER_OP expr                  { $$ = _HexAstBinaryExpr::create<_HexAstGreaterThanExpr>($1, $3); }
   | expr LEQ_OP expr                      { $$ = _HexAstBinaryExpr::create<_HexAstLessOrEqualsExpr>($1, $3); }
@@ -873,7 +875,8 @@ additive_expr
   ;
 
 unary_expr
-  : MINUS_OP expr %prec UMINUS            { $$ = _HexAstUnaryExpr::create<_HexAstNegateExpr>($2); }
+  : PLUS_OP expr %prec UPLUS              { $$ = _HexAstUnaryExpr::create<_HexAstPositiveExpr>($2); }
+  | MINUS_OP expr %prec UMINUS            { $$ = _HexAstUnaryExpr::create<_HexAstNegativeExpr>($2); }
   | NOT expr                              { $$ = _HexAstUnaryExpr::create<_HexAstNotExpr>($2); }
   | BITWISE_NOT expr                      { $$ = _HexAstUnaryExpr::create<_HexAstBitwiseNotExpr>($2); }
   | expr INC_OP                           { $$ = _HexAstUnaryExpr::create<_HexAstIncrementExpr>($1); }

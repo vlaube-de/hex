@@ -39,7 +39,8 @@ public:
   virtual HexAstSlicing visit(HexAstSlicing);
   virtual HexAstTargetList visit(HexAstTargetList);
   virtual HexAstName visit(HexAstName);
-  virtual HexAstNegateExpr visit(HexAstNegateExpr);
+  virtual HexAstPositiveExpr visit(HexAstPositiveExpr);
+  virtual HexAstNegativeExpr visit(HexAstNegativeExpr);
   virtual HexAstNotExpr visit(HexAstNotExpr);
   virtual HexAstBitwiseNotExpr visit(HexAstBitwiseNotExpr);
   virtual HexAstIncrementExpr visit(HexAstIncrementExpr);
@@ -59,6 +60,7 @@ public:
   virtual HexAstEqualsExpr visit(HexAstEqualsExpr);
   virtual HexAstNotEqualExpr visit(HexAstNotEqualExpr);
   virtual HexAstIsExpr visit(HexAstIsExpr);
+  virtual HexAstIsNotExpr visit(HexAstIsNotExpr);
   virtual HexAstLessThanExpr visit(HexAstLessThanExpr);
   virtual HexAstGreaterThanExpr visit(HexAstGreaterThanExpr);
   virtual HexAstGreaterOrEqualsExpr visit(HexAstGreaterOrEqualsExpr);

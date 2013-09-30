@@ -16,19 +16,18 @@
  */
 
 
-#include "ast_commutative_binary_expr.h"
-#include "ast_expr.h"
+#include "ast_positive_expr.h"
 #include "visitor/ast_visitor.h"
+#include "../../base/assert.h"
 
-#ifndef _AST_IS_EXPR_H_
-#define _AST_IS_EXPR_H_
+_HexAstPositiveExpr::_HexAstPositiveExpr(
+  HexAstExpr expr
+): _HexAstUnaryExpr(expr)
+{
+}
 
-typedef class _HexAstIsExpr : public _HexAstCommutativeBinaryExpr {
-public:
-  _HexAstIsExpr(HexAstExpr, HexAstExpr);
-
-  virtual void accept(AstVisitor*);
-} * HexAstIsExpr;
-
-
-#endif /* _AST_IS_EXPR_H_ */
+void
+_HexAstPositiveExpr::accept(AstVisitor* visitor)
+{
+  visitor->visit(this);
+}

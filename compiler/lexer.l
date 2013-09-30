@@ -56,6 +56,7 @@ int new_line_returned = 0;
 "if"                                EAT_TOKEN(yytext, IF);
 "in"                                EAT_TOKEN(yytext, IN);
 "is"                                EAT_TOKEN(yytext, IS);
+"is not"                            EAT_TOKEN(yytext, IS_NOT)
 "lock"                              EAT_TOKEN(yytext, LOCK);
 "not"                               EAT_TOKEN(yytext, NOT);
 "operator"                          EAT_TOKEN(yytext, OPERATOR);
@@ -133,8 +134,7 @@ int new_line_returned = 0;
 ".."                                EAT_TOKEN(yytext, ELLIPSIS_SHORT);
 "@"                                 EAT_TOKEN(yytext, AT);
 "**"                                EAT_TOKEN(yytext, STARS);
-"%"                                 EAT_TOKEN(yytext, PERCENT);
-
+"%%"                                EAT_TOKEN(yytext, STRING_OP);
 
 .                                   {
                                         /* ignore bad characters */

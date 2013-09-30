@@ -16,18 +16,18 @@
  */
 
 
-#include "ast_neg_expr.h"
+#include "ast_negative_expr.h"
 #include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
 
-_HexAstNegateExpr::_HexAstNegateExpr(
+_HexAstNegativeExpr::_HexAstNegativeExpr(
   HexAstExpr expr
 ): _HexAstUnaryExpr(expr)
 {
 }
 
 void
-_HexAstNegateExpr::accept(AstVisitor* visitor)
+_HexAstNegativeExpr::accept(AstVisitor* visitor)
 {
   visitor->visit(this);
 }

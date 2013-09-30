@@ -83,8 +83,15 @@ AstVisitor::visit(HexAstName name)
   return name;
 }
 
-HexAstNegateExpr
-AstVisitor::visit(HexAstNegateExpr expr)
+HexAstPositiveExpr
+AstVisitor::visit(HexAstPositiveExpr expr)
+{
+  HEX_ASSERT(expr);
+  return expr;
+}
+
+HexAstNegativeExpr
+AstVisitor::visit(HexAstNegativeExpr expr)
 {
   HEX_ASSERT(expr);
   return expr;
@@ -218,6 +225,13 @@ AstVisitor::visit(HexAstNotEqualExpr expr)
 
 HexAstIsExpr
 AstVisitor::visit(HexAstIsExpr expr)
+{
+  HEX_ASSERT(expr);
+  return expr;
+}
+
+HexAstIsNotExpr
+AstVisitor::visit(HexAstIsNotExpr expr)
 {
   HEX_ASSERT(expr);
   return expr;

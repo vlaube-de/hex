@@ -231,7 +231,7 @@ TEST_F(HexParserExprAssociativityTest, TestLogicOrExprAssociativity)
 
 TEST_F(HexParserExprAssociativityTest, TestComparisonExprAssociativity)
 {
-  // is not part is wrong...
+  // ( ( (a is b) is not c ) in d ) not in e
   test(
     "a is b is not c in d not in e;",
     wrap_single_expr(
@@ -239,8 +239,8 @@ TEST_F(HexParserExprAssociativityTest, TestComparisonExprAssociativity)
         "<not_in_expr-left>"
           "<in_expr>"
             "<in_expr-left>"
-              "<is_expr>"
-                "<is_expr-left>"
+              "<is_not_expr>"
+                "<is_not_expr-left>"
                   "<is_expr>"
                     "<is_expr-left>"
                       "<identifier>a<identifier/>"
@@ -249,13 +249,11 @@ TEST_F(HexParserExprAssociativityTest, TestComparisonExprAssociativity)
                       "<identifier>b<identifier/>"
                     "<is_expr-right/>"
                   "<is_expr/>"
-                "<is_expr-left/>"
-                "<is_expr-right>"
-                  "<not_expr>"
-                    "<identifier>c<identifier/>"
-                  "<not_expr/>"
-                "<is_expr-right/>"
-              "<is_expr/>"
+                "<is_not_expr-left/>"
+                "<is_not_expr-right>"
+                  "<identifier>c<identifier/>"
+                "<is_not_expr-right/>"
+              "<is_not_expr/>"
             "<in_expr-left/>"
             "<in_expr-right>"
               "<identifier>d<identifier/>"

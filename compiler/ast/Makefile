@@ -230,8 +230,11 @@ ast_expr_list.o: ast_expr_list.h ast_expr_list.cc
 ast_unary_expr.o: ast_expr.h ast_unary_expr.h ast_unary_expr.cc
 	$(CXX) $(CFLAGS) -c ast_unary_expr.cc
 
-ast_neg_expr.o: ast_unary_expr.o ast_neg_expr.h ast_neg_expr.cc
-	$(CXX) $(CFLAGS) -c ast_neg_expr.cc
+ast_negative_expr.o: ast_unary_expr.o ast_negative_expr.h ast_negative_expr.cc
+	$(CXX) $(CFLAGS) -c ast_negative_expr.cc
+
+ast_positive_expr.o: ast_positive_expr.o ast_positive_expr.h ast_positive_expr.cc
+	$(CXX) $(CFLAGS) -c ast_positive_expr.cc
 
 ast_not_expr.o: ast_unary_expr.o ast_not_expr.h ast_not_expr.cc
 	$(CXX) $(CFLAGS) -c ast_not_expr.cc
@@ -301,6 +304,9 @@ ast_neq_expr.o: ast_commutative_binary_expr.o ast_neq_expr.h ast_neq_expr.cc
 
 ast_is_expr.o: ast_commutative_binary_expr.o ast_is_expr.h ast_is_expr.cc
 	$(CXX) $(CFLAGS) -c ast_is_expr.cc
+
+ast_is_not_expr.o: ast_commutative_binary_expr.o ast_is_not_expr.h ast_is_not_expr.cc
+	$(CXX) $(CFLAGS) -c ast_is_not_expr.cc
 
 ast_lt_expr.o: ast_binary_expr.o ast_lt_expr.h ast_lt_expr.cc
 	$(CXX) $(CFLAGS) -c ast_lt_expr.cc
@@ -483,7 +489,8 @@ obj:ast.h \
 	ast_bitwise_shift_left_expr.o	\
 	ast_bitwise_shift_right_expr.o	\
 	ast_unary_expr.o	\
-	ast_neg_expr.o	\
+	ast_negative_expr.o	\
+	ast_positive_expr.o \
 	ast_not_expr.o	\
 	ast_bitwise_not_expr.o	\
 	ast_inc_expr.o	\
@@ -498,6 +505,7 @@ obj:ast.h \
 	ast_eq_expr.o	\
 	ast_neq_expr.o	\
 	ast_is_expr.o	\
+	ast_is_not_expr.o \
 	ast_lt_expr.o	\
 	ast_le_expr.o	\
 	ast_gt_expr.o	\

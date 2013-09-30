@@ -21,15 +21,15 @@
 using * in hex_list;
 
 
-list1 = PRIMES[:];
-list2 = PRIMES[0];
-list3 = PRIMES[1:];
-list4 = PRIMES[:5];
-list5 = PRIMES[1:5];
-list6 = PRIMES[1:10:2];
-list7 = PRIMES[1:10:];
-list8 = PRIMES[1::];
-list9 = PRIMES[:10:2];
-list10 = PRIMES[:10:];
-list11 = PRIMES[::];
-list12 = PRIMES[::-1];
+# list1 = PRIMES[:];
+# list2 = PRIMES[0];
+# list3 = PRIMES[1:];
+# list4 = PRIMES[:5];
+# list5 = PRIMES[1:5];
+# list6 = PRIMES[1:10:2];
+# list7 = PRIMES[1:10:];
+# list8 = PRIMES[1::];
+# list9 = PRIMES[:10:2];
+# list10 = PRIMES[:10:];
+# list11 = PRIMES[::];
+# list12 = PRIMES[::-1];

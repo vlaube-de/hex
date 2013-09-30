@@ -20,15 +20,15 @@
 #include "ast_expr.h"
 #include "visitor/ast_visitor.h"
 
-#ifndef _AST_IS_EXPR_H_
-#define _AST_IS_EXPR_H_
+#ifndef _AST_IS_NOT_EXPR_H_
+#define _AST_IS_NOT_EXPR_H_
 
-typedef class _HexAstIsExpr : public _HexAstCommutativeBinaryExpr {
+typedef class _HexAstIsNotExpr : public _HexAstCommutativeBinaryExpr {
 public:
-  _HexAstIsExpr(HexAstExpr, HexAstExpr);
+  _HexAstIsNotExpr(HexAstExpr, HexAstExpr);
 
   virtual void accept(AstVisitor*);
-} * HexAstIsExpr;
+} * HexAstIsNotExpr;
 
 
-#endif /* _AST_IS_EXPR_H_ */
+#endif /* _AST_IS_NOT_EXPR_H_ */
