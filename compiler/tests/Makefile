@@ -33,6 +33,9 @@ OBJECTS=../hex_parser.o \
 
 SOURCES=../lex.yy.c ../parser.tab.cc
 
+parser_acceptance_test.test: parser_acceptance_test.cc
+	$(CXX) $(CFLAGS) $(LIBRARIES) $(OBJECTS) $(SOURCES) parser_acceptance_test.cc -o parser_acceptance_test.test
+
 parser_repr_test.test: parser_repr_test.cc
 	$(CXX) $(CFLAGS) $(LIBRARIES) $(OBJECTS) $(SOURCES) parser_repr_test.cc -o parser_repr_test.test
 
@@ -48,9 +51,10 @@ parser_expr_precedence_test.test: parser_xml_test_base.h parser_expr_precedence_
 parser_expr_associativity_test.test: parser_xml_test_base.h parser_expr_associativity_test.cc
 	$(CXX) $(CFLAGS) $(LIBRARIES) $(OBJECTS) $(SOURCES) parser_xml_test_base.cc parser_expr_associativity_test.cc -o parser_expr_associativity_test.test
 
-all: parser_repr_test.test \
-	 parser_xml_test.test  \
-	 parser_expr_precedence_test.test 	\
+all: parser_acceptance_test.test \
+	 parser_repr_test.test \
+	 parser_xml_test.test \
+	 parser_expr_precedence_test.test \
 	 parser_expr_associativity_test.test
 
 clean:
