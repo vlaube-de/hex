@@ -15,19 +15,25 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/* Base class for all HEX parser tests. */
 
-#include "parser_test_base.h"
-#include "../../base/c_str.h"
+#include "../hex_parser.h"
+#include "../../base/unittest.h"
 
-#ifndef _HEX_PARSER_XML_TEST_BASE_H_
-#define _HEX_PARSER_XML_TEST_BASE_H_
+#ifndef _HEX_PARSER_TEST_BASE_H_
+#define _HEX_PARSER_TEST_BASE_H_
 
-class HexParserXmlTestBase : public HexParserTestBase {
+class HexParserTestBase : public ::testing::Test {
 protected:
-  virtual void test(const c_str, const c_str);
+  virtual void SetUp() {
+    parser = new HexParser();
+  }
 
-  virtual const c_str wrap_single_stmt(const c_str);
-  virtual const c_str wrap_single_expr(const c_str);
+  virtual void TearDown() {
+    delete parser;
+  }
+
+  HexParser *parser;
 };
 
-#endif /* _HEX_PARSER_XML_TEST_BASE_H_ */
+#endif /* _HEX_PARSER_TEST_BASE_H_ */

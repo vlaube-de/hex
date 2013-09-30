@@ -15,26 +15,19 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "../../base/unittest.h"
-#include "../../base/memory.h"
-#include "../../base/assert.h"
+
+#include "parser_test_base.h"
 #include "../ast/ast.h"
 #include "../hex_parser.h"
 #include "../ast/visitor/ast_tostring_visitor.h"
+#include "../../base/unittest.h"
+#include "../../base/memory.h"
+#include "../../base/assert.h"
 
-class HexParserReprTest : public ::testing::Test {
+
+class HexParserReprTest : public HexParserTestBase {
 protected:
-  virtual void SetUp() {
-  	parser = new HexParser();
-  }
-
-  virtual void TearDown() {
-  	delete parser;
-  }
-
   void test(const c_str);
-
-  HexParser *parser;
 };
 
 void

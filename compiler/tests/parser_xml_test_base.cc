@@ -15,15 +15,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "parser_xml_test_base.h"
+
 #include <stdio.h>
-#include <string>
-#include "../../base/unittest.h"
-#include "../../base/memory.h"
-#include "../../base/assert.h"
+#include "parser_xml_test_base.h"
 #include "../ast/ast.h"
 #include "../hex_parser.h"
 #include "../ast/visitor/ast_to_xml_visitor.h"
+#include "../../base/unittest.h"
+#include "../../base/memory.h"
+#include "../../base/assert.h"
 
 
 #define MAX_XML_LENGTH 5000

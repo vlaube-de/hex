@@ -16,53 +16,42 @@
  */
 
 
-#include "parser_xml_test_base.h"
+#include "parser_test_base.h"
 #include "../../base/c_str.h"
 #include "../../base/memory.h"
 #include "../../base/assert.h"
 
 
-class HexParserAcceptanceTest : public ::testing::Test {
+class HexParserAcceptanceTest : public HexParserTestBase {
 protected:
-  virtual void SetUp() {
-    parser = new HexParser();
-    HEX_ASSERT(parser);
-  }
-
-  virtual void TearDown() {
-    HEX_DELETE(parser);
-  }
-
   void test(const c_str);
 
-  HexParser *parser;
-
-  #define _NUM_FILES_ 23
-  const c_str files[_NUM_FILES_] = {
-    "./assets/hex_blank.hex",
-    "./assets/hex_expr.hex",
-    "./assets/hex_integer.hex",
-    "./assets/hex_floating.hex",
-    "./assets/hex_string_literal.hex",
-    "./assets/hex_attribute_ref.hex",
-    "./assets/hex_call.hex",
-    "./assets/hex_slicing.hex",
-    "./assets/hex_list.hex",
-    "./assets/hex_dict.hex",
-    "./assets/hex_map.hex",
-    "./assets/hex_lambda.hex",
-    "./assets/hex_class.hex",
-    "./assets/hex_target_list.hex",
-    "./assets/hex_input_output_stmt.hex",
-    "./assets/hex_if_stmt.hex",
-    "./assets/hex_for_loop.hex",
-    "./assets/hex_lock_stmt.hex",
-    "./assets/hex_task_stmt.hex",
-    "./assets/hex_try_stmt.hex",
-    "./assets/hex_while_stmt.hex",
-    "./assets/hex_with_stmt.hex",
-    "./assets/hex_await_stmt.hex"
-  };
+  // #define _NUM_FILES_ 23
+  // const c_str files[_NUM_FILES_] = {
+  //   "./assets/hex_blank.hex",
+  //   "./assets/hex_expr.hex",
+  //   "./assets/hex_integer.hex",
+  //   "./assets/hex_floating.hex",
+  //   "./assets/hex_string_literal.hex",
+  //   "./assets/hex_attribute_ref.hex",
+  //   "./assets/hex_call.hex",
+  //   "./assets/hex_slicing.hex",
+  //   "./assets/hex_list.hex",
+  //   "./assets/hex_dict.hex",
+  //   "./assets/hex_map.hex",
+  //   "./assets/hex_lambda.hex",
+  //   "./assets/hex_class.hex",
+  //   "./assets/hex_target_list.hex",
+  //   "./assets/hex_input_output_stmt.hex",
+  //   "./assets/hex_if_stmt.hex",
+  //   "./assets/hex_for_loop.hex",
+  //   "./assets/hex_lock_stmt.hex",
+  //   "./assets/hex_task_stmt.hex",
+  //   "./assets/hex_try_stmt.hex",
+  //   "./assets/hex_while_stmt.hex",
+  //   "./assets/hex_with_stmt.hex",
+  //   "./assets/hex_await_stmt.hex"
+  // };
 };
 
 void
