@@ -552,36 +552,34 @@ TEST_F(HexParserXmlTest, TestNotExpr)
   test(
     "not 1 != 1;",
     wrap_single_expr(
-      "<not_equal_expr>"
-        "<not_equal_expr-left>"
-          "<not_expr>"
+      "<not_expr>"
+        "<not_equal_expr>"
+          "<not_equal_expr-left>"
             "<integer_literal>1<integer_literal/>"
-          "<not_expr/>"
           "<not_equal_expr-left/>"
           "<not_equal_expr-right>"
             "<integer_literal>1<integer_literal/>"
           "<not_equal_expr-right/>"
-      "<not_equal_expr/>"
+        "<not_equal_expr/>"
+      "<not_expr/>"
     )
   );
 
-  // test(
-  //   "not a is not b;",
-  //   wrap_single_expr(
-  //     "<is_expr>"
-  //       "<is_expr-left>"
-  //         "<not_expr>"
-  //           "<identifier>a<identifier/>"
-  //         "<not_expr/>"
-  //       "<is_expr-left/>"
-  //       "<is_expr-right>"
-  //         "<not_expr>"
-  //           "<identifier>b<identifier/>"
-  //         "<not_expr/>"
-  //       "<is_expr-right/>"
-  //     "<is_expr/>"
-  //   )
-  // );
+  test(
+    "not a is not b;",
+    wrap_single_expr(
+      "<not_expr>"
+        "<is_not_expr>"
+          "<is_not_expr-left>"
+            "<identifier>a<identifier/>"
+          "<is_not_expr-left/>"
+          "<is_not_expr-right>"
+            "<identifier>b<identifier/>"
+          "<is_not_expr-right/>"
+        "<is_not_expr/>"
+      "<not_expr/>"
+    )
+  );
 }
 
 TEST_F(HexParserXmlTest, TestBitwiseNotExpr)
@@ -837,32 +835,31 @@ TEST_F(HexParserXmlTest, TestPowerExpr)
 
 TEST_F(HexParserXmlTest, TestBitwiseExpr)
 {
-  // TODO: associtivity is wrong...
   test(
     "1 & 2 | 3 ^ 4;",
     wrap_single_expr(
-      "<bitwise_xor_expr>"
-        "<bitwise_xor_expr-left>"
-          "<bitwise_or_expr>"
-            "<bitwise_or_expr-left>"
-              "<bitwise_and_expr>"
-                "<bitwise_and_expr-left>"
-                  "<integer_literal>1<integer_literal/>"
-                "<bitwise_and_expr-left/>"
-                "<bitwise_and_expr-right>"
-                  "<integer_literal>2<integer_literal/>"
-                "<bitwise_and_expr-right/>"
-              "<bitwise_and_expr/>"
-            "<bitwise_or_expr-left/>"
-            "<bitwise_or_expr-right>"
+      "<bitwise_or_expr>"
+        "<bitwise_or_expr-left>"
+          "<bitwise_and_expr>"
+            "<bitwise_and_expr-left>"
+              "<integer_literal>1<integer_literal/>"
+            "<bitwise_and_expr-left/>"
+            "<bitwise_and_expr-right>"
+              "<integer_literal>2<integer_literal/>"
+            "<bitwise_and_expr-right/>"
+          "<bitwise_and_expr/>"
+        "<bitwise_or_expr-left/>"
+        "<bitwise_or_expr-right>"
+          "<bitwise_xor_expr>"
+            "<bitwise_xor_expr-left>"
               "<integer_literal>3<integer_literal/>"
-            "<bitwise_or_expr-right/>"
-          "<bitwise_or_expr/>"
-        "<bitwise_xor_expr-left/>"
-        "<bitwise_xor_expr-right>"
-          "<integer_literal>4<integer_literal/>"
-        "<bitwise_xor_expr-right/>"
-      "<bitwise_xor_expr/>"
+            "<bitwise_xor_expr-left/>"
+            "<bitwise_xor_expr-right>"
+              "<integer_literal>4<integer_literal/>"
+            "<bitwise_xor_expr-right/>"
+          "<bitwise_xor_expr/>"
+        "<bitwise_or_expr-right/>"
+      "<bitwise_or_expr/>"
     )
   );
 }

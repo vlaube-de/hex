@@ -235,31 +235,64 @@ The sky is your limit...
 %token <string> STARS
 %token <string> STRING_OP
 
+/***********************************************************************************************************
+ *
+ * |-------------------------------------------------------------------------------------------------------|
+ * |                   HEX expression precedence (precedence decreases as list goes down)                  |
+ * |-------------------------------------------------------------------------------------------------------|
+ * | Description                                       |    Operator                                       |
+ * |---------------------------------------------------|---------------------------------------------------|
+ * | identifiers, literals, tuples, list, dict         |     (), [], {}                                    |
+ * | subscription, slicing, call, attribute reference  |                                                   |
+ * | exponentiation                                    |     **                                            |
+ * | positive, negative expression                     |     +, -                                          |
+ * | bitwise not                                       |     ~                                             |
+ * | increment, decrement                              |     ++, --                                        |
+ * | existential                                       |     ?                                             |
+ * | string composition                                |     %%                                            |
+ * | multiplicative expression                         |     *, /, %                                       |
+ * | additive expression                               |     +, -                                          |
+ * | bitwise shift                                     |     <<, >>                                        |
+ * | bitwise AND                                       |     &                                             |
+ * | bitwise XOR                                       |     ^                                             |
+ * | bitwise OR                                        |     |                                             |
+ * | equality comparison                               |     ==, !=, is, is not, in, not in, >, <, >=, <=  |
+ * | logical NOT                                       |     not                                           |
+ * | logical AND                                       |     and                                           |
+ * | logical OR                                        |     or                                            |
+ * | range expression                                  |     ...                                           |
+ * | conditional expression                            |     if else then                                  |
+ * | input & output expression                         |     <<<, >>>                                      |
+ * | assignment, pseudo assignment                     |     =, +=, -=, *=, /=, %=, &=, ^=, |=, <<=, >>=   |
+ * |________________________________________________________________________________________________________
+ *
+ **********************************************************************************************************/
 
-%left     LBRACKET RBRACKET
-%left     LPAREN RPAREN
-%left     LBRACE RBRACE
-%left     IF THEN ELSE
 %left     COMMA
 %right    ASSIGN_OP ASSIGN_PLUS ASSIGN_MINUS ASSIGN_MUL ASSIGN_DIV ASSIGN_MOD 
           ASSIGN_BITWISE_AND ASSIGN_BITWISE_OR ASSIGN_BITWISE_XOR ASSIGN_SHIFTLEFT ASSIGN_SHIFTRIGHT
-%left     EQ_OP NEQ_OP IS IS_NOT IN NOT GREATER_OP LESS_OP GEQ_OP LEQ_OP
+%left     INPUT_OP OUTPUT_OP
+%right    IF THEN ELSE
+%left     ELLIPSIS ELLIPSIS_SHORT
 %left     OR
-%left     BITWISE_XOR
 %left     AND
+%right    NOT
+%left     EQ_OP NEQ_OP IS IS_NOT IN GREATER_OP LESS_OP GEQ_OP LEQ_OP
+%left     BITWISE_OR
+%left     BITWISE_XOR
+%left     BITWISE_AND
 %left     BITWISE_SHIFTLEFT BITWISE_SHIFTRIGHT
-%left     BITWISE_NOT BITWISE_AND BITWISE_OR
 %left     PLUS_OP MINUS_OP
 %left     MUL_OP DIV_OP MOD_OP
 %left     STRING_OP
 %left     EXISTENTIAL_OP
+%right    BITWISE_NOT
 %nonassoc DEC_OP INC_OP
-%nonassoc UPLUS
-%nonassoc UMINUS
-%left     ELLIPSIS ELLIPSIS_SHORT
+%nonassoc UPLUS UMINUS
 %left     STARS
 %left     IDENTIFIER STRING_LITERAL_SINGLE STRING_LITERAL_DOUBLE
           DECIMALINTEGER BININTEGER OCTINTEGER HEXINTEGER FLOAT
+          LBRACKET RBRACKET LPAREN RPAREN LBRACE RBRACE
 
 
 %type <hex_ast_integer> integer
@@ -799,7 +832,8 @@ expr
   ;
 
 paren_form
-  : LPAREN expr_list RPAREN               { $$ = _HexAstParenForm::create($2); }
+  : LPAREN RPAREN                         { $$ = _HexAstParenForm::create(NULL); }
+  | LPAREN expr_list RPAREN               { $$ = _HexAstParenForm::create($2); }
   ;
 
 string_expr

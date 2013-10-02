@@ -889,7 +889,9 @@ AstToXmlVisitor::visit(HexAstParenForm form_)
   this->double_tag(
     "paren_form",
     [this, form]() {
-      form->exprs()->accept(this);
+      if(form->exprs()) {
+        form->exprs()->accept(this);
+      }
     }
   );
 

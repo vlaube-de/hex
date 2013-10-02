@@ -30,7 +30,7 @@ _HexAstParenForm::_HexAstParenForm(
 bool
 _HexAstParenForm::reprOK()
 {
-  HEX_ASSERT(this->_exprs);
+  return true;
 }
 
 HexAstExprList
@@ -50,8 +50,6 @@ _HexAstParenForm::create(
   HexAstExprList exprs
 )
 {
-  HEX_ASSERT(exprs);
-
   HexAstParenForm obj = new _HexAstParenForm(exprs);
   HEX_ASSERT(obj);
   return obj;

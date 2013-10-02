@@ -720,7 +720,9 @@ AstToStringVisitor::visit(HexAstParenForm form_)
   HexAstParenForm form = AstVisitor::visit(form_);
 
   this->append("(");
-  form->exprs()->accept(this);
+  if(form->exprs()) {
+    form->exprs()->accept(this);
+  }
   this->append(")");
 
   return form; 
