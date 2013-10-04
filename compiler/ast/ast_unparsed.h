@@ -15,15 +15,17 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "../../base/c_str.h"
+
 #ifndef _AST_UNPARSED_H_
 #define _AST_UNPARSED_H_
 
 class AstUnparsed {
 public:
-  AstUnparsed(char*);
+  AstUnparsed(c_str);
 
 protected:
-  char *_value;
+  c_str _value;
 };
 
 #endif /* _AST_UNPARSED_H_ */

@@ -15,6 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <boost/smart_ptr.hpp>
 #include "ast_simple_stmt.h"
 #include "ast_primary.h"
 #include "ast_decorator_list.h"
@@ -43,10 +44,17 @@ public:
 
   virtual void accept(AstVisitor*);
 
-  static _HexAstAssignmentStmt* create(HexAstDecoratorList, HexAstPrimary, void*, ast_type_t, bool);
+  static _HexAstAssignmentStmt* create(
+    HexAstDecoratorList,
+    HexAstPrimary,
+    void*,
+    ast_type_t,
+    bool
+  );
+
 private:
-  HexAstDecoratorList _decorators;
-  HexAstPrimary _dst;
+  boost::scoped_ptr<_HexAstDecoratorList> _decorators;
+  boost::scoped_ptr<_HexAstPrimary> _dst;
   void* _src;
   bool _defer;
 } * HexAstAssignmentStmt;

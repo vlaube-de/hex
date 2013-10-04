@@ -15,6 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <boost/smart_ptr.hpp>
 #include "ast_expr.h"
 #include "ast_expr_list.h"
 #include "visitor/ast_visitor.h"
@@ -34,7 +35,7 @@ public:
 
   static _HexAstParenForm* create(HexAstExprList);
 private:
-  HexAstExprList _exprs;
+  boost::scoped_ptr<_HexAstExprList> _exprs;
 } * HexAstParenForm;
 
 #endif /* _AST_PAREN_FORM_H_ */

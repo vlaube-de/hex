@@ -15,6 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <boost/smart_ptr.hpp>
 #include "ast_compound_stmt.h"
 #include "ast_name.h"
 #include "ast_decorator_list.h"
@@ -51,10 +52,10 @@ public:
   );
 
 private:
-  HexAstDecoratorList _decorators;
-  HexAstIdentifier _name;
-  HexAstName _parent;
-  HexAstAttributeDefList _attributes;
+  boost::scoped_ptr<_HexAstDecoratorList> _decorators;
+  boost::scoped_ptr<_HexAstIdentifier> _name;
+  boost::scoped_ptr<_HexAstName> _parent;
+  boost::scoped_ptr<_HexAstAttributeDefList> _attributes;
 } * HexAstClassDef;
 
 #endif /* _AST_CLASS_DEF_H_ */

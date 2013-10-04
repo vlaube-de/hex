@@ -40,13 +40,13 @@ _HexAstResumeClause::reprOK()
 HexAstExprList
 _HexAstResumeClause::exprs()
 {
-  return this->_exprs;
+  return this->_exprs.get();
 }
 
 HexAstConditionalClause
 _HexAstResumeClause::condition()
 {
-  return this->_condition;
+  return this->_condition.get();
 }
 
 void

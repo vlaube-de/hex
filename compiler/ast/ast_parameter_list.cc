@@ -41,25 +41,25 @@ _HexAstParameterList::reprOK()
 HexAstSimpleParamList
 _HexAstParameterList::simple_params()
 {
-  return this->_simple_params;
+  return this->_simple_params.get();
 }
 
 HexAstKeywordValList
 _HexAstParameterList::keyword_vals()
 {
-  return this->_keyword_vals;
+  return this->_keyword_vals.get();
 }
 
 HexAstIdentifier
 _HexAstParameterList::args()
 {
-  return this->_args;
+  return this->_args.get();
 }
 
 HexAstIdentifier
 _HexAstParameterList::kwargs()
 {
-  return this->_kwargs;
+  return this->_kwargs.get();
 }
 
 void

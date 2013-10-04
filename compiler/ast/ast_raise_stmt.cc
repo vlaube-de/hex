@@ -36,7 +36,7 @@ _HexAstRaiseStmt::reprOK()
 HexAstExpr
 _HexAstRaiseStmt::expr()
 {
-  return this->_expr;
+  return this->_expr.get();
 }
 
 void

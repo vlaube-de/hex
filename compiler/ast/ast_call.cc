@@ -39,13 +39,13 @@ _HexAstCall::reprOK()
 HexAstPrimary
 _HexAstCall::source()
 {
-  return this->_source;
+  return this->_source.get();
 }
 
 HexAstArgList
 _HexAstCall::arglist()
 {
-  return this->_arglist;
+  return this->_arglist.get();
 }
 
 bool

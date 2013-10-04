@@ -16,6 +16,7 @@
  */
 
 
+#include <boost/smart_ptr.hpp>
 #include "ast_expr.h"
 #include "examiner.h"
 
@@ -31,7 +32,7 @@ public:
 
   HexAstExpr left();
   HexAstExpr right();
-  char* op();
+
   //virtual bool equals(void*);
   //virtual bool isomorphic(void*);
   //virtual bool equivalent(void*);
@@ -40,8 +41,8 @@ public:
   static T* create(HexAstExpr, HexAstExpr);
 
 protected:
-  HexAstExpr _lexpr;
-  HexAstExpr _rexpr;
+  boost::scoped_ptr<_HexAstExpr> _lexpr;
+  boost::scoped_ptr<_HexAstExpr> _rexpr;
 
 private:
   //bool examine(Examiner, void*);

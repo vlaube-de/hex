@@ -15,6 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <boost/smart_ptr.hpp>
 #include "ast_node.h"
 #include "ast_arg_list.h"
 #include "ast_name.h"
@@ -36,8 +37,8 @@ public:
 
   static _HexAstDecorator* create(HexAstName, HexAstArgList);
 private:
-  HexAstName _name;
-  HexAstArgList _args;
+  boost::scoped_ptr<_HexAstName> _name;
+  boost::scoped_ptr<_HexAstArgList> _args;
 } * HexAstDecorator;
 
 #endif /* _AST_DECORATOR_H_ */

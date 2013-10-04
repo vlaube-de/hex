@@ -15,6 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <boost/smart_ptr.hpp>
 #include "ast_node.h"
 #include "ast_expr.h"
 #include "ast_val_atom.h"
@@ -36,8 +37,8 @@ public:
 
   static _HexAstMapField* create(HexAstExpr, HexAstValAtom);
 private:
-  HexAstExpr _key;
-  HexAstValAtom _val;
+  boost::scoped_ptr<_HexAstExpr> _key;
+  boost::scoped_ptr<_HexAstValAtom> _val;
 } * HexAstMapField;
 
 #endif /* _AST_MAP_FIELD_H_ */

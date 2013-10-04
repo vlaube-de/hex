@@ -15,6 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "ast_unparsed.h"
 #include "ast_identifier.h"
 #include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
@@ -23,7 +24,8 @@
 
 _HexAstIdentifier::_HexAstIdentifier(
   c_str identifier
-):_identifier(strdup(identifier))
+):
+  AstUnparsed(strdup(identifier))
 {
   this->reprOK();
 }
@@ -31,13 +33,13 @@ _HexAstIdentifier::_HexAstIdentifier(
 bool
 _HexAstIdentifier::reprOK()
 {
-  HEX_ASSERT(this->_identifier);
+  HEX_ASSERT(this->identifier());
 }
 
 c_str
 _HexAstIdentifier::identifier()
 {
-  return this->_identifier;
+  return this->_value;
 }
 
 void

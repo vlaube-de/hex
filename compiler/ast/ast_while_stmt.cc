@@ -39,7 +39,7 @@ _HexAstWhileStmt::reprOK()
 HexAstExpr
 _HexAstWhileStmt::expr()
 {
-  return this->_expr;
+  return this->_expr.get();
 }
 
 void

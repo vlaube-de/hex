@@ -43,19 +43,19 @@ _HexAstFieldDef::reprOK()
 HexAstDecoratorList
 _HexAstFieldDef::decorators()
 {
-  return this->_decorators;
+  return this->_decorators.get();
 }
 
 HexAstIdentifier
 _HexAstFieldDef::name()
 {
-  return this->_name;
+  return this->_name.get();
 }
 
 HexAstValAtom
 _HexAstFieldDef::val()
 {
-  return this->_val;
+  return this->_val.get();
 }
 
 void

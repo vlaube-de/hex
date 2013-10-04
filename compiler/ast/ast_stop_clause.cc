@@ -40,13 +40,13 @@ _HexAstStopClause::reprOK()
 HexAstExprList
 _HexAstStopClause::exprs()
 {
-  return this->_exprs;
+  return this->_exprs.get();
 }
 
 HexAstConditionalClause
 _HexAstStopClause::condition()
 {
-  return this->_condition;
+  return this->_condition.get();
 }
 
 void

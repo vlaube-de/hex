@@ -20,9 +20,10 @@
 #include "../../base/assert.h"
 
 
-_HexAstUnaryExpr::_HexAstUnaryExpr(HexAstExpr expr)
+_HexAstUnaryExpr::_HexAstUnaryExpr(
+  HexAstExpr expr
+):_expr(expr)
 {
-  this->_expr = expr;
   this->reprOK();
 }
 
@@ -35,7 +36,7 @@ _HexAstUnaryExpr::reprOK()
 HexAstExpr
 _HexAstUnaryExpr::expr()
 {
-  return this->_expr;
+  return this->_expr.get();
 }
 /*
 bool

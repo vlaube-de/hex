@@ -15,6 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <boost/smart_ptr.hpp>
 #include "ast_node.h"
 #include "ast_name.h"
 #include "ast_typed.h"
@@ -40,7 +41,7 @@ public:
 
   static _HexAstUsingSrc* create(HexAstName, ast_type_t);
 private:
-  HexAstName _name;
+  boost::scoped_ptr<_HexAstName> _name;
 } * HexAstUsingSrc;
 
 #endif /* _AST_USING_SRC_H_ */

@@ -15,6 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <boost/smart_ptr.hpp>
 #include "ast_simple_stmt.h"
 #include "ast_expr.h"
 #include "visitor/ast_visitor.h"
@@ -34,7 +35,7 @@ public:
 
   static _HexAstContinueStmt* create(HexAstExpr);
 private:
-  HexAstExpr _predicate;
+  boost::scoped_ptr<_HexAstExpr> _predicate;
 } * HexAstContinueStmt;
 
 #endif /* _AST_CONTINUE_STMT_H_ */

@@ -16,6 +16,7 @@
  */
 
 
+#include <boost/smart_ptr.hpp>
 #include "ast_expr.h"
 #include "ast_range_expr.h"
 #include "visitor/ast_visitor.h"
@@ -36,8 +37,8 @@ public:
 
   static _HexAstExclusiveRangeExpr* create(HexAstExpr, HexAstExpr);
 private:
-  HexAstExpr _begin;
-  HexAstExpr _end;
+  boost::scoped_ptr<_HexAstExpr> _begin;
+  boost::scoped_ptr<_HexAstExpr> _end;
 } * HexAstExclusiveRangeExpr;
 
 

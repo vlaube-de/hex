@@ -18,6 +18,7 @@
 /* Top level of AST. */
 
 
+#include <boost/smart_ptr.hpp>
 #include "ast_stmt_group.h"
 #include "ast_node.h"
 #include "visitor/ast_visitor.h"
@@ -39,7 +40,7 @@ public:
   static int get_parse_tree_root(_HexAstHexProgram**);
   static void clear();
 private:
-  HexAstStmtGroup _stmts;
+  boost::scoped_ptr<_HexAstStmtGroup> _stmts;
 
   static void set_parse_tree_root(_HexAstHexProgram**);
 

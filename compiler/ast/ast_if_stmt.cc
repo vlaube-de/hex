@@ -29,7 +29,11 @@ _HexAstIfStmt::_HexAstIfStmt(
   HexAstStmtGroup stmts,
   HexAstElifStmtGroup elif_stmts,
   HexAstElseStmt else_stmt
-):_predicate(predicate), _HexAstCompoundStmt(stmts), _elif_stmts(elif_stmts), _else_stmt(else_stmt)
+):
+  _predicate(predicate),
+  _HexAstCompoundStmt(stmts),
+  _elif_stmts(elif_stmts),
+  _else_stmt(else_stmt)
 {
   this->reprOK();
 }
@@ -43,19 +47,19 @@ _HexAstIfStmt::reprOK()
 HexAstExpr
 _HexAstIfStmt::predicate()
 {
-  return this->_predicate;
+  return this->_predicate.get();
 }
 
 HexAstElifStmtGroup
 _HexAstIfStmt::elif_stmts()
 {
-  return this->_elif_stmts;
+  return this->_elif_stmts.get();
 }
 
 HexAstElseStmt
 _HexAstIfStmt::else_stmt()
 {
-  return this->_else_stmt;
+  return this->_else_stmt.get();
 }
 
 void

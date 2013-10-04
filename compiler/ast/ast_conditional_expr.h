@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
+#include <boost/smart_ptr.hpp>
 #include "ast_expr.h"
 #include "visitor/ast_visitor.h"
 
@@ -36,9 +36,9 @@ public:
 
   static _HexAstConditionalExpr* create(HexAstExpr, HexAstExpr, HexAstExpr);
 private:
-  HexAstExpr _predicate;
-  HexAstExpr _consequent;
-  HexAstExpr _alternate;
+  boost::scoped_ptr<_HexAstExpr> _predicate;
+  boost::scoped_ptr<_HexAstExpr> _consequent;
+  boost::scoped_ptr<_HexAstExpr> _alternate;
 
 } * HexAstConditionalExpr;
 

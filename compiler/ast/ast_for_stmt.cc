@@ -44,19 +44,19 @@ _HexAstForStmt::reprOK()
 HexAstTargetList
 _HexAstForStmt::targets()
 {
-  return this->_targets;
+  return this->_targets.get();
 }
 
 HexAstExprList
 _HexAstForStmt::exprs()
 {
-  return this->_exprs;
+  return this->_exprs.get();
 }
 
 HexAstExpr
 _HexAstForStmt::predicate()
 {
-  return this->_predicate;
+  return this->_predicate.get();
 }
 
 void

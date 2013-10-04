@@ -41,13 +41,13 @@ _HexAstCatchStmt::reprOK()
 HexAstTargetList
 _HexAstCatchStmt::targets()
 {
-  return this->_targets;
+  return this->_targets.get();
 }
 
 HexAstIdentifier
 _HexAstCatchStmt::alias()
 {
-  return this->_alias;
+  return this->_alias.get();
 }
 
 void

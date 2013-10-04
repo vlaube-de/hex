@@ -38,7 +38,7 @@ _HexAstTryStmt::reprOK()
 HexAstCatchStmtGroup
 _HexAstTryStmt::catch_stmt_group()
 {
-  return this->_catch_stmt_group;
+  return this->_catch_stmt_group.get();
 }
 
 void

@@ -15,6 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <boost/smart_ptr.hpp>
 #include "ast_simple_param_list.h"
 #include "ast_keyword_val_list.h"
 #include "ast_node.h"
@@ -48,11 +49,12 @@ public:
     HexAstIdentifier,
     HexAstIdentifier
   );
+
 private:
-  HexAstSimpleParamList _simple_params;
-  HexAstKeywordValList _keyword_vals;
-  HexAstIdentifier _args;
-  HexAstIdentifier _kwargs;
+  boost::scoped_ptr<_HexAstSimpleParamList> _simple_params;
+  boost::scoped_ptr<_HexAstKeywordValList> _keyword_vals;
+  boost::scoped_ptr<_HexAstIdentifier> _args;
+  boost::scoped_ptr<_HexAstIdentifier> _kwargs;
 } * HexAstParameterList;
 
 #endif /* _AST_PARAMETER_LIST_H_ */

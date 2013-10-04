@@ -40,13 +40,13 @@ _HexAstKeywordVal::reprOK()
 HexAstIdentifier
 _HexAstKeywordVal::key()
 {
-  return this->_key;
+  return this->_key.get();
 }
 
 HexAstValAtom
 _HexAstKeywordVal::val()
 {
-  return this->_val;
+  return this->_val.get();
 }
 
 void

@@ -17,9 +17,10 @@
 
 #include "ast_unparsed.h"
 #include "../../base/assert.h"
+#include "../../base/c_str.h"
 
 AstUnparsed::AstUnparsed(
-  char *value
+  c_str value
 ):_value(strdup(value))
 {
   HEX_ASSERT(this->_value);

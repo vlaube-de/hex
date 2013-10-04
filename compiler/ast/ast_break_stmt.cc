@@ -36,7 +36,7 @@ _HexAstBreakStmt::reprOK()
 HexAstExpr
 _HexAstBreakStmt::predicate()
 {
-  return this->_predicate;
+  return this->_predicate.get();
 }
 
 void

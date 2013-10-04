@@ -36,7 +36,7 @@ _HexAstParenForm::reprOK()
 HexAstExprList
 _HexAstParenForm::exprs()
 {
-  return this->_exprs;
+  return this->_exprs.get();
 }
 
 void

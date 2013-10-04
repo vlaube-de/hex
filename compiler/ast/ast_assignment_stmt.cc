@@ -29,7 +29,12 @@ _HexAstAssignmentStmt::_HexAstAssignmentStmt(
   void* src,
   ast_type_t type,
   bool defer
-):_decorators(decorators), _dst(dst), _src(src), AstTyped(type), _defer(defer)
+):
+  _decorators(decorators),
+  _dst(dst),
+  _src(src),
+  AstTyped(type),
+  _defer(defer)
 {
   this->reprOK();
 }
@@ -49,13 +54,13 @@ _HexAstAssignmentStmt::reprOK()
 HexAstDecoratorList
 _HexAstAssignmentStmt::decorators()
 {
-  return this->_decorators;
+  return this->_decorators.get();
 }
 
 HexAstPrimary
 _HexAstAssignmentStmt::dst()
 {
-  return this->_dst;
+  return this->_dst.get();
 }
 
 void*

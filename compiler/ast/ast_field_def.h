@@ -15,6 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <boost/smart_ptr.hpp>
 #include "ast_attribute_def.h"
 #include "ast_val_atom.h"
 #include "ast_identifier.h"
@@ -38,9 +39,9 @@ public:
 
   static _HexAstFieldDef* create(HexAstDecoratorList, HexAstIdentifier, HexAstValAtom);
 private:
-  HexAstDecoratorList _decorators;
-  HexAstIdentifier _name;
-  HexAstValAtom _val;
+  boost::scoped_ptr<_HexAstDecoratorList> _decorators;
+  boost::scoped_ptr<_HexAstIdentifier> _name;
+  boost::scoped_ptr<_HexAstValAtom> _val;
 } * HexAstFieldDef;
 
 #endif /* _AST_FIELD_DEF_H_ */

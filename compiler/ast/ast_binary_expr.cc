@@ -32,13 +32,13 @@ _HexAstBinaryExpr::_HexAstBinaryExpr(
 HexAstExpr
 _HexAstBinaryExpr::left()
 {
-  return this->_lexpr;
+  return this->_lexpr.get();
 }
 
 HexAstExpr
 _HexAstBinaryExpr::right()
 {
-  return this->_rexpr;
+  return this->_rexpr.get();
 }
 
 bool
@@ -46,12 +46,6 @@ _HexAstBinaryExpr::reprOK()
 {
   HEX_ASSERT(this->_lexpr);
   HEX_ASSERT(this->_rexpr);
-}
-
-char*
-_HexAstBinaryExpr::op()
-{
-  return "+";
 }
 
 /*

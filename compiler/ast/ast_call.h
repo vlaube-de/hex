@@ -15,6 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <boost/smart_ptr.hpp>
 #include "ast_primary.h"
 #include "ast_arg_list.h"
 #include "visitor/ast_visitor.h"
@@ -36,8 +37,8 @@ public:
 
   static _HexAstCall* create(HexAstPrimary, HexAstArgList, bool);
 private:
-  HexAstPrimary _source;
-  HexAstArgList _arglist;
+  boost::scoped_ptr<_HexAstPrimary> _source;
+  boost::scoped_ptr<_HexAstArgList> _arglist;
   bool _isAsync;
 } * HexAstCall;
 

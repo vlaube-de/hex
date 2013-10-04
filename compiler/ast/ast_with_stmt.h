@@ -15,6 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <boost/smart_ptr.hpp>
 #include "ast_compound_stmt.h"
 #include "ast_expr_list.h"
 #include "ast_stmt_group.h"
@@ -37,8 +38,8 @@ public:
 
   static _HexAstWithStmt* create(HexAstExprList, HexAstIdentifier, HexAstStmtGroup);
 private:
-  HexAstExprList _exprs;
-  HexAstIdentifier _alias;
+  boost::scoped_ptr<_HexAstExprList> _exprs;
+  boost::scoped_ptr<_HexAstIdentifier> _alias;
 } * HexAstWithStmt;
 
 #endif /* _AST_WITH_STMT_H_ */

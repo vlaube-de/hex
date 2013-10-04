@@ -39,13 +39,13 @@ _HexAstMapField::reprOK()
 HexAstExpr
 _HexAstMapField::key()
 {
-  return this->_key;
+  return this->_key.get();
 }
 
 HexAstValAtom
 _HexAstMapField::val()
 {
-  return this->_val;
+  return this->_val.get();
 }
 
 void

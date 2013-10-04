@@ -36,7 +36,7 @@ _HexAstMapForm::reprOK()
 HexAstMapFieldList
 _HexAstMapForm::list()
 {
-  return this->_list;
+  return this->_list.get();
 }
 
 void

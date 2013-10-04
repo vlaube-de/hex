@@ -15,6 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <boost/smart_ptr.hpp>
 #include "ast_compound_stmt.h"
 #include "ast_target_list.h"
 #include "ast_expr_list.h"
@@ -27,7 +28,12 @@
 
 typedef class _HexAstForStmt : public _HexAstCompoundStmt {
 public:
-  _HexAstForStmt(HexAstTargetList, HexAstExprList, HexAstExpr, HexAstStmtGroup);
+  _HexAstForStmt(
+    HexAstTargetList,
+    HexAstExprList,
+    HexAstExpr,
+    HexAstStmtGroup
+  );
 
   virtual bool reprOK();
 
@@ -37,11 +43,17 @@ public:
 
   virtual void accept(AstVisitor*);
 
-  static _HexAstForStmt* create(HexAstTargetList, HexAstExprList, HexAstExpr, HexAstStmtGroup);
+  static _HexAstForStmt* create(
+    HexAstTargetList,
+    HexAstExprList,
+    HexAstExpr,
+    HexAstStmtGroup
+  );
+
 private:
-  HexAstTargetList _targets;
-  HexAstExprList _exprs;
-  HexAstExpr _predicate;
+  boost::scoped_ptr<_HexAstTargetList> _targets;
+  boost::scoped_ptr<_HexAstExprList> _exprs;
+  boost::scoped_ptr<_HexAstExpr> _predicate;
 } * HexAstForStmt;
 
 #endif /* _AST_FOR_STMT_H_ */

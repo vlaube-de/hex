@@ -15,6 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <boost/smart_ptr.hpp>
 #include <list>
 #include "../../base/assert.h"
 
@@ -36,7 +37,7 @@ public:
   static C* expand(C*, T);
   static C* create_or_expand(T, C*);
 protected:
-  std::list<T> *_list;
+  boost::scoped_ptr< std::list<T> > _list;
 };
 
 template<typename C, typename T>
@@ -72,7 +73,7 @@ template<typename C, typename T>
 std::list<T>*
 AstListObj<C, T>::list()
 {
-  return this->_list;
+  return this->_list.get();
 }
 
 template<typename C, typename T>

@@ -28,7 +28,11 @@ _HexAstArgList::_HexAstArgList(
   HexAstKeywordValList keywordValList,
   HexAstIdentifier args,
   HexAstIdentifier kwargs
-):_valList(valList), _keywordValList(keywordValList), _args(args), _kwargs(kwargs)
+):
+  _valList(valList),
+  _keywordValList(keywordValList),
+  _args(args),
+  _kwargs(kwargs)
 {
   this->reprOK();
 }
@@ -47,25 +51,25 @@ _HexAstArgList::reprOK()
 HexAstValList
 _HexAstArgList::simple_args()
 {
-  return this->_valList;
+  return this->_valList.get();
 }
 
 HexAstKeywordValList
 _HexAstArgList::keyword_args()
 {
-  return this->_keywordValList;
+  return this->_keywordValList.get();
 }
 
 HexAstIdentifier
 _HexAstArgList::args()
 {
-  return this->_args;
+  return this->_args.get();
 }
 
 HexAstIdentifier
 _HexAstArgList::kwargs()
 {
-  return this->_kwargs;
+  return this->_kwargs.get();
 }
 
 void

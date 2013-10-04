@@ -40,13 +40,13 @@ _HexAstAttributeRef::reprOK()
 HexAstPrimary
 _HexAstAttributeRef::source()
 {
-  return this->_source;
+  return this->_source.get();
 }
 
 HexAstIdentifier
 _HexAstAttributeRef::attribute()
 {
-  return this->_attribute;
+  return this->_attribute.get();
 }
 
 void

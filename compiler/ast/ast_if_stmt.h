@@ -15,6 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <boost/smart_ptr.hpp>
 #include "ast_expr.h"
 #include "ast_compound_stmt.h"
 #include "ast_stmt_group.h"
@@ -27,7 +28,12 @@
 
 typedef class _HexAstIfStmt : public _HexAstCompoundStmt {
 public:
-  _HexAstIfStmt(HexAstExpr, HexAstStmtGroup, HexAstElifStmtGroup, HexAstElseStmt);
+  _HexAstIfStmt(
+    HexAstExpr,
+    HexAstStmtGroup,
+    HexAstElifStmtGroup,
+    HexAstElseStmt
+  );
 
   virtual bool reprOK();
 
@@ -37,11 +43,17 @@ public:
 
   virtual void accept(AstVisitor*);
 
-  static _HexAstIfStmt* create(HexAstExpr, HexAstStmtGroup, HexAstElifStmtGroup, HexAstElseStmt);
+  static _HexAstIfStmt* create(
+    HexAstExpr,
+    HexAstStmtGroup,
+    HexAstElifStmtGroup,
+    HexAstElseStmt
+  );
+
 private:
-  HexAstExpr _predicate;
-  HexAstElifStmtGroup _elif_stmts;
-  HexAstElseStmt _else_stmt;
+  boost::scoped_ptr<_HexAstExpr> _predicate;
+  boost::scoped_ptr<_HexAstElifStmtGroup> _elif_stmts;
+  boost::scoped_ptr<_HexAstElseStmt> _else_stmt;
 } * HexAstIfStmt;
 
 #endif /* _AST_IF_STMT_H_ */

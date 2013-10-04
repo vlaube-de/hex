@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
+#include <boost/smart_ptr.hpp>
 #include "ast_expr.h"
 #include "examiner.h"
 
@@ -38,7 +38,7 @@ public:
   template<typename T>
   static T* create(HexAstExpr);
 protected:
-  HexAstExpr _expr;
+  boost::scoped_ptr<_HexAstExpr> _expr;
 
 //  bool examine(Examiner, void*);
 } * HexAstUnaryExpr;

@@ -15,6 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <boost/smart_ptr.hpp>
 #include "ast_map_field_list.h"
 #include "ast_primary.h"
 #include "visitor/ast_visitor.h"
@@ -35,7 +36,7 @@ public:
   static _HexAstMapForm* create(HexAstMapFieldList);
 
 private:
-  HexAstMapFieldList _list;
+  boost::scoped_ptr<_HexAstMapFieldList> _list;
 } * HexAstMapForm;
 
 #endif /* _AST_MAP_FORM_H_ */

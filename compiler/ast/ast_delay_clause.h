@@ -15,6 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <boost/smart_ptr.hpp>
 #include "ast_task_clause.h"
 #include "ast_expr_list.h"
 #include "ast_expr.h"
@@ -41,8 +42,8 @@ public:
 
   static _HexAstConditionalDelayClause* create(HexAstExprList, HexAstConditionalClause);
 private:
-  HexAstExprList _exprs;
-  HexAstConditionalClause _condition;
+  boost::scoped_ptr<_HexAstExprList> _exprs;
+  boost::scoped_ptr<_HexAstConditionalClause> _condition;
 } * HexAstConditionalDelayClause;
 
 typedef class _HexAstFixedDelayClause : public _HexAstDelayClause {
@@ -58,8 +59,8 @@ public:
 
   static _HexAstFixedDelayClause* create(HexAstExprList, HexAstExpr);
 private:
-  HexAstExprList _exprs;
-  HexAstExpr _delay;
+  boost::scoped_ptr<_HexAstExprList> _exprs;
+  boost::scoped_ptr<_HexAstExpr> _delay;
 } * HexAstFixedDelayClause;
 
 

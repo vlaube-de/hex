@@ -39,7 +39,7 @@ _HexAstLockStmt::reprOK()
 HexAstExprList
 _HexAstLockStmt::exprs()
 {
-  return this->_exprs;
+  return this->_exprs.get();
 }
 
 void

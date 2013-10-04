@@ -15,6 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <boost/smart_ptr.hpp>
 #include "ast_val_list.h"
 #include "ast_keyword_val_list.h"
 #include "ast_node.h"
@@ -37,12 +38,18 @@ public:
 
   virtual void accept(AstVisitor*);
 
-  static _HexAstArgList* create(HexAstValList, HexAstKeywordValList, HexAstIdentifier, HexAstIdentifier);
+  static _HexAstArgList* create(
+    HexAstValList,
+    HexAstKeywordValList,
+    HexAstIdentifier,
+    HexAstIdentifier
+  );
+
 private:
-  HexAstValList _valList;
-  HexAstKeywordValList _keywordValList;
-  HexAstIdentifier _args;
-  HexAstIdentifier _kwargs;
+  boost::scoped_ptr<_HexAstValList> _valList;
+  boost::scoped_ptr<_HexAstKeywordValList> _keywordValList;
+  boost::scoped_ptr<_HexAstIdentifier> _args;
+  boost::scoped_ptr<_HexAstIdentifier> _kwargs;
 } * HexAstArgList;
 
 #endif /* _AST_ARG_LIST_H_ */

@@ -26,7 +26,10 @@ _HexAstConditionalExpr::_HexAstConditionalExpr(
   HexAstExpr predicate,
   HexAstExpr consequent,
   HexAstExpr alternate
-): _predicate(predicate), _consequent(consequent), _alternate(alternate)
+):
+  _predicate(predicate),
+  _consequent(consequent),
+  _alternate(alternate)
 {
   this->reprOK();
 }
@@ -42,19 +45,19 @@ _HexAstConditionalExpr::reprOK()
 HexAstExpr
 _HexAstConditionalExpr::predicate()
 {
-  return this->_predicate;
+  return this->_predicate.get();
 }
 
 HexAstExpr
 _HexAstConditionalExpr::consequent()
 {
-  return this->_consequent;
+  return this->_consequent.get();
 }
 
 HexAstExpr
 _HexAstConditionalExpr::alternate()
 {
-  return this->_alternate;
+  return this->_alternate.get();
 }
 
 void

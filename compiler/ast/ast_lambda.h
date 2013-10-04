@@ -15,6 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <boost/smart_ptr.hpp>
 #include "ast_node.h"
 #include "ast_parameter_list.h"
 #include "ast_stmt_group.h"
@@ -31,7 +32,7 @@ public:
   HexAstParameterList params();
 
 protected:
-  HexAstParameterList _params;
+  boost::scoped_ptr<_HexAstParameterList> _params;
 } * HexAstLambda;
 
 typedef class _HexAstLambdaSimple : public _HexAstLambda {
@@ -46,7 +47,7 @@ public:
 
   static _HexAstLambdaSimple* create(HexAstParameterList, HexAstExpr);
 private:
-  HexAstExpr _expr;
+  boost::scoped_ptr<_HexAstExpr> _expr;
 } * HexAstLambdaSimple;
 
 typedef class _HexAstLambdaComplex : public _HexAstLambda {
@@ -61,7 +62,7 @@ public:
 
   static _HexAstLambdaComplex* create(HexAstParameterList, HexAstStmtGroup);
 private:
-  HexAstStmtGroup _stmts;
+  boost::scoped_ptr<_HexAstStmtGroup> _stmts;
 } * HexAstLambdaComplex;
 
 #endif /* _AST_LAMBDA_H_ */

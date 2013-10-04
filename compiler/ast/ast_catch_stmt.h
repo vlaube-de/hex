@@ -15,6 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <boost/smart_ptr.hpp>
 #include "ast_compound_stmt.h"
 #include "ast_target_list.h"
 #include "ast_stmt_group.h"
@@ -37,8 +38,8 @@ public:
 
   static _HexAstCatchStmt* create(HexAstTargetList, HexAstIdentifier, HexAstStmtGroup);
 private:
-  HexAstTargetList _targets;
-  HexAstIdentifier _alias;
+  boost::scoped_ptr<_HexAstTargetList> _targets;
+  boost::scoped_ptr<_HexAstIdentifier> _alias;
 } * HexAstCatchStmt;
 
 #endif /* _AST_CATCH_STMT_H_ */

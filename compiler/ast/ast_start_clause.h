@@ -15,6 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <boost/smart_ptr.hpp>
 #include "ast_task_clause.h"
 #include "ast_name.h"
 #include "ast_target_list.h"
@@ -33,8 +34,8 @@ public:
   HexAstConditionalClause condition();
 
 protected:
-  HexAstIdentifier _alias;
-  HexAstConditionalClause _condition;
+  boost::scoped_ptr<_HexAstIdentifier> _alias;
+  boost::scoped_ptr<_HexAstConditionalClause> _condition;
 } * HexAstStartClause;
 
 
@@ -50,7 +51,7 @@ public:
 
   static _HexAstStartClauseSingle* create(HexAstName, HexAstIdentifier, HexAstConditionalClause);
 private:
-  HexAstName _target;
+  boost::scoped_ptr<_HexAstName> _target;
 } * HexAstStartClauseSingle;
 
 
@@ -66,7 +67,7 @@ public:
 
   static _HexAstStartClauseMultiple* create(HexAstTargetList, HexAstIdentifier, HexAstConditionalClause);
 private:
-  HexAstTargetList _targets;
+  boost::scoped_ptr<_HexAstTargetList> _targets;
 } * HexAstStartClauseMultiple;
 
 

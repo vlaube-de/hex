@@ -16,14 +16,15 @@
  */
 
 
+#include "ast_unparsed.h"
 #include "ast_primary.h"
-#include "../../base/c_str.h"
 #include "visitor/ast_visitor.h"
+#include "../../base/c_str.h"
 
 #ifndef _AST_IDENTIFIER_H_
 #define _AST_IDENTIFIER_H_
 
-typedef class _HexAstIdentifier : public _HexAstPrimary {
+typedef class _HexAstIdentifier : public _HexAstPrimary, AstUnparsed {
 public:
   _HexAstIdentifier(c_str);
 
@@ -34,9 +35,6 @@ public:
   c_str identifier();
 
   virtual void accept(AstVisitor*);
-
-private:
-  c_str _identifier;
 } * HexAstIdentifier;
 
 #endif /* _AST_IDENTIFIER_H_ */

@@ -42,13 +42,13 @@ _HexAstUsingStmtDirect::reprOK()
 HexAstName
 _HexAstUsingStmtDirect::target()
 {
-  return this->_target;
+  return this->_target.get();
 }
 
 HexAstIdentifier
 _HexAstUsingStmtDirect::alias()
 {
-  return this->_alias;
+  return this->_alias.get();
 }
 
 void
@@ -93,19 +93,19 @@ _HexAstUsingStmtRelative::reprOK()
 HexAstTargetList
 _HexAstUsingStmtRelative::targets()
 {
-  return this->_targets;
+  return this->_targets.get();
 }
 
 HexAstUsingSrc
 _HexAstUsingStmtRelative::src()
 {
-  return this->_src;
+  return this->_src.get();
 }
 
 HexAstIdentifier
 _HexAstUsingStmtRelative::alias()
 {
-  return this->_alias;
+  return this->_alias.get();
 }
 
 void

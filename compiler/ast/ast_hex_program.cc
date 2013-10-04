@@ -40,7 +40,7 @@ _HexAstHexProgram::reprOK()
 HexAstStmtGroup
 _HexAstHexProgram::stmts()
 {
-  return this->_stmts;
+  return this->_stmts.get();
 }
 
 void

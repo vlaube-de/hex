@@ -41,7 +41,7 @@ _HexAstUsingSrc::reprOK()
 HexAstName
 _HexAstUsingSrc::name()
 {
-  return this->_name;
+  return this->_name.get();
 }
 
 void

@@ -15,6 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <boost/smart_ptr.hpp>
 #include "ast_using_src.h"
 #include "ast_simple_stmt.h"
 #include "ast_target_list.h"
@@ -44,8 +45,8 @@ public:
 
   static _HexAstUsingStmtDirect* create(HexAstName, HexAstIdentifier);
 private:
-  HexAstName _target;
-  HexAstIdentifier _alias;
+  boost::scoped_ptr<_HexAstName> _target;
+  boost::scoped_ptr<_HexAstIdentifier> _alias;
 } * HexAstUsingStmtDirect;
 
 enum {
@@ -67,9 +68,9 @@ public:
 
   static _HexAstUsingStmtRelative* create(HexAstTargetList, HexAstUsingSrc, HexAstIdentifier, ast_type_t);
 private:
-  HexAstTargetList _targets;
-  HexAstUsingSrc _src;
-  HexAstIdentifier _alias;
+  boost::scoped_ptr<_HexAstTargetList> _targets;
+  boost::scoped_ptr<_HexAstUsingSrc> _src;
+  boost::scoped_ptr<_HexAstIdentifier> _alias;
 } * HexAstUsingStmtRelative;
 
 

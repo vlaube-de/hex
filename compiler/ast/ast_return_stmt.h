@@ -15,6 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <boost/smart_ptr.hpp>
 #include "ast_simple_stmt.h"
 #include "ast_expr_list.h"
 #include "visitor/ast_visitor.h"
@@ -35,8 +36,8 @@ public:
 
   static _HexAstReturnStmt* create(HexAstExprList, HexAstExpr);
 private:
-  HexAstExprList _return_vals;
-  HexAstExpr _predicate;
+  boost::scoped_ptr<_HexAstExprList> _return_vals;
+  boost::scoped_ptr<_HexAstExpr> _predicate;
 } * HexAstReturnStmt;
 
 #endif /* _AST_RETURN_STMT_H_ */

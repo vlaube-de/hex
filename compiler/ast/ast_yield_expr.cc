@@ -31,7 +31,7 @@ _HexAstYieldExpr::_HexAstYieldExpr(
 HexAstExprList
 _HexAstYieldExpr::exprs()
 {
-  return this->_exprs;
+  return this->_exprs.get();
 }
 
 void

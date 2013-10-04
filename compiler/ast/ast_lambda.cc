@@ -31,7 +31,7 @@ _HexAstLambda::_HexAstLambda(
 HexAstParameterList
 _HexAstLambda::params()
 {
-  return this->_params;
+  return this->_params.get();
 }
 
 _HexAstLambdaSimple::_HexAstLambdaSimple(
@@ -51,7 +51,7 @@ _HexAstLambdaSimple::reprOK()
 HexAstExpr
 _HexAstLambdaSimple::expr()
 {
-  return this->_expr;
+  return this->_expr.get();
 }
 
 void
@@ -95,7 +95,7 @@ _HexAstLambdaComplex::reprOK()
 HexAstStmtGroup
 _HexAstLambdaComplex::stmts()
 {
-  return this->_stmts;
+  return this->_stmts.get();
 }
 
 void

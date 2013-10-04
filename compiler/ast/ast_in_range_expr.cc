@@ -36,13 +36,13 @@ _HexAstInclusiveRangeExpr::reprOK()
 HexAstExpr
 _HexAstInclusiveRangeExpr::begin()
 {
-	return this->_begin;
+	return this->_begin.get();
 }
 
 HexAstExpr
 _HexAstInclusiveRangeExpr::end()
 {
-  return this->_end;
+  return this->_end.get();
 }
 
 void

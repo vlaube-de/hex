@@ -34,13 +34,13 @@ _HexAstStartClause::_HexAstStartClause(
 HexAstIdentifier
 _HexAstStartClause::alias()
 {
-  return this->_alias;
+  return this->_alias.get();
 }
 
 HexAstConditionalClause
 _HexAstStartClause::condition()
 {
-  return this->_condition;
+  return this->_condition.get();
 }
 
 _HexAstStartClauseSingle::_HexAstStartClauseSingle(
@@ -61,7 +61,7 @@ _HexAstStartClauseSingle::reprOK()
 HexAstName
 _HexAstStartClauseSingle::target()
 {
-  return this->_target;
+  return this->_target.get();
 }
 
 void
@@ -108,7 +108,7 @@ _HexAstStartClauseMultiple::reprOK()
 HexAstTargetList
 _HexAstStartClauseMultiple::targets()
 {
-  return this->_targets;
+  return this->_targets.get();
 }
 
 void

@@ -41,13 +41,13 @@ _HexAstConditionalDelayClause::reprOK()
 HexAstExprList
 _HexAstConditionalDelayClause::exprs()
 {
-  return this->_exprs;
+  return this->_exprs.get();
 }
 
 HexAstConditionalClause
 _HexAstConditionalDelayClause::condition()
 {
-  return this->_condition;
+  return this->_condition.get();
 }
 
 void
@@ -92,13 +92,13 @@ _HexAstFixedDelayClause::reprOK()
 HexAstExprList
 _HexAstFixedDelayClause::exprs()
 {
-  return this->_exprs;
+  return this->_exprs.get();
 }
 
 HexAstExpr
 _HexAstFixedDelayClause::delay()
 {
-  return this->_delay;
+  return this->_delay.get();
 }
 
 void

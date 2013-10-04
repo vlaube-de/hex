@@ -38,13 +38,13 @@ _HexAstDecorator::reprOK()
 HexAstName
 _HexAstDecorator::name()
 {
-  return this->_name;
+  return this->_name.get();
 }
 
 HexAstArgList
 _HexAstDecorator::args()
 {
-  return this->_args;
+  return this->_args.get();
 }
 
 void

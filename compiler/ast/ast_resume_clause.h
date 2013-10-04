@@ -15,6 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <boost/smart_ptr.hpp>
 #include "ast_task_clause.h"
 #include "ast_expr_list.h"
 #include "ast_conditional_clause.h"
@@ -36,8 +37,8 @@ public:
 
   static _HexAstResumeClause* create(HexAstExprList, HexAstConditionalClause);
 private:
-  HexAstExprList _exprs;
-  HexAstConditionalClause _condition;
+  boost::scoped_ptr<_HexAstExprList> _exprs;
+  boost::scoped_ptr<_HexAstConditionalClause> _condition;
 } * HexAstResumeClause;
 
 #endif /* _AST_RESUME_CLAUSE_H_ */

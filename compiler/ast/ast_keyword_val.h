@@ -15,6 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <boost/smart_ptr.hpp>
 #include "ast_node.h"
 #include "ast_val_atom.h"
 #include "ast_identifier.h"
@@ -36,8 +37,8 @@ public:
 
   static _HexAstKeywordVal* create(HexAstIdentifier, HexAstValAtom);
 private:
-  HexAstIdentifier _key;
-  HexAstValAtom _val;
+  boost::scoped_ptr<_HexAstIdentifier> _key;
+  boost::scoped_ptr<_HexAstValAtom> _val;
 } * HexAstKeywordVal;
 
 #endif /* _AST_KEYWORD_VAL_H_ */

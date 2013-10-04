@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
+#include <boost/scoped_ptr.hpp>
 #include "ast_identifier.h"
 #include "ast_primary.h"
 #include "visitor/ast_visitor.h"
@@ -36,8 +36,8 @@ public:
 
   static _HexAstAttributeRef* create(HexAstPrimary, HexAstIdentifier);
 private:
-  HexAstPrimary _source;
-  HexAstIdentifier _attribute;
+  boost::scoped_ptr<_HexAstPrimary> _source;
+  boost::scoped_ptr<_HexAstIdentifier> _attribute;
 } * HexAstAttributeRef;
 
 #endif /* _AST_ATTRIBUTE_REF_H_ */

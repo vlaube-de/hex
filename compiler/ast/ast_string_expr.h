@@ -15,6 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <boost/smart_ptr.hpp>
 #include "ast_expr.h"
 #include "ast_expr_list.h"
 #include "ast_string_literal.h"
@@ -36,8 +37,8 @@ public:
 
   static _HexAstStringExpr* create(HexAstStringLiteral, HexAstExprList);
 private:
-  HexAstStringLiteral _string;
-  HexAstExprList _exprs;
+  boost::scoped_ptr<_HexAstStringLiteral> _string;
+  boost::scoped_ptr<_HexAstExprList> _exprs;
 } * HexAstStringExpr;
 
 #endif /* _AST_STRING_EXPR_H_ */

@@ -38,13 +38,13 @@ _HexAstReturnStmt::reprOK()
 HexAstExprList
 _HexAstReturnStmt::return_vals()
 {
-  return this->_return_vals;
+  return this->_return_vals.get();
 }
 
 HexAstExpr
 _HexAstReturnStmt::predicate()
 {
-  return this->_predicate;
+  return this->_predicate.get();
 }
 
 void

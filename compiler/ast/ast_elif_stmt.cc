@@ -39,7 +39,7 @@ _HexAstElifStmt::reprOK()
 HexAstExpr
 _HexAstElifStmt::predicate()
 {
-  return this->_predicate;
+  return this->_predicate.get();
 }
 
 void

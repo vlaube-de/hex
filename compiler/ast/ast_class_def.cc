@@ -43,25 +43,25 @@ _HexAstClassDef::reprOK()
 HexAstDecoratorList
 _HexAstClassDef::decorators()
 {
-  return this->_decorators;
+  return this->_decorators.get();
 }
 
 HexAstIdentifier
 _HexAstClassDef::name()
 {
-  return this->_name;
+  return this->_name.get();
 }
 
 HexAstName
 _HexAstClassDef::parent()
 {
-  return this->_parent;
+  return this->_parent.get();
 }
 
 HexAstAttributeDefList
 _HexAstClassDef::attributes()
 {
-  return this->_attributes;
+  return this->_attributes.get();
 }
 
 void

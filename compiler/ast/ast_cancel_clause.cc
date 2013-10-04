@@ -41,13 +41,13 @@ _HexAstCancelClause::reprOK()
 HexAstExprList
 _HexAstCancelClause::exprs()
 {
-  return this->_exprs;
+  return this->_exprs.get();
 }
 
 HexAstConditionalClause
 _HexAstCancelClause::condition()
 {
-  return this->_condition;
+  return this->_condition.get();
 }
 
 void

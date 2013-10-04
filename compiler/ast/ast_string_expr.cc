@@ -40,13 +40,13 @@ _HexAstStringExpr::reprOK()
 HexAstStringLiteral
 _HexAstStringExpr::string()
 {
-  return this->_string;
+  return this->_string.get();
 }
 
 HexAstExprList
 _HexAstStringExpr::exprs()
 {
-  return this->_exprs;
+  return this->_exprs.get();
 }
 
 void

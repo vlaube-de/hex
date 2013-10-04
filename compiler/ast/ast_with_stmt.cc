@@ -40,13 +40,13 @@ _HexAstWithStmt::reprOK()
 HexAstExprList
 _HexAstWithStmt::exprs()
 {
-  return this->_exprs;
+  return this->_exprs.get();
 }
 
 HexAstIdentifier
 _HexAstWithStmt::alias()
 {
-  return this->_alias;
+  return this->_alias.get();
 }
 
 void
