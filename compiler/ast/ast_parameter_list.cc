@@ -32,10 +32,10 @@ _HexAstParameterList::_HexAstParameterList(
   this->reprOK();
 }
 
-bool
+void
 _HexAstParameterList::reprOK()
 {
-  return true;
+  // Do nothing here.
 }
 
 HexAstSimpleParamList

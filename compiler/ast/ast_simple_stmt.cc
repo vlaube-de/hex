@@ -19,4 +19,11 @@
 
 _HexAstSimpleStmt::_HexAstSimpleStmt()
 {
+  this->reprOK();
+}
+
+void
+_HexAstSimpleStmt::reprOK()
+{
+  // Do nothing here.
 }

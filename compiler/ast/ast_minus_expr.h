@@ -22,13 +22,12 @@
 #ifndef _AST_MINUS_EXPR_H_
 #define _AST_MINUS_EXPR_H_
 
-
 typedef class _HexAstMinusExpr : public _HexAstBinaryExpr {
 public:
   _HexAstMinusExpr(HexAstExpr, HexAstExpr);
 
+  virtual void reprOK();
   virtual void accept(AstVisitor*);
 } * HexAstMinusExpr;
-
 
 #endif /* _AST_MINUS_EXPR_H_ */

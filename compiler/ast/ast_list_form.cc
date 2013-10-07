@@ -27,7 +27,7 @@ _HexAstListForm::_HexAstListForm(
   this->reprOK();
 }
 
-bool
+void
 _HexAstListForm::reprOK()
 {
   HEX_ASSERT(

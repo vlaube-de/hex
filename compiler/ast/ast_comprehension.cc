@@ -33,7 +33,7 @@ _HexAstComprehension::_HexAstComprehension(
   this->reprOK();
 }
 
-bool
+void
 _HexAstComprehension::reprOK()
 {
   HEX_ASSERT(this->_candidates);

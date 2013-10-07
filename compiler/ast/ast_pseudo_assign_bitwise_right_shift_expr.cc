@@ -25,6 +25,13 @@ _HexAstPseudoAssignBitwiseRightShiftExpr::_HexAstPseudoAssignBitwiseRightShiftEx
   HexAstExpr right
 ):_HexAstPseudoAssignExpr(left, right)
 {
+  this->reprOK();
+}
+
+void
+_HexAstPseudoAssignBitwiseRightShiftExpr::reprOK()
+{
+  // Do nothing here.
 }
 
 void

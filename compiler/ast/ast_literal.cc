@@ -17,6 +17,8 @@
 
 #include "ast_literal.h"
 
-_HexAstLiteral::_HexAstLiteral()
+_HexAstLiteral::_HexAstLiteral(
+  c_str value
+) : AstUnparsed(value)
 {
 }

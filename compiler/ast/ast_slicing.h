@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
+#include <boost/smart_ptr.hpp>
 #include "ast_primary.h"
 #include "ast_expr.h"
 #include "visitor/ast_visitor.h"
@@ -27,17 +27,16 @@ typedef class _HexAstSlicing : public _HexAstPrimary {
 public:
   _HexAstSlicing(HexAstPrimary, HexAstExpr);
 
-  virtual bool reprOK();
+  virtual void reprOK();
+  virtual void accept(AstVisitor*);
 
   HexAstPrimary source();
   HexAstExpr slice();
 
-  virtual void accept(AstVisitor*);
-
   static _HexAstSlicing* create(HexAstPrimary, HexAstExpr);
 private:
-  HexAstPrimary _source;
-  HexAstExpr _slice;
+  boost::scoped_ptr<_HexAstPrimary> _source;
+  boost::scoped_ptr<_HexAstExpr> _slice;
 } * HexAstSlicing;
 
 #endif /* _AST_SLICING_H_ */

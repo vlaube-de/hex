@@ -15,6 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <boost/smart_ptr.hpp>
 #include "ast_stmt.h"
 #include "ast_stmt_group.h"
 
@@ -25,9 +26,11 @@ typedef class _HexAstCompoundStmt : public _HexAstStmt {
 public:
   _HexAstCompoundStmt(HexAstStmtGroup);
 
+  virtual void reprOK();
+
   HexAstStmtGroup stmts();
 protected:
-  HexAstStmtGroup _stmts;
+  boost::scoped_ptr<_HexAstStmtGroup> _stmts;
 } * HexAstCompoundStmt;
 
 #endif /* _AST_COMPOUND_STMT_H_ */

@@ -17,16 +17,15 @@
 
 
 #include "ast_primary.h"
+#include "ast_unparsed.h"
 #include "../../base/c_str.h"
 
 #ifndef _AST_LITERAL_H_
 #define _AST_LITERAL_H_
 
-typedef class _HexAstLiteral : public _HexAstPrimary {
+typedef class _HexAstLiteral : public _HexAstPrimary, public AstUnparsed {
 public:
-  _HexAstLiteral();
-
-  virtual c_str value()=0;
+  _HexAstLiteral(c_str);
 } * HexAstLiteral;
 
 #endif /* _AST_LITERAL_H */

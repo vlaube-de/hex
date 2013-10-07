@@ -36,12 +36,11 @@ typedef class _HexAstUsingStmtDirect : public _HexAstUsingStmt {
 public:
   _HexAstUsingStmtDirect(HexAstName, HexAstIdentifier);
 
-  virtual bool reprOK();
+  virtual void reprOK();
+  virtual void accept(AstVisitor*);
 
   HexAstName target();
   HexAstIdentifier alias();
-
-  virtual void accept(AstVisitor*);
 
   static _HexAstUsingStmtDirect* create(HexAstName, HexAstIdentifier);
 private:
@@ -58,15 +57,20 @@ typedef class _HexAstUsingStmtRelative : public AstTyped, public _HexAstUsingStm
 public:
   _HexAstUsingStmtRelative(HexAstTargetList, HexAstUsingSrc, HexAstIdentifier, ast_type_t);
 
-  virtual bool reprOK();
+  virtual void reprOK();
+  virtual void accept(AstVisitor*);
 
   HexAstTargetList targets();
   HexAstUsingSrc src();
   HexAstIdentifier alias();
 
-  virtual void accept(AstVisitor*);
+  static _HexAstUsingStmtRelative* create(
+    HexAstTargetList,
+    HexAstUsingSrc,
+    HexAstIdentifier,
+    ast_type_t
+  );
 
-  static _HexAstUsingStmtRelative* create(HexAstTargetList, HexAstUsingSrc, HexAstIdentifier, ast_type_t);
 private:
   boost::scoped_ptr<_HexAstTargetList> _targets;
   boost::scoped_ptr<_HexAstUsingSrc> _src;

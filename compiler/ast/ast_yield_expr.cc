@@ -26,6 +26,13 @@ _HexAstYieldExpr::_HexAstYieldExpr(
   HexAstExprList exprs
 ): _exprs(exprs)
 {
+  this->reprOK();
+}
+
+void
+_HexAstYieldExpr::reprOK()
+{
+  // Do nothing here.
 }
 
 HexAstExprList

@@ -32,11 +32,10 @@ typedef class _HexAstListForm : public AstTyped, public _HexAstPrimary {
 public:
   _HexAstListForm(void*, ast_type_t);
 
-  virtual bool reprOK();
+  virtual void reprOK();
+  virtual void accept(AstVisitor*);
 
   void* core();
-
-  virtual void accept(AstVisitor*);
 
   static _HexAstListForm* create(void*, ast_type_t);
 private:

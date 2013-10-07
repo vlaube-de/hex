@@ -28,7 +28,7 @@ _HexAstDictForm::_HexAstDictForm(
   this->reprOK();
 }
 
-bool
+void
 _HexAstDictForm::reprOK()
 {
   HEX_ASSERT(

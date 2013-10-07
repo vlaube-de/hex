@@ -41,57 +41,9 @@ _HexAstBinaryExpr::right()
   return this->_rexpr.get();
 }
 
-bool
+void
 _HexAstBinaryExpr::reprOK()
 {
-  HEX_ASSERT(this->_lexpr);
-  HEX_ASSERT(this->_rexpr);
+  HEX_ASSERT(this->left());
+  HEX_ASSERT(this->right());
 }
-
-/*
-bool
-_HexAstBinaryExpr::equals(void* obj)
-{
-  return this->examine(Examiners::Equals, obj);
-}
-
-bool
-_HexAstBinaryExpr::isomorphic(void* obj)
-{
-  return this->examine(Examiners::Isomorphic, obj);
-}
-
-bool
-_HexAstBinaryExpr::equivalent(void* obj)
-{
-  return this->examine(Examiners::Equivalent, obj);
-}
-
-bool
-_HexAstBinaryExpr::examine(Examiner e, void* obj)
-{
-  if(obj == NULL) return false;
-
-  HexAstBinaryExpr that = (HexAstBinaryExpr)obj;
-
-  if(!e->examine(this->_lexpr, that->left())) return false;
-  if(!e->examine(this->_rexpr, that->right())) return false;
-
-  return true;
-}
-
-template<typename T>
-T*
-_HexAstBinaryExpr::create(
-  HexAstExpr left,
-  HexAstExpr right
-)
-{
-  HEX_ASSERT(left);
-  HEX_ASSERT(right);
-
-  T* obj = new T(left, right);
-  HEX_ASSERT(obj);
-  return obj;
-}
-*/

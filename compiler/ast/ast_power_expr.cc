@@ -26,6 +26,13 @@ _HexAstPowerExpr::_HexAstPowerExpr(
   HexAstExpr right
 ): _HexAstBinaryExpr(left, right)
 {
+  this->reprOK();
+}
+
+void
+_HexAstPowerExpr::reprOK()
+{
+  // Do nothing here.
 }
 
 void

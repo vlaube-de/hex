@@ -20,6 +20,13 @@
 
 _HexAstElifStmtGroup::_HexAstElifStmtGroup()
 {
+  this->reprOK();
+}
+
+void
+_HexAstElifStmtGroup::reprOK()
+{
+  AstListObj::reprOK();
 }
 
 void

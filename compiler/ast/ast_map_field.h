@@ -28,12 +28,11 @@ typedef class _HexAstMapField : public _HexAstNode {
 public:
   _HexAstMapField(HexAstExpr, HexAstValAtom);
 
-  virtual bool reprOK();
+  virtual void reprOK();
+  virtual void accept(AstVisitor*);
 
   HexAstExpr key();
   HexAstValAtom val();
-
-  virtual void accept(AstVisitor*);
 
   static _HexAstMapField* create(HexAstExpr, HexAstValAtom);
 private:

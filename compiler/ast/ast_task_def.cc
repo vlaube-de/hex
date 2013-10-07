@@ -20,6 +20,13 @@
 
 _HexAstTaskDef::_HexAstTaskDef()
 {
+  this->reprOK();
+}
+
+void
+_HexAstTaskDef::reprOK()
+{
+  AstListObj::reprOK();
 }
 
 void

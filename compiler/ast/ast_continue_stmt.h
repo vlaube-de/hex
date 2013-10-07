@@ -27,11 +27,10 @@ typedef class _HexAstContinueStmt : public _HexAstSimpleStmt {
 public:
   _HexAstContinueStmt(HexAstExpr);
 
-  virtual bool reprOK();
+  virtual void reprOK();
+  virtual void accept(AstVisitor*);
 
   HexAstExpr predicate();
-
-  virtual void accept(AstVisitor*);
 
   static _HexAstContinueStmt* create(HexAstExpr);
 private:

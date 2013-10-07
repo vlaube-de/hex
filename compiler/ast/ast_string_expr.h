@@ -28,12 +28,11 @@ typedef class _HexAstStringExpr : public _HexAstExpr {
 public:
   _HexAstStringExpr(HexAstStringLiteral, HexAstExprList);
 
-  virtual bool reprOK();
+  virtual void reprOK();
+  virtual void accept(AstVisitor*);
 
   HexAstStringLiteral string();
   HexAstExprList exprs();
-
-  virtual void accept(AstVisitor*);
 
   static _HexAstStringExpr* create(HexAstStringLiteral, HexAstExprList);
 private:

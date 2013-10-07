@@ -27,15 +27,14 @@ enum {
   AST_VAL_ATOM_LAMBDA=0x04
 };
 
-typedef class _HexAstValAtom : public AstTyped, _HexAstNode {
+typedef class _HexAstValAtom : public AstTyped, public _HexAstNode {
 public:
   _HexAstValAtom(void*, ast_type_t);
 
-  virtual bool reprOK();
+  virtual void reprOK();
+  virtual void accept(AstVisitor*);
 
   void* core();
-
-  virtual void accept(AstVisitor*);
 
   static _HexAstValAtom* create(void*, ast_type_t);
 private:

@@ -27,10 +27,10 @@ _HexAstTaskState::_HexAstTaskState(
   this->reprOK();
 }
 
-bool
+void
 _HexAstTaskState::reprOK()
 {
-  HEX_ASSERT(this->_state);
+  HEX_ASSERT(this->state());
 }
 
 HexAstTaskStateEnum

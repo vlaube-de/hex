@@ -38,10 +38,10 @@ _HexAstIfStmt::_HexAstIfStmt(
   this->reprOK();
 }
 
-bool
+void
 _HexAstIfStmt::reprOK()
 {
-  HEX_ASSERT(this->_predicate);
+  HEX_ASSERT(this->predicate());
 }
 
 HexAstExpr

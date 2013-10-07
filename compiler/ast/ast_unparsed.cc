@@ -23,5 +23,11 @@ AstUnparsed::AstUnparsed(
   c_str value
 ):_value(strdup(value))
 {
-  HEX_ASSERT(this->_value);
+  HEX_ASSERT(this->value());
+}
+
+c_str
+AstUnparsed::value()
+{
+  return this->_value.get();
 }

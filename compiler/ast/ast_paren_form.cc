@@ -27,10 +27,10 @@ _HexAstParenForm::_HexAstParenForm(
   this->reprOK();
 }
 
-bool
+void
 _HexAstParenForm::reprOK()
 {
-  return true;
+  // Do nothing here.
 }
 
 HexAstExprList

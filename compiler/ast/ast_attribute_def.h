@@ -23,6 +23,8 @@
 typedef class _HexAstAttributeDef : public _HexAstNode {
 public:
   _HexAstAttributeDef();
+
+  virtual void reprOK();
 } * HexAstAttributeDef;
 
 #endif /* _AST_ATTRIBUTE_DEF_H_ */

@@ -34,11 +34,10 @@ typedef class _HexAstTaskState : public _HexAstNode {
 public:
   _HexAstTaskState(HexAstTaskStateEnum);
 
-  virtual bool reprOK();
+  virtual void reprOK();
+  virtual void accept(AstVisitor*);
 
   HexAstTaskStateEnum state();
-
-  virtual void accept(AstVisitor*);
 
   static _HexAstTaskState* create(HexAstTaskStateEnum);
 private:

@@ -24,6 +24,13 @@ _HexAstLessOrEqualsExpr::_HexAstLessOrEqualsExpr(
   HexAstExpr right
 ): _HexAstBinaryExpr(left, right)
 {
+  this->reprOK();
+}
+
+void
+_HexAstLessOrEqualsExpr::reprOK()
+{
+  // Do nothing here.
 }
 
 void

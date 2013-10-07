@@ -27,6 +27,7 @@ typedef class _HexAstInputStmt : public AstListObj<_HexAstInputStmt, HexAstPrima
 public:
   _HexAstInputStmt();
 
+  virtual void reprOK();
   virtual void accept(AstVisitor*);
 } * HexAstInputStmt;
 

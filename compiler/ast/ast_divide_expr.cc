@@ -26,6 +26,13 @@ _HexAstDivideExpr::_HexAstDivideExpr(
   HexAstExpr right
 ): _HexAstBinaryExpr(left, right)
 {
+  this->reprOK();
+}
+
+void
+_HexAstDivideExpr::reprOK()
+{
+  // Do nothing here.
 }
 
 void

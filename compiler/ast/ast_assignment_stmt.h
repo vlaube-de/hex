@@ -35,14 +35,13 @@ typedef class _HexAstAssignmentStmt : public AstTyped, public _HexAstSimpleStmt 
 public:
   _HexAstAssignmentStmt(HexAstDecoratorList, HexAstPrimary, void*, ast_type_t, bool);
 
-  virtual bool reprOK();
+  virtual void reprOK();
+  virtual void accept(AstVisitor*);
 
   HexAstDecoratorList decorators();
   HexAstPrimary dst();
   void* src();
   bool defer();
-
-  virtual void accept(AstVisitor*);
 
   static _HexAstAssignmentStmt* create(
     HexAstDecoratorList,

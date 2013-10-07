@@ -21,6 +21,10 @@
 #define _AST_STMT_H_
 
 typedef class _HexAstStmt : public _HexAstNode {
+public:
+  _HexAstStmt();
+
+  virtual void reprOK();
 } * HexAstStmt;
 
 #endif /* _AST_STMT_H_ */

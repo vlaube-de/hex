@@ -29,11 +29,14 @@ _HexAstFieldDef::_HexAstFieldDef(
   HexAstDecoratorList decorators,
   HexAstIdentifier name,
   HexAstValAtom val
-):_decorators(decorators), _name(name), _val(val)
+):
+  _decorators(decorators),
+  _name(name),
+  _val(val)
 {
 }
 
-bool
+void
 _HexAstFieldDef::reprOK()
 {
   HEX_ASSERT(this->_name);

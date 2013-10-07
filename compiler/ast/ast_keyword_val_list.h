@@ -27,8 +27,7 @@ typedef class _HexAstKeywordValList : public AstListObj<_HexAstKeywordValList, H
 public:
   _HexAstKeywordValList();
 
-  virtual bool reprOK();
-
+  virtual void reprOK();
   virtual void accept(AstVisitor*);
 } * HexAstKeywordValList;
 

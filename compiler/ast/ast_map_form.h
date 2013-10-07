@@ -27,14 +27,12 @@ typedef class _HexAstMapForm : public _HexAstPrimary {
 public:
   _HexAstMapForm(HexAstMapFieldList);
 
-  virtual bool reprOK();
+  virtual void reprOK();
+  virtual void accept(AstVisitor*);
 
   HexAstMapFieldList list();
 
-  virtual void accept(AstVisitor*);
-
   static _HexAstMapForm* create(HexAstMapFieldList);
-
 private:
   boost::scoped_ptr<_HexAstMapFieldList> _list;
 } * HexAstMapForm;

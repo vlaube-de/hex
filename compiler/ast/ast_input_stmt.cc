@@ -20,6 +20,13 @@
 
 _HexAstInputStmt::_HexAstInputStmt()
 {
+  this->reprOK();
+}
+
+void
+_HexAstInputStmt::reprOK()
+{
+  AstListObj::reprOK();
 }
 
 void

@@ -30,23 +30,23 @@ _HexAstSlicing::_HexAstSlicing(
   this->reprOK();
 }
 
-bool
+void
 _HexAstSlicing::reprOK()
 {
-  HEX_ASSERT(this->_source);
-  HEX_ASSERT(this->_slice);
+  HEX_ASSERT(this->source());
+  HEX_ASSERT(this->slice());
 }
 
 HexAstPrimary
 _HexAstSlicing::source()
 {
-  return this->_source;
+  return this->_source.get();
 }
 
 HexAstExpr
 _HexAstSlicing::slice()
 {
-  return this->_slice;
+  return this->_slice.get();
 }
 
 void

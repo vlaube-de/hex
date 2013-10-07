@@ -27,11 +27,10 @@ typedef class _HexAstTryStmt : public _HexAstCompoundStmt {
 public:
   _HexAstTryStmt(HexAstStmtGroup, HexAstCatchStmtGroup);
 
-  virtual bool reprOK();
+  virtual void reprOK();
+  virtual void accept(AstVisitor*);
 
   HexAstCatchStmtGroup catch_stmt_group();
-
-  virtual void accept(AstVisitor*);
 
   static _HexAstTryStmt* create(HexAstStmtGroup, HexAstCatchStmtGroup);
 private:

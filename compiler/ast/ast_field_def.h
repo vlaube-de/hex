@@ -29,13 +29,12 @@ typedef class _HexAstFieldDef : public _HexAstAttributeDef {
 public:
   _HexAstFieldDef(HexAstDecoratorList, HexAstIdentifier, HexAstValAtom);
 
-  virtual bool reprOK();
+  virtual void reprOK();
+  virtual void accept(AstVisitor*);
 
   HexAstDecoratorList decorators();
   HexAstIdentifier name();
   HexAstValAtom val();
-
-  virtual void accept(AstVisitor*);
 
   static _HexAstFieldDef* create(HexAstDecoratorList, HexAstIdentifier, HexAstValAtom);
 private:

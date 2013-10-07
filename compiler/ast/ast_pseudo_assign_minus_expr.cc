@@ -25,6 +25,13 @@ _HexAstPseudoAssignMinusExpr::_HexAstPseudoAssignMinusExpr(
   HexAstExpr right
 ):_HexAstPseudoAssignExpr(left, right)
 {
+  this->reprOK();
+}
+
+void
+_HexAstPseudoAssignMinusExpr::reprOK()
+{
+  // Do noting here.
 }
 
 void

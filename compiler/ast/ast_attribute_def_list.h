@@ -27,6 +27,7 @@ typedef class _HexAstAttributeDefList : public AstListObj<_HexAstAttributeDefLis
 public:
   _HexAstAttributeDefList();
 
+  virtual void reprOK();
   virtual void accept(AstVisitor*);
 } * HexAstAttributeDefList;
 

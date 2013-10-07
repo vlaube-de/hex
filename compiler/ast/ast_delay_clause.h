@@ -26,6 +26,10 @@
 #define _AST_DELAY_CLAUSE_H_
 
 typedef class _HexAstDelayClause : public _HexAstTaskClause {
+public:
+  _HexAstDelayClause();
+
+  virtual void reprOK();
 } * HexAstDelayClause;
 
 
@@ -33,12 +37,11 @@ typedef class _HexAstConditionalDelayClause : public _HexAstDelayClause {
 public:
   _HexAstConditionalDelayClause(HexAstExprList, HexAstConditionalClause);
 
-  virtual bool reprOK();
+  virtual void reprOK();
+  virtual void accept(AstVisitor*);
 
   HexAstExprList exprs();
   HexAstConditionalClause condition();
-
-  virtual void accept(AstVisitor*);
 
   static _HexAstConditionalDelayClause* create(HexAstExprList, HexAstConditionalClause);
 private:
@@ -50,12 +53,11 @@ typedef class _HexAstFixedDelayClause : public _HexAstDelayClause {
 public:
   _HexAstFixedDelayClause(HexAstExprList, HexAstExpr);
 
-  virtual bool reprOK();
+  virtual void reprOK();
+  virtual void accept(AstVisitor*);
 
   HexAstExprList exprs();
   HexAstExpr delay();
-
-  virtual void accept(AstVisitor*);
 
   static _HexAstFixedDelayClause* create(HexAstExprList, HexAstExpr);
 private:

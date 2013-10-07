@@ -30,11 +30,11 @@ _HexAstStringExpr::_HexAstStringExpr(
   this->reprOK(); 
 }
 
-bool
+void
 _HexAstStringExpr::reprOK()
 {
-  HEX_ASSERT(this->_string);
-  HEX_ASSERT(this->_exprs);
+  HEX_ASSERT(this->string());
+  HEX_ASSERT(this->exprs());
 }
 
 HexAstStringLiteral

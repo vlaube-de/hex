@@ -27,8 +27,7 @@ typedef class _HexAstDecoratorList : public AstListObj<_HexAstDecoratorList, Hex
 public:
   _HexAstDecoratorList();
 
-  virtual bool reprOK();
-
+  virtual void reprOK();
   virtual void accept(AstVisitor*);
 } * HexAstDecoratorList;
 

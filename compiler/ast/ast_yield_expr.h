@@ -27,9 +27,10 @@ typedef class _HexAstYieldExpr : public _HexAstExpr {
 public:
   _HexAstYieldExpr(HexAstExprList);
 
-  HexAstExprList exprs();
-
+  virtual void reprOK();
   virtual void accept(AstVisitor*);
+
+  HexAstExprList exprs();
 
   static _HexAstYieldExpr* create(HexAstExprList);
 private:

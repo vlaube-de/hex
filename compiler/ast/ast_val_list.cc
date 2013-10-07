@@ -21,6 +21,13 @@
 
 _HexAstValList::_HexAstValList()
 {
+  this->reprOK();
+}
+
+void
+_HexAstValList::reprOK()
+{
+  AstListObj::reprOK();
 }
 
 void

@@ -29,8 +29,9 @@ typedef class _HexAstLambda : public _HexAstNode {
 public:
   _HexAstLambda(HexAstParameterList);
 
-  HexAstParameterList params();
+  virtual void reprOK();
 
+  HexAstParameterList params();
 protected:
   boost::scoped_ptr<_HexAstParameterList> _params;
 } * HexAstLambda;
@@ -39,11 +40,10 @@ typedef class _HexAstLambdaSimple : public _HexAstLambda {
 public:
   _HexAstLambdaSimple(HexAstParameterList, HexAstExpr);
 
-  virtual bool reprOK();
+  virtual void reprOK();
+  virtual void accept(AstVisitor*);
 
   HexAstExpr expr();
-
-  virtual void accept(AstVisitor*);
 
   static _HexAstLambdaSimple* create(HexAstParameterList, HexAstExpr);
 private:
@@ -54,11 +54,10 @@ typedef class _HexAstLambdaComplex : public _HexAstLambda {
 public:
   _HexAstLambdaComplex(HexAstParameterList, HexAstStmtGroup);
 
-  virtual bool reprOK();
+  virtual void reprOK();
+  virtual void accept(AstVisitor*);
 
   HexAstStmtGroup stmts();
-
-  virtual void accept(AstVisitor*);
 
   static _HexAstLambdaComplex* create(HexAstParameterList, HexAstStmtGroup);
 private:

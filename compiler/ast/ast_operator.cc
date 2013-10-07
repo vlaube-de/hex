@@ -26,7 +26,7 @@ _HexAstOperator::_HexAstOperator(
   this->reprOK();
 }
 
-bool
+void
 _HexAstOperator::reprOK()
 {
   HEX_ASSERT(this->_op);

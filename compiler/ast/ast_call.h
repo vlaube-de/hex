@@ -27,13 +27,12 @@ typedef class _HexAstCall : public _HexAstPrimary {
 public:
   _HexAstCall(HexAstPrimary, HexAstArgList, bool);
 
-  virtual bool reprOK();
+  virtual void reprOK();
+  virtual void accept(AstVisitor*);
 
   HexAstPrimary source();
   HexAstArgList arglist();
   bool isAsync();
-
-  virtual void accept(AstVisitor*);
 
   static _HexAstCall* create(HexAstPrimary, HexAstArgList, bool);
 private:

@@ -29,12 +29,11 @@ typedef class _HexAstCancelClause : public _HexAstTaskClause {
 public:
   _HexAstCancelClause(HexAstExprList, HexAstConditionalClause);
 
-  virtual bool reprOK();
+  virtual void reprOK();
+  virtual void accept(AstVisitor*);
 
   HexAstExprList exprs();
   HexAstConditionalClause condition();
-
-  virtual void accept(AstVisitor*);
 
   static _HexAstCancelClause* create(HexAstExprList, HexAstConditionalClause);
 private:

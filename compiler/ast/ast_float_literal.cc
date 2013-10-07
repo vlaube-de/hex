@@ -24,21 +24,15 @@
 
 _HexAstFloatLiteral::_HexAstFloatLiteral(
   c_str value
-):AstUnparsed(value)
+):_HexAstLiteral(value)
 {
   this->reprOK();
 }
 
-bool
+void
 _HexAstFloatLiteral::reprOK()
 {
-  HEX_ASSERT(this->_value);
-}
-
-c_str
-_HexAstFloatLiteral::value()
-{
-  return this->_value;
+  // Do nothing here.
 }
 
 void

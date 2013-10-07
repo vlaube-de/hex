@@ -17,45 +17,7 @@
 
 
 #include "ast_node.h"
-#include "../../base/assert.h"
-
 
 _HexAstNode::_HexAstNode()
 {
-}
-
-void*
-_HexAstNode::simplify()
-{
-  return this;
-}
-
-void*
-_HexAstNode::standardize()
-{
-  return this;
-}
-
-bool
-_HexAstNode::reprOK()
-{
-  return true;
-}
-
-bool
-_HexAstNode::equal(void*)
-{
-  return false;
-}
-
-bool
-_HexAstNode::isomorphic(void*)
-{
-  return false;
-}
-
-bool
-_HexAstNode::equivalent(void*)
-{
-  return  false;
 }

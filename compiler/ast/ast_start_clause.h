@@ -43,13 +43,17 @@ typedef class _HexAstStartClauseSingle : public _HexAstStartClause {
 public:
   _HexAstStartClauseSingle(HexAstName, HexAstIdentifier, HexAstConditionalClause);
 
-  virtual bool reprOK();
+  virtual void reprOK();
+  virtual void accept(AstVisitor*);
 
   HexAstName target();
 
-  virtual void accept(AstVisitor*);
+  static _HexAstStartClauseSingle* create(
+    HexAstName,
+    HexAstIdentifier,
+    HexAstConditionalClause
+  );
 
-  static _HexAstStartClauseSingle* create(HexAstName, HexAstIdentifier, HexAstConditionalClause);
 private:
   boost::scoped_ptr<_HexAstName> _target;
 } * HexAstStartClauseSingle;
@@ -59,13 +63,17 @@ typedef class _HexAstStartClauseMultiple : public _HexAstStartClause {
 public:
   _HexAstStartClauseMultiple(HexAstTargetList, HexAstIdentifier, HexAstConditionalClause);
 
-  virtual bool reprOK();
+  virtual void reprOK();
+  virtual void accept(AstVisitor*);
 
   HexAstTargetList targets();
 
-  virtual void accept(AstVisitor*);
+  static _HexAstStartClauseMultiple* create(
+    HexAstTargetList,
+    HexAstIdentifier,
+    HexAstConditionalClause
+  );
 
-  static _HexAstStartClauseMultiple* create(HexAstTargetList, HexAstIdentifier, HexAstConditionalClause);
 private:
   boost::scoped_ptr<_HexAstTargetList> _targets;
 } * HexAstStartClauseMultiple;

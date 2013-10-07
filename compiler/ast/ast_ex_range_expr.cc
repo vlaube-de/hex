@@ -26,12 +26,14 @@ _HexAstExclusiveRangeExpr::_HexAstExclusiveRangeExpr(
   HexAstExpr end
 ): _begin(begin), _end(end)
 {
+  this->reprOK();
 }
 
-bool
+void
 _HexAstExclusiveRangeExpr::reprOK()
 {
-  return true;
+  HEX_ASSERT(this->begin());
+  HEX_ASSERT(this->end());
 }
 
 HexAstExpr

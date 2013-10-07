@@ -33,12 +33,12 @@ _HexAstForStmt::_HexAstForStmt(
   this->reprOK();
 }
 
-bool
+void
 _HexAstForStmt::reprOK()
 {
-  HEX_ASSERT(this->_targets);
-  HEX_ASSERT(this->_exprs);
-  HEX_ASSERT(this->_stmts);
+  HEX_ASSERT(this->targets());
+  HEX_ASSERT(this->exprs());
+  HEX_ASSERT(this->stmts());
 }
 
 HexAstTargetList

@@ -27,11 +27,7 @@ typedef class _HexAstUnaryExpr : public _HexAstExpr {
 public:
   _HexAstUnaryExpr(HexAstExpr);
 
-  virtual bool reprOK();
-
-  //virtual bool equals(void*);
-  //virtual bool isomorphic(void*);
-  //virtual bool equivalent(void*);
+  virtual void reprOK();
 
   HexAstExpr expr();
 
@@ -39,8 +35,6 @@ public:
   static T* create(HexAstExpr);
 protected:
   boost::scoped_ptr<_HexAstExpr> _expr;
-
-//  bool examine(Examiner, void*);
 } * HexAstUnaryExpr;
 
 template<typename T>

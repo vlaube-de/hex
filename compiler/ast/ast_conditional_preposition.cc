@@ -27,10 +27,10 @@ _HexAstConditionalPreposition::_HexAstConditionalPreposition(
   this->reprOK();
 }
 
-bool
+void
 _HexAstConditionalPreposition::reprOK()
 {
-  HEX_ASSERT(this->_preposition);
+  HEX_ASSERT(this->preposition());
 }
 
 HexAstConditionalPrepositionEnum

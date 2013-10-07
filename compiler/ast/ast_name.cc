@@ -20,6 +20,13 @@
 
 _HexAstName::_HexAstName()
 {
+  this->reprOK();
+}
+
+void
+_HexAstName::reprOK()
+{
+  AstListObj::reprOK();
 }
 
 void

@@ -22,10 +22,17 @@ _HexAstCompoundStmt::_HexAstCompoundStmt(
   HexAstStmtGroup stmts
 ):_stmts(stmts)
 {
+  this->reprOK();
+}
+
+void
+_HexAstCompoundStmt::reprOK()
+{
+  // Do nothing here.
 }
 
 HexAstStmtGroup
 _HexAstCompoundStmt::stmts()
 {
-  return this->_stmts;
+  return this->_stmts.get();
 }

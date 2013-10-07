@@ -20,6 +20,13 @@
 
 _HexAstAttributeDefList::_HexAstAttributeDefList()
 {
+  this->reprOK();
+}
+
+void
+_HexAstAttributeDefList::reprOK()
+{
+  AstListObj::reprOK();
 }
 
 void

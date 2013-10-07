@@ -30,10 +30,10 @@ _HexAstWhileStmt::_HexAstWhileStmt(
   this->reprOK();
 }
 
-bool
+void
 _HexAstWhileStmt::reprOK()
 {
-  HEX_ASSERT(this->_expr);
+  HEX_ASSERT(this->expr());
 }
 
 HexAstExpr

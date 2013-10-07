@@ -24,6 +24,12 @@ _HexAstIsNotExpr::_HexAstIsNotExpr(
   HexAstExpr right
 ): _HexAstCommutativeBinaryExpr(left, right)
 {
+  this->reprOK();
+}
+
+void
+_HexAstIsNotExpr::reprOK()
+{
 }
 
 void

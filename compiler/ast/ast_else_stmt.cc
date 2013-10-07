@@ -24,6 +24,13 @@ _HexAstElseStmt::_HexAstElseStmt(
   HexAstStmtGroup stmts
 ):_HexAstCompoundStmt(stmts)
 {
+  this->reprOK();
+}
+
+void
+_HexAstElseStmt::reprOK()
+{
+  // Do nothing here.
 }
 
 void

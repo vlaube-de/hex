@@ -22,8 +22,8 @@ _HexAstTaskClause::_HexAstTaskClause()
   this->reprOK();
 }
 
-bool
+void
 _HexAstTaskClause::reprOK()
 {
-  return true;
+  // Do nothing here.
 }

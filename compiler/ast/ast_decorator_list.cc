@@ -25,10 +25,10 @@ _HexAstDecoratorList::_HexAstDecoratorList()
   this->reprOK();
 }
 
-bool
+void
 _HexAstDecoratorList::reprOK()
 {
-  HEX_ASSERT(this->_list);
+  AstListObj::reprOK();
 }
 
 void

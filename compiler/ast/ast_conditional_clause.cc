@@ -26,35 +26,38 @@ _HexAstConditionalClause::_HexAstConditionalClause(
   HexAstConditionalPreposition preposition,
   HexAstExprList exprs,
   HexAstTaskState state
-):_preposition(preposition), _exprs(exprs), _state(state)
+):
+  _preposition(preposition),
+  _exprs(exprs),
+  _state(state)
 {
   this->reprOK();
 }
 
-bool
+void
 _HexAstConditionalClause::reprOK()
 {
-  HEX_ASSERT(this->_preposition);
-  HEX_ASSERT(this->_exprs);
-  HEX_ASSERT(this->_state);
+  HEX_ASSERT(this->preposition());
+  HEX_ASSERT(this->exprs());
+  HEX_ASSERT(this->state());
 }
 
 HexAstConditionalPreposition
 _HexAstConditionalClause::preposition()
 {
-  return this->_preposition;
+  return this->_preposition.get();
 }
 
 HexAstExprList
 _HexAstConditionalClause::exprs()
 {
-  return this->_exprs;
+  return this->_exprs.get();
 }
 
 HexAstTaskState
 _HexAstConditionalClause::state()
 {
-  return this->_state;
+  return this->_state.get();
 }
 
 void

@@ -33,11 +33,10 @@ typedef class _HexAstUsingSrc : public AstTyped, _HexAstNode {
 public:
   _HexAstUsingSrc(HexAstName, ast_type_t);
 
-  virtual bool reprOK();
+  virtual void reprOK();
+  virtual void accept(AstVisitor*);
 
   HexAstName name();
-
-  virtual void accept(AstVisitor*);
 
   static _HexAstUsingSrc* create(HexAstName, ast_type_t);
 private:

@@ -30,11 +30,11 @@ _HexAstStopClause::_HexAstStopClause(
   this->reprOK();
 }
 
-bool
+void
 _HexAstStopClause::reprOK()
 {
-  HEX_ASSERT(this->_exprs);
-  HEX_ASSERT(this->_condition);
+  HEX_ASSERT(this->exprs());
+  HEX_ASSERT(this->condition());
 }
 
 HexAstExprList

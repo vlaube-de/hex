@@ -24,10 +24,10 @@ _HexAstKeywordValList::_HexAstKeywordValList()
   this->reprOK();
 }
 
-bool
+void
 _HexAstKeywordValList::reprOK()
 {
-  HEX_ASSERT(this->_list);
+  AstListObj::reprOK();
 }
 
 void

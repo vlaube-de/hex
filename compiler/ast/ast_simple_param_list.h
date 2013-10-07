@@ -27,8 +27,7 @@ typedef class _HexAstSimpleParamList : public AstListObj<_HexAstSimpleParamList,
 public:
   _HexAstSimpleParamList();
 
-  virtual bool reprOK();
-
+  virtual void reprOK();
   virtual void accept(AstVisitor*);
 
 } * HexAstSimpleParamList;

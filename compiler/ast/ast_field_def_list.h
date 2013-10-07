@@ -27,9 +27,9 @@ typedef class _HexAstFieldDefList : public AstListObj<_HexAstFieldDefList, HexAs
 public:
   _HexAstFieldDefList();
 
-  virtual bool reprOK();
-
+  virtual void reprOK();
   virtual void accept(AstVisitor*);
+
 } * HexAstFieldDefList;
 
 #endif /* _AST_FIELD_DEF_LIST_H_ */

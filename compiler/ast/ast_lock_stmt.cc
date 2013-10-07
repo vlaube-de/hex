@@ -30,7 +30,7 @@ _HexAstLockStmt::_HexAstLockStmt(
   this->reprOK();
 }
 
-bool
+void
 _HexAstLockStmt::reprOK()
 {
   HEX_ASSERT(this->_exprs);

@@ -22,11 +22,11 @@
 #ifndef _AST_BITWISE_XOR_EXPR_H_
 #define _AST_BITWISE_XOR_EXPR_H_
 
-
 typedef class _HexAstBitwiseXorExpr : public _HexAstCommutativeBinaryExpr {
 public:
   _HexAstBitwiseXorExpr(HexAstExpr, HexAstExpr);
 
+  virtual void reprOK();
   virtual void accept(AstVisitor*);
 } * HexAstBitwiseXorExpr;
 

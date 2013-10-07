@@ -26,6 +26,7 @@ typedef class _HexAstPseudoAssignPlusExpr : public _HexAstPseudoAssignExpr {
 public:
   _HexAstPseudoAssignPlusExpr(HexAstExpr, HexAstExpr);
 
+  virtual void reprOK();
   virtual void accept(AstVisitor*);
 } * HexAstPseudoAssignPlusExpr;
 

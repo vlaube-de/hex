@@ -27,10 +27,10 @@ _HexAstContinueStmt::_HexAstContinueStmt(
   this->reprOK();
 }
 
-bool
+void
 _HexAstContinueStmt::reprOK()
 {
-  return true;
+  // Do nothing here.
 }
 
 HexAstExpr

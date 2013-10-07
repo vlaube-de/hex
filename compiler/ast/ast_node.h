@@ -20,15 +20,13 @@
  * Base class for all AST nodes.
  */
 
-#include "examinable.h"
-#include "../../base/uuid.h"
 #include "visitor/ast_visitor.h"
 
 #ifndef _AST_NODE_H_
 #define _AST_NODE_H_
 
 
-typedef class _HexAstNode : public Examinable {
+typedef class _HexAstNode {
 public:
   _HexAstNode();
 
@@ -37,35 +35,26 @@ public:
    * Returns an instance that is equivalent
    * to this one.
    */
-  void* simplify();
+  // void* simplify();
 
   /*
    * Symantic standardization for this instance.
    * Returns an instance that is equivalent
    * to this one.
    */
-  void* standardize();
+  // void* standardize();
 
   /*
-   * Representation invariant check.
+   * Representation invariance check.
    *
-   * Should be used at the beginning and end of
-   * public methods.
-   *
-   * Returns true if the instance is in a correct
-   * representation.
+   * Should be used inside sub-classes's
+   * constructors and public methods.
    */
-  virtual bool reprOK();
-
-  virtual bool equal(void*);
-  virtual bool isomorphic(void*);
-  virtual bool equivalent(void*);
+  virtual void reprOK()=0;
 
   /* Visitor pattern. */
   virtual void accept(AstVisitor*)=0;
 
-protected:
-  hex_uuid_t _id;
 } * HexAstNode;
 
 #endif /* _AST_NODE_H_ */

@@ -25,6 +25,13 @@ _HexAstPseudoAssignBitwiseOrExpr::_HexAstPseudoAssignBitwiseOrExpr(
   HexAstExpr right
 ):_HexAstPseudoAssignExpr(left, right)
 {
+  this->reprOK();
+}
+
+void
+_HexAstPseudoAssignBitwiseOrExpr::reprOK()
+{
+  // Do nothing here.
 }
 
 void

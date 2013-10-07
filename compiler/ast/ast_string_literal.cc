@@ -26,25 +26,18 @@
 _HexAstStringLiteral::_HexAstStringLiteral(
   ast_type_t type,
   c_str value 
-):AstTyped(type), AstUnparsed(value)
+):AstTyped(type), _HexAstLiteral(value)
 {
   this->reprOK();
 }
 
-bool
+void
 _HexAstStringLiteral::reprOK()
 {
-  HEX_ASSERT(this->_value);
   HEX_ASSERT(
     this->_type==AST_STRING_LITERAL_SINGLE_QUOTE ||
     this->_type==AST_STRING_LITERAL_DOUBLE_QUOTE
   );
-}
-
-c_str
-_HexAstStringLiteral::value()
-{
-  return this->_value;
 }
 
 void

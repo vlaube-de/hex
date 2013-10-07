@@ -33,7 +33,7 @@ _HexAstUsingStmtDirect::_HexAstUsingStmtDirect(
   this->reprOK();
 }
 
-bool
+void
 _HexAstUsingStmtDirect::reprOK()
 {
   HEX_ASSERT(this->_target);
@@ -80,7 +80,7 @@ _HexAstUsingStmtRelative::_HexAstUsingStmtRelative(
   this->reprOK();
 }
 
-bool
+void
 _HexAstUsingStmtRelative::reprOK()
 {
   HEX_ASSERT(this->_src);

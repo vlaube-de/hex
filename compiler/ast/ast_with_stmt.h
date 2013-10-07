@@ -29,12 +29,11 @@ typedef class _HexAstWithStmt : public _HexAstCompoundStmt {
 public:
   _HexAstWithStmt(HexAstExprList, HexAstIdentifier, HexAstStmtGroup);
 
-  virtual bool reprOK();
+  virtual void reprOK();
+  virtual void accept(AstVisitor*);
 
   HexAstExprList exprs();
   HexAstIdentifier alias();
-
-  virtual void accept(AstVisitor*);
 
   static _HexAstWithStmt* create(HexAstExprList, HexAstIdentifier, HexAstStmtGroup);
 private:

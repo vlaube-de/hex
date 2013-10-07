@@ -27,10 +27,10 @@ _HexAstBreakStmt::_HexAstBreakStmt(
   this->reprOK();
 }
 
-bool
+void
 _HexAstBreakStmt::reprOK()
 {
-  return true;
+  // Do nothing here.
 }
 
 HexAstExpr

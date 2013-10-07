@@ -23,6 +23,8 @@
 typedef class _HexAstSimpleStmt : public _HexAstStmt {
 public:
   _HexAstSimpleStmt();
+
+  virtual void reprOK();
 } * HexAstSimpleStmt;
 
 #endif /* _AST_SIMPLE_STMT_H_ */

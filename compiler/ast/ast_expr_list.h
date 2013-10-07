@@ -28,6 +28,7 @@ typedef class _HexAstExprList : public AstListObj<_HexAstExprList, HexAstExpr>, 
 public:
   _HexAstExprList();
 
+  virtual void reprOK();
   virtual void accept(AstVisitor*);
 } * HexAstExprList;
 

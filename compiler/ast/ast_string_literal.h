@@ -29,14 +29,11 @@ enum {
   AST_STRING_LITERAL_DOUBLE_QUOTE=0x02
 };
 
-typedef class _HexAstStringLiteral : public _HexAstLiteral, AstTyped, AstUnparsed {
+typedef class _HexAstStringLiteral : public _HexAstLiteral, AstTyped {
 public:
   _HexAstStringLiteral(ast_type_t, c_str);
 
-  virtual bool reprOK();
-
-  virtual c_str value();
-
+  virtual void reprOK();
   virtual void accept(AstVisitor*);
 
   static _HexAstStringLiteral* create(ast_type_t, c_str);

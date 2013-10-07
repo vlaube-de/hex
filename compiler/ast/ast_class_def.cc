@@ -29,15 +29,20 @@ _HexAstClassDef::_HexAstClassDef(
   HexAstIdentifier name,
   HexAstName parent,
   HexAstAttributeDefList attributes
-):_decorators(decorators), _name(name), _parent(parent), _attributes(attributes), _HexAstCompoundStmt(NULL)
+):
+  _decorators(decorators),
+  _name(name),
+  _parent(parent),
+  _attributes(attributes),
+  _HexAstCompoundStmt(NULL)
 {
   this->reprOK();
 }
 
-bool
+void
 _HexAstClassDef::reprOK()
 {
-  HEX_ASSERT(this->_name);
+  HEX_ASSERT(this->name());
 }
 
 HexAstDecoratorList

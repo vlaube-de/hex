@@ -30,11 +30,11 @@ _HexAstOperatorDef::_HexAstOperatorDef(
   this->reprOK();
 }
 
-bool
+void
 _HexAstOperatorDef::reprOK()
 {
-  HEX_ASSERT(this->_op);
-  HEX_ASSERT(this->_lambda);
+  HEX_ASSERT(this->op());
+  HEX_ASSERT(this->lambda());
 }
 
 HexAstOperator

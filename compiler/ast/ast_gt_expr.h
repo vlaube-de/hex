@@ -27,6 +27,7 @@ typedef class _HexAstGreaterThanExpr : public _HexAstBinaryExpr {
 public:
   _HexAstGreaterThanExpr(HexAstExpr, HexAstExpr);
 
+  virtual void reprOK();
   virtual void accept(AstVisitor*);
 } * HexAstGreaterThanExpr;
 

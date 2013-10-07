@@ -27,6 +27,7 @@ class AstListObj {
 public:
   AstListObj();
 
+  virtual void reprOK();
   virtual bool append(T);
   virtual bool push_front(T);
 
@@ -45,6 +46,13 @@ AstListObj<C, T>::AstListObj():
   _list(new std::list<T>())
 {
   HEX_ASSERT(this->_list);
+}
+
+template<typename C, typename T>
+void
+AstListObj<C, T>::reprOK()
+{
+  HEX_ASSERT(this->list());
 }
 
 template<typename C, typename T>

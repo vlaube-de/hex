@@ -26,6 +26,7 @@ typedef class _HexAstNotExpr : public _HexAstUnaryExpr {
 public:
   _HexAstNotExpr(HexAstExpr);
 
+  virtual void reprOK();
   virtual void accept(AstVisitor*);
 
 } * HexAstNotExpr;

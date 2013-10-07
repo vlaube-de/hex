@@ -25,6 +25,13 @@ _HexAstNotExpr::_HexAstNotExpr(
   HexAstExpr expr
 ): _HexAstUnaryExpr(expr)
 {
+  this->reprOK();
+}
+
+void
+_HexAstNotExpr::reprOK()
+{
+  // Do nothing here.
 }
 
 void

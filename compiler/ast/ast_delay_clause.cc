@@ -23,6 +23,17 @@
 #include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
 
+_HexAstDelayClause::_HexAstDelayClause()
+{
+  this->reprOK();
+}
+
+void
+_HexAstDelayClause::reprOK()
+{
+  // Do nothing here.
+}
+
 _HexAstConditionalDelayClause::_HexAstConditionalDelayClause(
   HexAstExprList exprs,
   HexAstConditionalClause condition
@@ -31,11 +42,11 @@ _HexAstConditionalDelayClause::_HexAstConditionalDelayClause(
   this->reprOK();
 }
 
-bool
+void
 _HexAstConditionalDelayClause::reprOK()
 {
-  HEX_ASSERT(this->_exprs);
-  HEX_ASSERT(this->_condition);
+  HEX_ASSERT(this->exprs());
+  HEX_ASSERT(this->condition());
 }
 
 HexAstExprList
@@ -83,10 +94,10 @@ _HexAstFixedDelayClause::_HexAstFixedDelayClause(
   this->reprOK();
 }
 
-bool
+void
 _HexAstFixedDelayClause::reprOK()
 {
-  HEX_ASSERT(this->_delay);
+  HEX_ASSERT(this->delay());
 }
 
 HexAstExprList

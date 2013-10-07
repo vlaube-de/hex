@@ -30,16 +30,10 @@ _HexAstIdentifier::_HexAstIdentifier(
   this->reprOK();
 }
 
-bool
+void
 _HexAstIdentifier::reprOK()
 {
-  HEX_ASSERT(this->identifier());
-}
-
-c_str
-_HexAstIdentifier::identifier()
-{
-  return this->_value;
+  // Do nothing here.
 }
 
 void

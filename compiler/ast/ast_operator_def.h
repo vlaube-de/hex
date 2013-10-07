@@ -27,12 +27,11 @@ typedef class _HexAstOperatorDef : public _HexAstAttributeDef {
 public:
   _HexAstOperatorDef(HexAstOperator op, HexAstLambda);
 
-  virtual bool reprOK();
+  virtual void reprOK();
+  virtual void accept(AstVisitor*);
 
   HexAstOperator op();
   HexAstLambda lambda();
-
-  virtual void accept(AstVisitor*);
 
   static _HexAstOperatorDef* create(HexAstOperator, HexAstLambda);
 private:

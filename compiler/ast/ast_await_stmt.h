@@ -26,8 +26,7 @@ typedef class _HexAstAwaitStmt : public _HexAstCompoundStmt {
 public:
   _HexAstAwaitStmt(HexAstStmtGroup);
 
-  virtual bool reprOK();
-
+  virtual void reprOK();
   virtual void accept(AstVisitor*);
 
   static _HexAstAwaitStmt* create(HexAstStmtGroup);

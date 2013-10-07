@@ -29,10 +29,10 @@ _HexAstDecorator::_HexAstDecorator(
   this->reprOK();
 }
 
-bool
+void
 _HexAstDecorator::reprOK()
 {
-  HEX_ASSERT(this->_name);
+  HEX_ASSERT(this->name());
 }
 
 HexAstName

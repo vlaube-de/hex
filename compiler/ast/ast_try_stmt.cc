@@ -29,10 +29,10 @@ _HexAstTryStmt::_HexAstTryStmt(
   this->reprOK();
 }
 
-bool
+void
 _HexAstTryStmt::reprOK()
 {
-  HEX_ASSERT(this->_catch_stmt_group);
+  HEX_ASSERT(this->catch_stmt_group());
 }
 
 HexAstCatchStmtGroup

@@ -28,11 +28,10 @@ typedef class _HexAstElifStmt : public _HexAstCompoundStmt {
 public:
   _HexAstElifStmt(HexAstExpr, HexAstStmtGroup);
 
-  virtual bool reprOK();
+  virtual void reprOK();
+  virtual void accept(AstVisitor*);
 
   HexAstExpr predicate();
-
-  virtual void accept(AstVisitor*);
 
   static _HexAstElifStmt* create(HexAstExpr, HexAstStmtGroup);
 private:

@@ -34,7 +34,7 @@ _HexAstConditionalExpr::_HexAstConditionalExpr(
   this->reprOK();
 }
 
-bool
+void
 _HexAstConditionalExpr::reprOK()
 {
   HEX_ASSERT(this->_predicate);

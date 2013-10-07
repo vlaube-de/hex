@@ -30,7 +30,7 @@ _HexAstAttributeRef::_HexAstAttributeRef(
   this->reprOK();
 }
 
-bool
+void
 _HexAstAttributeRef::reprOK()
 {
   HEX_ASSERT(this->_source);

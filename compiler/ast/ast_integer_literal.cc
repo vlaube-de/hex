@@ -26,27 +26,20 @@
 _HexAstIntegerLiteral::_HexAstIntegerLiteral(
   ast_type_t type,
   c_str value
-):AstTyped(type), AstUnparsed(value)
+):AstTyped(type), _HexAstLiteral(value)
 {
   this->reprOK();
 }
 
-bool
+void
 _HexAstIntegerLiteral::reprOK()
 {
-  HEX_ASSERT(this->_value);
   HEX_ASSERT(
     this->_type==AST_INTEGER_LITERAL_DECIMAL ||
     this->_type==AST_INTEGER_LITERAL_BINARY  ||
     this->_type==AST_INTEGER_LITERAL_OCTAL   ||
     this->_type==AST_INTEGER_LITERAL_HEXADECIMAL
   );
-}
-
-c_str
-_HexAstIntegerLiteral::value()
-{
-  return this->_value;
 }
 
 void

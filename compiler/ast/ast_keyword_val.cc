@@ -30,11 +30,11 @@ _HexAstKeywordVal::_HexAstKeywordVal(
   this->reprOK();
 }
 
-bool
+void
 _HexAstKeywordVal::reprOK()
 {
-  HEX_ASSERT(this->_key);
-  HEX_ASSERT(this->_val);
+  HEX_ASSERT(this->key());
+  HEX_ASSERT(this->val());
 }
 
 HexAstIdentifier

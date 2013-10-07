@@ -31,11 +31,10 @@ typedef class _HexAstConditionalPreposition : public _HexAstNode {
 public:
   _HexAstConditionalPreposition(HexAstConditionalPrepositionEnum);
 
-  virtual bool reprOK();
+  virtual void reprOK();
+  virtual void accept(AstVisitor*);
 
   HexAstConditionalPrepositionEnum preposition();
-
-  virtual void accept(AstVisitor*);
 
   static _HexAstConditionalPreposition* create(HexAstConditionalPrepositionEnum);
 private:

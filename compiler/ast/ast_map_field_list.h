@@ -26,9 +26,9 @@ typedef class _HexAstMapFieldList : public AstListObj<_HexAstMapFieldList, HexAs
 public:
   _HexAstMapFieldList();
 
-  virtual bool reprOK();
-
+  virtual void reprOK();
   virtual void accept(AstVisitor*);
+
 } * HexAstMapFieldList;
 
 #endif /* _AST_MAP_FIELD_LIST_H_ */

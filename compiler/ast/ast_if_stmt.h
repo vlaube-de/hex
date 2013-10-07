@@ -35,13 +35,12 @@ public:
     HexAstElseStmt
   );
 
-  virtual bool reprOK();
+  virtual void reprOK();
+  virtual void accept(AstVisitor*);
 
   HexAstExpr predicate();
   HexAstElifStmtGroup elif_stmts();
   HexAstElseStmt else_stmt();
-
-  virtual void accept(AstVisitor*);
 
   static _HexAstIfStmt* create(
     HexAstExpr,

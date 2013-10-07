@@ -22,11 +22,11 @@
 #ifndef _AST_BITWISE_SHIFT_LEFT_EXPR_H_
 #define _AST_BITWISE_SHIFT_LEFT_EXPR_H_
 
-
 typedef class _HexAstBitwiseShiftLeftExpr : public _HexAstBinaryExpr {
 public:
   _HexAstBitwiseShiftLeftExpr(HexAstExpr, HexAstExpr);
 
+  virtual void reprOK();
   virtual void accept(AstVisitor*);
 } * HexAstBitwiseShiftLeftExpr;
 

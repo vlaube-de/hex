@@ -27,6 +27,7 @@ typedef class _HexAstNotEqualExpr : public _HexAstCommutativeBinaryExpr {
 public:
   _HexAstNotEqualExpr(HexAstExpr, HexAstExpr);
 
+  virtual void reprOK();
   virtual void accept(AstVisitor*);
 } * HexAstNotEqualExpr;
 

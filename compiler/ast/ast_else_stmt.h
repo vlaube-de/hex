@@ -26,6 +26,7 @@ typedef class _HexAstElseStmt : public _HexAstCompoundStmt {
 public:
   _HexAstElseStmt(HexAstStmtGroup);
 
+  virtual void reprOK();
   virtual void accept(AstVisitor*);
 
   static _HexAstElseStmt* create(HexAstStmtGroup);

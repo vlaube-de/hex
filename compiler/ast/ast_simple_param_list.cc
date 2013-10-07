@@ -24,10 +24,10 @@ _HexAstSimpleParamList::_HexAstSimpleParamList()
   this->reprOK();
 }
 
-bool
+void
 _HexAstSimpleParamList::reprOK()
 {
-  HEX_ASSERT(this->_list);
+  AstListObj::reprOK();
 }
 
 void

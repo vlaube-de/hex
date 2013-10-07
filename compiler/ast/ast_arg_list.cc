@@ -37,7 +37,7 @@ _HexAstArgList::_HexAstArgList(
   this->reprOK();
 }
 
-bool
+void
 _HexAstArgList::reprOK()
 {
   HEX_ASSERT(

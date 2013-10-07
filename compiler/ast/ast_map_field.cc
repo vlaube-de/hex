@@ -29,11 +29,11 @@ _HexAstMapField::_HexAstMapField(
   this->reprOK();
 }
 
-bool
+void
 _HexAstMapField::reprOK()
 {
-  HEX_ASSERT(this->_key);
-  HEX_ASSERT(this->_val);
+  HEX_ASSERT(this->key());
+  HEX_ASSERT(this->val());
 }
 
 HexAstExpr

@@ -25,6 +25,13 @@ _HexAstNotInExpr::_HexAstNotInExpr(
   HexAstExpr right
 ): _HexAstBinaryExpr(left, right)
 {
+  this->reprOK();
+}
+
+void
+_HexAstNotInExpr::reprOK()
+{
+  // Do nothing here.
 }
 
 void

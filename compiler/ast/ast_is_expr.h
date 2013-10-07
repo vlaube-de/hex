@@ -27,6 +27,7 @@ typedef class _HexAstIsExpr : public _HexAstCommutativeBinaryExpr {
 public:
   _HexAstIsExpr(HexAstExpr, HexAstExpr);
 
+  virtual void reprOK();
   virtual void accept(AstVisitor*);
 } * HexAstIsExpr;
 

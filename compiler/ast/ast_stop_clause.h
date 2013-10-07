@@ -28,12 +28,11 @@ typedef class _HexAstStopClause : public _HexAstTaskClause {
 public:
   _HexAstStopClause(HexAstExprList, HexAstConditionalClause);
 
-  virtual bool reprOK();
+  virtual void reprOK();
+  virtual void accept(AstVisitor* visitor);
 
   HexAstExprList exprs();
   HexAstConditionalClause condition();
-
-  virtual void accept(AstVisitor* visitor);
 
   static _HexAstStopClause* create(HexAstExprList, HexAstConditionalClause);
 private:

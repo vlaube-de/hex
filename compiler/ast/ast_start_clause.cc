@@ -52,10 +52,10 @@ _HexAstStartClauseSingle::_HexAstStartClauseSingle(
   this->reprOK();
 }
 
-bool
+void
 _HexAstStartClauseSingle::reprOK()
 {
-  HEX_ASSERT(this->_target);
+  HEX_ASSERT(this->target());
 }
 
 HexAstName
@@ -99,10 +99,10 @@ _HexAstStartClauseMultiple::_HexAstStartClauseMultiple(
   this->reprOK();
 }
 
-bool
+void
 _HexAstStartClauseMultiple::reprOK()
 {
-  HEX_ASSERT(this->_targets);
+  HEX_ASSERT(this->targets());
 }
 
 HexAstTargetList

@@ -27,6 +27,7 @@ typedef class _HexAstDivideExpr : public _HexAstBinaryExpr {
 public:
   _HexAstDivideExpr(HexAstExpr, HexAstExpr);
 
+  virtual void reprOK();
   virtual void accept(AstVisitor*);
 } * HexAstDivideExpr;
 

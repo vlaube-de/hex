@@ -24,6 +24,12 @@ _HexAstStmtGroup::_HexAstStmtGroup()
 }
 
 void
+_HexAstStmtGroup::reprOK()
+{
+  AstListObj::reprOK();
+}
+
+void
 _HexAstStmtGroup::accept(AstVisitor* visitor)
 {
   visitor->visit(this);

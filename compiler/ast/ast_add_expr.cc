@@ -25,6 +25,13 @@ _HexAstAddExpr::_HexAstAddExpr(
   HexAstExpr right
 ): _HexAstCommutativeBinaryExpr(left, right)
 {
+  this->reprOK();
+}
+
+void
+_HexAstAddExpr::reprOK()
+{
+  // Do nothing here.
 }
 
 void

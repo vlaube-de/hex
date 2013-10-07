@@ -28,14 +28,10 @@ typedef class _HexAstBinaryExpr : public _HexAstExpr {
 public:
   _HexAstBinaryExpr(HexAstExpr lexpr, HexAstExpr rexpr);
 
-  virtual bool reprOK();
+  virtual void reprOK();
 
   HexAstExpr left();
   HexAstExpr right();
-
-  //virtual bool equals(void*);
-  //virtual bool isomorphic(void*);
-  //virtual bool equivalent(void*);
 
   template<typename T>
   static T* create(HexAstExpr, HexAstExpr);
@@ -43,10 +39,6 @@ public:
 protected:
   boost::scoped_ptr<_HexAstExpr> _lexpr;
   boost::scoped_ptr<_HexAstExpr> _rexpr;
-
-private:
-  //bool examine(Examiner, void*);
-
 } * HexAstBinaryExpr;
 
 template<typename T>

@@ -25,6 +25,13 @@ _HexAstGreaterThanExpr::_HexAstGreaterThanExpr(
   HexAstExpr right
 ): _HexAstBinaryExpr(left, right)
 {
+  this->reprOK();
+}
+
+void
+_HexAstGreaterThanExpr::reprOK()
+{
+  // Do nothing here.
 }
 
 void

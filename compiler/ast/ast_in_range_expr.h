@@ -28,12 +28,11 @@ typedef class _HexAstInclusiveRangeExpr : public _HexAstRangeExpr {
 public:
   _HexAstInclusiveRangeExpr(HexAstExpr, HexAstExpr);
 
-  virtual bool reprOK();
+  virtual void reprOK();
+  virtual void accept(AstVisitor*);
 
   HexAstExpr begin();
   HexAstExpr end();
-
-  virtual void accept(AstVisitor*);
 
   static _HexAstInclusiveRangeExpr* create(HexAstExpr, HexAstExpr);
 private:

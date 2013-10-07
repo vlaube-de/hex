@@ -22,11 +22,11 @@
 #ifndef _AST_BITWISE_AND_EXPR_H_
 #define _AST_BITWISE_AND_EXPR_H_
 
-
 typedef class _HexAstBitwiseAndExpr : public _HexAstCommutativeBinaryExpr {
 public:
   _HexAstBitwiseAndExpr(HexAstExpr, HexAstExpr);
 
+  virtual void reprOK();
   virtual void accept(AstVisitor*);
 } * HexAstBitwiseAndExpr;
 

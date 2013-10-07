@@ -27,6 +27,7 @@ typedef class _HexAstStmtGroup : public AstListObj<_HexAstStmtGroup, HexAstStmt>
 public:
   _HexAstStmtGroup();
 
+  virtual void reprOK();
   virtual void accept(AstVisitor*);
 } * HexAstStmtGroup;
 

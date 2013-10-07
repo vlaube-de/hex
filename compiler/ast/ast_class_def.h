@@ -35,14 +35,13 @@ public:
     HexAstAttributeDefList
   );
 
-  virtual bool reprOK();
+  virtual void reprOK();
+  virtual void accept(AstVisitor*);
 
   HexAstDecoratorList decorators();
   HexAstIdentifier name();
   HexAstName parent();
   HexAstAttributeDefList attributes();
-
-  virtual void accept(AstVisitor*);
 
   static _HexAstClassDef* create(
     HexAstDecoratorList,

@@ -26,6 +26,13 @@ _HexAstBitwiseXorExpr::_HexAstBitwiseXorExpr(
   HexAstExpr right
 ): _HexAstCommutativeBinaryExpr(left, right)
 {
+  this->reprOK();
+}
+
+void
+_HexAstBitwiseXorExpr::reprOK()
+{
+  // Do nothing here.
 }
 
 void

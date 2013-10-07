@@ -27,10 +27,10 @@ _HexAstUnaryExpr::_HexAstUnaryExpr(
   this->reprOK();
 }
 
-bool
+void
 _HexAstUnaryExpr::reprOK()
 {
-  HEX_ASSERT(this->_expr);
+  HEX_ASSERT(this->expr());
 }
 
 HexAstExpr
@@ -38,34 +38,3 @@ _HexAstUnaryExpr::expr()
 {
   return this->_expr.get();
 }
-/*
-bool
-_HexAstUnaryExpr::equals(void* obj)
-{
-  return this->examine(Examiners::Equals, obj);
-}
-
-bool
-_HexAstUnaryExpr::isomorphic(void* obj)
-{
-  return this->examine(Examiners::Isomorphic, obj);
-}
-
-bool
-_HexAstUnaryExpr::equivalent(void *obj)
-{
-  return this->examine(Examiners::Equivalent, obj);
-}
-
-bool
-_HexAstUnaryExpr::examine(Examiner e, void* obj)
-{
-  if(obj == NULL) return false;
-
-  HexAstUnaryExpr that = (HexAstUnaryExpr)obj;
-
-  if(this == that) return true;
-
-  return e->examine(this->expr(), that->expr());
-}
-*/

@@ -31,10 +31,10 @@ _HexAstHexProgram::_HexAstHexProgram(
   this->reprOK();
 }
 
-bool
+void
 _HexAstHexProgram::reprOK()
 {
-  return true;
+  // Do nothing here.
 }
 
 HexAstStmtGroup

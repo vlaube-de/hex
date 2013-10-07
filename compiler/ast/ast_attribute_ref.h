@@ -27,12 +27,11 @@ typedef class _HexAstAttributeRef : public _HexAstPrimary {
 public:
   _HexAstAttributeRef(HexAstPrimary, HexAstIdentifier);
 
-  virtual bool reprOK();
+  virtual void reprOK();
+  virtual void accept(AstVisitor*);
 
   HexAstPrimary source();
   HexAstIdentifier attribute();
-
-  virtual void accept(AstVisitor*);
 
   static _HexAstAttributeRef* create(HexAstPrimary, HexAstIdentifier);
 private:

@@ -38,6 +38,9 @@ ast_list_obj.o: ast_list_obj.h ast_list_obj.cc
 ast_node.o: examinable.h ast_node.h ast_node.cc
 	$(CXX) $(CFLAGS) -c ast_node.cc
 
+ast_expr.o: ast_expr.h ast_expr.cc
+	$(CXX) $(CFLAGS) -c ast_expr.cc
+
 ast_target_list.o: ast_list_obj.o ast_node.o ast_target_list.h ast_target_list.cc
 	$(CXX) $(CFLAGS) -c ast_target_list.cc
 
@@ -142,6 +145,9 @@ ast_output_stmt.o: ast_output_stmt.h ast_output_stmt.cc
 
 ast_expr_list_stmt.o: ast_expr_list_stmt.h ast_expr_list_stmt.cc
 	$(CXX) $(CFLAGS) -c ast_expr_list_stmt.cc
+
+ast_stmt.o: ast_stmt.h ast_stmt.cc
+	$(CXX) $(CFLAGS) -c ast_stmt.cc
 
 ast_simple_stmt.o: ast_simple_stmt.h ast_simple_stmt.cc
 	$(CXX) $(CFLAGS) -c ast_simple_stmt.cc
@@ -415,7 +421,8 @@ obj:ast.h \
 	ast_unparsed.o	\
 	ast_typed.o		\
 	ast_list_obj.o	\
-	ast_node.o			\
+	ast_node.o	\
+	ast_expr.o \
 	ast_target_list.o	\
 	ast_val_atom.o	\
 	ast_val_list.o	\
@@ -451,7 +458,8 @@ obj:ast.h \
 	ast_input_stmt.o	\
 	ast_output_stmt.o	\
 	ast_expr_list_stmt.o	\
-	ast_simple_stmt.o	\
+	ast_stmt.o \
+	ast_simple_stmt.o \
 	ast_compound_stmt.o	\
 	ast_for_stmt.o	\
 	ast_with_stmt.o	\

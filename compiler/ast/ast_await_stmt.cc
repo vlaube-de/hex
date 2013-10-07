@@ -27,10 +27,10 @@ _HexAstAwaitStmt::_HexAstAwaitStmt(
   this->reprOK();
 }
 
-bool
+void
 _HexAstAwaitStmt::reprOK()
 {
-  return true;
+  // Do nothing.
 }
 
 void

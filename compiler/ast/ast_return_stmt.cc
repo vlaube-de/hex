@@ -29,10 +29,10 @@ _HexAstReturnStmt::_HexAstReturnStmt(
   this->reprOK();
 }
 
-bool
+void
 _HexAstReturnStmt::reprOK()
 {
-  return true;
+  // Do nothing here.
 }
 
 HexAstExprList

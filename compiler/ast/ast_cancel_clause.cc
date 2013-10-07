@@ -31,11 +31,11 @@ _HexAstCancelClause::_HexAstCancelClause(
   this->reprOK();
 }
 
-bool
+void
 _HexAstCancelClause::reprOK()
 {
-  HEX_ASSERT(this->_exprs);
-  HEX_ASSERT(this->_condition);
+  HEX_ASSERT(this->exprs());
+  HEX_ASSERT(this->condition());
 }
 
 HexAstExprList

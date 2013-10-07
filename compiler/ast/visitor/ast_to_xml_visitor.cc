@@ -130,7 +130,7 @@ AstToXmlVisitor::visit(HexAstIdentifier identifier_)
 {
   HexAstIdentifier identifier = AstVisitor::visit(identifier_);
 
-	this->double_tag("identifier", identifier->identifier());
+	this->double_tag("identifier", identifier->value());
 
   return identifier;
 }

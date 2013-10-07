@@ -34,14 +34,13 @@ public:
     HexAstIdentifier
   );
 
-  virtual bool reprOK();
+  virtual void reprOK();
+  virtual void accept(AstVisitor*);
 
   HexAstSimpleParamList simple_params();
   HexAstKeywordValList keyword_vals();
   HexAstIdentifier args();
   HexAstIdentifier kwargs();
-
-  virtual void accept(AstVisitor*);
 
   static _HexAstParameterList* create(
     HexAstSimpleParamList,

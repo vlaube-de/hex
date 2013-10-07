@@ -19,4 +19,11 @@
 
 _HexAstAttributeDef::_HexAstAttributeDef()
 {
+  this->reprOK();
+}
+
+void
+_HexAstAttributeDef::reprOK()
+{
+  // Do nothing here.
 }

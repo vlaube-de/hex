@@ -30,10 +30,10 @@ _HexAstElifStmt::_HexAstElifStmt(
   this->reprOK();
 }
 
-bool
+void
 _HexAstElifStmt::reprOK()
 {
-  HEX_ASSERT(this->_predicate);
+  HEX_ASSERT(this->predicate());
 }
 
 HexAstExpr

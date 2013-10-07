@@ -26,6 +26,7 @@ typedef class _HexAstPseudoAssignBitwiseRightShiftExpr : public _HexAstPseudoAss
 public:
   _HexAstPseudoAssignBitwiseRightShiftExpr(HexAstExpr, HexAstExpr);
 
+  virtual void reprOK();
   virtual void accept(AstVisitor*);
 } * HexAstPseudoAssignBitwiseRightShiftExpr;
 

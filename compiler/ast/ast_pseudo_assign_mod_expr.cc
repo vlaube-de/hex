@@ -25,6 +25,13 @@ _HexAstPseudoAssignModulusExpr::_HexAstPseudoAssignModulusExpr(
   HexAstExpr right
 ):_HexAstPseudoAssignExpr(left, right)
 {
+  this->reprOK();
+}
+
+void
+_HexAstPseudoAssignModulusExpr::reprOK()
+{
+  // Do nothing here.
 }
 
 void

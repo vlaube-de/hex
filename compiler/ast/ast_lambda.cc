@@ -26,6 +26,13 @@ _HexAstLambda::_HexAstLambda(
   HexAstParameterList params
 ):_params(params)
 {
+  this->reprOK();
+}
+
+void
+_HexAstLambda::reprOK()
+{
+  // Do nothing here.
 }
 
 HexAstParameterList
@@ -42,10 +49,10 @@ _HexAstLambdaSimple::_HexAstLambdaSimple(
   this->reprOK();
 }
 
-bool
+void
 _HexAstLambdaSimple::reprOK()
 {
-  HEX_ASSERT(this->_expr);
+  HEX_ASSERT(this->expr());
 }
 
 HexAstExpr
@@ -86,10 +93,10 @@ _HexAstLambdaComplex::_HexAstLambdaComplex(
   this->reprOK();
 }
 
-bool
+void
 _HexAstLambdaComplex::reprOK()
 {
-  return true;
+  // Do nothing here.
 }
 
 HexAstStmtGroup

@@ -28,6 +28,7 @@ typedef class _HexAstTaskDef : public AstListObj<_HexAstTaskDef, HexAstTaskClaus
 public:
   _HexAstTaskDef();
 
+  virtual void reprOK();
   virtual void accept(AstVisitor*);
 } * HexAstTaskDef;
 

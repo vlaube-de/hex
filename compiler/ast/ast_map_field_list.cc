@@ -24,10 +24,10 @@ _HexAstMapFieldList::_HexAstMapFieldList()
   this->reprOK();
 }
 
-bool
+void
 _HexAstMapFieldList::reprOK()
 {
-  HEX_ASSERT(this->_list);
+  AstListObj::reprOK();
 }
 
 void

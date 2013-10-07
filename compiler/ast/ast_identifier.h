@@ -24,17 +24,15 @@
 #ifndef _AST_IDENTIFIER_H_
 #define _AST_IDENTIFIER_H_
 
-typedef class _HexAstIdentifier : public _HexAstPrimary, AstUnparsed {
+typedef class _HexAstIdentifier : public _HexAstPrimary, public AstUnparsed {
 public:
   _HexAstIdentifier(c_str);
 
-  virtual bool reprOK();
+  virtual void reprOK();
+  virtual void accept(AstVisitor*);
 
   static _HexAstIdentifier* create(c_str);
 
-  c_str identifier();
-
-  virtual void accept(AstVisitor*);
 } * HexAstIdentifier;
 
 #endif /* _AST_IDENTIFIER_H_ */

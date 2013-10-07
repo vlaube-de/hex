@@ -15,6 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <boost/smart_ptr.hpp>
 #include "ast_node.h"
 #include "ast_task_state.h"
 #include "ast_expr_list.h"
@@ -24,25 +25,31 @@
 #ifndef _AST_CONDITIONAL_CLAUSE_H_
 #define _AST_CONDITIONAL_CLAUSE_H_
 
-
 typedef class _HexAstConditionalClause : public _HexAstNode {
 public:
   _HexAstConditionalClause(
-    HexAstConditionalPreposition, HexAstExprList, HexAstTaskState);
+    HexAstConditionalPreposition,
+    HexAstExprList,
+    HexAstTaskState
+  );
 
-  virtual bool reprOK();
+  virtual void reprOK();
+  virtual void accept(AstVisitor*);
 
   HexAstConditionalPreposition preposition();
   HexAstExprList exprs();
   HexAstTaskState state();
 
-  virtual void accept(AstVisitor*);
+  static _HexAstConditionalClause* create(
+    HexAstConditionalPreposition,
+    HexAstExprList,
+    HexAstTaskState
+  );
 
-  static _HexAstConditionalClause* create(HexAstConditionalPreposition, HexAstExprList, HexAstTaskState);
 private:
-  HexAstConditionalPreposition _preposition;
-  HexAstExprList _exprs;
-  HexAstTaskState _state;
+  boost::scoped_ptr<_HexAstConditionalPreposition> _preposition;
+  boost::scoped_ptr<_HexAstExprList> _exprs;
+  boost::scoped_ptr<_HexAstTaskState> _state;
 } * HexAstConditionalClause;
 
 #endif /* _AST_CONDITIONAL_CLAUSE_H_ */

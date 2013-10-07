@@ -62,7 +62,7 @@ AstToStringVisitor::visit(HexAstIdentifier identifier_)
 {
   HexAstIdentifier identifier = AstVisitor::visit(identifier_);
 
-  this->append(identifier->identifier());
+  this->append(identifier->value());
 
   return identifier;
 }

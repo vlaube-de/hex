@@ -26,6 +26,13 @@ _HexAstModulusExpr::_HexAstModulusExpr(
   HexAstExpr right
 ): _HexAstBinaryExpr(left, right)
 {
+  this->reprOK();
+}
+
+void
+_HexAstModulusExpr::reprOK()
+{
+  // Do nothing here.
 }
 
 void

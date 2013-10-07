@@ -25,6 +25,13 @@ _HexAstPseudoAssignDivideExpr::_HexAstPseudoAssignDivideExpr(
   HexAstExpr right
 ):_HexAstPseudoAssignExpr(left, right)
 {
+  this->reprOK();
+}
+
+void
+_HexAstPseudoAssignDivideExpr::reprOK()
+{
+  // Do nothing here.
 }
 
 void

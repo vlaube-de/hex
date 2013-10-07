@@ -27,11 +27,10 @@ typedef class _HexAstParenForm : public _HexAstExpr {
 public:
   _HexAstParenForm(HexAstExprList);
 
-  virtual bool reprOK();
+  virtual void reprOK();
+  virtual void accept(AstVisitor*);
 
   HexAstExprList exprs();
-
-  virtual void accept(AstVisitor*);
 
   static _HexAstParenForm* create(HexAstExprList);
 private:

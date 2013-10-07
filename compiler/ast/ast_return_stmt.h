@@ -27,12 +27,11 @@ typedef class _HexAstReturnStmt : public _HexAstSimpleStmt {
 public:
   _HexAstReturnStmt(HexAstExprList, HexAstExpr);
 
-  virtual bool reprOK();
+  virtual void reprOK();
+  virtual void accept(AstVisitor*);
 
   HexAstExprList return_vals();
   HexAstExpr predicate();
-
-  virtual void accept(AstVisitor*);
 
   static _HexAstReturnStmt* create(HexAstExprList, HexAstExpr);
 private:

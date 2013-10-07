@@ -30,10 +30,10 @@ _HexAstCall::_HexAstCall(
   this->reprOK();
 }
 
-bool
+void
 _HexAstCall::reprOK()
 {
-  HEX_ASSERT(this->_source);
+  HEX_ASSERT(this->source());
 }
 
 HexAstPrimary

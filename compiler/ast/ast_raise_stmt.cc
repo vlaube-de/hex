@@ -27,10 +27,10 @@ _HexAstRaiseStmt::_HexAstRaiseStmt(
   this->reprOK();
 }
 
-bool
+void
 _HexAstRaiseStmt::reprOK()
 {
-  HEX_ASSERT(this->_expr);
+  HEX_ASSERT(this->expr());
 }
 
 HexAstExpr

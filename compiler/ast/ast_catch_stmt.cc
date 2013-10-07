@@ -32,10 +32,10 @@ _HexAstCatchStmt::_HexAstCatchStmt(
   this->reprOK();
 }
 
-bool
+void
 _HexAstCatchStmt::reprOK()
 {
-  return true;
+  // Do nothing here.
 }
 
 HexAstTargetList

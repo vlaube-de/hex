@@ -28,7 +28,7 @@ _HexAstValAtom::_HexAstValAtom(
   this->reprOK();
 }
 
-bool
+void
 _HexAstValAtom::reprOK()
 {
   HEX_ASSERT(

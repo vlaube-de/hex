@@ -26,6 +26,13 @@ _HexAstBitwiseShiftRightExpr::_HexAstBitwiseShiftRightExpr(
   HexAstExpr right
 ): _HexAstBinaryExpr(left, right)
 {
+  this->reprOK();
+}
+
+void
+_HexAstBitwiseShiftRightExpr::reprOK()
+{
+  // Do nothing here.
 }
 
 void

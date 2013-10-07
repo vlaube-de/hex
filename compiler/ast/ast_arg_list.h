@@ -29,14 +29,13 @@ typedef class _HexAstArgList : public _HexAstNode {
 public:
   _HexAstArgList(HexAstValList, HexAstKeywordValList, HexAstIdentifier, HexAstIdentifier);
 
-  virtual bool reprOK();
+  virtual void reprOK();
+  virtual void accept(AstVisitor*);
 
   HexAstValList simple_args();
   HexAstKeywordValList keyword_args();
   HexAstIdentifier args();
   HexAstIdentifier kwargs();
-
-  virtual void accept(AstVisitor*);
 
   static _HexAstArgList* create(
     HexAstValList,

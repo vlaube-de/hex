@@ -29,12 +29,11 @@ typedef class _HexAstCatchStmt : public _HexAstCompoundStmt {
 public:
   _HexAstCatchStmt(HexAstTargetList, HexAstIdentifier, HexAstStmtGroup);
 
-  virtual bool reprOK();
+  virtual void reprOK();
+  virtual void accept(AstVisitor*);
 
   HexAstTargetList targets();
   HexAstIdentifier alias();
-
-  virtual void accept(AstVisitor*);
 
   static _HexAstCatchStmt* create(HexAstTargetList, HexAstIdentifier, HexAstStmtGroup);
 private:

@@ -26,20 +26,18 @@ typedef class _HexAstConditionalExpr : public _HexAstExpr {
 public:
   _HexAstConditionalExpr(HexAstExpr, HexAstExpr, HexAstExpr);
 
-  virtual bool reprOK();
+  virtual void reprOK();
+  virtual void accept(AstVisitor*);
 
   HexAstExpr predicate();
   HexAstExpr consequent();
   HexAstExpr alternate();
-
-  virtual void accept(AstVisitor*);
 
   static _HexAstConditionalExpr* create(HexAstExpr, HexAstExpr, HexAstExpr);
 private:
   boost::scoped_ptr<_HexAstExpr> _predicate;
   boost::scoped_ptr<_HexAstExpr> _consequent;
   boost::scoped_ptr<_HexAstExpr> _alternate;
-
 } * HexAstConditionalExpr;
 
 

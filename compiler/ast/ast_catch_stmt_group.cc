@@ -20,6 +20,13 @@
 
 _HexAstCatchStmtGroup::_HexAstCatchStmtGroup()
 {
+  this->reprOK();
+}
+
+void
+_HexAstCatchStmtGroup::reprOK()
+{
+  AstListObj::reprOK();
 }
 
 void

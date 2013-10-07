@@ -30,11 +30,10 @@ typedef class _HexAstHexProgram : public _HexAstNode {
 public:
   _HexAstHexProgram(HexAstStmtGroup);
 
-  virtual bool reprOK();
+  virtual void reprOK();
+  virtual void accept(AstVisitor*);
 
   HexAstStmtGroup stmts();
-
-  virtual void accept(AstVisitor*);
 
   static _HexAstHexProgram* create(HexAstStmtGroup);
   static int get_parse_tree_root(_HexAstHexProgram**);

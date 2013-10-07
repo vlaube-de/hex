@@ -24,10 +24,10 @@ _HexAstTargetList::_HexAstTargetList()
   this->reprOK();
 }
 
-bool
+void
 _HexAstTargetList::reprOK()
 {
-  HEX_ASSERT(this->_list);
+  // Do nothing here.
 }
 
 void

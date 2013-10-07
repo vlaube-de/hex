@@ -35,13 +35,12 @@ public:
     HexAstStmtGroup
   );
 
-  virtual bool reprOK();
+  virtual void reprOK();
+  virtual void accept(AstVisitor*);
 
   HexAstTargetList targets();
   HexAstExprList exprs();
   HexAstExpr predicate();
-
-  virtual void accept(AstVisitor*);
 
   static _HexAstForStmt* create(
     HexAstTargetList,

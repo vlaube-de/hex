@@ -27,10 +27,10 @@ _HexAstMapForm::_HexAstMapForm(
   this->reprOK();
 }
 
-bool
+void
 _HexAstMapForm::reprOK()
 {
-  HEX_ASSERT(this->_list);
+  HEX_ASSERT(this->list());
 }
 
 HexAstMapFieldList

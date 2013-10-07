@@ -24,6 +24,13 @@ _HexAstNotEqualExpr::_HexAstNotEqualExpr(
   HexAstExpr right
 ): _HexAstCommutativeBinaryExpr(left, right)
 {
+  this->reprOK();
+}
+
+void
+_HexAstNotEqualExpr::reprOK()
+{
+  // Do nothing here.
 }
 
 void

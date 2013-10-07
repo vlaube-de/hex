@@ -15,29 +15,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <boost/smart_ptr.hpp>
-#include "ast_node.h"
-#include "ast_arg_list.h"
-#include "ast_name.h"
-#include "visitor/ast_visitor.h"
+#include "ast_expr.h"
 
-#ifndef _AST_DECORATOR_H_
-#define _AST_DECORATOR_H_
+_HexAstExpr::_HexAstExpr()
+{
+  this->reprOK();
+}
 
-typedef class _HexAstDecorator : public _HexAstNode {
-public:
-  _HexAstDecorator(HexAstName, HexAstArgList);
-
-  virtual void reprOK();
-  virtual void accept(AstVisitor*);
-
-  HexAstName name();
-  HexAstArgList args();
-
-  static _HexAstDecorator* create(HexAstName, HexAstArgList);
-private:
-  boost::scoped_ptr<_HexAstName> _name;
-  boost::scoped_ptr<_HexAstArgList> _args;
-} * HexAstDecorator;
-
-#endif /* _AST_DECORATOR_H_ */
+void
+_HexAstExpr::reprOK()
+{
+  // Do nothing here.
+}

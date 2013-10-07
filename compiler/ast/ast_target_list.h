@@ -27,8 +27,7 @@ typedef class _HexAstTargetList : public AstListObj<_HexAstTargetList, HexAstIde
 public:
   _HexAstTargetList();
 
-  virtual bool reprOK();
-
+  virtual void reprOK();
   virtual void accept(AstVisitor*);
 
 } * HexAstTargetList;

@@ -60,11 +60,10 @@ typedef class _HexAstOperator : public _HexAstNode {
 public:
   _HexAstOperator(HexAstOperatorEnum);
 
-  virtual bool reprOK();
+  virtual void reprOK();
+  virtual void accept(AstVisitor*);
 
   HexAstOperatorEnum op();
-
-  virtual void accept(AstVisitor*);
 
   static _HexAstOperator* create(HexAstOperatorEnum);
 private:

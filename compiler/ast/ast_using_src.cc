@@ -29,7 +29,7 @@ _HexAstUsingSrc::_HexAstUsingSrc(
   this->reprOK();
 }
 
-bool
+void
 _HexAstUsingSrc::reprOK()
 {
   HEX_ASSERT(this->_type);

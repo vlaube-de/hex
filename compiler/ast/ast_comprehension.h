@@ -26,18 +26,28 @@
 
 typedef class _HexAstComprehension : public _HexAstNode {
 public:
-  _HexAstComprehension(HexAstExprList, HexAstTargetList, HexAstExprList, HexAstExpr);
+  _HexAstComprehension(
+    HexAstExprList,
+    HexAstTargetList,
+    HexAstExprList,
+    HexAstExpr
+  );
 
-  virtual bool reprOK();
+  virtual void reprOK();
+  virtual void accept(AstVisitor*);
 
   HexAstExprList dst();
   HexAstTargetList candidates();
   HexAstExprList src();
   HexAstExpr predicate();
 
-  virtual void accept(AstVisitor*);
+  static _HexAstComprehension* create(
+    HexAstExprList,
+    HexAstTargetList,
+    HexAstExprList,
+    HexAstExpr
+  );
 
-  static _HexAstComprehension* create(HexAstExprList, HexAstTargetList, HexAstExprList, HexAstExpr);
 private:
   HexAstExprList _dst;
   HexAstTargetList _candidates;

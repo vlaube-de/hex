@@ -28,6 +28,7 @@ typedef class _HexAstValList : public AstListObj<_HexAstValList, HexAstValAtom>,
 public:
   _HexAstValList();
 
+  virtual void reprOK();
   virtual void accept(AstVisitor*);
 } * HexAstValList;
 

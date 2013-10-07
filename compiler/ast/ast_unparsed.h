@@ -15,6 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <boost/smart_ptr.hpp>
 #include "../../base/c_str.h"
 
 #ifndef _AST_UNPARSED_H_
@@ -24,8 +25,9 @@ class AstUnparsed {
 public:
   AstUnparsed(c_str);
 
+  c_str value();
 protected:
-  c_str _value;
+  boost::scoped_ptr<char> _value;
 };
 
 #endif /* _AST_UNPARSED_H_ */

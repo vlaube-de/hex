@@ -28,12 +28,11 @@ typedef class _HexAstKeywordVal : public _HexAstNode {
 public:
   _HexAstKeywordVal(HexAstIdentifier, HexAstValAtom);
 
-  virtual bool reprOK();
+  virtual void reprOK();
+  virtual void accept(AstVisitor*);
 
   HexAstIdentifier key();
   HexAstValAtom val();
-
-  virtual void accept(AstVisitor*);
 
   static _HexAstKeywordVal* create(HexAstIdentifier, HexAstValAtom);
 private:

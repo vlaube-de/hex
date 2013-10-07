@@ -39,11 +39,11 @@ _HexAstAssignmentStmt::_HexAstAssignmentStmt(
   this->reprOK();
 }
 
-bool
+void
 _HexAstAssignmentStmt::reprOK()
 {
-  HEX_ASSERT(this->_src);
-  HEX_ASSERT(this->_dst);
+  HEX_ASSERT(this->src());
+  HEX_ASSERT(this->dst());
   HEX_ASSERT(
     this->_type==AST_ASSIGNMENT_STMT_EXPR_LIST ||
     this->_type==AST_ASSIGNMENT_STMT_LAMBDA ||

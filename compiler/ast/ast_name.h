@@ -23,11 +23,11 @@
 #ifndef _AST_NAME_H_
 #define _AST_NAME_H_
 
-
-typedef class _HexAstName : public AstListObj<_HexAstName, HexAstIdentifier>, _HexAstNode {
+typedef class _HexAstName : public AstListObj<_HexAstName, HexAstIdentifier>, public _HexAstNode {
 public:
   _HexAstName();
 
+  virtual void reprOK();
   virtual void accept(AstVisitor*);
 } * HexAstName;
 
