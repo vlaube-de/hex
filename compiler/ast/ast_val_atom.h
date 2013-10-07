@@ -16,29 +16,12 @@
  */
 
 #include "ast_node.h"
-#include "ast_typed.h"
 #include "visitor/ast_visitor.h"
 
 #ifndef _AST_VAL_ATOM_H_
 #define _AST_VAL_ATOM_H_
 
-enum {
-  AST_VAL_ATOM_EXPR=0x02,
-  AST_VAL_ATOM_LAMBDA=0x04
-};
-
-typedef class _HexAstValAtom : public AstTyped, public _HexAstNode {
-public:
-  _HexAstValAtom(void*, ast_type_t);
-
-  virtual void reprOK();
-  virtual void accept(AstVisitor*);
-
-  void* core();
-
-  static _HexAstValAtom* create(void*, ast_type_t);
-private:
-  void* _core;
+typedef class _HexAstValAtom : public _HexAstNode {
 } * HexAstValAtom;
 
 #endif /* _AST_VAL_ATOM_H_ */

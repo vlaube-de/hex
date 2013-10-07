@@ -16,28 +16,51 @@
  */
 
 #include "ast_literal.h"
-#include "ast_typed.h"
 #include "../../base/c_str.h"
+#include "../../base/assert.h"
 
 #ifndef _AST_INTEGER_LITERAL_H_
 #define _AST_INTEGER_LITERAL_H_
 
-enum {
-  AST_INTEGER_LITERAL_DECIMAL=0x02,
-  AST_INTEGER_LITERAL_BINARY=0x04,
-  AST_INTEGER_LITERAL_OCTAL=0x08,
-  AST_INTEGER_LITERAL_HEXADECIMAL=0x10
-};
-
-typedef class _HexAstIntegerLiteral : public _HexAstLiteral, AstTyped {
+typedef class _HexAstIntegerLiteral : public _HexAstLiteral {
 public:
-  _HexAstIntegerLiteral(ast_type_t, c_str);
+  _HexAstIntegerLiteral(c_str);
 
   virtual void reprOK();
   virtual void accept(AstVisitor*);
 
-  static _HexAstIntegerLiteral* create(ast_type_t, c_str);
+  template<typename T>
+  static T* create(c_str);
+
 } * HexAstIntegerLiteral;
 
+template<typename T>
+T*
+_HexAstIntegerLiteral::create(c_str value)
+{
+  T* obj = new T(value);
+  HEX_ASSERT(obj);
+  return obj;
+}
+
+typedef class _HexAstDecimalIntegerLiteral : public _HexAstIntegerLiteral {
+public:
+  _HexAstDecimalIntegerLiteral(c_str);
+} * HexAstDecimalIntegerLiteral;
+
+typedef class _HexAstBinaryIntegerLiteral : public _HexAstIntegerLiteral {
+public:
+  _HexAstBinaryIntegerLiteral(c_str);
+} * HexAstBinaryIntegerLiteral;
+
+typedef class _HexAstOctalIntegerLiteral : public _HexAstIntegerLiteral {
+public:
+  _HexAstOctalIntegerLiteral(c_str);
+} * HexAstOctalIntegerLiteral;
+
+typedef class _HexAstHexadecimalIntegerLiteral : public _HexAstIntegerLiteral {
+public:
+  _HexAstHexadecimalIntegerLiteral(c_str);
+} * HexAstHexadecimalIntegerLiteral;
 
 #endif /* _AST_INTEGER_LITERAL_H_ */

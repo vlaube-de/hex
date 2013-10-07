@@ -18,22 +18,18 @@
 #include "ast_assignment_stmt.h"
 #include "ast_node.h"
 #include "ast_primary.h"
+#include "ast_expr_list.h"
+#include "ast_lambda.h"
 #include "ast_decorator_list.h"
-#include "ast_typed.h"
+#include "ast_task_def.h"
 #include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
 
 _HexAstAssignmentStmt::_HexAstAssignmentStmt(
-  HexAstDecoratorList decorators,
-  HexAstPrimary dst,
-  void* src,
-  ast_type_t type,
+  HexAstPrimary target,
   bool defer
 ):
-  _decorators(decorators),
-  _dst(dst),
-  _src(src),
-  AstTyped(type),
+  _target(target),
   _defer(defer)
 {
   this->reprOK();
@@ -42,31 +38,13 @@ _HexAstAssignmentStmt::_HexAstAssignmentStmt(
 void
 _HexAstAssignmentStmt::reprOK()
 {
-  HEX_ASSERT(this->src());
-  HEX_ASSERT(this->dst());
-  HEX_ASSERT(
-    this->_type==AST_ASSIGNMENT_STMT_EXPR_LIST ||
-    this->_type==AST_ASSIGNMENT_STMT_LAMBDA ||
-    this->_type==AST_ASSIGNMENT_STMT_TASK
-  );
-}
-
-HexAstDecoratorList
-_HexAstAssignmentStmt::decorators()
-{
-  return this->_decorators.get();
+  HEX_ASSERT(this->target());
 }
 
 HexAstPrimary
-_HexAstAssignmentStmt::dst()
+_HexAstAssignmentStmt::target()
 {
-  return this->_dst.get();
-}
-
-void*
-_HexAstAssignmentStmt::src()
-{
-  return this->_src;
+  return this->_target.get();
 }
 
 bool
@@ -75,34 +53,150 @@ _HexAstAssignmentStmt::defer()
   return this->_defer;
 }
 
+_HexAstExprListAssignmentStmt::_HexAstExprListAssignmentStmt(
+  HexAstPrimary target,
+  HexAstExprList src,
+  bool defer
+):
+  _HexAstAssignmentStmt(target, defer),
+  _src(src)
+{
+  this->reprOK();
+}
+
 void
-_HexAstAssignmentStmt::accept(AstVisitor* visitor)
+_HexAstExprListAssignmentStmt::reprOK()
+{
+  HEX_ASSERT(this->src());
+}
+
+void
+_HexAstExprListAssignmentStmt::accept(AstVisitor* visitor)
 {
   visitor->visit(this);
 }
 
-HexAstAssignmentStmt
-_HexAstAssignmentStmt::create(
-  HexAstDecoratorList decorators,
-  HexAstPrimary dst,
-  void* src,
-  ast_type_t type,
+HexAstExprList
+_HexAstExprListAssignmentStmt::src()
+{
+  return this->_src.get();
+}
+
+HexAstExprListAssignmentStmt
+_HexAstExprListAssignmentStmt::create(
+  HexAstPrimary target,
+  HexAstExprList src,
   bool defer
 )
 {
-  HEX_ASSERT(src);
-  HEX_ASSERT(dst);
-  HEX_ASSERT(type);
-
-  HexAstAssignmentStmt obj = new _HexAstAssignmentStmt(
-    decorators,
-    dst,
+  HexAstExprListAssignmentStmt obj = new _HexAstExprListAssignmentStmt(
+    target,
     src,
-    type,
     defer
   );
 
   HEX_ASSERT(obj);
+  return obj;
+}
 
+_HexAstLambdaAssignmentStmt::_HexAstLambdaAssignmentStmt(
+  HexAstDecoratorList decorators,
+  HexAstPrimary target,
+  HexAstLambda src,
+  bool defer
+):
+  _decorators(decorators),
+  _src(src),
+  _HexAstAssignmentStmt(target, defer)
+{
+  this->reprOK();
+}
+
+void
+_HexAstLambdaAssignmentStmt::reprOK()
+{
+  HEX_ASSERT(this->src());
+}
+
+void
+_HexAstLambdaAssignmentStmt::accept(AstVisitor* visitor)
+{
+  visitor->visit(this);
+}
+
+HexAstDecoratorList
+_HexAstLambdaAssignmentStmt::decorators()
+{
+  return this->_decorators.get();
+}
+
+HexAstLambda
+_HexAstLambdaAssignmentStmt::src()
+{
+  return this->_src.get();
+}
+
+HexAstLambdaAssignmentStmt
+_HexAstLambdaAssignmentStmt::create(
+  HexAstDecoratorList decorators,
+  HexAstPrimary target,
+  HexAstLambda src,
+  bool defer
+)
+{
+  HexAstLambdaAssignmentStmt obj = new _HexAstLambdaAssignmentStmt(
+    decorators,
+    target,
+    src,
+    defer
+  );
+
+  HEX_ASSERT(obj);
+  return obj;
+}
+
+_HexAstTaskDefAssignmentStmt::_HexAstTaskDefAssignmentStmt(
+  HexAstPrimary target,
+  HexAstTaskDef src,
+  bool defer
+):
+  _src(src),
+  _HexAstAssignmentStmt(target, defer)
+{
+  this->reprOK();
+}
+
+void
+_HexAstTaskDefAssignmentStmt::reprOK()
+{
+  HEX_ASSERT(this->src());
+}
+
+void
+_HexAstTaskDefAssignmentStmt::accept(AstVisitor* visitor)
+{
+  visitor->visit(this);
+}
+
+HexAstTaskDef
+_HexAstTaskDefAssignmentStmt::src()
+{
+  return this->_src.get();
+}
+
+HexAstTaskDefAssignmentStmt
+_HexAstTaskDefAssignmentStmt::create(
+  HexAstPrimary target,
+  HexAstTaskDef src,
+  bool defer
+)
+{
+  HexAstTaskDefAssignmentStmt obj = new _HexAstTaskDefAssignmentStmt(
+    target,
+    src,
+    defer
+  );
+
+  HEX_ASSERT(obj);
   return obj;
 }

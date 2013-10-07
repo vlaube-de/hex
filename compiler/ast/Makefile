@@ -29,25 +29,16 @@ examiner.o: examiner.h examiner.cc
 ast_unparsed.o: ast_unparsed.h ast_unparsed.cc
 	$(CXX) $(CFLAGS) -c ast_unparsed.cc
 
-ast_typed.o: ast_typed.h ast_typed.cc
-	$(CXX) $(CFLAGS) -c ast_typed.cc
-
 ast_list_obj.o: ast_list_obj.h ast_list_obj.cc
 	$(CXX) $(CFLAGS) -c ast_list_obj.cc
 
 ast_node.o: examinable.h ast_node.h ast_node.cc
 	$(CXX) $(CFLAGS) -c ast_node.cc
 
-ast_expr.o: ast_expr.h ast_expr.cc
-	$(CXX) $(CFLAGS) -c ast_expr.cc
-
 ast_target_list.o: ast_list_obj.o ast_node.o ast_target_list.h ast_target_list.cc
 	$(CXX) $(CFLAGS) -c ast_target_list.cc
 
-ast_val_atom.o: ast_node.o ast_val_atom.h ast_val_atom.cc
-	$(CXX) $(CFLAGS) -c ast_val_atom.cc
-
-ast_val_list.o: ast_node.o ast_list_obj.o ast_val_atom.o ast_val_list.h ast_val_list.cc
+ast_val_list.o: ast_node.o ast_list_obj.o ast_val_list.h ast_val_list.cc
 	$(CXX) $(CFLAGS) -c ast_val_list.cc
 
 ast_simple_param_list.o: ast_list_obj.o ast_node.o ast_simple_param_list.h ast_simple_param_list.cc
@@ -71,7 +62,7 @@ ast_comprehension.o: ast_node.o ast_comprehension.h ast_comprehension.cc
 ast_list_form.o: ast_node.o ast_comprehension.o ast_list_form.h ast_list_form.cc
 	$(CXX) $(CFLAGS) -c ast_list_form.cc
 
-ast_map_field.o: ast_node.o ast_val_atom.o ast_map_field.h ast_map_field.cc
+ast_map_field.o: ast_node.o ast_map_field.h ast_map_field.cc
 	$(CXX) $(CFLAGS) -c ast_map_field.cc
 
 ast_map_field_list.o: ast_node.o ast_list_obj.o ast_map_field_list.h ast_map_field_list.cc
@@ -80,7 +71,7 @@ ast_map_field_list.o: ast_node.o ast_list_obj.o ast_map_field_list.h ast_map_fie
 ast_map_form.o: ast_node.o ast_map_field_list.o ast_map_form.h ast_map_form.cc
 	$(CXX) $(CFLAGS) -c ast_map_form.cc
 
-ast_field_def.o: ast_node.o ast_val_atom.o ast_field_def.h ast_field_def.cc
+ast_field_def.o: ast_node.o ast_field_def.h ast_field_def.cc
 	$(CXX) $(CFLAGS) -c ast_field_def.cc
 
 ast_field_def_list.o: ast_field_def.o ast_list_obj.o ast_field_def_list.h ast_field_def_list.cc
@@ -419,12 +410,9 @@ ast.h:
 obj:ast.h \
 	examiner.o	\
 	ast_unparsed.o	\
-	ast_typed.o		\
 	ast_list_obj.o	\
 	ast_node.o	\
-	ast_expr.o \
 	ast_target_list.o	\
-	ast_val_atom.o	\
 	ast_val_list.o	\
 	ast_simple_param_list.o	\
 	ast_keyword_val.o	\

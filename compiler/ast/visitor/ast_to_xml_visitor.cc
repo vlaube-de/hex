@@ -1061,22 +1061,6 @@ AstToXmlVisitor::visit(HexAstValList vallist_)
   return vallist;
 }
 
-HexAstValAtom
-AstToXmlVisitor::visit(HexAstValAtom atom_)
-{
-  HexAstValAtom atom = AstVisitor::visit(atom_);
-
-  if(atom->type() == AST_VAL_ATOM_EXPR) {
-    HexAstExpr expr = (HexAstExpr)(atom->core());
-    expr->accept(this);
-  } else if(atom->type() == AST_VAL_ATOM_LAMBDA) {
-    HexAstLambda lambda = (HexAstLambda)(atom->core());
-    lambda->accept(this);
-  }
-
-  return atom;
-}
-
 HexAstArgList
 AstToXmlVisitor::visit(HexAstArgList arglist_)
 {
@@ -1183,21 +1167,34 @@ AstToXmlVisitor::visit(HexAstComprehension comprehension_)
   return comprehension;
 }
 
-HexAstListForm
-AstToXmlVisitor::visit(HexAstListForm form_)
+HexAstExplicitListForm
+AstToXmlVisitor::visit(HexAstExplicitListForm form_)
 {
-  HexAstListForm form = AstVisitor::visit(form_);
+  HexAstExplicitListForm form = AstVisitor::visit(form_);
 
   this->double_tag(
     "list_form",
     [this, form]() {
-      if(form->type() == AST_LIST_FORM_EXPR_LIST) {
-        HexAstExprList exprlist = (HexAstExprList)(form->core());
-        exprlist->accept(this);
-      } else if(form->type() == AST_LIST_FORM_COMPREHENSION) {
-        HexAstComprehension comprehension = (HexAstComprehension)(form->core());
-        comprehension->accept(this);
+      if(form->elements()) {
+        HexAstExprList elements = form->elements();
+        elements->accept(this);
       }
+    }
+  );
+
+  return form;
+}
+
+HexAstImplicitListForm
+AstToXmlVisitor::visit(HexAstImplicitListForm form_)
+{
+  HexAstImplicitListForm form = AstVisitor::visit(form_);
+
+  this->double_tag(
+    "list_form",
+    [this, form] () {
+      HexAstComprehension comprehension = form->comprehension();
+      comprehension->accept(this);
     }
   );
 
@@ -1328,21 +1325,34 @@ AstToXmlVisitor::visit(HexAstFieldDefList list_)
   return list;
 }
 
-HexAstDictForm
-AstToXmlVisitor::visit(HexAstDictForm dict_)
+HexAstExplicitDictForm
+AstToXmlVisitor::visit(HexAstExplicitDictForm dict_)
 {
-  HexAstDictForm dict = AstVisitor::visit(dict_);
+  HexAstExplicitDictForm dict = AstVisitor::visit(dict_);
 
   this->double_tag(
     "dict_form",
     [this, dict]() {
-      if(dict->type() == AST_DICT_FORM_EXPLICIT) {
-        HexAstFieldDefList fields = (HexAstFieldDefList)(dict->core());
-        fields->accept(this);
-      } else if (dict->type() == AST_DICT_FORM_COMPREHENSION) {
-        HexAstComprehension comprehension = (HexAstComprehension)(dict->core());
-        comprehension->accept(this);
+      if(dict->fields()) {
+        HexAstFieldDefList fields = dict->fields();
+        fields->accept(this); 
       }
+    }
+  );
+
+  return dict;
+}
+
+HexAstImplicitDictForm
+AstToXmlVisitor::visit(HexAstImplicitDictForm dict_)
+{
+  HexAstImplicitDictForm dict = AstVisitor::visit(dict_);
+
+  this->double_tag(
+    "dict_form",
+    [this, dict] () {
+      HexAstComprehension comprehension = dict->comprehension();
+      comprehension->accept(this);
     }
   );
 
@@ -1571,10 +1581,42 @@ AstToXmlVisitor::visit(HexAstAttributeDefList defs_)
   return defs;
 }
 
-HexAstAssignmentStmt
-AstToXmlVisitor::visit(HexAstAssignmentStmt stmt_)
+HexAstExprListAssignmentStmt
+AstToXmlVisitor::visit(HexAstExprListAssignmentStmt stmt_)
 {
-  HexAstAssignmentStmt stmt = AstVisitor::visit(stmt_);
+  HexAstExprListAssignmentStmt stmt = AstVisitor::visit(stmt_);
+
+  this->double_tag(
+    "assignment_stmt",
+    [this, stmt]() {
+
+      // dst
+      this->double_tag(
+        "assignment_stmt-dst",
+        [this, stmt]() {
+          stmt->target()->accept(this);
+        }
+      );
+
+      // src
+      this->double_tag(
+        "assignment_stmt-src",
+        [this, stmt]() {
+          HexAstExprList exprlist = stmt->src();
+          exprlist->accept(this);
+        }
+      );
+
+    }
+  );
+
+  return stmt;
+}
+
+HexAstLambdaAssignmentStmt
+AstToXmlVisitor::visit(HexAstLambdaAssignmentStmt stmt_)
+{
+  HexAstLambdaAssignmentStmt stmt = AstVisitor::visit(stmt_);
 
   this->double_tag(
     "assignment_stmt",
@@ -1594,7 +1636,7 @@ AstToXmlVisitor::visit(HexAstAssignmentStmt stmt_)
       this->double_tag(
         "assignment_stmt-dst",
         [this, stmt]() {
-          stmt->dst()->accept(this);
+          stmt->target()->accept(this);
         }
       );
 
@@ -1602,16 +1644,40 @@ AstToXmlVisitor::visit(HexAstAssignmentStmt stmt_)
       this->double_tag(
         "assignment_stmt-src",
         [this, stmt]() {
-          if(stmt->type() == AST_ASSIGNMENT_STMT_EXPR_LIST) {
-            HexAstExprList exprlist = (HexAstExprList)(stmt->src());
-            exprlist->accept(this);
-          } else if(stmt->type() == AST_ASSIGNMENT_STMT_LAMBDA) {
-            HexAstLambda lambda = (HexAstLambda)(stmt->src());
-            lambda->accept(this);
-          } else if(stmt->type() == AST_ASSIGNMENT_STMT_TASK) {
-            HexAstTaskDef task = (HexAstTaskDef)(stmt->src());
-            task->accept(this);
-          }
+          HexAstLambda lambda = stmt->src();
+          lambda->accept(this);
+        }
+      );
+
+    }
+  );
+
+  return stmt;
+}
+
+HexAstTaskDefAssignmentStmt
+AstToXmlVisitor::visit(HexAstTaskDefAssignmentStmt stmt_)
+{
+  HexAstTaskDefAssignmentStmt stmt = AstVisitor::visit(stmt_);
+
+  this->double_tag(
+    "assignment_stmt",
+    [this, stmt]() {
+
+      // dst
+      this->double_tag(
+        "assignment_stmt-dst",
+        [this, stmt]() {
+          stmt->target()->accept(this);
+        }
+      );
+
+      // src
+      this->double_tag(
+        "assignment_stmt-src",
+        [this, stmt]() {
+          HexAstTaskDef task = stmt->src();
+          task->accept(this);
         }
       );
 
@@ -1629,9 +1695,18 @@ AstToXmlVisitor::visit(HexAstUsingSrc src_)
   this->double_tag(
     "using_src",
     [this, src]() {
-      if(src->type() == AST_USING_SRC_NAME) {
-        HexAstName name = (HexAstName)(src->name());
-        name->accept(this);
+      if(src->level() > 0) {
+        this->double_tag(
+          "using_src_level",
+          [this, src]() {
+            char lvl[5] = {0};
+            sprintf(lvl, "%zd", src->level());
+            this->append(lvl);
+          }
+        );
+      }
+      if(src->name()) {
+        src->name()->accept(this);
       }
     }
   );

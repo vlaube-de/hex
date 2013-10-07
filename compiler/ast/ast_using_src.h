@@ -18,28 +18,24 @@
 #include <boost/smart_ptr.hpp>
 #include "ast_node.h"
 #include "ast_name.h"
-#include "ast_typed.h"
 #include "visitor/ast_visitor.h"
 
 #ifndef _AST_USING_SRC_H_
 #define _AST_USING_SRC_H_
 
-enum {
-  AST_USING_SRC_NAME=0x0A,
-  AST_USING_SRC_DOT=0x0F
-};
-
-typedef class _HexAstUsingSrc : public AstTyped, _HexAstNode {
+typedef class _HexAstUsingSrc : public _HexAstNode {
 public:
-  _HexAstUsingSrc(HexAstName, ast_type_t);
+  _HexAstUsingSrc(size_t, HexAstName);
 
   virtual void reprOK();
   virtual void accept(AstVisitor*);
 
+  size_t level();
   HexAstName name();
 
-  static _HexAstUsingSrc* create(HexAstName, ast_type_t);
+  static _HexAstUsingSrc* create(size_t, HexAstName);
 private:
+  size_t _level;
   boost::scoped_ptr<_HexAstName> _name;
 } * HexAstUsingSrc;
 

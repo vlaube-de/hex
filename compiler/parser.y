@@ -90,6 +90,7 @@ The sky is your limit...
   class _HexAstAttributeDef* hex_ast_attribute_def;
   class _HexAstAttributeDefList* hex_ast_attribute_def_list;
   class _HexAstAssignmentStmt* hex_ast_assignment_stmt;
+  size_t hex_ast_using_src_level;
   class _HexAstUsingSrc* hex_ast_using_src;
   class _HexAstUsingStmt* hex_ast_using_stmt;
   class _HexAstElifStmt* hex_ast_elif_stmt;
@@ -296,6 +297,7 @@ The sky is your limit...
 
 
 %type <hex_ast_integer> integer
+%type <hex_ast_float> float
 %type <hex_ast_string> string
 %type <hex_ast_literal> literal
 %type <hex_ast_call> call
@@ -345,6 +347,7 @@ The sky is your limit...
 %type <hex_ast_attribute_def> attribute_def
 %type <hex_ast_attribute_def_list> attribute_def_list
 %type <hex_ast_assignment_stmt> assignment_stmt
+%type <hex_ast_using_src_level> using_src_level
 %type <hex_ast_using_src> using_src
 %type <hex_ast_using_stmt> using_stmt
 %type <hex_ast_elif_stmt> elif_stmt
@@ -622,22 +625,28 @@ elif_stmt
 using_stmt
   : USING name SEMICOLON                                    { $$ = _HexAstUsingStmtDirect::create($2, NULL); }
   | USING name AS identifier SEMICOLON                      { $$ = _HexAstUsingStmtDirect::create($2, $4); }
-  | USING target_list IN using_src SEMICOLON                { $$ = _HexAstUsingStmtRelative::create($2, $4, NULL, AST_USING_STMT_RELATIVE_TARGET); }
-  | USING target_list IN using_src AS identifier SEMICOLON  { $$ = _HexAstUsingStmtRelative::create($2, $4, $6, AST_USING_STMT_RELATIVE_TARGET); }
-  | USING MUL_OP IN using_src SEMICOLON                     { $$ = _HexAstUsingStmtRelative::create(NULL, $4, NULL, AST_USING_STMT_RELATIVE_ALL); }
+  | USING target_list IN using_src SEMICOLON                { $$ = _HexAstUsingStmtRelative::create($2, $4, NULL); }
+  | USING target_list IN using_src AS identifier SEMICOLON  { $$ = _HexAstUsingStmtRelative::create($2, $4, $6); }
+  | USING MUL_OP IN using_src SEMICOLON                     { $$ = _HexAstUsingStmtRelative::create(NULL, $4, NULL); }
   ;
 
 using_src
-  : name                                                  { $$ = _HexAstUsingSrc::create($1, AST_USING_SRC_NAME); }
-  | DOT                                                   { $$ = _HexAstUsingSrc::create(NULL, AST_USING_SRC_DOT); }
+  : name                                                    { $$ = _HexAstUsingSrc::create(0, $1); }
+  | using_src_level                                         { $$ = _HexAstUsingSrc::create($1, NULL); }
+  | using_src_level name                                    { $$ = _HexAstUsingSrc::create($1, $2); }
+  ;
+
+using_src_level
+  : DOT                                                     { $$ = 1; }
+  | using_src_level DOT                                     { $$ = $1 + 1; }
   ;
 
 assignment_stmt
-  : primary ASSIGN_OP expr_list SEMICOLON                 { $$ = _HexAstAssignmentStmt::create(NULL, $1, $3, AST_ASSIGNMENT_STMT_EXPR_LIST, false); }
-  | primary ASSIGN_OP DEFER expr_list SEMICOLON           { $$ = _HexAstAssignmentStmt::create(NULL, $1, $4, AST_ASSIGNMENT_STMT_EXPR_LIST, true); }
-  | primary ASSIGN_OP lambda SEMICOLON                    { $$ = _HexAstAssignmentStmt::create(NULL, $1, $3, AST_ASSIGNMENT_STMT_LAMBDA, false); }
-  | decorator_list primary ASSIGN_OP lambda SEMICOLON     { $$ = _HexAstAssignmentStmt::create($1, $2, $4, AST_ASSIGNMENT_STMT_LAMBDA, false); }
-  | primary ASSIGN_OP task_def SEMICOLON                  { $$ = _HexAstAssignmentStmt::create(NULL, $1, $3, AST_ASSIGNMENT_STMT_TASK, false); }
+  : primary ASSIGN_OP expr_list SEMICOLON                 { $$ = _HexAstExprListAssignmentStmt::create($1, $3, false); }
+  | primary ASSIGN_OP DEFER expr_list SEMICOLON           { $$ = _HexAstExprListAssignmentStmt::create($1, $4, true); }
+  | primary ASSIGN_OP lambda SEMICOLON                    { $$ = _HexAstLambdaAssignmentStmt::create(NULL, $1, $3, false); }
+  | decorator_list primary ASSIGN_OP lambda SEMICOLON     { $$ = _HexAstLambdaAssignmentStmt::create($1, $2, $4, false); }
+  | primary ASSIGN_OP task_def SEMICOLON                  { $$ = _HexAstTaskDefAssignmentStmt::create($1, $3, false); }
   ;
 
 attribute_def_list
@@ -700,9 +709,9 @@ decorator
   ;
 
 dict_form
-  : LBRACE RBRACE                               { $$ = _HexAstDictForm::create(NULL, AST_DICT_FORM_EMPTY); }
-  | LBRACE field_def_list RBRACE                { $$ = _HexAstDictForm::create($2, AST_DICT_FORM_EXPLICIT); }
-  | LBRACE comprehension RBRACE                 { $$ = _HexAstDictForm::create($2, AST_DICT_FORM_COMPREHENSION); }
+  : LBRACE RBRACE                               { $$ = _HexAstExplicitDictForm::create(NULL); }
+  | LBRACE field_def_list RBRACE                { $$ = _HexAstExplicitDictForm::create($2); }
+  | LBRACE comprehension RBRACE                 { $$ = _HexAstImplicitDictForm::create($2); }
   ;
 
 field_def_list
@@ -729,9 +738,9 @@ field_def
   ;
 
 list_form
-  : LBRACKET RBRACKET                           { $$ = _HexAstListForm::create(NULL, AST_LIST_FORM_EMPTY); }
-  | LBRACKET expr_list RBRACKET                 { $$ = _HexAstListForm::create($2, AST_LIST_FORM_EXPR_LIST); }
-  | LBRACKET comprehension RBRACKET             { $$ = _HexAstListForm::create($2, AST_LIST_FORM_COMPREHENSION); }
+  : LBRACKET RBRACKET                           { $$ = _HexAstExplicitListForm::create(NULL); }
+  | LBRACKET expr_list RBRACKET                 { $$ = _HexAstExplicitListForm::create($2); }
+  | LBRACKET comprehension RBRACKET             { $$ = _HexAstImplicitListForm::create($2); }
   ;
 
 comprehension
@@ -760,8 +769,8 @@ arg_list
   ;
 
 val_atom
-  : expr                                { $$ = _HexAstValAtom::create($1, AST_VAL_ATOM_EXPR); }
-  | lambda                              { $$ = _HexAstValAtom::create($1, AST_VAL_ATOM_LAMBDA); }
+  : expr                                { $$ = $1; }
+  | lambda                              { $$ = $1; }
   ;
 
 val_list
@@ -964,20 +973,24 @@ call
 
 literal
   : integer                               { $$ = $1; }
-  | FLOAT                                 { $$ = _HexAstFloatLiteral::create($1); }
+  | float                                 { $$ = $1; }
   | string                                { $$ = $1; }
   ;
 
+float
+  : FLOAT                                 { $$ = _HexAstFloatLiteral::create($1); }
+  ;
+
 string
-  : STRING_LITERAL_SINGLE                 { $$ = _HexAstStringLiteral::create(AST_STRING_LITERAL_SINGLE_QUOTE, $1); }
-  | STRING_LITERAL_DOUBLE                 { $$ = _HexAstStringLiteral::create(AST_STRING_LITERAL_DOUBLE_QUOTE, $1); }
+  : STRING_LITERAL_SINGLE                 { $$ = _HexAstStringLiteral::create<_HexAstSingleQuoteStringLiteral>($1); }
+  | STRING_LITERAL_DOUBLE                 { $$ = _HexAstStringLiteral::create<_HexAstDoubleQuoteStringLiteral>($1); }
   ;
 
 integer
-  : DECIMALINTEGER                        { $$ = _HexAstIntegerLiteral::create(AST_INTEGER_LITERAL_DECIMAL, $1); }
-  | BININTEGER                            { $$ = _HexAstIntegerLiteral::create(AST_INTEGER_LITERAL_BINARY, $1); }
-  | OCTINTEGER                            { $$ = _HexAstIntegerLiteral::create(AST_INTEGER_LITERAL_OCTAL, $1); }
-  | HEXINTEGER                            { $$ = _HexAstIntegerLiteral::create(AST_INTEGER_LITERAL_HEXADECIMAL, $1); }
+  : DECIMALINTEGER                        { $$ = _HexAstIntegerLiteral::create<_HexAstDecimalIntegerLiteral>($1); }
+  | BININTEGER                            { $$ = _HexAstIntegerLiteral::create<_HexAstBinaryIntegerLiteral>($1); }
+  | OCTINTEGER                            { $$ = _HexAstIntegerLiteral::create<_HexAstOctalIntegerLiteral>($1); }
+  | HEXINTEGER                            { $$ = _HexAstIntegerLiteral::create<_HexAstHexadecimalIntegerLiteral>($1); }
   ;
 
 %%

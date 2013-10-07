@@ -17,16 +17,13 @@
 
 #include "ast_string_literal.h"
 #include "ast_unparsed.h"
-#include "ast_typed.h"
 #include "visitor/ast_visitor.h"
-#include "../../base/assert.h"
 #include "../../base/c_str.h"
 
 
 _HexAstStringLiteral::_HexAstStringLiteral(
-  ast_type_t type,
   c_str value 
-):AstTyped(type), _HexAstLiteral(value)
+) : _HexAstLiteral(value)
 {
   this->reprOK();
 }
@@ -34,10 +31,7 @@ _HexAstStringLiteral::_HexAstStringLiteral(
 void
 _HexAstStringLiteral::reprOK()
 {
-  HEX_ASSERT(
-    this->_type==AST_STRING_LITERAL_SINGLE_QUOTE ||
-    this->_type==AST_STRING_LITERAL_DOUBLE_QUOTE
-  );
+  // Do nothing here.
 }
 
 void
@@ -46,10 +40,14 @@ _HexAstStringLiteral::accept(AstVisitor* visitor)
   visitor->visit(this);
 }
 
-HexAstStringLiteral
-_HexAstStringLiteral::create(ast_type_t type, c_str value)
+_HexAstSingleQuoteStringLiteral::_HexAstSingleQuoteStringLiteral(
+  c_str value
+) : _HexAstStringLiteral(value)
 {
-  HexAstStringLiteral obj = new _HexAstStringLiteral(type, value);
-  HEX_ASSERT(obj);
-  return obj;
+}
+
+_HexAstDoubleQuoteStringLiteral::_HexAstDoubleQuoteStringLiteral(
+  c_str value
+) : _HexAstStringLiteral(value)
+{
 }

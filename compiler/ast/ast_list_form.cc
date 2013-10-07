@@ -16,45 +16,73 @@
  */
 
 #include "ast_list_form.h"
+#include "ast_expr_list.h"
+#include "ast_comprehension.h"
 #include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
 
-_HexAstListForm::_HexAstListForm(
-  void* core,
-  ast_type_t type
-):_core(core), AstTyped(type)
+_HexAstExplicitListForm::_HexAstExplicitListForm(
+  HexAstExprList elements
+) : _elements(elements)
 {
   this->reprOK();
 }
 
 void
-_HexAstListForm::reprOK()
+_HexAstExplicitListForm::reprOK()
 {
-  HEX_ASSERT(
-    this->_type==AST_LIST_FORM_EMPTY ||
-    this->_type==AST_LIST_FORM_EXPR_LIST ||
-    this->_type==AST_LIST_FORM_COMPREHENSION
-  );
-}
-
-void*
-_HexAstListForm::core()
-{
-  return this->_core;
+  // Do nothing here.
 }
 
 void
-_HexAstListForm::accept(AstVisitor* visitor)
+_HexAstExplicitListForm::accept(AstVisitor* visitor)
 {
   visitor->visit(this);
 }
 
-HexAstListForm
-_HexAstListForm::create(
-  void* core, ast_type_t type
-)
+HexAstExprList
+_HexAstExplicitListForm::elements()
 {
-  HexAstListForm obj = new _HexAstListForm(core, type);
+  return this->_elements.get();
+}
+
+HexAstExplicitListForm
+_HexAstExplicitListForm::create(HexAstExprList elements)
+{
+  HexAstExplicitListForm obj = new _HexAstExplicitListForm(elements);
+  HEX_ASSERT(obj);
+  return obj;
+}
+
+_HexAstImplicitListForm::_HexAstImplicitListForm(
+  HexAstComprehension comprehension
+) : _comprehension(comprehension)
+{
+  this->reprOK();
+}
+
+void
+_HexAstImplicitListForm::reprOK()
+{
+  HEX_ASSERT(this->comprehension());
+}
+
+void
+_HexAstImplicitListForm::accept(AstVisitor* visitor)
+{
+  visitor->visit(this);
+}
+
+HexAstComprehension
+_HexAstImplicitListForm::comprehension()
+{
+  return this->_comprehension.get();
+}
+
+HexAstImplicitListForm
+_HexAstImplicitListForm::create(HexAstComprehension comprehension)
+{
+  HexAstImplicitListForm obj = new _HexAstImplicitListForm(comprehension);
   HEX_ASSERT(obj);
   return obj;
 }

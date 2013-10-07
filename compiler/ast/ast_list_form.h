@@ -15,31 +15,44 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <boost/smart_ptr.hpp>
 #include "ast_primary.h"
-#include "ast_typed.h"
+#include "ast_expr_list.h"
+#include "ast_comprehension.h"
 #include "visitor/ast_visitor.h"
 
 #ifndef _AST_LIST_FORM_H_
 #define _AST_LIST_FORM_H_
 
-enum {
-  AST_LIST_FORM_EMPTY=0x01,
-  AST_LIST_FORM_EXPR_LIST=0x02,
-  AST_LIST_FORM_COMPREHENSION=0x04
-};
+typedef class _HexAstListForm : public _HexAstPrimary {
+} * HexAstListForm;
 
-typedef class _HexAstListForm : public AstTyped, public _HexAstPrimary {
+typedef class _HexAstExplicitListForm: public _HexAstListForm {
 public:
-  _HexAstListForm(void*, ast_type_t);
+  _HexAstExplicitListForm(HexAstExprList);
+
+  HexAstExprList elements();
 
   virtual void reprOK();
   virtual void accept(AstVisitor*);
 
-  void* core();
-
-  static _HexAstListForm* create(void*, ast_type_t);
+  static _HexAstExplicitListForm* create(HexAstExprList);
 private:
-  void* _core;
-} * HexAstListForm;
+  boost::scoped_ptr<_HexAstExprList> _elements;
+} * HexAstExplicitListForm;
+
+typedef class _HexAstImplicitListForm : public _HexAstListForm {
+public:
+  _HexAstImplicitListForm(HexAstComprehension);
+
+  HexAstComprehension comprehension();
+
+  virtual void reprOK();
+  virtual void accept(AstVisitor*);
+
+  static _HexAstImplicitListForm* create(HexAstComprehension);
+private:
+  boost::scoped_ptr<_HexAstComprehension> _comprehension;
+} * HexAstImplicitListForm;
 
 #endif /* _AST_LIST_FORM_H_ */

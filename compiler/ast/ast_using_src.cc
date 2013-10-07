@@ -17,14 +17,15 @@
 
 #include "ast_using_src.h"
 #include "ast_name.h"
-#include "ast_typed.h"
 #include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
 
 _HexAstUsingSrc::_HexAstUsingSrc(
-  HexAstName name,
-  ast_type_t type
-):_name(name), AstTyped(type)
+  size_t level,
+  HexAstName name
+) :
+  _level(level),
+  _name(name)
 {
   this->reprOK();
 }
@@ -32,10 +33,15 @@ _HexAstUsingSrc::_HexAstUsingSrc(
 void
 _HexAstUsingSrc::reprOK()
 {
-  HEX_ASSERT(this->_type);
-  if(this->_type == AST_USING_SRC_NAME) {
-    HEX_ASSERT(this->_name);
+  if(this->level() == 0) {
+    HEX_ASSERT(this->name());
   }
+}
+
+size_t
+_HexAstUsingSrc::level()
+{
+  return this->_level;
 }
 
 HexAstName
@@ -52,11 +58,11 @@ _HexAstUsingSrc::accept(AstVisitor* visitor)
 
 HexAstUsingSrc
 _HexAstUsingSrc::create(
-  HexAstName name,
-  ast_type_t type
+  size_t level,
+  HexAstName name
 )
 {
-  HexAstUsingSrc obj = new _HexAstUsingSrc(name, type);
+  HexAstUsingSrc obj = new _HexAstUsingSrc(level, name);
   HEX_ASSERT(obj);
   return obj;
 }

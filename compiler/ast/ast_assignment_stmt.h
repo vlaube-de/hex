@@ -18,44 +18,96 @@
 #include <boost/smart_ptr.hpp>
 #include "ast_simple_stmt.h"
 #include "ast_primary.h"
+#include "ast_expr_list.h"
+#include "ast_lambda.h"
 #include "ast_decorator_list.h"
-#include "ast_typed.h"
+#include "ast_task_def.h"
 #include "visitor/ast_visitor.h"
 
 #ifndef _AST_ASSIGNMENT_STMT_H_
 #define _AST_ASSIGNMENT_STMT_H_
 
-enum {
-  AST_ASSIGNMENT_STMT_EXPR_LIST=0x0A,
-  AST_ASSIGNMENT_STMT_LAMBDA=0x0C,
-  AST_ASSIGNMENT_STMT_TASK=0x0F
-};
-
-typedef class _HexAstAssignmentStmt : public AstTyped, public _HexAstSimpleStmt {
+typedef class _HexAstAssignmentStmt : public _HexAstSimpleStmt {
 public:
-  _HexAstAssignmentStmt(HexAstDecoratorList, HexAstPrimary, void*, ast_type_t, bool);
+  _HexAstAssignmentStmt(HexAstPrimary, bool);
+
+  virtual void reprOK();
+
+  virtual HexAstPrimary target();
+  virtual bool defer();
+
+protected:
+  boost::scoped_ptr<_HexAstPrimary> _target;
+  bool _defer;
+} * HexAstAssignmentStmt;
+
+typedef class _HexAstExprListAssignmentStmt : public _HexAstAssignmentStmt {
+public:
+  _HexAstExprListAssignmentStmt(HexAstPrimary, HexAstExprList, bool);
+
+  virtual void reprOK();
+  virtual void accept(AstVisitor*);
+
+  HexAstExprList src();
+
+  static _HexAstExprListAssignmentStmt* create(
+    HexAstPrimary,
+    HexAstExprList,
+    bool
+  );
+
+private:
+  boost::scoped_ptr<_HexAstExprList> _src;
+} * HexAstExprListAssignmentStmt;
+
+typedef class _HexAstLambdaAssignmentStmt : public _HexAstAssignmentStmt {
+public:
+  _HexAstLambdaAssignmentStmt(
+    HexAstDecoratorList,
+    HexAstPrimary,
+    HexAstLambda,
+    bool
+  );
 
   virtual void reprOK();
   virtual void accept(AstVisitor*);
 
   HexAstDecoratorList decorators();
-  HexAstPrimary dst();
-  void* src();
-  bool defer();
+  HexAstLambda src();
 
-  static _HexAstAssignmentStmt* create(
+  static _HexAstLambdaAssignmentStmt* create(
     HexAstDecoratorList,
     HexAstPrimary,
-    void*,
-    ast_type_t,
+    HexAstLambda,
     bool
   );
 
 private:
   boost::scoped_ptr<_HexAstDecoratorList> _decorators;
-  boost::scoped_ptr<_HexAstPrimary> _dst;
-  void* _src;
-  bool _defer;
-} * HexAstAssignmentStmt;
+  boost::scoped_ptr<_HexAstLambda> _src;
+} * HexAstLambdaAssignmentStmt;
+
+typedef class _HexAstTaskDefAssignmentStmt : public _HexAstAssignmentStmt {
+public:
+  _HexAstTaskDefAssignmentStmt(
+    HexAstPrimary,
+    HexAstTaskDef,
+    bool
+  );
+
+  virtual void reprOK();
+  virtual void accept(AstVisitor*);
+
+  HexAstTaskDef src();
+
+  static _HexAstTaskDefAssignmentStmt* create(
+    HexAstPrimary,
+    HexAstTaskDef,
+    bool
+  );
+
+protected:
+  boost::scoped_ptr<_HexAstTaskDef> _src;
+} * HexAstTaskDefAssignmentStmt;
 
 #endif /* _AST_ASSIGNMENT_STMT_H_ */

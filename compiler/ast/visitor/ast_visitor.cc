@@ -440,18 +440,18 @@ AstVisitor::visit(HexAstParameterList params)
   return params;
 }
 
-HexAstValList
-AstVisitor::visit(HexAstValList vallist)
-{
-  HEX_ASSERT(vallist);
-  return vallist;
-}
-
 HexAstValAtom
 AstVisitor::visit(HexAstValAtom atom)
 {
   HEX_ASSERT(atom);
   return atom;
+}
+
+HexAstValList
+AstVisitor::visit(HexAstValList vallist)
+{
+  HEX_ASSERT(vallist);
+  return vallist;
 }
 
 HexAstArgList
@@ -468,8 +468,15 @@ AstVisitor::visit(HexAstComprehension comprehension)
   return comprehension;
 }
 
-HexAstListForm
-AstVisitor::visit(HexAstListForm form)
+HexAstExplicitListForm
+AstVisitor::visit(HexAstExplicitListForm form)
+{
+  HEX_ASSERT(form);
+  return form;
+}
+
+HexAstImplicitListForm
+AstVisitor::visit(HexAstImplicitListForm form)
 {
   HEX_ASSERT(form);
   return form;
@@ -510,8 +517,15 @@ AstVisitor::visit(HexAstFieldDefList list)
   return list;
 }
 
-HexAstDictForm
-AstVisitor::visit(HexAstDictForm dict)
+HexAstExplicitDictForm
+AstVisitor::visit(HexAstExplicitDictForm dict)
+{
+  HEX_ASSERT(dict);
+  return dict;
+}
+
+HexAstImplicitDictForm
+AstVisitor::visit(HexAstImplicitDictForm dict)
 {
   HEX_ASSERT(dict);
   return dict;
@@ -552,8 +566,22 @@ AstVisitor::visit(HexAstAttributeDefList list)
   return list;
 }
 
-HexAstAssignmentStmt
-AstVisitor::visit(HexAstAssignmentStmt stmt)
+HexAstExprListAssignmentStmt
+AstVisitor::visit(HexAstExprListAssignmentStmt stmt)
+{
+  HEX_ASSERT(stmt);
+  return stmt;
+}
+
+HexAstLambdaAssignmentStmt
+AstVisitor::visit(HexAstLambdaAssignmentStmt stmt)
+{
+  HEX_ASSERT(stmt);
+  return stmt;
+}
+
+HexAstTaskDefAssignmentStmt
+AstVisitor::visit(HexAstTaskDefAssignmentStmt stmt)
 {
   HEX_ASSERT(stmt);
   return stmt;

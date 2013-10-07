@@ -17,16 +17,14 @@
 
 #include "ast_integer_literal.h"
 #include "ast_unparsed.h"
-#include "ast_typed.h"
 #include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
 #include "../../base/c_str.h"
 
 
 _HexAstIntegerLiteral::_HexAstIntegerLiteral(
-  ast_type_t type,
   c_str value
-):AstTyped(type), _HexAstLiteral(value)
+) : _HexAstLiteral(value)
 {
   this->reprOK();
 }
@@ -34,12 +32,7 @@ _HexAstIntegerLiteral::_HexAstIntegerLiteral(
 void
 _HexAstIntegerLiteral::reprOK()
 {
-  HEX_ASSERT(
-    this->_type==AST_INTEGER_LITERAL_DECIMAL ||
-    this->_type==AST_INTEGER_LITERAL_BINARY  ||
-    this->_type==AST_INTEGER_LITERAL_OCTAL   ||
-    this->_type==AST_INTEGER_LITERAL_HEXADECIMAL
-  );
+  // Do nothing here.
 }
 
 void
@@ -48,10 +41,27 @@ _HexAstIntegerLiteral::accept(AstVisitor* visitor)
   visitor->visit(this);
 }
 
-HexAstIntegerLiteral
-_HexAstIntegerLiteral::create(ast_type_t type, c_str value)
+_HexAstDecimalIntegerLiteral::_HexAstDecimalIntegerLiteral(
+  c_str value
+) : _HexAstIntegerLiteral(value)
 {
-  HexAstIntegerLiteral obj = new _HexAstIntegerLiteral(type, value);
-  HEX_ASSERT(obj);
-  return obj;
 }
+
+_HexAstBinaryIntegerLiteral::_HexAstBinaryIntegerLiteral(
+  c_str value
+) : _HexAstIntegerLiteral(value)
+{
+}
+
+_HexAstOctalIntegerLiteral::_HexAstOctalIntegerLiteral(
+  c_str value
+) : _HexAstIntegerLiteral(value)
+{
+}
+
+_HexAstHexadecimalIntegerLiteral::_HexAstHexadecimalIntegerLiteral(
+  c_str value
+) : _HexAstIntegerLiteral(value)
+{
+}
+

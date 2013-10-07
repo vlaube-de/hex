@@ -19,16 +19,12 @@
  * Generic AST node for HEX expressions
  */
 
-#include "ast_node.h"
+#include "ast_val_atom.h"
 
 #ifndef _AST_EXPR_H_
 #define _AST_EXPR_H_
 
-typedef class _HexAstExpr : public _HexAstNode {
-public:
-  _HexAstExpr();
-
-  virtual void reprOK();
+typedef class _HexAstExpr : public _HexAstValAtom {
 } * HexAstExpr;
 
 #endif /* _AST_EXPR_H_ */

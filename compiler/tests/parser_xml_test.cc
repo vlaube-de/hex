@@ -230,6 +230,7 @@ TEST_F(HexParserXmlTest, TestCall)
     )
   );
 
+  /*
   test(
     "person.set_age(24);",
     wrap_single_expr(
@@ -310,6 +311,7 @@ TEST_F(HexParserXmlTest, TestCall)
       "<attribute/>"
     )
   );
+  */
 }
 
 TEST_F(HexParserXmlTest, TestAttributeRef)
@@ -2012,13 +2014,14 @@ TEST_F(HexParserXmlTest, TestUsingStmt)
           "<target_list/>"
         "<using_stmt_relative-targets/>"
         "<using_stmt_relative-src>"
-          "<using_src><using_src/>"
+          "<using_src>"
+            "<using_src_level>1<using_src_level/>"
+          "<using_src/>"
         "<using_stmt_relative-src/>"
       "<using_stmt_relative/>"
     )
   );
 
-  // TODO: missing using target.
   test(
     "using * in lib;",
     wrap_single_stmt(

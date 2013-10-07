@@ -19,50 +19,9 @@
 #include "../../base/assert.h"
 #include "ast_commutative_binary_expr.h"
 
-
 _HexAstCommutativeBinaryExpr::_HexAstCommutativeBinaryExpr(
   HexAstExpr left,
   HexAstExpr right
 ) :_HexAstBinaryExpr(left, right)
 {
 }
-
-/*
-bool
-_HexAstCommutativeBinaryExpr::equals(void* obj)
-{
-  return this->examine(Examiners::Equals, obj);
-}
-
-bool
-_HexAstCommutativeBinaryExpr::isomorphic(void* obj)
-{
-  return this->examine(Examiners::Isomorphic, obj);
-}
-
-bool
-_HexAstCommutativeBinaryExpr::equivalent(void* obj)
-{
-  return this->examine(Examiners::Equivalent, obj);
-}
-
-bool
-_HexAstCommutativeBinaryExpr::examine(Examiner e, void* obj)
-{
-  if(obj == NULL) return false;
-
-  HexAstCommutativeBinaryExpr that = (HexAstCommutativeBinaryExpr)obj;
-
-  if(this == that) return true;
-
-  bool leftLeft = e->examine(this->left(), that->left());
-  bool rightRight = e->examine(this->right(), that->right());
-  if(leftLeft == true && rightRight == true) return true;
-
-  bool leftRight = e->examine(this->left(), that->right());
-  bool rightLeft = e->examine(this->right(), that->left());
-  if(leftRight == true && rightLeft == true) return true;
-
-  return false;
-}
-*/

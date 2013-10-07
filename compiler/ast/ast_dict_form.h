@@ -15,31 +15,44 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <boost/smart_ptr.hpp>
 #include "ast_primary.h"
-#include "ast_typed.h"
+#include "ast_field_def_list.h"
+#include "ast_comprehension.h"
 #include "visitor/ast_visitor.h"
 
 #ifndef _AST_DICT_FORM_H_
 #define _AST_DICT_FORM_H_
 
-enum {
-  AST_DICT_FORM_EMPTY=0x01,
-  AST_DICT_FORM_EXPLICIT=0x02,
-  AST_DICT_FORM_COMPREHENSION=0x04
-};
+typedef class _HexAstDictForm : public _HexAstPrimary {
+} * HexAstDictForm;
 
-typedef class _HexAstDictForm : public AstTyped, public _HexAstPrimary {
+typedef class _HexAstExplicitDictForm : public _HexAstDictForm {
 public:
-  _HexAstDictForm(void*, ast_type_t);
+  _HexAstExplicitDictForm(HexAstFieldDefList);
 
   virtual void reprOK();
   virtual void accept(AstVisitor*);
 
-  void* core();
+  HexAstFieldDefList fields();
 
-  static _HexAstDictForm* create(void*, ast_type_t);
+  static _HexAstExplicitDictForm* create(HexAstFieldDefList);
 private:
-  void* _core;
-} * HexAstDictForm;
+  boost::scoped_ptr<_HexAstFieldDefList> _fields;
+} * HexAstExplicitDictForm;
+
+typedef class _HexAstImplicitDictForm : public _HexAstDictForm {
+public:
+  _HexAstImplicitDictForm(HexAstComprehension);    
+
+  virtual void reprOK();
+  virtual void accept(AstVisitor*);
+
+  HexAstComprehension comprehension();
+
+  static _HexAstImplicitDictForm* create(HexAstComprehension);
+private:
+  boost::scoped_ptr<_HexAstComprehension> _comprehension;
+} * HexAstImplicitDictForm;
 
 #endif /* _AST_DICT_FORM_H_ */

@@ -20,7 +20,6 @@
 #include "ast_simple_stmt.h"
 #include "ast_target_list.h"
 #include "ast_identifier.h"
-#include "ast_typed.h"
 #include "ast_name.h"
 #include "visitor/ast_visitor.h"
 
@@ -53,9 +52,9 @@ enum {
   AST_USING_STMT_RELATIVE_ALL=0x0F
 };
 
-typedef class _HexAstUsingStmtRelative : public AstTyped, public _HexAstUsingStmt {
+typedef class _HexAstUsingStmtRelative : public _HexAstUsingStmt {
 public:
-  _HexAstUsingStmtRelative(HexAstTargetList, HexAstUsingSrc, HexAstIdentifier, ast_type_t);
+  _HexAstUsingStmtRelative(HexAstTargetList, HexAstUsingSrc, HexAstIdentifier);
 
   virtual void reprOK();
   virtual void accept(AstVisitor*);
@@ -67,8 +66,7 @@ public:
   static _HexAstUsingStmtRelative* create(
     HexAstTargetList,
     HexAstUsingSrc,
-    HexAstIdentifier,
-    ast_type_t
+    HexAstIdentifier
   );
 
 private:

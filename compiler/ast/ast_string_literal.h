@@ -17,26 +17,42 @@
 
 #include "ast_literal.h"
 #include "ast_unparsed.h"
-#include "ast_typed.h"
 #include "visitor/ast_visitor.h"
 #include "../../base/c_str.h"
+#include "../../base/assert.h"
 
 #ifndef _AST_STRING_LITERAL_H_
 #define _AST_STRING_LITERAL_H_
 
-enum {
-  AST_STRING_LITERAL_SINGLE_QUOTE=0x01,
-  AST_STRING_LITERAL_DOUBLE_QUOTE=0x02
-};
-
-typedef class _HexAstStringLiteral : public _HexAstLiteral, AstTyped {
+typedef class _HexAstStringLiteral : public _HexAstLiteral {
 public:
-  _HexAstStringLiteral(ast_type_t, c_str);
+  _HexAstStringLiteral(c_str);
 
   virtual void reprOK();
   virtual void accept(AstVisitor*);
 
-  static _HexAstStringLiteral* create(ast_type_t, c_str);
+  template<typename T>
+  static T* create(c_str);
+
 } * HexAstStringLiteral;
+
+template<typename T>
+T*
+_HexAstStringLiteral::create(c_str value)
+{
+  T* obj = new T(value);
+  HEX_ASSERT(obj);
+  return obj;
+}
+
+typedef class _HexAstSingleQuoteStringLiteral : public _HexAstStringLiteral {
+public:
+  _HexAstSingleQuoteStringLiteral(c_str);
+} * HexAstSingleQuoteStringLiteral;
+
+typedef class _HexAstDoubleQuoteStringLiteral : public _HexAstStringLiteral {
+public:
+  _HexAstDoubleQuoteStringLiteral(c_str);
+} * HexAstDoubleQuoteStringLiteral;
 
 #endif /* _AST_STRING_LITERAL_H_ */

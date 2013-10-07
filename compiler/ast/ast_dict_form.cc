@@ -16,47 +16,76 @@
  */
 
 #include "ast_dict_form.h"
-#include "ast_typed.h"
+#include "ast_field_def_list.h"
+#include "ast_comprehension.h"
 #include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
 
-_HexAstDictForm::_HexAstDictForm(
-  void* core,
-  ast_type_t type
-):_core(core), AstTyped(type)
+_HexAstExplicitDictForm::_HexAstExplicitDictForm(
+  HexAstFieldDefList fields 
+) : _fields(fields)
 {
   this->reprOK();
 }
 
 void
-_HexAstDictForm::reprOK()
+_HexAstExplicitDictForm::reprOK()
 {
-  HEX_ASSERT(
-    this->_type==AST_DICT_FORM_EMPTY ||
-    this->_type==AST_DICT_FORM_EXPLICIT ||
-    this->_type==AST_DICT_FORM_COMPREHENSION
-  );
+  // Do nothing here.
 }
 
-void*
-_HexAstDictForm::core()
+HexAstFieldDefList
+_HexAstExplicitDictForm::fields()
 {
-  return this->_core;
+  return this->_fields.get();
 }
 
 void
-_HexAstDictForm::accept(AstVisitor* visitor)
+_HexAstExplicitDictForm::accept(AstVisitor* visitor)
 {
   visitor->visit(this);
 }
 
-HexAstDictForm
-_HexAstDictForm::create(
-  void* core,
-  ast_type_t type
+HexAstExplicitDictForm
+_HexAstExplicitDictForm::create(
+  HexAstFieldDefList fields
 )
 {
-  HexAstDictForm obj = new _HexAstDictForm(core, type);
+  HexAstExplicitDictForm obj = new _HexAstExplicitDictForm(fields);
+  HEX_ASSERT(obj);
+  return obj;
+}
+
+
+_HexAstImplicitDictForm::_HexAstImplicitDictForm(
+  HexAstComprehension comprehension
+) : _comprehension(comprehension)
+{
+  this->reprOK();
+}
+
+void
+_HexAstImplicitDictForm::reprOK()
+{
+  HEX_ASSERT(this->comprehension());
+}
+
+HexAstComprehension
+_HexAstImplicitDictForm::comprehension()
+{
+  return this->_comprehension.get();
+}
+
+void
+_HexAstImplicitDictForm::accept(AstVisitor* visitor)
+{
+  visitor->visit(this);
+}
+
+HexAstImplicitDictForm
+_HexAstImplicitDictForm::create(HexAstComprehension comprehension)
+{
+  HexAstImplicitDictForm obj = new _HexAstImplicitDictForm(comprehension);
   HEX_ASSERT(obj);
   return obj;
 }

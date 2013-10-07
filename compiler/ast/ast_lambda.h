@@ -16,7 +16,6 @@
  */
 
 #include <boost/smart_ptr.hpp>
-#include "ast_node.h"
 #include "ast_parameter_list.h"
 #include "ast_stmt_group.h"
 #include "ast_expr.h"
@@ -25,7 +24,7 @@
 #ifndef _AST_LAMBDA_H_
 #define _AST_LAMBDA_H_
 
-typedef class _HexAstLambda : public _HexAstNode {
+typedef class _HexAstLambda : public _HexAstValAtom {
 public:
   _HexAstLambda(HexAstParameterList);
 

@@ -839,22 +839,6 @@ AstToStringVisitor::visit(HexAstValList vallist_)
   return vallist;
 }
 
-HexAstValAtom
-AstToStringVisitor::visit(HexAstValAtom atom_)
-{
-  HexAstValAtom atom = AstVisitor::visit(atom_);
-
-  if(atom->type() == AST_VAL_ATOM_EXPR) {
-    HexAstExpr expr = (HexAstExpr)(atom->core());
-    expr->accept(this);
-  } else if(atom->type() == AST_VAL_ATOM_LAMBDA) {
-    HexAstLambda lambda = (HexAstLambda)(atom->core());
-    lambda->accept(this);
-  }
-
-  return atom;
-}
-
 HexAstArgList
 AstToStringVisitor::visit(HexAstArgList arglist_)
 {
@@ -913,20 +897,32 @@ AstToStringVisitor::visit(HexAstComprehension comprehension_)
   return comprehension;
 }
 
-HexAstListForm
-AstToStringVisitor::visit(HexAstListForm form_)
+HexAstExplicitListForm
+AstToStringVisitor::visit(HexAstExplicitListForm form_)
 {
-  HexAstListForm form = AstVisitor::visit(form_);
+  HexAstExplicitListForm form = AstVisitor::visit(form_);
 
   this->append("[");
 
-  if(form->type() == AST_LIST_FORM_EXPR_LIST) {
-    HexAstExprList exprlist = (HexAstExprList)(form->core());
-    exprlist->accept(this);
-  } else if(form->type() == AST_LIST_FORM_COMPREHENSION) {
-    HexAstComprehension comprehension = (HexAstComprehension)(form->core());
-    comprehension->accept(this);
+  if(form->elements()) {
+    HexAstExprList elements = form->elements();
+    elements->accept(this);
   }
+
+  this->append("]");
+
+  return form;
+}
+
+HexAstImplicitListForm
+AstToStringVisitor::visit(HexAstImplicitListForm form_)
+{
+  HexAstImplicitListForm form = AstVisitor::visit(form_);
+
+  this->append("[");
+
+  HexAstComprehension comprehension = form->comprehension();
+  comprehension->accept(this);
 
   this->append("]");
 
@@ -1007,20 +1003,32 @@ AstToStringVisitor::visit(HexAstFieldDefList list_)
   return list;
 }
 
-HexAstDictForm
-AstToStringVisitor::visit(HexAstDictForm dict_)
+HexAstExplicitDictForm
+AstToStringVisitor::visit(HexAstExplicitDictForm dict_)
 {
-  HexAstDictForm dict = AstVisitor::visit(dict_);
+  HexAstExplicitDictForm dict = AstVisitor::visit(dict_);
 
   this->append("{");
 
-  if(dict->type() == AST_DICT_FORM_EXPLICIT) {
-    HexAstFieldDefList fields = (HexAstFieldDefList)(dict->core());
+  if(dict->fields()) {
+    HexAstFieldDefList fields = dict->fields();
     fields->accept(this);
-  } else if (dict->type() == AST_DICT_FORM_COMPREHENSION) {
-    HexAstComprehension comprehension = (HexAstComprehension)(dict->core());
-    comprehension->accept(this);
   }
+
+  this->append("}");
+
+  return dict;
+}
+
+HexAstImplicitDictForm
+AstToStringVisitor::visit(HexAstImplicitDictForm dict_)
+{
+  HexAstImplicitDictForm dict = AstVisitor::visit(dict_);
+
+  this->append("{");
+
+  HexAstComprehension comprehension = dict->comprehension();
+  comprehension->accept(this);
 
   this->append("}");
 
@@ -1201,30 +1209,60 @@ AstToStringVisitor::visit(HexAstAttributeDefList defs_)
   return defs;
 }
 
-HexAstAssignmentStmt
-AstToStringVisitor::visit(HexAstAssignmentStmt stmt_)
+HexAstExprListAssignmentStmt
+AstToStringVisitor::visit(HexAstExprListAssignmentStmt stmt_)
 {
-  HexAstAssignmentStmt stmt = AstVisitor::visit(stmt_);
+  HexAstExprListAssignmentStmt stmt = AstVisitor::visit(stmt_);
 
-  if(stmt->decorators()) {
-    stmt->decorators()->accept(this);
-  }
-  stmt->dst()->accept(this);
+  stmt->target()->accept(this);
   this->append(" = ");
   if(stmt->defer()) {
     this->append(" defer ");
   }
 
-  if(stmt->type() == AST_ASSIGNMENT_STMT_EXPR_LIST) {
-    HexAstExprList exprlist = (HexAstExprList)(stmt->src());
-    exprlist->accept(this);
-  } else if(stmt->type() == AST_ASSIGNMENT_STMT_LAMBDA) {
-    HexAstLambda lambda = (HexAstLambda)(stmt->src());
-    lambda->accept(this);
-  } else if(stmt->type() == AST_ASSIGNMENT_STMT_TASK) {
-    HexAstTaskDef task = (HexAstTaskDef)(stmt->src());
-    task->accept(this);
+  HexAstExprList exprlist = stmt->src();
+  exprlist->accept(this);
+
+  this->append(";");
+
+  return stmt;
+}
+
+HexAstLambdaAssignmentStmt
+AstToStringVisitor::visit(HexAstLambdaAssignmentStmt stmt_)
+{
+  HexAstLambdaAssignmentStmt stmt = AstVisitor::visit(stmt_);
+
+  if(stmt->decorators()){
+    stmt->decorators()->accept(this);
   }
+  stmt->target()->accept(this);
+  this->append(" = ");
+  if(stmt->defer()) {
+    this->append(" defer ");
+  }
+
+  HexAstLambda lambda = stmt->src();
+  lambda->accept(this);
+
+  this->append(";");
+
+  return stmt;
+}
+
+HexAstTaskDefAssignmentStmt
+AstToStringVisitor::visit(HexAstTaskDefAssignmentStmt stmt_)
+{
+  HexAstTaskDefAssignmentStmt stmt = AstVisitor::visit(stmt_);
+
+  stmt->target()->accept(this);
+  this->append(" = ");
+  if(stmt->defer()) {
+    this->append(" defer ");
+  }
+
+  HexAstTaskDef task = stmt->src();
+  task->accept(this);
 
   this->append(";");
 
@@ -1236,11 +1274,15 @@ AstToStringVisitor::visit(HexAstUsingSrc src_)
 {
   HexAstUsingSrc src = AstVisitor::visit(src_);
 
-  if(src->type() == AST_USING_SRC_NAME) {
-    HexAstName name = (HexAstName)(src->name());
-    name->accept(this);
-  } else if(src->type() == AST_USING_SRC_DOT) {
+  size_t level = src->level();
+  HexAstName name = src->name();
+
+  for(int i = 0; i < level; i++) {
     this->append(".");
+  }
+
+  if(src->name()) {
+    src->name()->accept(this);
   }
 
   return src;
