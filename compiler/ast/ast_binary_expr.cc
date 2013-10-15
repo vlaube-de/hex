@@ -17,14 +17,21 @@
 
 
 #include "ast_binary_expr.h"
+#include "ast_expr_associativity.h"
+#include "ast_expr_precedence.h"
 #include "examiner.h"
 #include "../../base/assert.h"
 
 
 _HexAstBinaryExpr::_HexAstBinaryExpr(
   HexAstExpr lexpr,
-  HexAstExpr rexpr
-):_lexpr(lexpr), _rexpr(rexpr)
+  HexAstExpr rexpr,
+  HexAstExprAssociativity associativity,
+  HexAstExprPrecedence precedence
+) :
+  _lexpr(lexpr),
+  _rexpr(rexpr),
+  _HexAstExpr(associativity, precedence)
 {
   this->reprOK();
 }
@@ -46,4 +53,10 @@ _HexAstBinaryExpr::reprOK()
 {
   HEX_ASSERT(this->left());
   HEX_ASSERT(this->right());
+
+  // Check for precedence.
+  HEX_ASSERT(this->left()->precedence() >= this->precedence());
+  if(this->right()->associativity() == EXPR_ASSOCIATIVITY_LEFT) {
+    HEX_ASSERT(this->right()->precedence() >= this->precedence());
+  }
 }

@@ -17,6 +17,8 @@
 
 
 #include "ast_bitwise_shift_left_expr.h"
+#include "ast_expr_associativity.h"
+#include "ast_expr_precedence.h"
 #include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
 
@@ -24,7 +26,12 @@
 _HexAstBitwiseShiftLeftExpr::_HexAstBitwiseShiftLeftExpr(
   HexAstExpr left,
   HexAstExpr right
-): _HexAstBinaryExpr(left, right)
+) : _HexAstBinaryExpr(
+      left,
+      right,
+      EXPR_ASSOCIATIVITY_LEFT,
+      EXPR_PRECEDENCE_BITWISE_SHIFT
+    )
 {
   this->reprOK();
 }

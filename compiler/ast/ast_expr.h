@@ -20,11 +20,24 @@
  */
 
 #include "ast_val_atom.h"
+#include "ast_expr_associativity.h"
+#include "ast_expr_precedence.h"
 
 #ifndef _AST_EXPR_H_
 #define _AST_EXPR_H_
 
 typedef class _HexAstExpr : public _HexAstValAtom {
+public:
+  _HexAstExpr(
+    HexAstExprAssociativity associativity,
+    HexAstExprPrecedence precedence
+  ) : _associativity(associativity), _precedence(precedence) {}
+
+  virtual HexAstExprAssociativity associativity() { return this->_associativity; }
+  virtual HexAstExprPrecedence precedence() { return this->_precedence; }
+protected:
+  HexAstExprAssociativity _associativity;
+  HexAstExprPrecedence _precedence;
 } * HexAstExpr;
 
 #endif /* _AST_EXPR_H_ */

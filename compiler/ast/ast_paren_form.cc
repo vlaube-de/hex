@@ -17,12 +17,20 @@
 
 #include "ast_expr_list.h"
 #include "ast_paren_form.h"
+#include "ast_primary.h"
+#include "ast_expr_associativity.h"
+#include "ast_expr_precedence.h"
 #include "../../base/assert.h"
 #include "visitor/ast_visitor.h"
 
 _HexAstParenForm::_HexAstParenForm(
   HexAstExprList exprs
-):_exprs(exprs)
+) :
+  _exprs(exprs),
+  _HexAstPrimary(
+    EXPR_ASSOCIATIVITY_LEFT,
+    EXPR_PRECEDENCE_PRIMARY_1
+  )
 {
   this->reprOK();
 }

@@ -15,15 +15,21 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 #include "ast_binary_expr.h"
+#include "ast_expr_associativity.h"
+#include "ast_expr_precedence.h"
 
 #ifndef _AST_COMMUTATIVE_BINARY_EXPR_H_
 #define _AST_COMMUTATIVE_BINARY_EXPR_H_
 
 typedef class _HexAstCommutativeBinaryExpr : public _HexAstBinaryExpr {
 public:
-  _HexAstCommutativeBinaryExpr(HexAstExpr left, HexAstExpr right);
+  _HexAstCommutativeBinaryExpr(
+    HexAstExpr,
+    HexAstExpr,
+    HexAstExprAssociativity,
+    HexAstExprPrecedence
+  );
 } * HexAstCommutativeBinaryExpr;
 
 #endif /* _AST_COMMUTATIVE_BINARY_EXPR_H_ */

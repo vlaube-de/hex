@@ -28,7 +28,6 @@ public:
 
   virtual void reprOK();
   virtual void accept(AstVisitor*);
-
 } * HexAstNotExpr;
 
 #endif /* _AST_NOT_EXPR_H_ */

@@ -16,13 +16,21 @@
  */
 
 #include "ast_map_form.h"
+#include "ast_primary.h"
+#include "ast_expr_associativity.h"
+#include "ast_expr_precedence.h"
 #include "ast_map_field_list.h"
 #include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
 
 _HexAstMapForm::_HexAstMapForm(
   HexAstMapFieldList list
-):_list(list)
+):
+  _list(list),
+  _HexAstPrimary(
+    EXPR_ASSOCIATIVITY_LEFT,
+    EXPR_PRECEDENCE_PRIMARY_1
+  )
 {
   this->reprOK();
 }

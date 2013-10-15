@@ -18,6 +18,8 @@
 
 #include <boost/smart_ptr.hpp>
 #include "ast_expr.h"
+#include "ast_expr_associativity.h"
+#include "ast_expr_precedence.h"
 #include "examiner.h"
 
 #ifndef _HEX_AST_BINARY_EXPR_H_
@@ -26,7 +28,12 @@
 
 typedef class _HexAstBinaryExpr : public _HexAstExpr {
 public:
-  _HexAstBinaryExpr(HexAstExpr lexpr, HexAstExpr rexpr);
+  _HexAstBinaryExpr(
+    HexAstExpr,
+    HexAstExpr,
+    HexAstExprAssociativity,
+    HexAstExprPrecedence
+  );
 
   virtual void reprOK();
 

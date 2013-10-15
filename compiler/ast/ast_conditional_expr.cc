@@ -17,6 +17,8 @@
 
 
 #include "ast_conditional_expr.h"
+#include "ast_expr_associativity.h"
+#include "ast_expr_precedence.h"
 #include "ast_expr.h"
 #include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
@@ -29,7 +31,11 @@ _HexAstConditionalExpr::_HexAstConditionalExpr(
 ):
   _predicate(predicate),
   _consequent(consequent),
-  _alternate(alternate)
+  _alternate(alternate),
+  _HexAstExpr(
+    EXPR_ASSOCIATIVITY_RIGHT,
+    EXPR_PRECEDENCE_CONDITIONAL_EXPR
+  )
 {
   this->reprOK();
 }

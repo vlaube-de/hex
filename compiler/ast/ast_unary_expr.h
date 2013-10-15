@@ -16,6 +16,8 @@
  */
 
 #include <boost/smart_ptr.hpp>
+#include "ast_expr_associativity.h"
+#include "ast_expr_precedence.h"
 #include "ast_expr.h"
 #include "examiner.h"
 
@@ -25,7 +27,11 @@
 
 typedef class _HexAstUnaryExpr : public _HexAstExpr {
 public:
-  _HexAstUnaryExpr(HexAstExpr);
+  _HexAstUnaryExpr(
+    HexAstExpr,
+    HexAstExprAssociativity,
+    HexAstExprPrecedence
+  );
 
   virtual void reprOK();
 

@@ -16,9 +16,17 @@
  */
 
 #include "ast_literal.h"
+#include "ast_primary.h"
+#include "ast_expr_associativity.h"
+#include "ast_expr_precedence.h"
 
 _HexAstLiteral::_HexAstLiteral(
   c_str value
-) : AstUnparsed(value)
+):
+  AstUnparsed(value),
+  _HexAstPrimary(
+    EXPR_ASSOCIATIVITY_LEFT,
+    EXPR_PRECEDENCE_PRIMARY_1
+  )
 {
 }

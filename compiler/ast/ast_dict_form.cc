@@ -16,10 +16,22 @@
  */
 
 #include "ast_dict_form.h"
+#include "ast_primary.h"
+#include "ast_expr_associativity.h"
+#include "ast_expr_precedence.h"
 #include "ast_field_def_list.h"
 #include "ast_comprehension.h"
 #include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
+
+_HexAstDictForm::_HexAstDictForm(
+) :
+  _HexAstPrimary(
+    EXPR_ASSOCIATIVITY_LEFT,
+    EXPR_PRECEDENCE_PRIMARY_1
+  )
+{
+}
 
 _HexAstExplicitDictForm::_HexAstExplicitDictForm(
   HexAstFieldDefList fields 

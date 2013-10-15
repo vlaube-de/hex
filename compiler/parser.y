@@ -264,6 +264,7 @@ The sky is your limit...
  * | range expression                                  |     ...                                           |
  * | conditional expression                            |     if else then                                  |
  * | input & output expression                         |     <<<, >>>                                      |
+ * | yield expression                                  |                                                   |
  * | assignment, pseudo assignment                     |     =, +=, -=, *=, /=, %=, &=, ^=, |=, <<=, >>=   |
  * |________________________________________________________________________________________________________
  *
@@ -272,6 +273,7 @@ The sky is your limit...
 %left     COMMA
 %right    ASSIGN_OP ASSIGN_PLUS ASSIGN_MINUS ASSIGN_MUL ASSIGN_DIV ASSIGN_MOD 
           ASSIGN_BITWISE_AND ASSIGN_BITWISE_OR ASSIGN_BITWISE_XOR ASSIGN_SHIFTLEFT ASSIGN_SHIFTRIGHT
+%left     YIELD
 %left     INPUT_OP OUTPUT_OP
 %right    IF THEN ELSE
 %left     ELLIPSIS ELLIPSIS_SHORT

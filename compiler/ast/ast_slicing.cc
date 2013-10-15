@@ -17,6 +17,8 @@
 
 #include "ast_slicing.h"
 #include "ast_primary.h"
+#include "ast_expr_associativity.h"
+#include "ast_expr_precedence.h"
 #include "ast_expr.h"
 #include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
@@ -25,7 +27,13 @@
 _HexAstSlicing::_HexAstSlicing(
   HexAstPrimary source,
   HexAstExpr slice
-):_source(source), _slice(slice)
+) :
+  _source(source),
+  _slice(slice),
+  _HexAstPrimary(
+    EXPR_ASSOCIATIVITY_LEFT,
+    EXPR_PRECEDENCE_PRIMARY_2
+  )
 {
   this->reprOK();
 }

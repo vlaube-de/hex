@@ -32,7 +32,6 @@ public:
   virtual void accept(AstVisitor*);
 
   static _HexAstIdentifier* create(c_str);
-
 } * HexAstIdentifier;
 
 #endif /* _AST_IDENTIFIER_H_ */

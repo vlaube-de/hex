@@ -16,14 +16,15 @@
  */
 
 #include "ast_expr.h"
+#include "ast_expr_associativity.h"
+#include "ast_expr_precedence.h"
 
 #ifndef _AST_PRIMARY_H_
 #define _AST_PRIMARY_H_
 
 typedef class _HexAstPrimary : public _HexAstExpr {
 public:
-  _HexAstPrimary();
-
+  _HexAstPrimary(HexAstExprAssociativity, HexAstExprPrecedence);
 } * HexAstPrimary;
 
 #endif /* _AST_PRIMARY_H_ */

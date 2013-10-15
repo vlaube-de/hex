@@ -34,6 +34,8 @@ public:
   HexAstArgList arglist();
   bool isAsync();
 
+  virtual HexAstExprPrecedence precedence() { return EXPR_PRECEDENCE_PRIMARY_2; }
+
   static _HexAstCall* create(HexAstPrimary, HexAstArgList, bool);
 private:
   boost::scoped_ptr<_HexAstPrimary> _source;

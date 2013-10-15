@@ -797,7 +797,7 @@ TEST_F(HexParserExprPrecedenceTest, ComparisonExpr_vs_BitwiseOrExpr)
   );
 }
 
-TEST_F(HexParserExprPrecedenceTest, LogicalNot_vs_ComparisionExpr)
+TEST_F(HexParserExprPrecedenceTest, LogicalNot_vs_ComparisonExpr)
 {
   // not (1 == 1)
   test(

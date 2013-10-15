@@ -16,12 +16,19 @@
  */
 
 #include "ast_expr.h"
+#include "ast_expr_associativity.h"
+#include "ast_expr_precedence.h"
 #include "ast_binary_expr.h"
 #include "ast_pseudo_assign_expr.h"
 
 _HexAstPseudoAssignExpr::_HexAstPseudoAssignExpr(
   HexAstExpr left,
   HexAstExpr right
-):_HexAstBinaryExpr(left, right)
+) : _HexAstBinaryExpr(
+      left,
+      right,
+      EXPR_ASSOCIATIVITY_RIGHT,
+      EXPR_PRECEDENCE_ASSIGNMENT
+    )
 {
 }

@@ -16,7 +16,12 @@
  */
 
 #include "ast_primary.h"
+#include "ast_expr_associativity.h"
+#include "ast_expr_precedence.h"
 
-_HexAstPrimary::_HexAstPrimary()
+_HexAstPrimary::_HexAstPrimary(
+  HexAstExprAssociativity associativity,
+  HexAstExprPrecedence precedence
+) : _HexAstExpr(associativity, precedence)
 {
 }

@@ -17,6 +17,8 @@
 
 #include "ast_call.h"
 #include "ast_primary.h"
+#include "ast_expr_associativity.h"
+#include "ast_expr_precedence.h"
 #include "ast_arg_list.h"
 #include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
@@ -25,7 +27,14 @@ _HexAstCall::_HexAstCall(
   HexAstPrimary source,
   HexAstArgList arglist,
   bool isAsync
-):_source(source), _arglist(arglist), _isAsync(isAsync)
+) :
+  _source(source),
+  _arglist(arglist),
+  _isAsync(isAsync),
+  _HexAstPrimary(
+    EXPR_ASSOCIATIVITY_LEFT,
+    EXPR_PRECEDENCE_PRIMARY_2
+  )
 {
   this->reprOK();
 }

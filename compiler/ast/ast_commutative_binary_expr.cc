@@ -15,13 +15,17 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "examiner.h"
+#include "examiner.h" 
+#include "ast_expr_associativity.h"
+#include "ast_expr_precedence.h"
 #include "../../base/assert.h"
 #include "ast_commutative_binary_expr.h"
 
 _HexAstCommutativeBinaryExpr::_HexAstCommutativeBinaryExpr(
   HexAstExpr left,
-  HexAstExpr right
-) :_HexAstBinaryExpr(left, right)
+  HexAstExpr right,
+  HexAstExprAssociativity associativity,
+  HexAstExprPrecedence precedence
+) : _HexAstBinaryExpr(left, right, associativity, precedence)
 {
 }

@@ -17,12 +17,18 @@
 
 
 #include "ast_unary_expr.h"
+#include "ast_expr_associativity.h"
+#include "ast_expr_precedence.h"
 #include "../../base/assert.h"
 
 
 _HexAstUnaryExpr::_HexAstUnaryExpr(
-  HexAstExpr expr
-):_expr(expr)
+  HexAstExpr expr,
+  HexAstExprAssociativity associativity,
+  HexAstExprPrecedence precedence
+):
+  _expr(expr),
+  _HexAstExpr(associativity, precedence)
 {
   this->reprOK();
 }

@@ -17,12 +17,18 @@
 
 
 #include "ast_positive_expr.h"
+#include "ast_expr_associativity.h"
+#include "ast_expr_precedence.h"
 #include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
 
 _HexAstPositiveExpr::_HexAstPositiveExpr(
   HexAstExpr expr
-): _HexAstUnaryExpr(expr)
+): _HexAstUnaryExpr(
+    expr,
+    EXPR_ASSOCIATIVITY_RIGHT,
+    EXPR_PRECEDENCE_UNARY_1
+  )
 {
 }
 

@@ -17,12 +17,20 @@
 
 
 #include "ast_expr.h"
+#include "ast_expr_associativity.h"
+#include "ast_expr_precedence.h"
 #include "visitor/ast_visitor.h"
 
 #ifndef _AST_RANGE_EXPR_H_
 #define _AST_RANGE_EXPR_H_
 
 typedef class _HexAstRangeExpr : public _HexAstExpr {
+public:
+  _HexAstRangeExpr() : _HexAstExpr(
+    EXPR_ASSOCIATIVITY_LEFT,
+    EXPR_PRECEDENCE_RANGE_EXPR
+  ) {}
+
 } * HexAstRangeExpr;
 
 

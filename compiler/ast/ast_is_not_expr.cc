@@ -17,12 +17,19 @@
 
 
 #include "ast_is_not_expr.h"
+#include "ast_expr_associativity.h"
+#include "ast_expr_precedence.h"
 #include "visitor/ast_visitor.h"
 
 _HexAstIsNotExpr::_HexAstIsNotExpr(
   HexAstExpr left,
   HexAstExpr right
-): _HexAstCommutativeBinaryExpr(left, right)
+) : _HexAstCommutativeBinaryExpr(
+      left,
+      right,
+      EXPR_ASSOCIATIVITY_LEFT,
+      EXPR_PRECEDENCE_EQUALITY
+    )
 {
   this->reprOK();
 }
@@ -30,6 +37,7 @@ _HexAstIsNotExpr::_HexAstIsNotExpr(
 void
 _HexAstIsNotExpr::reprOK()
 {
+  // Do nothing here.
 }
 
 void

@@ -16,15 +16,22 @@
  */
 
 
+#include "ast_yield_expr.h"
 #include "ast_expr.h"
 #include "ast_expr_list.h"
-#include "ast_yield_expr.h"
+#include "ast_expr_associativity.h"
+#include "ast_expr_precedence.h"
 #include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
 
 _HexAstYieldExpr::_HexAstYieldExpr(
   HexAstExprList exprs
-): _exprs(exprs)
+):
+  _exprs(exprs),
+  _HexAstExpr(
+    EXPR_ASSOCIATIVITY_LEFT,
+    EXPR_PRECEDENCE_YIELD_EXPR
+  )
 {
   this->reprOK();
 }

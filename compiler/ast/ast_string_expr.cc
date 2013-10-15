@@ -15,8 +15,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "ast_expr_list.h"
 #include "ast_string_expr.h"
+#include "ast_expr_precedence.h"
+#include "ast_expr_list.h"
 #include "ast_string_literal.h"
 #include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
@@ -25,7 +26,13 @@
 _HexAstStringExpr::_HexAstStringExpr(
   HexAstStringLiteral string,
   HexAstExprList exprs
-):_string(string), _exprs(exprs)
+) :
+  _string(string),
+  _exprs(exprs),
+  _HexAstExpr(
+    EXPR_ASSOCIATIVITY_LEFT,
+    EXPR_PRECEDENCE_STRING_COMPOSITION
+  )
 {
   this->reprOK(); 
 }

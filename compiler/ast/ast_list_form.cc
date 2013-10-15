@@ -16,10 +16,21 @@
  */
 
 #include "ast_list_form.h"
+#include "ast_primary.h"
 #include "ast_expr_list.h"
+#include "ast_expr_associativity.h"
+#include "ast_expr_precedence.h"
 #include "ast_comprehension.h"
 #include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
+
+_HexAstListForm::_HexAstListForm(
+) : _HexAstPrimary(
+      EXPR_ASSOCIATIVITY_LEFT,
+      EXPR_PRECEDENCE_PRIMARY_1
+    )
+{
+}
 
 _HexAstExplicitListForm::_HexAstExplicitListForm(
   HexAstExprList elements

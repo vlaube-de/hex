@@ -17,6 +17,9 @@
 
 #include "ast_unparsed.h"
 #include "ast_identifier.h"
+#include "ast_primary.h"
+#include "ast_expr_associativity.h"
+#include "ast_expr_precedence.h"
 #include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
 #include "../../base/c_str.h"
@@ -25,7 +28,11 @@
 _HexAstIdentifier::_HexAstIdentifier(
   c_str identifier
 ):
-  AstUnparsed(strdup(identifier))
+  AstUnparsed(strdup(identifier)),
+  _HexAstPrimary(
+    EXPR_ASSOCIATIVITY_LEFT,
+    EXPR_PRECEDENCE_PRIMARY_1
+  )
 {
   this->reprOK();
 }

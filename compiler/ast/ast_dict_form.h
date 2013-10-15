@@ -19,12 +19,15 @@
 #include "ast_primary.h"
 #include "ast_field_def_list.h"
 #include "ast_comprehension.h"
+#include "ast_expr_precedence.h"
 #include "visitor/ast_visitor.h"
 
 #ifndef _AST_DICT_FORM_H_
 #define _AST_DICT_FORM_H_
 
 typedef class _HexAstDictForm : public _HexAstPrimary {
+public:
+  _HexAstDictForm();
 } * HexAstDictForm;
 
 typedef class _HexAstExplicitDictForm : public _HexAstDictForm {

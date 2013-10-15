@@ -18,6 +18,8 @@
 #include <list>
 #include "ast_identifier.h"
 #include "ast_primary.h"
+#include "ast_expr_associativity.h"
+#include "ast_expr_precedence.h"
 #include "ast_attribute_ref.h"
 #include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
@@ -25,7 +27,13 @@
 _HexAstAttributeRef::_HexAstAttributeRef(
   HexAstPrimary source,
   HexAstIdentifier attribute
-): _source(source), _attribute(attribute)
+) :
+  _source(source),
+  _attribute(attribute),
+  _HexAstPrimary(
+    EXPR_ASSOCIATIVITY_LEFT,
+    EXPR_PRECEDENCE_PRIMARY_2
+  )
 {
   this->reprOK();
 }
