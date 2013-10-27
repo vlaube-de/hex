@@ -22,11 +22,8 @@ CFLAGS=-Wno-implicit -Wall -arch x86_64
 AR=ar
 ARFLAGS=rvs
 
-GTEST_INCLUDE=-I/usr/local/gtest-1.6.0/include
-LIBGTEST=/usr/lib/libgtest.a
-
 unittest.o: unittest.h unittest.cc
-	$(CXX) $(GTEST_INCLUDE) -c unittest.h unittest.cc
+	$(CXX) $(CFLAGS) -DGTEST_HAS_TR1_TUPLE=0 -c unittest.h unittest.cc
 
 utils.o: utils.c utils.h
 	$(CC) $(CFLAGS) -c utils.c utils.h
