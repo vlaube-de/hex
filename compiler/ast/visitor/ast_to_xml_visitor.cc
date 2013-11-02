@@ -38,7 +38,9 @@ AstToXmlVisitor::~AstToXmlVisitor()
 const c_str
 AstToXmlVisitor::str()
 {
-  return (const c_str)_strbuf->c_str();
+  c_str str = strdup(_strbuf->c_str());
+  HEX_ASSERT(str);
+  return (const c_str)str;
 }
 
 void
