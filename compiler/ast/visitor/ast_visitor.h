@@ -88,6 +88,7 @@ public:
   virtual HexAstStringExpr visit(HexAstStringExpr);
   virtual HexAstParenForm visit(HexAstParenForm);
   virtual HexAstExprList visit(HexAstExprList);
+  virtual HexAstSimpleParam visit(HexAstSimpleParam);
   virtual HexAstSimpleParamList visit(HexAstSimpleParamList);
   virtual HexAstKeywordVal visit(HexAstKeywordVal);
   virtual HexAstKeywordValList visit(HexAstKeywordValList);

@@ -15,21 +15,48 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "ast_list_obj.h"
-#include "ast_node.h"
 #include "ast_simple_param.h"
+#include "ast_identifier.h"
+#include "ast_name.h"
 #include "visitor/ast_visitor.h"
+#include "../../base/assert.h"
 
-#ifndef _AST_SIMPLE_PARAM_LIST_H_
-#define _AST_SIMPLE_PARAM_LIST_H_
+_HexAstSimpleParam::_HexAstSimpleParam(
+  HexAstIdentifier name,
+  HexAstName type
+) : _name(name), _type(type)
+{
+  this->reprOK();
+}
 
-typedef class _HexAstSimpleParamList : public AstListObj<_HexAstSimpleParamList, HexAstSimpleParam>, _HexAstNode {
-public:
-  _HexAstSimpleParamList();
+void
+_HexAstSimpleParam::reprOK()
+{
+  HEX_ASSERT(this->name());
+}
 
-  virtual void reprOK();
-  virtual void accept(AstVisitor*);
+void
+_HexAstSimpleParam::accept(AstVisitor *visitor)
+{
+  visitor->visit(this);
+}
 
-} * HexAstSimpleParamList;
+HexAstIdentifier
+_HexAstSimpleParam::name()
+{
+  return this->_name.get();
+}
 
-#endif /* _AST_SIMPLE_PARAM_LIST_H_ */
+HexAstName
+_HexAstSimpleParam::type()
+{
+  return this->_type.get();
+}
+
+HexAstSimpleParam
+_HexAstSimpleParam::create(HexAstIdentifier name, HexAstName type)
+{
+  HexAstSimpleParam obj = new _HexAstSimpleParam(name, type);
+  HEX_ASSERT(obj);
+  return obj;
+}

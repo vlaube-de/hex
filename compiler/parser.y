@@ -68,6 +68,7 @@ The sky is your limit...
   class _HexAstParenForm* hex_ast_paren_form;
   class _HexAstExpr* hex_ast_expr;
   class _HexAstExprList* hex_ast_expr_list;
+  class _HexAstSimpleParam* hex_ast_simple_param;
   class _HexAstSimpleParamList* hex_ast_simple_param_list;
   class _HexAstKeywordVal* hex_ast_keyword_val;
   class _HexAstKeywordValList* hex_ast_keyword_val_list;
@@ -325,6 +326,7 @@ The sky is your limit...
 %type <hex_ast_paren_form> paren_form
 %type <hex_ast_expr> expr
 %type <hex_ast_expr_list> expr_list
+%type <hex_ast_simple_param> simple_param
 %type <hex_ast_simple_param_list> simple_param_list
 %type <hex_ast_keyword_val> keyword_val
 %type <hex_ast_keyword_val_list> keyword_val_list
@@ -816,8 +818,13 @@ keyword_val
   ;
 
 simple_param_list
-  : identifier                                                                                      { $$ = AstListObj<_HexAstSimpleParamList, HexAstIdentifier>::create($1); }
-  | simple_param_list COMMA identifier                                                              { $$ = AstListObj<_HexAstSimpleParamList, HexAstIdentifier>::expand($1, $3); }
+  : simple_param                                                                                    { $$ = AstListObj<_HexAstSimpleParamList, HexAstSimpleParam>::create($1); }
+  | simple_param_list COMMA simple_param                                                            { $$ = AstListObj<_HexAstSimpleParamList, HexAstSimpleParam>::expand($1, $3); }
+  ;
+
+simple_param
+  : identifier                                                                                      { $$ = _HexAstSimpleParam::create($1, NULL); }
+  | AT name identifier                                                                              { $$ = _HexAstSimpleParam::create($3, $2); }
   ;
 
 expr_list

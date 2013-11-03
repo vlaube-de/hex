@@ -744,15 +744,30 @@ AstToStringVisitor::visit(HexAstExprList exprlist_)
   return exprlist;
 }
 
+HexAstSimpleParam
+AstToStringVisitor::visit(HexAstSimpleParam param_)
+{
+  HexAstSimpleParam param = AstVisitor::visit(param_);
+
+  if(param->type()) {
+    this->append("@");
+    param->type()->accept(this);
+    this->append(" ");
+  }
+  param->name()->accept(this);
+
+  return param;
+}
+
 HexAstSimpleParamList
 AstToStringVisitor::visit(HexAstSimpleParamList params_)
 {
   HexAstSimpleParamList params = AstVisitor::visit(params_);
 
-  this->iterate<HexAstIdentifier>(
+  this->iterate<HexAstSimpleParam>(
     params->list(),
-    [this](HexAstIdentifier identifier) {
-      identifier->accept(this);
+    [this](HexAstSimpleParam param) {
+      param->accept(this);
     },
     this->_commaDelimiter
   );

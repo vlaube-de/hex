@@ -41,6 +41,9 @@ ast_target_list.o: ast_list_obj.o ast_node.o ast_target_list.h ast_target_list.c
 ast_val_list.o: ast_node.o ast_list_obj.o ast_val_list.h ast_val_list.cc
 	$(CXX) $(CFLAGS) -c ast_val_list.cc
 
+ast_simple_param.o: ast_simple_param.h ast_simple_param.cc
+	$(CXX) $(CFLAGS) -c ast_simple_param.cc
+
 ast_simple_param_list.o: ast_list_obj.o ast_node.o ast_simple_param_list.h ast_simple_param_list.cc
 	$(CXX) $(CFLAGS) -c ast_simple_param_list.cc
 
@@ -414,6 +417,7 @@ obj:ast.h \
 	ast_node.o	\
 	ast_target_list.o	\
 	ast_val_list.o	\
+	ast_simple_param.o \
 	ast_simple_param_list.o	\
 	ast_keyword_val.o	\
 	ast_keyword_val_list.o	\

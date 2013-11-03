@@ -412,6 +412,13 @@ AstVisitor::visit(HexAstExprList exprlist)
   return exprlist;
 }
 
+HexAstSimpleParam
+AstVisitor::visit(HexAstSimpleParam param)
+{
+  HEX_ASSERT(param);
+  return param;
+}
+
 HexAstSimpleParamList
 AstVisitor::visit(HexAstSimpleParamList params)
 {

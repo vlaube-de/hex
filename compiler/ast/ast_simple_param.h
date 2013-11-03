@@ -15,21 +15,29 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "ast_list_obj.h"
+#include <boost/smart_ptr.hpp>
 #include "ast_node.h"
-#include "ast_simple_param.h"
+#include "ast_name.h"
+#include "ast_identifier.h"
 #include "visitor/ast_visitor.h"
 
-#ifndef _AST_SIMPLE_PARAM_LIST_H_
-#define _AST_SIMPLE_PARAM_LIST_H_
+#ifndef _AST_SIMPLE_PARAM_H_
+#define _AST_SIMPLE_PARAM_H_
 
-typedef class _HexAstSimpleParamList : public AstListObj<_HexAstSimpleParamList, HexAstSimpleParam>, _HexAstNode {
+typedef class _HexAstSimpleParam : public _HexAstNode {
 public:
-  _HexAstSimpleParamList();
+  _HexAstSimpleParam(HexAstIdentifier, HexAstName);
 
   virtual void reprOK();
   virtual void accept(AstVisitor*);
 
-} * HexAstSimpleParamList;
+  HexAstIdentifier name();
+  HexAstName type();
 
-#endif /* _AST_SIMPLE_PARAM_LIST_H_ */
+  static _HexAstSimpleParam* create(HexAstIdentifier, HexAstName);
+private:
+  boost::scoped_ptr<_HexAstIdentifier> _name;
+  boost::scoped_ptr<_HexAstName> _type;
+} * HexAstSimpleParam;
+
+#endif /* _AST_SIMPLE_PARAM_H_ */

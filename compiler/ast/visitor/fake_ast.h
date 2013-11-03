@@ -81,6 +81,7 @@ typedef class _HexAstYieldExpr * HexAstYieldExpr;
 typedef class _HexAstStringExpr * HexAstStringExpr;
 typedef class _HexAstParenForm * HexAstParenForm;
 typedef class _HexAstExprList * HexAstExprList;
+typedef class _HexAstSimpleParam * HexAstSimpleParam;
 typedef class _HexAstSimpleParamList * HexAstSimpleParamList;
 typedef class _HexAstKeywordVal * HexAstKeywordVal;
 typedef class _HexAstKeywordValList * HexAstKeywordValList;

@@ -920,6 +920,35 @@ AstToXmlVisitor::visit(HexAstExprList exprlist_)
   return exprlist;
 }
 
+HexAstSimpleParam
+AstToXmlVisitor::visit(HexAstSimpleParam param_)
+{
+  HexAstSimpleParam param = AstVisitor::visit(param_);
+
+  this->double_tag(
+    "simple_param",
+    [this, param]() {
+      if(param->type()) {
+        this->double_tag(
+          "simple_param-type",
+          [this, param]() {
+            param->type()->accept(this);
+          }
+        );
+      }
+
+      this->double_tag(
+        "simple_param-name",
+        [this, param]() {
+          param->name()->accept(this);
+        }
+      );
+    }
+  );
+
+  return param;
+}
+
 HexAstSimpleParamList
 AstToXmlVisitor::visit(HexAstSimpleParamList params_)
 {
@@ -928,10 +957,10 @@ AstToXmlVisitor::visit(HexAstSimpleParamList params_)
   this->double_tag(
     "simple_parameter_list",
     [this, params]() {
-      this->iterate<HexAstIdentifier>(
+      this->iterate<HexAstSimpleParam>(
         params->list(),
-        [this](HexAstIdentifier identifier) {
-          identifier->accept(this);
+        [this](HexAstSimpleParam param) {
+          param->accept(this);
         }
       );
     }
