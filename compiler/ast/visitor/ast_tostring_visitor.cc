@@ -775,6 +775,39 @@ AstToStringVisitor::visit(HexAstSimpleParamList params_)
   return params;
 }
 
+HexAstKeywordParam
+AstToStringVisitor::visit(HexAstKeywordParam param_)
+{
+  HexAstKeywordParam param = AstVisitor::visit(param_);
+
+  if(param->type()) {
+    this->append("@");
+    param->type()->accept(this);
+    this->append(" ");
+  }
+  param->name()->accept(this);
+  this->append("=");
+  param->value()->accept(this);
+
+  return param;
+}
+
+HexAstKeywordParamList
+AstToStringVisitor::visit(HexAstKeywordParamList params_)
+{
+  HexAstKeywordParamList params = AstVisitor::visit(params_);
+
+  this->iterate<HexAstKeywordParam>(
+    params->list(),
+    [this](HexAstKeywordParam param) {
+      param->accept(this);
+    },
+    this->_commaDelimiter
+  ); 
+
+  return params;
+}
+
 HexAstKeywordVal
 AstToStringVisitor::visit(HexAstKeywordVal keyval_)
 {
@@ -815,9 +848,9 @@ AstToStringVisitor::visit(HexAstParameterList params_)
     prev = true;
   }
 
-  if(params->keyword_vals()) {
+  if(params->keyword_params()) {
     if(prev) this->append(", ");
-    params->keyword_vals()->accept(this);
+    params->keyword_params()->accept(this); 
     prev = true;
   }
 

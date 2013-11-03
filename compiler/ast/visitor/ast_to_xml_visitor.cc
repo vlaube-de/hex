@@ -969,6 +969,63 @@ AstToXmlVisitor::visit(HexAstSimpleParamList params_)
   return params;
 }
 
+HexAstKeywordParam
+AstToXmlVisitor::visit(HexAstKeywordParam param_)
+{
+  HexAstKeywordParam param = AstVisitor::visit(param_);
+
+  this->double_tag(
+    "keyword_param",
+    [this, param]() {
+
+      if(param->type()) {
+        this->double_tag(
+          "keyword_param-type",
+          [this, param]() {
+            param->type()->accept(this);
+          }
+        );
+      }
+
+      this->double_tag(
+        "keyword_param-name",
+        [this, param]() {
+          param->name()->accept(this);
+        }
+      );
+
+      this->double_tag(
+        "keyword_param-value",
+        [this, param]() {
+          param->value()->accept(this);
+        }
+      );
+    }
+  );
+
+  return param;
+}
+
+HexAstKeywordParamList
+AstToXmlVisitor::visit(HexAstKeywordParamList params_)
+{
+  HexAstKeywordParamList params = AstVisitor::visit(params_);
+
+  this->double_tag(
+    "keyword_param_list",
+    [this, params]() {
+      this->iterate<HexAstKeywordParam>(
+        params->list(),
+        [this](HexAstKeywordParam param) {
+          param->accept(this);
+        }
+      );
+    }
+  );
+
+  return params;
+}
+
 HexAstKeywordVal
 AstToXmlVisitor::visit(HexAstKeywordVal keyval_)
 {
@@ -1037,11 +1094,11 @@ AstToXmlVisitor::visit(HexAstParameterList params_)
       }
 
       // keyword params
-      if(params->keyword_vals()) {
+      if(params->keyword_params()) {
         this->double_tag(
           "parameter_list-keyword_params",
           [this, params]() {
-            params->keyword_vals()->accept(this);
+            params->keyword_params()->accept(this);
           }
         );
       }

@@ -24,10 +24,10 @@
 
 _HexAstParameterList::_HexAstParameterList(
   HexAstSimpleParamList simple_params,
-  HexAstKeywordValList keyword_vals,
+  HexAstKeywordParamList keyword_params,
   HexAstIdentifier args,
   HexAstIdentifier kwargs
-):_simple_params(simple_params), _keyword_vals(keyword_vals), _args(args), _kwargs(kwargs)
+):_simple_params(simple_params), _keyword_params(keyword_params), _args(args), _kwargs(kwargs)
 {
   this->reprOK();
 }
@@ -44,10 +44,10 @@ _HexAstParameterList::simple_params()
   return this->_simple_params.get();
 }
 
-HexAstKeywordValList
-_HexAstParameterList::keyword_vals()
+HexAstKeywordParamList
+_HexAstParameterList::keyword_params()
 {
-  return this->_keyword_vals.get();
+  return this->_keyword_params.get();
 }
 
 HexAstIdentifier
@@ -71,14 +71,14 @@ _HexAstParameterList::accept(AstVisitor* visitor)
 HexAstParameterList
 _HexAstParameterList::create(
   HexAstSimpleParamList simple_params,
-  HexAstKeywordValList keyword_vals,
+  HexAstKeywordParamList keyword_params,
   HexAstIdentifier args,
   HexAstIdentifier kwargs
 )
 {
   HexAstParameterList obj = new _HexAstParameterList(
     simple_params,
-    keyword_vals,
+    keyword_params,
     args,
     kwargs
   );

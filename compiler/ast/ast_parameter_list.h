@@ -17,7 +17,7 @@
 
 #include <boost/smart_ptr.hpp>
 #include "ast_simple_param_list.h"
-#include "ast_keyword_val_list.h"
+#include "ast_keyword_param_list.h"
 #include "ast_node.h"
 #include "ast_identifier.h"
 #include "visitor/ast_visitor.h"
@@ -29,7 +29,7 @@ typedef class _HexAstParameterList : public _HexAstNode {
 public:
   _HexAstParameterList(
     HexAstSimpleParamList,
-    HexAstKeywordValList,
+    HexAstKeywordParamList,
     HexAstIdentifier,
     HexAstIdentifier
   );
@@ -38,20 +38,20 @@ public:
   virtual void accept(AstVisitor*);
 
   HexAstSimpleParamList simple_params();
-  HexAstKeywordValList keyword_vals();
+  HexAstKeywordParamList keyword_params();
   HexAstIdentifier args();
   HexAstIdentifier kwargs();
 
   static _HexAstParameterList* create(
     HexAstSimpleParamList,
-    HexAstKeywordValList,
+    HexAstKeywordParamList,
     HexAstIdentifier,
     HexAstIdentifier
   );
 
 private:
   boost::scoped_ptr<_HexAstSimpleParamList> _simple_params;
-  boost::scoped_ptr<_HexAstKeywordValList> _keyword_vals;
+  boost::scoped_ptr<_HexAstKeywordParamList> _keyword_params;
   boost::scoped_ptr<_HexAstIdentifier> _args;
   boost::scoped_ptr<_HexAstIdentifier> _kwargs;
 } * HexAstParameterList;

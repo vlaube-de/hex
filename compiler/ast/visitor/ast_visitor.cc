@@ -426,6 +426,20 @@ AstVisitor::visit(HexAstSimpleParamList params)
   return params;
 }
 
+HexAstKeywordParam
+AstVisitor::visit(HexAstKeywordParam param)
+{
+  HEX_ASSERT(param);
+  return param;
+}
+
+HexAstKeywordParamList
+AstVisitor::visit(HexAstKeywordParamList params)
+{
+  HEX_ASSERT(params);
+  return params;
+}
+
 HexAstKeywordVal
 AstVisitor::visit(HexAstKeywordVal keyval)
 {

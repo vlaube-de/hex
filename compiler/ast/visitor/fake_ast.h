@@ -83,6 +83,8 @@ typedef class _HexAstParenForm * HexAstParenForm;
 typedef class _HexAstExprList * HexAstExprList;
 typedef class _HexAstSimpleParam * HexAstSimpleParam;
 typedef class _HexAstSimpleParamList * HexAstSimpleParamList;
+typedef class _HexAstKeywordParam * HexAstKeywordParam;
+typedef class _HexAstKeywordParamList * HexAstKeywordParamList;
 typedef class _HexAstKeywordVal * HexAstKeywordVal;
 typedef class _HexAstKeywordValList * HexAstKeywordValList;
 typedef class _HexAstParameterList * HexAstParameterList;
