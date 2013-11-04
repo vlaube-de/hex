@@ -788,19 +788,19 @@ val_list
 
 parameter_list
   : simple_param_list                                                                               { $$ = _HexAstParameterList::create($1, NULL, NULL, NULL); }
-  | keyword_param_list                                                                                { $$ = _HexAstParameterList::create(NULL, $1, NULL, NULL); }
+  | keyword_param_list                                                                              { $$ = _HexAstParameterList::create(NULL, $1, NULL, NULL); }
   | arg_val                                                                                         { $$ = _HexAstParameterList::create(NULL, NULL, $1, NULL); }
   | kwarg_val                                                                                       { $$ = _HexAstParameterList::create(NULL, NULL, NULL, $1); }
-  | simple_param_list COMMA keyword_param_list                                                        { $$ = _HexAstParameterList::create($1, $3, NULL, NULL); }
+  | simple_param_list COMMA keyword_param_list                                                      { $$ = _HexAstParameterList::create($1, $3, NULL, NULL); }
   | simple_param_list COMMA arg_val                                                                 { $$ = _HexAstParameterList::create($1, NULL, $3, NULL); }
   | simple_param_list COMMA kwarg_val                                                               { $$ = _HexAstParameterList::create($1, NULL, NULL, $3); }
   | simple_param_list COMMA arg_val COMMA kwarg_val                                                 { $$ = _HexAstParameterList::create($1, NULL, $3, $5); }
-  | simple_param_list COMMA keyword_param_list COMMA arg_val                                          { $$ = _HexAstParameterList::create($1, $3, $5, NULL); }
-  | simple_param_list COMMA keyword_param_list COMMA kwarg_val                                        { $$ = _HexAstParameterList::create($1, $3, NULL, $5); }
-  | simple_param_list COMMA keyword_param_list COMMA arg_val COMMA kwarg_val                          { $$ = _HexAstParameterList::create($1, $3, $5, $7); }
-  | keyword_param_list COMMA arg_val                                                                  { $$ = _HexAstParameterList::create(NULL, $1, $3, NULL); }
-  | keyword_param_list COMMA kwarg_val                                                                { $$ = _HexAstParameterList::create(NULL, $1, NULL, $3); }
-  | keyword_param_list COMMA arg_val COMMA kwarg_val                                                  { $$ = _HexAstParameterList::create(NULL, $1, $3, $5); }
+  | simple_param_list COMMA keyword_param_list COMMA arg_val                                        { $$ = _HexAstParameterList::create($1, $3, $5, NULL); }
+  | simple_param_list COMMA keyword_param_list COMMA kwarg_val                                      { $$ = _HexAstParameterList::create($1, $3, NULL, $5); }
+  | simple_param_list COMMA keyword_param_list COMMA arg_val COMMA kwarg_val                        { $$ = _HexAstParameterList::create($1, $3, $5, $7); }
+  | keyword_param_list COMMA arg_val                                                                { $$ = _HexAstParameterList::create(NULL, $1, $3, NULL); }
+  | keyword_param_list COMMA kwarg_val                                                              { $$ = _HexAstParameterList::create(NULL, $1, NULL, $3); }
+  | keyword_param_list COMMA arg_val COMMA kwarg_val                                                { $$ = _HexAstParameterList::create(NULL, $1, $3, $5); }
   | arg_val COMMA kwarg_val                                                                         { $$ = _HexAstParameterList::create(NULL, NULL, $1, $3); }
   ;
 

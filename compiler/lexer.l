@@ -17,7 +17,6 @@
 
 
 %{
-#include <stdio.h>
 #include "parser.tab.hh"
 #include "yacc_extern.h"
 
@@ -135,10 +134,6 @@ int new_line_returned = 0;
 "@"                                 EAT_TOKEN(yytext, AT);
 "**"                                EAT_TOKEN(yytext, STARS);
 "%%"                                EAT_TOKEN(yytext, STRING_OP);
-
-.                                   {
-                                        /* ignore bad characters */
-                                    }
 
 
 %%

@@ -43,9 +43,13 @@ _HexAstConditionalExpr::_HexAstConditionalExpr(
 void
 _HexAstConditionalExpr::reprOK()
 {
-  HEX_ASSERT(this->_predicate);
-  HEX_ASSERT(this->_consequent);
-  HEX_ASSERT(this->_alternate);
+  HEX_ASSERT(this->predicate());
+  HEX_ASSERT(this->consequent());
+  HEX_ASSERT(this->alternate());
+
+  HEX_ASSERT(this->predicate()->precedence() >= this->precedence());
+  HEX_ASSERT(this->consequent()->precedence() >= this->precedence());
+  HEX_ASSERT(this->alternate()->precedence() >= this->precedence());
 }
 
 HexAstExpr

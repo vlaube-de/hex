@@ -230,7 +230,6 @@ TEST_F(HexParserXmlTest, TestCall)
     )
   );
 
-  /*
   test(
     "person.set_age(24);",
     wrap_single_expr(
@@ -311,7 +310,6 @@ TEST_F(HexParserXmlTest, TestCall)
       "<attribute/>"
     )
   );
-  */
 }
 
 TEST_F(HexParserXmlTest, TestAttributeRef)

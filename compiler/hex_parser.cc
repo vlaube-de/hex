@@ -44,9 +44,9 @@ int
 HexParser::parse_from_file(const c_str path, HexAstHexProgram* program)
 {
   HEX_ASSERT(path);
+
   FileReader reader(path);
   c_str content = NULL;
-
   reader.read_file(&content);
 
   return this->_parse(content, program);
