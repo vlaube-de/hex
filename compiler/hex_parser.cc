@@ -17,13 +17,11 @@
 
 /* HEX parser. */
 
-#include <string>
-#include <iostream>
-#include <fstream>
-#include <sstream>
+#include <cstddef>
 #include "parser.tab.hh"
 #include "hex_parser.h"
 #include "ast/ast.h"
+#include "../base/freader.h"
 #include "../base/assert.h"
 #include "../base/c_str.h"
 
@@ -39,13 +37,18 @@ extern void yy_switch_to_buffer(YY_BUFFER_STATE);
 
 HexParser::HexParser()
 {
+  // Do nothing here.
 }
 
 int
 HexParser::parse_from_file(const c_str path, HexAstHexProgram* program)
 {
   HEX_ASSERT(path);
-  c_str content = this->_read_file(path);
+  FileReader reader(path);
+  c_str content = NULL;
+
+  reader.read_file(&content);
+
   return this->_parse(content, program);
 }
 
@@ -61,17 +64,17 @@ HexParser::_parse(const c_str content, HexAstHexProgram* program)
 {
   int res;
 
-  // prepare for parsing.
+  // Prepare for parsing.
   YY_BUFFER_STATE buffer = yy_scan_string(content);
   yy_switch_to_buffer(buffer);
 
   // Clears the AST.
   _HexAstHexProgram::clear();
 
-  // the real magic happens here.
+  // The real magic happens here.
   res = yyparse();
 
-  // flush the buffer right after parsing.
+  // Flush the buffer right after parsing.
   yy_flush_buffer(buffer);
   yy_delete_buffer(buffer);
 
@@ -87,19 +90,4 @@ HexParser::_parse(const c_str content, HexAstHexProgram* program)
   }
 
   return res;
-}
-
-c_str
-HexParser::_read_file(const c_str path)
-{
-  std::ifstream file(path);
-
-  std::stringstream buffer;
-  buffer << file.rdbuf();
-
-  file.close();
-
-  std::string str = buffer.str();
-
-  return (c_str)strdup(str.c_str());
 }

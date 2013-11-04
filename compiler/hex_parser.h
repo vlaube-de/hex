@@ -31,8 +31,6 @@ public:
   int parse_from_file(const c_str, HexAstHexProgram*);
   int parse(const c_str, HexAstHexProgram*);
 protected:
-  c_str _read_file(const c_str);
-
   int _parse(const c_str, HexAstHexProgram*);
 };
 
