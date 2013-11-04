@@ -74,6 +74,9 @@ bitmap_unittest.test: base bitmap_unittest.cc
 bst_unittest.test: base bst_unittest.cc
 	$(CXX) $(CFLAGS) $(LIBGTEST) ../bst.o ../unittest.o bst_unittest.cc -o bst_unittest.test
 
+freader_unittest.test: base freader_unittest.cc
+	$(CXX) $(CFLAGS) $(LIBGTEST) ../freader.o ../unittest.o freader_unittest.cc -o freader_unittest.test
+
 all: assert_unittest.test	\
 	 utils_unittest.test	\
 	 memory_unittest.test	\
@@ -89,7 +92,8 @@ all: assert_unittest.test	\
 	 stack_unittest.test 	\
 	 queue_unittest.test 	\
 	 bitmap_unittest.test 	\
-	 bst_unittest.test
+	 bst_unittest.test  \
+	 freader_unittest.test
 
 
 clean:

@@ -70,6 +70,9 @@ bitmap.o: bitmap.h bitmap.c
 bst.o: bst.h bst.c
 	$(CC) $(CFLAGS) -c bst.h bst.c
 
+freader.o: freader.h freader.cc
+	$(CXX) $(CFLAGS) -c freader.cc
+
 obj: unittest.o \
 	 utils.o    \
 	 memory.o   \
@@ -85,7 +88,8 @@ obj: unittest.o \
 	 stack.o    \
 	 queue.o    \
 	 bitmap.o   \
-	 bst.o
+	 bst.o  \
+	 freader.o
 
 libbase.a: obj
 	$(AR) $(ARFLAGS) libbase.a *.o
