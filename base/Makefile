@@ -96,5 +96,6 @@ libbase.a: obj
 
 all: libbase.a
 
+.PHONY : clean
 clean:
 	rm *.gch *.o *.a *.out *.test

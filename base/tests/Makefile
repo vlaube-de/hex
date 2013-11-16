@@ -95,6 +95,6 @@ all: assert_unittest.test	\
 	 bst_unittest.test  \
 	 freader_unittest.test
 
-
+.PHONY : clean
 clean:
 	rm *.gch *.o *.a *.out *.test

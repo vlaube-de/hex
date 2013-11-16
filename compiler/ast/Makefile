@@ -558,6 +558,6 @@ visitors:
 all: libast.a \
 	 visitors
 
-
+.PHONY : clean
 clean:
 	rm ast.h *.gch *.o *.a *.out *.test *.a

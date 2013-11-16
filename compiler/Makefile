@@ -45,6 +45,6 @@ all: lex.yy.c       \
 	 hex_parser.o     \
 	 parser_stub.out
 
-
+.PHONY : clean
 clean:
-	rm *.gch *.out *.o *.swp .lexer.l.swp *.output *.vcg *.test parser.tab.cc parser.tab.hh ast.h
+	rm *.gch *.out *.o *.swp .lexer.l.swp *.output *.vcg *.test parser.tab.cc parser.tab.hh

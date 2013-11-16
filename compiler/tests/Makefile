@@ -57,5 +57,6 @@ all: parser_acceptance_test.test \
 	 parser_expr_precedence_test.test \
 	 parser_expr_associativity_test.test
 
+.PHONY : clean
 clean:
 	rm *.gch *.o *.a *.out *.test

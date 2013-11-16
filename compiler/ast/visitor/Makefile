@@ -33,5 +33,6 @@ all: ast_visitor.o	\
 	 ast_tostring_visitor.o \
 	 ast_to_xml_visitor.o
 
+.PHONY : clean
 clean:
 	rm *.gch *.out *.o *.swp *.a
