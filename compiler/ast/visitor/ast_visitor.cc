@@ -538,6 +538,20 @@ AstVisitor::visit(HexAstFieldDefList list)
   return list;
 }
 
+HexAstKeyValuePair
+AstVisitor::visit(HexAstKeyValuePair pair)
+{
+  HEX_ASSERT(pair);
+  return pair;
+}
+
+HexAstKeyValuePairList
+AstVisitor::visit(HexAstKeyValuePairList list)
+{
+  HEX_ASSERT(list);
+  return list;
+}
+
 HexAstExplicitDictForm
 AstVisitor::visit(HexAstExplicitDictForm dict)
 {

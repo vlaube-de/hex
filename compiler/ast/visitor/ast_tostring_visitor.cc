@@ -1051,6 +1051,34 @@ AstToStringVisitor::visit(HexAstFieldDefList list_)
   return list;
 }
 
+HexAstKeyValuePair
+AstToStringVisitor::visit(HexAstKeyValuePair pair_)
+{
+  HexAstKeyValuePair pair = AstVisitor::visit(pair_);
+
+  pair->key()->accept(this);
+  this->append(": ");
+  pair->value()->accept(this);
+
+  return pair;
+}
+
+HexAstKeyValuePairList
+AstToStringVisitor::visit(HexAstKeyValuePairList list_)
+{
+  HexAstKeyValuePairList list = AstVisitor::visit(list_);
+
+  this->iterate<HexAstKeyValuePair>(
+    list->list(),
+    [this](HexAstKeyValuePair pair) {
+      pair->accept(this);
+    },
+    this->_commaDelimiter
+  );
+
+  return list;
+}
+
 HexAstExplicitDictForm
 AstToStringVisitor::visit(HexAstExplicitDictForm dict_)
 {
@@ -1059,7 +1087,7 @@ AstToStringVisitor::visit(HexAstExplicitDictForm dict_)
   this->append("{");
 
   if(dict->fields()) {
-    HexAstFieldDefList fields = dict->fields();
+    HexAstKeyValuePairList fields = dict->fields();
     fields->accept(this);
   }
 

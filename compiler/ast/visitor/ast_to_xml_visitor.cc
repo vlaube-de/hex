@@ -1413,6 +1413,56 @@ AstToXmlVisitor::visit(HexAstFieldDefList list_)
   return list;
 }
 
+HexAstKeyValuePair
+AstToXmlVisitor::visit(HexAstKeyValuePair pair_)
+{
+  HexAstKeyValuePair pair = AstVisitor::visit(pair_);
+
+  this->double_tag(
+    "key_value_pair",
+    [this, pair]() {
+
+      // key
+      this->double_tag(
+        "key_value_pair-key",
+        [this, pair]() {
+          pair->key()->accept(this);
+        }
+      );
+
+      // value
+      this->double_tag(
+        "key_value_pair-value",
+        [this, pair]() {
+          pair->value()->accept(this);
+        }
+      );
+    }
+  );
+
+  return pair;
+}
+
+HexAstKeyValuePairList
+AstToXmlVisitor::visit(HexAstKeyValuePairList list_)
+{
+  HexAstKeyValuePairList list = AstVisitor::visit(list_);
+
+  this->double_tag(
+    "key_value_pair_list",
+    [this, list]() {
+      this->iterate<HexAstKeyValuePair>(
+        list->list(),
+        [this](HexAstKeyValuePair pair) {
+          pair->accept(this);
+        }
+      );
+    }
+  );
+
+  return list;
+}
+
 HexAstExplicitDictForm
 AstToXmlVisitor::visit(HexAstExplicitDictForm dict_)
 {
@@ -1422,7 +1472,7 @@ AstToXmlVisitor::visit(HexAstExplicitDictForm dict_)
     "dict_form",
     [this, dict]() {
       if(dict->fields()) {
-        HexAstFieldDefList fields = dict->fields();
+        HexAstKeyValuePairList fields = dict->fields();
         fields->accept(this); 
       }
     }

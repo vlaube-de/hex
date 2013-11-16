@@ -106,6 +106,8 @@ public:
   virtual HexAstMapFieldList visit(HexAstMapFieldList);
   virtual HexAstMapForm visit(HexAstMapForm);
   virtual HexAstFieldDefList visit(HexAstFieldDefList);
+  virtual HexAstKeyValuePair visit(HexAstKeyValuePair);
+  virtual HexAstKeyValuePairList visit(HexAstKeyValuePairList);
   virtual HexAstExplicitDictForm visit(HexAstExplicitDictForm);
   virtual HexAstImplicitDictForm visit(HexAstImplicitDictForm);
   virtual HexAstDecorator visit(HexAstDecorator);

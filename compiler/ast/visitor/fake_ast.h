@@ -100,6 +100,8 @@ typedef class _HexAstMapField * HexAstMapField;
 typedef class _HexAstMapFieldList * HexAstMapFieldList;
 typedef class _HexAstMapForm * HexAstMapForm;
 typedef class _HexAstFieldDefList * HexAstFieldDefList;
+typedef class _HexAstKeyValuePair * HexAstKeyValuePair;
+typedef class _HexAstKeyValuePairList * HexAstKeyValuePairList;
 typedef class _HexAstDictForm * HexAstDictForm;
 typedef class _HexAstExplicitDictForm * HexAstExplicitDictForm;
 typedef class _HexAstImplicitDictForm * HexAstImplicitDictForm;

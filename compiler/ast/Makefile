@@ -86,6 +86,12 @@ ast_field_def.o: ast_node.o ast_field_def.h ast_field_def.cc
 ast_field_def_list.o: ast_field_def.o ast_list_obj.o ast_field_def_list.h ast_field_def_list.cc
 	$(CXX) $(CFLAGS) -c ast_field_def_list.cc
 
+ast_key_value_pair.o: ast_key_value_pair.h ast_key_value_pair.cc
+	$(CXX) $(CFLAGS) -c ast_key_value_pair.cc
+
+ast_key_value_pair_list.o: ast_key_value_pair_list.h ast_key_value_pair_list.cc
+	$(CXX) $(CFLAGS) -c ast_key_value_pair_list.cc
+
 ast_dict_form.o: ast_node.o ast_dict_form.h ast_dict_form.cc
 	$(CXX) $(CFLAGS) -c ast_dict_form.cc
 
@@ -438,6 +444,8 @@ obj:ast.h \
 	ast_map_form.o	\
 	ast_field_def.o	\
 	ast_field_def_list.o	\
+	ast_key_value_pair.o \
+	ast_key_value_pair_list.o \
 	ast_dict_form.o	\
 	ast_name.o	\
 	ast_decorator.o	\

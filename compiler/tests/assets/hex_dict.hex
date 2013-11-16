@@ -19,16 +19,16 @@
 
 
 PROVINCES = {
-  BC: 'British Columbia',
-  AB: 'Alberta',
-  SK: 'Saskatchewan',
-  MB: 'Manitoba',
-  ON: 'Ontario',
-  QC: 'Quebec',
-  NB: 'New Brunswick',
-  NL: 'Newfoundland and Labrador',
-  PE: 'Prince Edward Isand',
-  NS: 'Nova Scotia'
+  'BC': 'British Columbia',
+  'AB': 'Alberta',
+  'SK': 'Saskatchewan',
+  'MB': 'Manitoba',
+  'ON': 'Ontario',
+  'QC': 'Quebec',
+  'NB': 'New Brunswick',
+  'NL': 'Newfoundland and Labrador',
+  'PE': 'Prince Edward Isand',
+  'NS': 'Nova Scotia'
 };
 
 

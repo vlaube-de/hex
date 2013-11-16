@@ -19,7 +19,7 @@
 #include "ast_primary.h"
 #include "ast_expr_associativity.h"
 #include "ast_expr_precedence.h"
-#include "ast_field_def_list.h"
+#include "ast_key_value_pair_list.h"
 #include "ast_comprehension.h"
 #include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
@@ -34,7 +34,7 @@ _HexAstDictForm::_HexAstDictForm(
 }
 
 _HexAstExplicitDictForm::_HexAstExplicitDictForm(
-  HexAstFieldDefList fields 
+  HexAstKeyValuePairList fields 
 ) : _fields(fields)
 {
   this->reprOK();
@@ -46,7 +46,7 @@ _HexAstExplicitDictForm::reprOK()
   // Do nothing here.
 }
 
-HexAstFieldDefList
+HexAstKeyValuePairList
 _HexAstExplicitDictForm::fields()
 {
   return this->_fields.get();
@@ -60,7 +60,7 @@ _HexAstExplicitDictForm::accept(AstVisitor* visitor)
 
 HexAstExplicitDictForm
 _HexAstExplicitDictForm::create(
-  HexAstFieldDefList fields
+  HexAstKeyValuePairList fields
 )
 {
   HexAstExplicitDictForm obj = new _HexAstExplicitDictForm(fields);

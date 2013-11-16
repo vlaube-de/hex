@@ -85,6 +85,8 @@ The sky is your limit...
   class _HexAstMapFieldList* hex_ast_map_field_list;
   class _HexAstMapForm* hex_ast_map_form;
   class _HexAstFieldDefList* hex_ast_field_def_list;
+  class _HexAstKeyValuePair* hex_ast_key_value_pair;
+  class _HexAstKeyValuePairList* hex_ast_key_value_pair_list;
   class _HexAstDictForm* hex_ast_dict_form;
   class _HexAstDecorator* hex_ast_decorator;
   class _HexAstDecoratorList* hex_ast_decorator_list;
@@ -347,6 +349,8 @@ The sky is your limit...
 %type <hex_ast_map_field_list> map_field_list
 %type <hex_ast_map_form> map_form
 %type <hex_ast_field_def_list> field_def_list
+%type <hex_ast_key_value_pair> key_value_pair
+%type <hex_ast_key_value_pair_list> key_value_pair_list
 %type <hex_ast_dict_form> dict_form
 %type <hex_ast_decorator> decorator
 %type <hex_ast_decorator_list> decorator_list
@@ -718,8 +722,17 @@ decorator
 
 dict_form
   : LBRACE RBRACE                                                                                   { $$ = _HexAstExplicitDictForm::create(NULL); }
-  | LBRACE field_def_list RBRACE                                                                    { $$ = _HexAstExplicitDictForm::create($2); }
+  | LBRACE key_value_pair_list RBRACE                                                               { $$ = _HexAstExplicitDictForm::create($2); }
   | LBRACE comprehension RBRACE                                                                     { $$ = _HexAstImplicitDictForm::create($2); }
+  ;
+
+key_value_pair_list
+  : key_value_pair                                                                                  { $$ = AstListObj<_HexAstKeyValuePairList, HexAstKeyValuePair>::create($1); }
+  | key_value_pair_list COMMA key_value_pair                                                        { $$ = AstListObj<_HexAstKeyValuePairList, HexAstKeyValuePair>::expand($1, $3); } 
+  ;
+
+key_value_pair
+  : expr COLON val_atom                                                                             { $$ = _HexAstKeyValuePair::create($1, $3); }
   ;
 
 field_def_list

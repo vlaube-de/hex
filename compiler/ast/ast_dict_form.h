@@ -17,7 +17,7 @@
 
 #include <boost/smart_ptr.hpp>
 #include "ast_primary.h"
-#include "ast_field_def_list.h"
+#include "ast_key_value_pair_list.h"
 #include "ast_comprehension.h"
 #include "ast_expr_precedence.h"
 #include "visitor/ast_visitor.h"
@@ -32,16 +32,16 @@ public:
 
 typedef class _HexAstExplicitDictForm : public _HexAstDictForm {
 public:
-  _HexAstExplicitDictForm(HexAstFieldDefList);
+  _HexAstExplicitDictForm(HexAstKeyValuePairList);
 
   virtual void reprOK();
   virtual void accept(AstVisitor*);
 
-  HexAstFieldDefList fields();
+  HexAstKeyValuePairList fields(); 
 
-  static _HexAstExplicitDictForm* create(HexAstFieldDefList);
+  static _HexAstExplicitDictForm* create(HexAstKeyValuePairList);
 private:
-  boost::scoped_ptr<_HexAstFieldDefList> _fields;
+  boost::scoped_ptr<_HexAstKeyValuePairList> _fields;
 } * HexAstExplicitDictForm;
 
 typedef class _HexAstImplicitDictForm : public _HexAstDictForm {
