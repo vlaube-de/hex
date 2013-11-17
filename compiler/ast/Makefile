@@ -95,18 +95,6 @@ ast_decorator.o: ast_node.o ast_decorator.h ast_decorator.cc
 ast_decorator_list.o: ast_decorator.o ast_decorator_list.h ast_decorator_list.cc
 	$(CXX) $(CFLAGS) -c ast_decorator_list.cc
 
-ast_operator.o: ast_operator.h ast_operator.cc
-	$(CXX) $(CFLAGS) -c ast_operator.cc
-
-ast_operator_def.o: ast_node.o ast_operator_def.h ast_operator_def.cc
-	$(CXX) $(CFLAGS) -c ast_operator_def.cc
-
-ast_attribute_def.o: ast_node.o ast_attribute_def.h ast_attribute_def.cc
-	$(CXX) $(CFLAGS) -c ast_attribute_def.cc
-
-ast_attribute_def_list.o: ast_attribute_def_list.h ast_attribute_def_list.cc
-	$(CXX) $(CFLAGS) -c ast_attribute_def_list.cc
-
 ast_assignment_stmt.o: ast_node.o ast_assignment_stmt.h ast_assignment_stmt.cc
 	$(CXX) $(CFLAGS) -c ast_assignment_stmt.cc
 
@@ -438,10 +426,6 @@ obj:ast.h \
 	ast_name.o	\
 	ast_decorator.o	\
 	ast_decorator_list.o	\
-	ast_operator.o	\
-	ast_operator_def.o	\
-	ast_attribute_def.o	\
-	ast_attribute_def_list.o  \
 	ast_assignment_stmt.o	\
 	ast_using_src.o	\
 	ast_using_stmt.o	\

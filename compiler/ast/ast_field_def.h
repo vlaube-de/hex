@@ -16,7 +16,7 @@
  */
 
 #include <boost/smart_ptr.hpp>
-#include "ast_attribute_def.h"
+#include "ast_node.h"
 #include "ast_val_atom.h"
 #include "ast_identifier.h"
 #include "ast_decorator_list.h"
@@ -25,7 +25,7 @@
 #ifndef _AST_FIELD_DEF_H_
 #define _AST_FIELD_DEF_H_
 
-typedef class _HexAstFieldDef : public _HexAstAttributeDef {
+typedef class _HexAstFieldDef : public _HexAstNode {
 public:
   _HexAstFieldDef(HexAstDecoratorList, HexAstIdentifier, HexAstValAtom);
 

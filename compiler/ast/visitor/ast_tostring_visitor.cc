@@ -1003,7 +1003,7 @@ AstToStringVisitor::visit(HexAstFieldDefList list_)
     [this](HexAstFieldDef field) {
       field->accept(this);
     },
-    this->_commaDelimiter
+    this->_newlineDelimiter
   );
 
   return list;
@@ -1100,147 +1100,6 @@ AstToStringVisitor::visit(HexAstDecoratorList decorators_)
   );
 
   return decorators;
-}
-
-HexAstOperator
-AstToStringVisitor::visit(HexAstOperator op_)
-{
-  HexAstOperator op = AstVisitor::visit(op_);
-
-  char* s = NULL;
-
-  switch(op->op()) {
-    case AST_OPERATOR_PLUS:
-      s = "+";
-      break;
-    case AST_OPERATOR_MINUS:
-      s = "-";
-      break;
-    case AST_OPERATOR_MUL:
-      s = "*";
-      break;
-    case AST_OPERATOR_DIV:
-      s = "/";
-      break;
-    case AST_OPERATOR_MOD:
-      s = "%";
-      break;
-    case AST_OPERATOR_BITWISE_NOT:
-      s = "~";
-      break;
-    case AST_OPERATOR_BITWISE_AND:
-      s = "&";
-      break;
-    case AST_OPERATOR_BITWISE_OR:
-      s = "|";
-      break;
-    case AST_OPERATOR_BITWISE_XOR:
-      s = "^";
-      break;
-    case AST_OPERATOR_BITWISE_SHIFTLEFT:
-      s = "<<";
-      break;
-    case AST_OPERATOR_BITWISE_SHIFTRIGHT:
-      s = ">>";
-      break;
-    case AST_OPERATOR_EQ:
-      s = "==";
-      break;
-    case AST_OPERATOR_NEQ:
-      s = "!=";
-      break;
-    case AST_OPERATOR_GT:
-      s = ">";
-      break;
-    case AST_OPERATOR_LT:
-      s = "<";
-      break;
-    case AST_OPERATOR_GEQ:
-      s = ">=";
-      break;
-    case AST_OPERATOR_LEQ:
-      s = "<=";
-      break;
-    case AST_OPERATOR_INC:
-      s = "++";
-      break;
-    case AST_OPERATOR_DEC:
-      s = "--";
-      break;
-    case AST_OPERATOR_ASSIGN_OP:
-      s = "=";
-      break;
-    case AST_OPERATOR_ASSIGN_PLUS:
-      s = "+=";
-      break;
-    case AST_OPERATOR_ASSIGN_MINUS:
-      s = "-=";
-      break;
-    case AST_OPERATOR_ASSIGN_MUL:
-      s = "*=";
-      break;
-    case AST_OPERATOR_ASSIGN_DIV:
-      s = "/=";
-      break;
-    case AST_OPERATOR_ASSIGN_MOD:
-      s = "%=";
-      break;
-    case AST_OPERATOR_ASSIGN_BITWISE_AND:
-      s = "&=";
-      break;
-    case AST_OPERATOR_ASSIGN_BITWISE_OR:
-      s = "|=";
-      break;
-    case AST_OPERATOR_ASSIGN_BITWISE_XOR:
-      s = "^=";
-      break;
-    case AST_OPERATOR_ASSIGN_SHIFTLEFT:
-      s = "<<=";
-      break;
-    case AST_OPERATOR_ASSIGN_SHIFTRIGHT:
-      s = ">>=";
-      break;
-    case AST_OPERATOR_INPUT:
-      s = "<<<";
-      break;
-    case AST_OPERATOR_OUTPUT:
-      s = ">>>";
-      break;
-    default:
-      break;
-  }
-
-  HEX_ASSERT(s);
-  this->append(s);
-
-  return op;
-}
-
-HexAstOperatorDef
-AstToStringVisitor::visit(HexAstOperatorDef def_)
-{
-  HexAstOperatorDef def = AstVisitor::visit(def_);
-
-  def->op()->accept(this);
-  this->append(": ");
-  def->lambda()->accept(this);
-
-  return def;
-}
-
-HexAstAttributeDefList
-AstToStringVisitor::visit(HexAstAttributeDefList defs_)
-{
-  HexAstAttributeDefList defs = AstVisitor::visit(defs_);
-
-  for_each(defs->list()->begin(), defs->list()->end(),
-    [this](HexAstAttributeDef def) {
-      def->accept(this);
-      this->append("\n");
-    }
-  );
-
-  return defs;
 }
 
 HexAstExprListAssignmentStmt
@@ -1576,7 +1435,7 @@ AstToStringVisitor::visit(HexAstClassDef def_)
   if(def->attributes()) {
     this->append(" {");
     def->attributes()->accept(this);
-    this->append("}");
+    this->append("\n}");
   } else {
     this->append(";");
   }

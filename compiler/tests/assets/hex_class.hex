@@ -98,12 +98,12 @@ class ComplexNum {
 
   abs: () -> math.sqrt(real**2 + imag**2)
 
-  operator +: (num) => {
+  __add__: (num) => {
     real+=num.real;
     imag+=num.imag;
   }
 
-  operator -: (num) => {
+  __minus__: (num) => {
     real-=num.real;
     imag-=num.imag;
   }

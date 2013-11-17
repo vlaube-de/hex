@@ -109,9 +109,6 @@ public:
   virtual HexAstImplicitDictForm visit(HexAstImplicitDictForm);
   virtual HexAstDecorator visit(HexAstDecorator);
   virtual HexAstDecoratorList visit(HexAstDecoratorList);
-  virtual HexAstOperator visit(HexAstOperator);
-  virtual HexAstOperatorDef visit(HexAstOperatorDef);
-  virtual HexAstAttributeDefList visit(HexAstAttributeDefList);
   virtual HexAstExprListAssignmentStmt visit(HexAstExprListAssignmentStmt);
   virtual HexAstLambdaAssignmentStmt visit(HexAstLambdaAssignmentStmt);
   virtual HexAstTaskDefAssignmentStmt visit(HexAstTaskDefAssignmentStmt);

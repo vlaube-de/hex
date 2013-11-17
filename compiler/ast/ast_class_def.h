@@ -19,7 +19,7 @@
 #include "ast_compound_stmt.h"
 #include "ast_name.h"
 #include "ast_decorator_list.h"
-#include "ast_attribute_def_list.h"
+#include "ast_field_def_list.h"
 #include "ast_identifier.h"
 #include "visitor/ast_visitor.h"
 
@@ -32,7 +32,7 @@ public:
     HexAstDecoratorList,
     HexAstIdentifier,
     HexAstName,
-    HexAstAttributeDefList
+    HexAstFieldDefList
   );
 
   virtual void reprOK();
@@ -41,20 +41,20 @@ public:
   HexAstDecoratorList decorators();
   HexAstIdentifier name();
   HexAstName parent();
-  HexAstAttributeDefList attributes();
+  HexAstFieldDefList attributes();
 
   static _HexAstClassDef* create(
     HexAstDecoratorList,
     HexAstIdentifier,
     HexAstName,
-    HexAstAttributeDefList
+    HexAstFieldDefList
   );
 
 private:
   boost::scoped_ptr<_HexAstDecoratorList> _decorators;
   boost::scoped_ptr<_HexAstIdentifier> _name;
   boost::scoped_ptr<_HexAstName> _parent;
-  boost::scoped_ptr<_HexAstAttributeDefList> _attributes;
+  boost::scoped_ptr<_HexAstFieldDefList> _attributes;
 } * HexAstClassDef;
 
 #endif /* _AST_CLASS_DEF_H_ */

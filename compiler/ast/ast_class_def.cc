@@ -19,7 +19,7 @@
 #include "ast_compound_stmt.h"
 #include "ast_name.h"
 #include "ast_decorator_list.h"
-#include "ast_attribute_def_list.h"
+#include "ast_field_def_list.h"
 #include "ast_identifier.h"
 #include "visitor/ast_visitor.h"
 #include "../../base/assert.h"
@@ -28,7 +28,7 @@ _HexAstClassDef::_HexAstClassDef(
   HexAstDecoratorList decorators,
   HexAstIdentifier name,
   HexAstName parent,
-  HexAstAttributeDefList attributes
+  HexAstFieldDefList attributes
 ):
   _decorators(decorators),
   _name(name),
@@ -63,7 +63,7 @@ _HexAstClassDef::parent()
   return this->_parent.get();
 }
 
-HexAstAttributeDefList
+HexAstFieldDefList
 _HexAstClassDef::attributes()
 {
   return this->_attributes.get();
@@ -80,7 +80,7 @@ _HexAstClassDef::create(
   HexAstDecoratorList decorators,
   HexAstIdentifier name,
   HexAstName parent,
-  HexAstAttributeDefList attributes
+  HexAstFieldDefList attributes
 )
 {
   HEX_ASSERT(name);

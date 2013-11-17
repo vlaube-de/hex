@@ -87,10 +87,6 @@ The sky is your limit...
   class _HexAstDictForm* hex_ast_dict_form;
   class _HexAstDecorator* hex_ast_decorator;
   class _HexAstDecoratorList* hex_ast_decorator_list;
-  class _HexAstOperator* hex_ast_operator;
-  class _HexAstOperatorDef* hex_ast_operator_def;
-  class _HexAstAttributeDef* hex_ast_attribute_def;
-  class _HexAstAttributeDefList* hex_ast_attribute_def_list;
   class _HexAstAssignmentStmt* hex_ast_assignment_stmt;
   size_t hex_ast_using_src_level;
   class _HexAstUsingSrc* hex_ast_using_src;
@@ -348,10 +344,6 @@ The sky is your limit...
 %type <hex_ast_dict_form> dict_form
 %type <hex_ast_decorator> decorator
 %type <hex_ast_decorator_list> decorator_list
-%type <hex_ast_operator> operator
-%type <hex_ast_operator_def> operator_def
-%type <hex_ast_attribute_def> attribute_def
-%type <hex_ast_attribute_def_list> attribute_def_list
 %type <hex_ast_assignment_stmt> assignment_stmt
 %type <hex_ast_using_src_level> using_src_level
 %type <hex_ast_using_src> using_src
@@ -567,10 +559,10 @@ lambda
 class_def
   : CLASS identifier SEMICOLON                                                                      { $$ = _HexAstClassDef::create(NULL, $2, NULL, NULL); }
   | CLASS identifier EXTENDS name SEMICOLON                                                         { $$ = _HexAstClassDef::create(NULL, $2, $4, NULL); }
-  | CLASS identifier LBRACE attribute_def_list RBRACE                                               { $$ = _HexAstClassDef::create(NULL, $2, NULL, $4); }
-  | CLASS identifier EXTENDS name LBRACE attribute_def_list RBRACE                                  { $$ = _HexAstClassDef::create(NULL, $2, $4, $6); }
-  | decorator_list CLASS identifier LBRACE attribute_def_list RBRACE                                { $$ = _HexAstClassDef::create($1, $3, NULL, $5); }
-  | decorator_list CLASS identifier EXTENDS name LBRACE attribute_def_list RBRACE                   { $$ = _HexAstClassDef::create($1, $3, $5, $7); }
+  | CLASS identifier LBRACE field_def_list RBRACE                                                   { $$ = _HexAstClassDef::create(NULL, $2, NULL, $4); }
+  | CLASS identifier EXTENDS name LBRACE field_def_list RBRACE                                      { $$ = _HexAstClassDef::create(NULL, $2, $4, $6); }
+  | decorator_list CLASS identifier LBRACE field_def_list RBRACE                                    { $$ = _HexAstClassDef::create($1, $3, NULL, $5); }
+  | decorator_list CLASS identifier EXTENDS name LBRACE field_def_list RBRACE                       { $$ = _HexAstClassDef::create($1, $3, $5, $7); }
   | decorator_list CLASS identifier LBRACE RBRACE                                                   { $$ = _HexAstClassDef::create($1, $3, NULL, NULL); }
   | decorator_list CLASS identifier EXTENDS name LBRACE RBRACE                                      { $$ = _HexAstClassDef::create($1, $3, $5, NULL); }
   ;
@@ -655,55 +647,6 @@ assignment_stmt
   | primary ASSIGN_OP task_def SEMICOLON                                                            { $$ = _HexAstTaskDefAssignmentStmt::create($1, $3, false); }
   ;
 
-attribute_def_list
-  : attribute_def                                                                                   { $$ = AstListObj<_HexAstAttributeDefList, HexAstAttributeDef>::create($1); }
-  | attribute_def_list attribute_def                                                                { $$ = AstListObj<_HexAstAttributeDefList, HexAstAttributeDef>::expand($1, $2); }
-  ;
-
-attribute_def
-  : field_def                                                                                       { $$ = $1; }
-  | operator_def                                                                                    { $$ = $1; }
-  ;
-
-operator_def
-  : operator COLON lambda                                                                           { $$ = _HexAstOperatorDef::create($1, $3); }
-  ;
-
-operator
-  : OPERATOR PLUS_OP                                                                                { $$ = _HexAstOperator::create(AST_OPERATOR_PLUS); }
-  | OPERATOR MINUS_OP                                                                               { $$ = _HexAstOperator::create(AST_OPERATOR_MINUS); }
-  | OPERATOR MUL_OP                                                                                 { $$ = _HexAstOperator::create(AST_OPERATOR_MUL); }
-  | OPERATOR DIV_OP                                                                                 { $$ = _HexAstOperator::create(AST_OPERATOR_DIV); }
-  | OPERATOR MOD_OP                                                                                 { $$ = _HexAstOperator::create(AST_OPERATOR_MOD); }
-  | OPERATOR BITWISE_NOT                                                                            { $$ = _HexAstOperator::create(AST_OPERATOR_BITWISE_NOT); }
-  | OPERATOR BITWISE_AND                                                                            { $$ = _HexAstOperator::create(AST_OPERATOR_BITWISE_AND); }
-  | OPERATOR BITWISE_OR                                                                             { $$ = _HexAstOperator::create(AST_OPERATOR_BITWISE_OR); }
-  | OPERATOR BITWISE_XOR                                                                            { $$ = _HexAstOperator::create(AST_OPERATOR_BITWISE_XOR); }
-  | OPERATOR BITWISE_SHIFTLEFT                                                                      { $$ = _HexAstOperator::create(AST_OPERATOR_BITWISE_SHIFTLEFT); }
-  | OPERATOR BITWISE_SHIFTRIGHT                                                                     { $$ = _HexAstOperator::create(AST_OPERATOR_BITWISE_SHIFTRIGHT); }
-  | OPERATOR EQ_OP                                                                                  { $$ = _HexAstOperator::create(AST_OPERATOR_EQ); }
-  | OPERATOR NEQ_OP                                                                                 { $$ = _HexAstOperator::create(AST_OPERATOR_NEQ); }
-  | OPERATOR GREATER_OP                                                                             { $$ = _HexAstOperator::create(AST_OPERATOR_GT); }
-  | OPERATOR LESS_OP                                                                                { $$ = _HexAstOperator::create(AST_OPERATOR_LT); }
-  | OPERATOR GEQ_OP                                                                                 { $$ = _HexAstOperator::create(AST_OPERATOR_GEQ); }
-  | OPERATOR LEQ_OP                                                                                 { $$ = _HexAstOperator::create(AST_OPERATOR_LEQ); }
-  | OPERATOR INC_OP                                                                                 { $$ = _HexAstOperator::create(AST_OPERATOR_INC); }
-  | OPERATOR DEC_OP                                                                                 { $$ = _HexAstOperator::create(AST_OPERATOR_DEC); }
-  | OPERATOR ASSIGN_OP                                                                              { $$ = _HexAstOperator::create(AST_OPERATOR_ASSIGN_OP); }
-  | OPERATOR ASSIGN_PLUS                                                                            { $$ = _HexAstOperator::create(AST_OPERATOR_ASSIGN_PLUS); }
-  | OPERATOR ASSIGN_MINUS                                                                           { $$ = _HexAstOperator::create(AST_OPERATOR_ASSIGN_MINUS); }
-  | OPERATOR ASSIGN_MUL                                                                             { $$ = _HexAstOperator::create(AST_OPERATOR_ASSIGN_MUL); }
-  | OPERATOR ASSIGN_DIV                                                                             { $$ = _HexAstOperator::create(AST_OPERATOR_ASSIGN_DIV); }
-  | OPERATOR ASSIGN_MOD                                                                             { $$ = _HexAstOperator::create(AST_OPERATOR_ASSIGN_MOD); }
-  | OPERATOR ASSIGN_BITWISE_AND                                                                     { $$ = _HexAstOperator::create(AST_OPERATOR_ASSIGN_BITWISE_AND); }
-  | OPERATOR ASSIGN_BITWISE_OR                                                                      { $$ = _HexAstOperator::create(AST_OPERATOR_ASSIGN_BITWISE_OR); }
-  | OPERATOR ASSIGN_BITWISE_XOR                                                                     { $$ = _HexAstOperator::create(AST_OPERATOR_ASSIGN_BITWISE_XOR); }
-  | OPERATOR ASSIGN_SHIFTLEFT                                                                       { $$ = _HexAstOperator::create(AST_OPERATOR_ASSIGN_SHIFTLEFT); }
-  | OPERATOR ASSIGN_SHIFTRIGHT                                                                      { $$ = _HexAstOperator::create(AST_OPERATOR_ASSIGN_SHIFTRIGHT); }
-  | OPERATOR INPUT_OP                                                                               { $$ = _HexAstOperator::create(AST_OPERATOR_INPUT); }
-  | OPERATOR OUTPUT_OP                                                                              { $$ = _HexAstOperator::create(AST_OPERATOR_OUTPUT); }
-  ;
-
 decorator_list
   : decorator                                                                                       { $$ = AstListObj<_HexAstDecoratorList, HexAstDecorator>::create($1); }
   | decorator_list decorator                                                                        { $$ = AstListObj<_HexAstDecoratorList, HexAstDecorator>::expand($1, $2); }
@@ -731,7 +674,7 @@ key_value_pair
 
 field_def_list
   : field_def                                                                                       { $$ = AstListObj<_HexAstFieldDefList, HexAstFieldDef>::create($1); }
-  | field_def_list COMMA field_def                                                                  { $$ = AstListObj<_HexAstFieldDefList, HexAstFieldDef>::expand($1, $3); }
+  | field_def_list field_def                                                                        { $$ = AstListObj<_HexAstFieldDefList, HexAstFieldDef>::expand($1, $2); }
   ;
 
 field_def

@@ -1834,7 +1834,7 @@ TEST_F(HexParserXmlTest, TestClassDef)
           "<name/>"
         "<class_def-parent/>"
         "<class_def-attributes>"
-          "<attribute_def_list>"
+          "<field_def_list>"
             "<field_def>"
               "<field_def-name>"
                 "<identifier>grade<identifier/>"
@@ -1867,7 +1867,7 @@ TEST_F(HexParserXmlTest, TestClassDef)
                 "<lambda_simple/>"
               "<field_def-val/>"
             "<field_def/>"
-          "<attribute_def_list/>"
+          "<field_def_list/>"
         "<class_def-attributes/>"
       "<class_def/>"
     )

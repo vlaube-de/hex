@@ -559,27 +559,6 @@ AstVisitor::visit(HexAstDecoratorList decorators)
   return decorators;
 }
 
-HexAstOperator
-AstVisitor::visit(HexAstOperator op)
-{
-  HEX_ASSERT(op); 
-  return op;
-}
-
-HexAstOperatorDef
-AstVisitor::visit(HexAstOperatorDef def)
-{
-  HEX_ASSERT(def);
-  return def;
-}
-
-HexAstAttributeDefList
-AstVisitor::visit(HexAstAttributeDefList list)
-{
-  HEX_ASSERT(list);
-  return list;
-}
-
 HexAstExprListAssignmentStmt
 AstVisitor::visit(HexAstExprListAssignmentStmt stmt)
 {
