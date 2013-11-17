@@ -1595,14 +1595,16 @@ AstToStringVisitor::visit(HexAstStartClauseSingle clause_)
 
   this->append("start ");
   clause->target()->accept(this);
-  this->append(" ");
 
   if(clause->alias()) {
     this->append(" as ");
     clause->alias()->accept(this);
   }
 
-  clause->condition()->accept(this);
+  if(clause->condition()) {
+    this->append(" ");
+    clause->condition()->accept(this);
+  }
 
   return clause;
 }
@@ -1613,14 +1615,20 @@ AstToStringVisitor::visit(HexAstStartClauseMultiple clause_)
   HexAstStartClauseMultiple clause = AstVisitor::visit(clause_);
 
   this->append("start ");
+
+  this->append("(");
   clause->targets()->accept(this);
+  this->append(")");
 
   if(clause->alias()) {
     this->append(" as ");
     clause->alias()->accept(this);
   }
 
-  clause->condition()->accept(this);
+  if(clause->condition()) {
+    this->append(" ");
+    clause->condition()->accept(this);
+  }
 
   return clause;
 }
@@ -1717,7 +1725,7 @@ AstToStringVisitor::visit(HexAstTaskDef def_)
     [this](HexAstTaskClause clause) {
       clause->accept(this);
     },
-    this->_newlineDelimiter
+    this->_commaDelimiter
   );
 
   return def;

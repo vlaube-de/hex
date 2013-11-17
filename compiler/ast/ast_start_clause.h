@@ -30,6 +30,8 @@ typedef class _HexAstStartClause : public _HexAstTaskClause {
 public:
   _HexAstStartClause(HexAstIdentifier, HexAstConditionalClause);
 
+  virtual void reprOK();
+
   HexAstIdentifier alias();
   HexAstConditionalClause condition();
 

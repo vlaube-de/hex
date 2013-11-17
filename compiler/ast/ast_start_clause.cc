@@ -29,6 +29,13 @@ _HexAstStartClause::_HexAstStartClause(
   HexAstConditionalClause condition
 ):_alias(alias), _condition(condition)
 {
+  this->reprOK();
+}
+
+void
+_HexAstStartClause::reprOK()
+{
+  // Do nothing here.
 }
 
 HexAstIdentifier

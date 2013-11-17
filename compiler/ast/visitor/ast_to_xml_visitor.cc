@@ -2365,12 +2365,14 @@ AstToXmlVisitor::visit(HexAstStartClauseSingle clause_)
       }
 
       // condition
-      this->double_tag(
-        "start_clause_single-condition",
-        [this, clause]() {
-          clause->condition()->accept(this);
-        }
-      );
+      if(clause->condition()) {
+        this->double_tag(
+          "start_clause_single-condition",
+          [this, clause]() {
+            clause->condition()->accept(this);
+          }
+        );
+      }
 
     }
   );
@@ -2406,12 +2408,14 @@ AstToXmlVisitor::visit(HexAstStartClauseMultiple clause_)
       }
 
       // condition
-      this->double_tag(
-        "start_clause_multiple-condition",
-        [this, clause]() {
-          clause->condition()->accept(this);
-        }
-      );
+      if(clause->condition()) {
+        this->double_tag(
+          "start_clause_multiple-condition",
+          [this, clause]() {
+            clause->condition()->accept(this);
+          }
+        );
+      }
 
     }
   );
@@ -2553,12 +2557,14 @@ AstToXmlVisitor::visit(HexAstFixedDelayClause clause_)
     [this, clause]() {
 
       // exprs
-      this->double_tag(
-        "fixed_delay_clause-exprs",
-        [this, clause]() {
-          clause->exprs()->accept(this);
-        }
-      );
+      if(clause->exprs()) {
+        this->double_tag(
+          "fixed_delay_clause-exprs",
+          [this, clause]() {
+            clause->exprs()->accept(this);
+          }
+        );
+      }
 
       // delay
       this->double_tag(

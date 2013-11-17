@@ -562,13 +562,13 @@ TEST_F(HexParserReprTest, TestAwaitStmt) {
 }
 
 TEST_F(HexParserReprTest, TestTaskDefinition) {
-  // test(
-  //   "mytask = start t1,"
-  //             "delay by mins(2),"
-  //             "start (t2, t3, t4) as tasks,"
-  //             "stop any(tasks) when any(tasks) stop,"
-  //             "hello_world() after all(tasks) finish;"
-  // );
+  test(
+    "mytask = start t1, "
+              "delay by mins(2), "
+              "start (t2, t3, t4) as tasks, "
+              "stop any(tasks) when any(tasks) stop, "
+              "start hello_world after all(tasks) finish;"
+  );
 }
 
 TEST_F(HexParserReprTest, TestReturnStmt) {
