@@ -510,27 +510,6 @@ AstVisitor::visit(HexAstFieldDef def)
   return def;
 }
 
-HexAstMapField
-AstVisitor::visit(HexAstMapField field)
-{
-  HEX_ASSERT(field);
-  return field;
-}
-
-HexAstMapFieldList
-AstVisitor::visit(HexAstMapFieldList list)
-{
-  HEX_ASSERT(list);
-  return list;
-}
-
-HexAstMapForm
-AstVisitor::visit(HexAstMapForm map)
-{
-  HEX_ASSERT(map);
-  return map;
-}
-
 HexAstFieldDefList
 AstVisitor::visit(HexAstFieldDefList list)
 {

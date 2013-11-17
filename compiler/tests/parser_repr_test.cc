@@ -290,21 +290,6 @@ TEST_F(HexParserReprTest, TestDictForm) {
   );
 }
 
-TEST_F(HexParserReprTest, TestMapForm) {
-  test("{0x01 => 123, 0x0A => 789};");
-  test(
-  "{"
-    "3.1415 => [3, 1, 4, 1, 5], "
-    "0.00 => [0b00, 0o00, 0x00], "
-    "5.457 => {"
-      "0x01 => 5.235, "
-      "0xFA => 333, "
-      "0b01 => 94"
-    "}"
-  "};"
-  );
-}
-
 TEST_F(HexParserReprTest, TestLambdaSimpleForm) {
   test("sqr = (x) -> x * x;");
   test("wrapper = (func, *args, **kwargs) -> func(session(), *args, **kwargs);");
@@ -627,5 +612,5 @@ TEST_F(HexParserReprTest, TestExprListStmt) {
   test("1;");
   test("myobj;");
   test("x, y, z;");
-  test("[for _ in 1...100], (x, y, z), {a: 1, b: 2}, {1 => a, 2 => b};");
+  test("[for _ in 1...100], (x, y, z), {a: 1, b: 2};");
 }

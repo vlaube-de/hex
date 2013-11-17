@@ -71,15 +71,6 @@ ast_comprehension.o: ast_node.o ast_comprehension.h ast_comprehension.cc
 ast_list_form.o: ast_node.o ast_comprehension.o ast_list_form.h ast_list_form.cc
 	$(CXX) $(CFLAGS) -c ast_list_form.cc
 
-ast_map_field.o: ast_node.o ast_map_field.h ast_map_field.cc
-	$(CXX) $(CFLAGS) -c ast_map_field.cc
-
-ast_map_field_list.o: ast_node.o ast_list_obj.o ast_map_field_list.h ast_map_field_list.cc
-	$(CXX) $(CFLAGS) -c ast_map_field_list.cc
-
-ast_map_form.o: ast_node.o ast_map_field_list.o ast_map_form.h ast_map_form.cc
-	$(CXX) $(CFLAGS) -c ast_map_form.cc
-
 ast_field_def.o: ast_node.o ast_field_def.h ast_field_def.cc
 	$(CXX) $(CFLAGS) -c ast_field_def.cc
 
@@ -439,9 +430,6 @@ obj:ast.h \
 	ast_arg_list.o	\
 	ast_comprehension.o	\
 	ast_list_form.o	\
-	ast_map_field.o	\
-	ast_map_field_list.o	\
-	ast_map_form.o	\
 	ast_field_def.o	\
 	ast_field_def_list.o	\
 	ast_key_value_pair.o \

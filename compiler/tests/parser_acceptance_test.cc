@@ -44,7 +44,6 @@ TEST_F(HexParserAcceptanceTest, TestAcceptance07) { test("./assets/hex_call.hex"
 TEST_F(HexParserAcceptanceTest, TestAcceptance08) { test("./assets/hex_slicing.hex"); }
 TEST_F(HexParserAcceptanceTest, TestAcceptance09) { test("./assets/hex_list.hex"); }
 TEST_F(HexParserAcceptanceTest, TestAcceptance10) { test("./assets/hex_dict.hex"); }
-TEST_F(HexParserAcceptanceTest, TestAcceptance11) { test("./assets/hex_map.hex"); }
 TEST_F(HexParserAcceptanceTest, TestAcceptance12) { test("./assets/hex_lambda.hex"); }
 TEST_F(HexParserAcceptanceTest, TestAcceptance13) { test("./assets/hex_class.hex"); }
 TEST_F(HexParserAcceptanceTest, TestAcceptance14) { test("./assets/hex_target_list.hex"); }

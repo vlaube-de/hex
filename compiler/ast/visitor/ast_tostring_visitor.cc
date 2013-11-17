@@ -993,48 +993,6 @@ AstToStringVisitor::visit(HexAstFieldDef def_)
   return def;
 }
 
-HexAstMapField
-AstToStringVisitor::visit(HexAstMapField field_)
-{
-  HexAstMapField field = AstVisitor::visit(field_);
-
-  field->key()->accept(this);
-  this->append(" => ");
-  field->val()->accept(this);
-
-  return field;
-}
-
-HexAstMapFieldList
-AstToStringVisitor::visit(HexAstMapFieldList list_)
-{
-  HexAstMapFieldList list = AstVisitor::visit(list_);
-
-  this->iterate<HexAstMapField>(
-    list->list(),
-    [this](HexAstMapField field) {
-      field->accept(this);
-    },
-    this->_commaDelimiter
-  );
-
-  return list;
-}
-
-HexAstMapForm
-AstToStringVisitor::visit(HexAstMapForm map_)
-{
-  HexAstMapForm map = AstVisitor::visit(map_);
-
-  this->append("{");
-  if(map->list()) {
-    map->list()->accept(this);
-  }
-  this->append("}");
-
-  return map;
-}
-
 HexAstFieldDefList
 AstToStringVisitor::visit(HexAstFieldDefList list_)
 {

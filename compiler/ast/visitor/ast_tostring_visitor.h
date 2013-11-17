@@ -99,9 +99,6 @@ public:
   virtual HexAstExplicitListForm visit(HexAstExplicitListForm);
   virtual HexAstImplicitListForm visit(HexAstImplicitListForm);
   virtual HexAstFieldDef visit(HexAstFieldDef);
-  virtual HexAstMapField visit(HexAstMapField);
-  virtual HexAstMapFieldList visit(HexAstMapFieldList);
-  virtual HexAstMapForm visit(HexAstMapForm);
   virtual HexAstFieldDefList visit(HexAstFieldDefList);
   virtual HexAstKeyValuePair visit(HexAstKeyValuePair);
   virtual HexAstKeyValuePairList visit(HexAstKeyValuePairList);

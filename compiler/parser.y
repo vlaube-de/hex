@@ -81,9 +81,6 @@ The sky is your limit...
   class _HexAstComprehension* hex_ast_comprehension;
   class _HexAstListForm* hex_ast_list_form;
   class _HexAstFieldDef* hex_ast_field_def;
-  class _HexAstMapField* hex_ast_map_field;
-  class _HexAstMapFieldList* hex_ast_map_field_list;
-  class _HexAstMapForm* hex_ast_map_form;
   class _HexAstFieldDefList* hex_ast_field_def_list;
   class _HexAstKeyValuePair* hex_ast_key_value_pair;
   class _HexAstKeyValuePairList* hex_ast_key_value_pair_list;
@@ -345,9 +342,6 @@ The sky is your limit...
 %type <hex_ast_comprehension> comprehension
 %type <hex_ast_list_form> list_form
 %type <hex_ast_field_def> field_def
-%type <hex_ast_map_field> map_field
-%type <hex_ast_map_field_list> map_field_list
-%type <hex_ast_map_form> map_form
 %type <hex_ast_field_def_list> field_def_list
 %type <hex_ast_key_value_pair> key_value_pair
 %type <hex_ast_key_value_pair_list> key_value_pair_list
@@ -740,19 +734,6 @@ field_def_list
   | field_def_list COMMA field_def                                                                  { $$ = AstListObj<_HexAstFieldDefList, HexAstFieldDef>::expand($1, $3); }
   ;
 
-map_form
-  : LBRACE map_field_list RBRACE                                                                    { $$ = _HexAstMapForm::create($2); }
-  ;
-
-map_field_list
-  : map_field                                                                                       { $$ = AstListObj<_HexAstMapFieldList, HexAstMapField>::create($1); }
-  | map_field_list COMMA map_field                                                                  { $$ = AstListObj<_HexAstMapFieldList, HexAstMapField>::expand($1, $3); }
-  ;
-
-map_field
-  : expr ARROW val_atom                                                                             { $$ = _HexAstMapField::create($1, $3); }
-  ;
-
 field_def
   : identifier COLON val_atom                                                                       { $$ = _HexAstFieldDef::create(NULL, $1, $3); }
   | decorator_list identifier COLON val_atom                                                        { $$ = _HexAstFieldDef::create($1, $2, $4); }
@@ -985,7 +966,6 @@ primary
   | attribute_ref                                                                                   { $$ = $1; }
   | list_form                                                                                       { $$ = $1; }
   | dict_form                                                                                       { $$ = $1; }
-  | map_form                                                                                        { $$ = $1; }
   ;
 
 identifier
