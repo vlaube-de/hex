@@ -19,7 +19,7 @@
 #include "ast_existential_expr.h"
 #include "ast_expr_associativity.h"
 #include "ast_expr_precedence.h"
-#include "visitor/ast_visitor.h"
+#include "../visitor/ast_visitor.h"
 
 _HexAstExistentialExpr::_HexAstExistentialExpr(
   HexAstExpr expr

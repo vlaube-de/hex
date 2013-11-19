@@ -21,7 +21,7 @@
 #include "ast_decorator_list.h"
 #include "ast_field_def_list.h"
 #include "ast_identifier.h"
-#include "visitor/ast_visitor.h"
+#include "../visitor/ast_visitor.h"
 
 #ifndef _AST_CLASS_DEF_H_
 #define _AST_CLASS_DEF_H_

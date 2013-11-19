@@ -17,7 +17,7 @@
 
 #include "ast_string_literal.h"
 #include "ast_unparsed.h"
-#include "visitor/ast_visitor.h"
+#include "../visitor/ast_visitor.h"
 #include "../../base/c_str.h"
 
 

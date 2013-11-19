@@ -19,7 +19,7 @@
 #include "ast_expr.h"
 #include "ast_compound_stmt.h"
 #include "ast_stmt_group.h"
-#include "visitor/ast_visitor.h"
+#include "../visitor/ast_visitor.h"
 #include "../../base/assert.h"
 
 _HexAstWhileStmt::_HexAstWhileStmt(

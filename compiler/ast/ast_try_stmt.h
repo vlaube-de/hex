@@ -18,7 +18,7 @@
 #include <boost/smart_ptr.hpp>
 #include "ast_compound_stmt.h"
 #include "ast_catch_stmt_group.h"
-#include "visitor/ast_visitor.h"
+#include "../visitor/ast_visitor.h"
 
 #ifndef _AST_TRY_STMT_H_
 #define _AST_TRY_STMT_H_

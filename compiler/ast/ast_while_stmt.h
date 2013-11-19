@@ -19,7 +19,7 @@
 #include "ast_compound_stmt.h"
 #include "ast_expr.h"
 #include "ast_stmt_group.h"
-#include "visitor/ast_visitor.h"
+#include "../visitor/ast_visitor.h"
 
 #ifndef _AST_WHILE_STMT_H_
 #define _AST_WHILE_STMT_H_

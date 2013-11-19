@@ -21,7 +21,7 @@
 #include "ast_stmt_group.h"
 #include "ast_elif_stmt_group.h"
 #include "ast_else_stmt.h"
-#include "visitor/ast_visitor.h"
+#include "../visitor/ast_visitor.h"
 #include "../../base/assert.h"
 
 _HexAstIfStmt::_HexAstIfStmt(

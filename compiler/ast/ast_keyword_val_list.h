@@ -18,7 +18,7 @@
 #include "ast_node.h"
 #include "ast_keyword_val.h"
 #include "ast_list_obj.h"
-#include "visitor/ast_visitor.h"
+#include "../visitor/ast_visitor.h"
 
 #ifndef _AST_KEYWORD_VAL_LIST_H_
 #define _AST_KEYWORD_VAL_LIST_H_

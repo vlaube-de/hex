@@ -17,17 +17,18 @@
 
 #include <list>
 #include "ast_visitor.h"
-#include "../../../base/c_str.h"
+#include "../../base/strbuf.h"
+#include "../../base/c_str.h"
 
-#ifndef _AST_TO_XML_VISITOR_H_
-#define _AST_TO_XML_VISITOR_H_
+#ifndef _AST_TOSTRING_VISITOR_H_
+#define _AST_TOSTRING_VISITOR_H_
 
-class AstToXmlVisitor : public AstVisitor {
+class AstToStringVisitor : public AstVisitor {
 public:
-  AstToXmlVisitor();
-  ~AstToXmlVisitor();
+  AstToStringVisitor();
+  ~AstToStringVisitor();
 
-  const c_str str();
+  c_str str();
 
   virtual HexAstIdentifier visit(HexAstIdentifier);
   virtual HexAstIntegerLiteral visit(HexAstIntegerLiteral);
@@ -149,23 +150,19 @@ public:
   virtual HexAstHexProgram visit(HexAstHexProgram);
 
 protected:
-  std::string* _strbuf;
+  Strbuf _strbuf;
 
-  void append(const c_str);
-
-  void begin_tag(const c_str);
-  void end_tag(const c_str);
-  void double_tag(const c_str, c_str);
-
-  template<class Function>
-  void double_tag(const c_str, Function);
+  void append(c_str);
 
   template<class T, class Function>
-  void iterate(std::list<T>*, Function, bool breakOnLast=true);
+  void iterate(std::list<T>*, Function, const c_str, bool breakOnLast=true);
 
-  template<class T>
-  void double_tag_for_binary_expr(T, const c_str);
+  const c_str _nullDelimiter = "";
+  const c_str _commaDelimiter = ", ";
+  const c_str _dotDelimiter = ".";
+  const c_str _newlineDelimiter = "\n";
+  const c_str _inputDelimiter = " <<< ";
+  const c_str _outputDelimiter = " >>> ";
 };
 
-
-#endif /* _AST_TO_XML_VISITOR_H_ */
+#endif /* _AST_TOSTRING_VISITOR_H_ */

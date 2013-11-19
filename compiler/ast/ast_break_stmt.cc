@@ -17,7 +17,7 @@
 
 #include "ast_break_stmt.h"
 #include "ast_expr.h"
-#include "visitor/ast_visitor.h"
+#include "../visitor/ast_visitor.h"
 #include "../../base/assert.h"
 
 _HexAstBreakStmt::_HexAstBreakStmt(

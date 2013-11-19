@@ -18,7 +18,7 @@
 #include "ast_expr.h"
 #include "ast_pseudo_assign_expr.h"
 #include "ast_pseudo_assign_mul_expr.h"
-#include "visitor/ast_visitor.h"
+#include "../visitor/ast_visitor.h"
 
 _HexAstPseudoAssignMultiplyExpr::_HexAstPseudoAssignMultiplyExpr(
   HexAstExpr left,

@@ -18,7 +18,7 @@
 #include "ast_keyword_val.h"
 #include "ast_identifier.h"
 #include "ast_val_atom.h"
-#include "visitor/ast_visitor.h"
+#include "../visitor/ast_visitor.h"
 #include "../../base/assert.h"
 
 

@@ -23,7 +23,7 @@
 #include "../../base/assert.h"
 #include "../ast/ast.h"
 #include "../hex_parser.h"
-#include "../ast/visitor/ast_to_xml_visitor.h"
+#include "../visitor/ast_to_xml_visitor.h"
 
 
 /***************************************************

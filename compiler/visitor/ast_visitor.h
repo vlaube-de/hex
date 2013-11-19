@@ -15,20 +15,22 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <list>
-#include "ast_visitor.h"
-#include "../../../base/strbuf.h"
-#include "../../../base/c_str.h"
+/* Generic visitor of AST tree. */
 
-#ifndef _AST_TOSTRING_VISITOR_H_
-#define _AST_TOSTRING_VISITOR_H_
+#ifndef _AST_VISITOR_H_
+#define _AST_VISITOR_H_
 
-class AstToStringVisitor : public AstVisitor {
+// forward declaration.
+class AstVisitor;
+
+#ifdef _HEX_AST_
+  #include "../ast/ast.h"
+#else
+  #include "fake_ast.h"
+#endif /* _HEX_AST_ */
+
+class AstVisitor {
 public:
-  AstToStringVisitor();
-  ~AstToStringVisitor();
-
-  c_str str();
 
   virtual HexAstIdentifier visit(HexAstIdentifier);
   virtual HexAstIntegerLiteral visit(HexAstIntegerLiteral);
@@ -93,6 +95,7 @@ public:
   virtual HexAstKeywordVal visit(HexAstKeywordVal);
   virtual HexAstKeywordValList visit(HexAstKeywordValList);
   virtual HexAstParameterList visit(HexAstParameterList);
+  virtual HexAstValAtom visit(HexAstValAtom);
   virtual HexAstValList visit(HexAstValList);
   virtual HexAstArgList visit(HexAstArgList);
   virtual HexAstComprehension visit(HexAstComprehension);
@@ -149,20 +152,6 @@ public:
   virtual HexAstStmtGroup visit(HexAstStmtGroup);
   virtual HexAstHexProgram visit(HexAstHexProgram);
 
-protected:
-  Strbuf _strbuf;
-
-  void append(c_str);
-
-  template<class T, class Function>
-  void iterate(std::list<T>*, Function, const c_str, bool breakOnLast=true);
-
-  const c_str _nullDelimiter = "";
-  const c_str _commaDelimiter = ", ";
-  const c_str _dotDelimiter = ".";
-  const c_str _newlineDelimiter = "\n";
-  const c_str _inputDelimiter = " <<< ";
-  const c_str _outputDelimiter = " >>> ";
 };
 
-#endif /* _AST_TOSTRING_VISITOR_H_ */
+#endif /* _AST_VISITOR_H_ */

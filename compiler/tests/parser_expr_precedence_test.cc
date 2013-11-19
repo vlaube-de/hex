@@ -20,7 +20,7 @@
 #include "parser_xml_test_base.h"
 #include "../ast/ast.h"
 #include "../hex_parser.h"
-#include "../ast/visitor/ast_to_xml_visitor.h"
+#include "../visitor/ast_to_xml_visitor.h"
 #include "../../base/unittest.h"
 #include "../../base/memory.h"
 #include "../../base/assert.h"

@@ -19,7 +19,7 @@
 #include "ast_list_obj.h"
 #include "ast_node.h"
 #include "ast_task_clause.h"
-#include "visitor/ast_visitor.h"
+#include "../visitor/ast_visitor.h"
 
 #ifndef _AST_TASK_DEF_H_
 #define _AST_TASK_DEF_H_

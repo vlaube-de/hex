@@ -16,7 +16,7 @@
  */
 
 #include "ast_field_def_list.h"
-#include "visitor/ast_visitor.h"
+#include "../visitor/ast_visitor.h"
 #include "../../base/assert.h"
 
 _HexAstFieldDefList::_HexAstFieldDefList()

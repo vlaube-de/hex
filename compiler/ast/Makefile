@@ -532,11 +532,8 @@ obj:ast.h \
 libast.a: obj
 	$(AR) $(ARFLAGS) libast.a *.o
 
-visitors:
-	cd visitor/ && make all
 
-all: libast.a \
-	 visitors
+all: libast.a
 
 .PHONY : clean
 clean:

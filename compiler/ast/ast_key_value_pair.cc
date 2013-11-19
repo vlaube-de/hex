@@ -19,7 +19,7 @@
 #include "ast_expr.h"
 #include "ast_val_atom.h"
 #include "../../base/assert.h"
-#include "visitor/ast_visitor.h"
+#include "../visitor/ast_visitor.h"
 
 
 _HexAstKeyValuePair::_HexAstKeyValuePair(

@@ -19,7 +19,7 @@
 #include "ast_compound_stmt.h"
 #include "ast_expr_list.h"
 #include "ast_stmt_group.h"
-#include "visitor/ast_visitor.h"
+#include "../visitor/ast_visitor.h"
 
 #ifndef _AST_LOCK_STMT_H_
 #define _AST_LOCK_STMT_H_

@@ -18,7 +18,7 @@
 #include "ast_return_stmt.h"
 #include "ast_expr_list.h"
 #include "ast_expr.h"
-#include "visitor/ast_visitor.h"
+#include "../visitor/ast_visitor.h"
 #include "../../base/assert.h"
 
 _HexAstReturnStmt::_HexAstReturnStmt(

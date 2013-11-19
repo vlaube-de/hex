@@ -16,7 +16,7 @@
  */
 
 #include "ast_task_state.h"
-#include "visitor/ast_visitor.h"
+#include "../visitor/ast_visitor.h"
 #include "../../base/assert.h"
 
 

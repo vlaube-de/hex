@@ -20,7 +20,7 @@
 #include "ast_target_list.h"
 #include "ast_stmt_group.h"
 #include "ast_identifier.h"
-#include "visitor/ast_visitor.h"
+#include "../visitor/ast_visitor.h"
 #include "../../base/assert.h"
 
 _HexAstCatchStmt::_HexAstCatchStmt(

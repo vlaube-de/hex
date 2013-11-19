@@ -20,7 +20,7 @@
 #include "ast_target_list.h"
 #include "ast_stmt_group.h"
 #include "ast_identifier.h"
-#include "visitor/ast_visitor.h"
+#include "../visitor/ast_visitor.h"
 
 #ifndef _AST_CATCH_STMT_H_
 #define _AST_CATCH_STMT_H_

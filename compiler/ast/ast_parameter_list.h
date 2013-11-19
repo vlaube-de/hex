@@ -20,7 +20,7 @@
 #include "ast_keyword_param_list.h"
 #include "ast_node.h"
 #include "ast_identifier.h"
-#include "visitor/ast_visitor.h"
+#include "../visitor/ast_visitor.h"
 
 #ifndef _AST_PARAMETER_LIST_H_
 #define _AST_PARAMETER_LIST_H_

@@ -16,7 +16,7 @@
  */
 
 #include "ast_literal.h"
-#include "visitor/ast_visitor.h"
+#include "../visitor/ast_visitor.h"
 #include "../../base/c_str.h"
 
 #ifndef _AST_FLOAT_LITERAL_H_

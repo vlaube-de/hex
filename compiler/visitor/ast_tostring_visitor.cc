@@ -17,10 +17,10 @@
 
 // #include <stdio.h>
 #include <algorithm>
-#include "../ast.h"
+#include "../ast/ast.h"
 #include "ast_tostring_visitor.h"
-#include "../../../base/strbuf.h"
-#include "../../../base/assert.h"
+#include "../../base/strbuf.h"
+#include "../../base/assert.h"
 
 AstToStringVisitor::AstToStringVisitor()
   :_strbuf(strbuf_create())

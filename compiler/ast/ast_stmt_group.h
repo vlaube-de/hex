@@ -18,7 +18,7 @@
 #include "ast_node.h"
 #include "ast_list_obj.h"
 #include "ast_stmt.h"
-#include "visitor/ast_visitor.h"
+#include "../visitor/ast_visitor.h"
 
 #ifndef _AST_STMT_GROUP_H_
 #define _AST_STMT_GROUP_H_

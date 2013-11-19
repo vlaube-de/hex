@@ -17,7 +17,7 @@
 
 #include "ast_binary_expr.h"
 #include "ast_expr.h"
-#include "visitor/ast_visitor.h"
+#include "../visitor/ast_visitor.h"
 
 #ifndef _AST_MINUS_EXPR_H_
 #define _AST_MINUS_EXPR_H_

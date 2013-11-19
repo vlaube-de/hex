@@ -21,7 +21,7 @@
 #include "ast_stmt_group.h"
 #include "ast_elif_stmt_group.h"
 #include "ast_else_stmt.h"
-#include "visitor/ast_visitor.h"
+#include "../visitor/ast_visitor.h"
 
 #ifndef _AST_IF_STMT_H_
 #define _AST_IF_STMT_H_

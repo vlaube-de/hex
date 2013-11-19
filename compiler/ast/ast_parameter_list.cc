@@ -19,7 +19,7 @@
 #include "ast_simple_param_list.h"
 #include "ast_keyword_val_list.h"
 #include "ast_identifier.h"
-#include "visitor/ast_visitor.h"
+#include "../visitor/ast_visitor.h"
 #include "../../base/assert.h"
 
 _HexAstParameterList::_HexAstParameterList(

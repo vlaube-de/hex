@@ -19,7 +19,7 @@
 #include "ast_expr.h"
 #include "ast_target_list.h"
 #include "ast_node.h"
-#include "visitor/ast_visitor.h"
+#include "../visitor/ast_visitor.h"
 
 #ifndef _AST_COMPREHENSION_H_
 #define _AST_COMPREHENSION_H_

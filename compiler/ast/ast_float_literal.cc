@@ -17,7 +17,7 @@
 
 #include "ast_float_literal.h"
 #include "ast_unparsed.h"
-#include "visitor/ast_visitor.h"
+#include "../visitor/ast_visitor.h"
 #include "../../base/assert.h"
 #include "../../base/c_str.h"
 

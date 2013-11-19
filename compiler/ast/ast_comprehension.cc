@@ -19,7 +19,7 @@
 #include "ast_expr.h"
 #include "ast_target_list.h"
 #include "ast_comprehension.h"
-#include "visitor/ast_visitor.h"
+#include "../visitor/ast_visitor.h"
 #include "../../base/assert.h"
 
 

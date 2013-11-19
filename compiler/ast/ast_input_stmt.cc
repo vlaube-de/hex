@@ -16,7 +16,7 @@
  */
 
 #include "ast_input_stmt.h"
-#include "visitor/ast_visitor.h"
+#include "../visitor/ast_visitor.h"
 
 _HexAstInputStmt::_HexAstInputStmt()
 {

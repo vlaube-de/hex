@@ -21,7 +21,7 @@
 #include "ast_expr_precedence.h"
 #include "ast_key_value_pair_list.h"
 #include "ast_comprehension.h"
-#include "visitor/ast_visitor.h"
+#include "../visitor/ast_visitor.h"
 #include "../../base/assert.h"
 
 _HexAstDictForm::_HexAstDictForm(

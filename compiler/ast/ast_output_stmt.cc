@@ -16,7 +16,7 @@
  */
 
 #include "ast_output_stmt.h"
-#include "visitor/ast_visitor.h"
+#include "../visitor/ast_visitor.h"
 
 _HexAstOutputStmt::_HexAstOutputStmt()
 {

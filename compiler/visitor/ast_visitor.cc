@@ -16,8 +16,8 @@
  */
 
 #include "ast_visitor.h"
-#include "../ast.h"
-#include "../../../base/assert.h"
+#include "../ast/ast.h"
+#include "../../base/assert.h"
 
 
 HexAstIdentifier

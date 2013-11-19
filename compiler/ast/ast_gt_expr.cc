@@ -19,7 +19,7 @@
 #include "ast_gt_expr.h"
 #include "ast_expr_associativity.h"
 #include "ast_expr_precedence.h"
-#include "visitor/ast_visitor.h"
+#include "../visitor/ast_visitor.h"
 
 
 _HexAstGreaterThanExpr::_HexAstGreaterThanExpr(

@@ -26,9 +26,9 @@ LIBAST=../ast/libast.a
 LIBRARIES=$(LIBGTEST) $(LIBAST) $(LIBBASE)
 
 OBJECTS=../hex_parser.o \
-		../ast/visitor/ast_visitor.o \
-		../ast/visitor/ast_tostring_visitor.o \
-		../ast/visitor/ast_to_xml_visitor.o
+		../visitor/ast_visitor.o \
+		../visitor/ast_tostring_visitor.o \
+		../visitor/ast_to_xml_visitor.o
 
 SOURCES=../lex.yy.c ../parser.tab.cc
 

@@ -18,10 +18,10 @@
 
 #include <list>
 #include <string>
-#include "../ast.h"
+#include "../ast/ast.h"
 #include "ast_to_xml_visitor.h"
-#include "../../../base/assert.h"
-#include "../../../base/memory.h"
+#include "../../base/assert.h"
+#include "../../base/memory.h"
 
 
 AstToXmlVisitor::AstToXmlVisitor()

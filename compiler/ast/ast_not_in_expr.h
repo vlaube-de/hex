@@ -19,7 +19,7 @@
 #include "ast_binary_expr.h"
 #include "ast_expr.h"
 #include "ast_expr_precedence.h"
-#include "visitor/ast_visitor.h"
+#include "../visitor/ast_visitor.h"
 
 #ifndef _AST_NOT_IN_EXPR_H_
 #define _AST_NOT_IN_EXPR_H_

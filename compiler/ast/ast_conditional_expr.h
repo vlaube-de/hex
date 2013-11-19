@@ -17,7 +17,7 @@
 
 #include <boost/smart_ptr.hpp>
 #include "ast_expr.h"
-#include "visitor/ast_visitor.h"
+#include "../visitor/ast_visitor.h"
 
 #ifndef _AST_CONDITIONAL_EXPR_H_
 #define _AST_CONDITIONAL_EXPR_H_

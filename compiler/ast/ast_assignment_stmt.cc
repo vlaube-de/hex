@@ -22,7 +22,7 @@
 #include "ast_lambda.h"
 #include "ast_decorator_list.h"
 #include "ast_task_def.h"
-#include "visitor/ast_visitor.h"
+#include "../visitor/ast_visitor.h"
 #include "../../base/assert.h"
 
 _HexAstAssignmentStmt::_HexAstAssignmentStmt(

@@ -21,7 +21,7 @@
 #include "ast_target_list.h"
 #include "ast_conditional_clause.h"
 #include "ast_identifier.h"
-#include "visitor/ast_visitor.h"
+#include "../visitor/ast_visitor.h"
 #include "../../base/assert.h"
 
 _HexAstStartClause::_HexAstStartClause(

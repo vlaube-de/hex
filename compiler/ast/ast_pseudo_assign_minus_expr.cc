@@ -18,7 +18,7 @@
 #include "ast_expr.h"
 #include "ast_pseudo_assign_expr.h"
 #include "ast_pseudo_assign_minus_expr.h"
-#include "visitor/ast_visitor.h"
+#include "../visitor/ast_visitor.h"
 
 _HexAstPseudoAssignMinusExpr::_HexAstPseudoAssignMinusExpr(
   HexAstExpr left,

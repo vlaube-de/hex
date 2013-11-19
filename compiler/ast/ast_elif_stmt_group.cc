@@ -16,7 +16,7 @@
  */
 
 #include "ast_elif_stmt_group.h"
-#include "visitor/ast_visitor.h"
+#include "../visitor/ast_visitor.h"
 
 _HexAstElifStmtGroup::_HexAstElifStmtGroup()
 {

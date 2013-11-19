@@ -15,22 +15,19 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* Generic visitor of AST tree. */
+#include <list>
+#include "ast_visitor.h"
+#include "../../base/c_str.h"
 
-#ifndef _AST_VISITOR_H_
-#define _AST_VISITOR_H_
+#ifndef _AST_TO_XML_VISITOR_H_
+#define _AST_TO_XML_VISITOR_H_
 
-// forward declaration.
-class AstVisitor;
-
-#ifdef _HEX_AST_
-  #include "../ast.h"
-#else
-  #include "fake_ast.h"
-#endif /* _HEX_AST_ */
-
-class AstVisitor {
+class AstToXmlVisitor : public AstVisitor {
 public:
+  AstToXmlVisitor();
+  ~AstToXmlVisitor();
+
+  const c_str str();
 
   virtual HexAstIdentifier visit(HexAstIdentifier);
   virtual HexAstIntegerLiteral visit(HexAstIntegerLiteral);
@@ -95,7 +92,6 @@ public:
   virtual HexAstKeywordVal visit(HexAstKeywordVal);
   virtual HexAstKeywordValList visit(HexAstKeywordValList);
   virtual HexAstParameterList visit(HexAstParameterList);
-  virtual HexAstValAtom visit(HexAstValAtom);
   virtual HexAstValList visit(HexAstValList);
   virtual HexAstArgList visit(HexAstArgList);
   virtual HexAstComprehension visit(HexAstComprehension);
@@ -152,6 +148,24 @@ public:
   virtual HexAstStmtGroup visit(HexAstStmtGroup);
   virtual HexAstHexProgram visit(HexAstHexProgram);
 
+protected:
+  std::string* _strbuf;
+
+  void append(const c_str);
+
+  void begin_tag(const c_str);
+  void end_tag(const c_str);
+  void double_tag(const c_str, c_str);
+
+  template<class Function>
+  void double_tag(const c_str, Function);
+
+  template<class T, class Function>
+  void iterate(std::list<T>*, Function, bool breakOnLast=true);
+
+  template<class T>
+  void double_tag_for_binary_expr(T, const c_str);
 };
 
-#endif /* _AST_VISITOR_H_ */
+
+#endif /* _AST_TO_XML_VISITOR_H_ */

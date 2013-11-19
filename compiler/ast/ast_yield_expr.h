@@ -18,7 +18,7 @@
 #include <boost/smart_ptr.hpp>
 #include "ast_expr.h"
 #include "ast_expr_list.h"
-#include "visitor/ast_visitor.h"
+#include "../visitor/ast_visitor.h"
 
 #ifndef _AST_YIELD_EXPR_H_
 #define _AST_YIELD_EXPR_H_

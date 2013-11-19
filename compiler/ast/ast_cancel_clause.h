@@ -20,7 +20,7 @@
 #include "ast_task_state.h"
 #include "ast_expr_list.h"
 #include "ast_conditional_clause.h"
-#include "visitor/ast_visitor.h"
+#include "../visitor/ast_visitor.h"
 
 #ifndef _AST_CANCEL_CLAUSE_H_
 #define _AST_CANCEL_CLAUSE_H_

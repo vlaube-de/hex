@@ -19,7 +19,7 @@
 #include "ast_is_not_expr.h"
 #include "ast_expr_associativity.h"
 #include "ast_expr_precedence.h"
-#include "visitor/ast_visitor.h"
+#include "../visitor/ast_visitor.h"
 
 _HexAstIsNotExpr::_HexAstIsNotExpr(
   HexAstExpr left,

@@ -20,7 +20,7 @@
 #include "ast_primary.h"
 #include "ast_expr_associativity.h"
 #include "ast_expr_precedence.h"
-#include "visitor/ast_visitor.h"
+#include "../visitor/ast_visitor.h"
 #include "../../base/assert.h"
 #include "../../base/c_str.h"
 

@@ -21,7 +21,7 @@
 #include "ast_val_atom.h"
 #include "ast_identifier.h"
 #include "ast_decorator_list.h"
-#include "visitor/ast_visitor.h"
+#include "../visitor/ast_visitor.h"
 #include "../../base/assert.h"
 
 

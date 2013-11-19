@@ -16,7 +16,7 @@
  */
 
 #include "ast_key_value_pair_list.h"
-#include "visitor/ast_visitor.h"
+#include "../visitor/ast_visitor.h"
 #include "../../base/assert.h"
 
 _HexAstKeyValuePairList::_HexAstKeyValuePairList()

@@ -19,7 +19,7 @@
 #include "ast_expr.h"
 #include "ast_val_atom.h"
 #include "ast_node.h"
-#include "visitor/ast_visitor.h"
+#include "../visitor/ast_visitor.h"
 
 #ifndef _AST_KEY_VALUE_PAIR_H_
 #define _AST_KEY_VALUE_PAIR_H_

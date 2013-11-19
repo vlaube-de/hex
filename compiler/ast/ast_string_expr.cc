@@ -19,7 +19,7 @@
 #include "ast_expr_precedence.h"
 #include "ast_expr_list.h"
 #include "ast_string_literal.h"
-#include "visitor/ast_visitor.h"
+#include "../visitor/ast_visitor.h"
 #include "../../base/assert.h"
 
 

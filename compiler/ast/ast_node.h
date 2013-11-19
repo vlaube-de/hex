@@ -20,7 +20,7 @@
  * Base class for all AST nodes.
  */
 
-#include "visitor/ast_visitor.h"
+#include "../visitor/ast_visitor.h"
 
 #ifndef _AST_NODE_H_
 #define _AST_NODE_H_

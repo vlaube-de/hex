@@ -18,7 +18,7 @@
 
 #include "ast_unparsed.h"
 #include "ast_primary.h"
-#include "visitor/ast_visitor.h"
+#include "../visitor/ast_visitor.h"
 #include "../../base/c_str.h"
 
 #ifndef _AST_IDENTIFIER_H_

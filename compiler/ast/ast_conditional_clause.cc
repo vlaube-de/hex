@@ -19,7 +19,7 @@
 #include "ast_node.h"
 #include "ast_task_state.h"
 #include "ast_expr_list.h"
-#include "visitor/ast_visitor.h"
+#include "../visitor/ast_visitor.h"
 #include "../../base/assert.h"
 
 _HexAstConditionalClause::_HexAstConditionalClause(

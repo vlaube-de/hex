@@ -16,7 +16,7 @@
  */
 
 #include "ast_name.h"
-#include "visitor/ast_visitor.h"
+#include "../visitor/ast_visitor.h"
 
 _HexAstName::_HexAstName()
 {

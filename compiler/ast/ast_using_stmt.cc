@@ -21,7 +21,7 @@
 #include "ast_target_list.h"
 #include "ast_identifier.h"
 #include "ast_name.h"
-#include "visitor/ast_visitor.h"
+#include "../visitor/ast_visitor.h"
 #include "../../base/assert.h"
 
 _HexAstUsingStmtDirect::_HexAstUsingStmtDirect(

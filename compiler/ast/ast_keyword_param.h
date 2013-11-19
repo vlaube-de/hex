@@ -20,7 +20,7 @@
 #include "ast_name.h"
 #include "ast_identifier.h"
 #include "ast_val_atom.h"
-#include "visitor/ast_visitor.h"
+#include "../visitor/ast_visitor.h"
 
 #ifndef _AST_KEYWORD_PARAM_H_
 #define _AST_KEYWORD_PARAM_H_

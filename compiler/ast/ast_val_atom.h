@@ -16,7 +16,7 @@
  */
 
 #include "ast_node.h"
-#include "visitor/ast_visitor.h"
+#include "../visitor/ast_visitor.h"
 
 #ifndef _AST_VAL_ATOM_H_
 #define _AST_VAL_ATOM_H_

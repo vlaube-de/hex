@@ -17,7 +17,7 @@
 
 #include "ast_else_stmt.h"
 #include "ast_stmt_group.h"
-#include "visitor/ast_visitor.h"
+#include "../visitor/ast_visitor.h"
 #include "../../base/assert.h"
 
 _HexAstElseStmt::_HexAstElseStmt(

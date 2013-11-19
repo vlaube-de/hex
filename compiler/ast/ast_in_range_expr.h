@@ -19,7 +19,7 @@
 #include <boost/smart_ptr.hpp>
 #include "ast_expr.h"
 #include "ast_range_expr.h"
-#include "visitor/ast_visitor.h"
+#include "../visitor/ast_visitor.h"
 
 #ifndef _AST_IN_RANGE_EXPR_H_
 #define _AST_IN_RANGE_EXPR_H_

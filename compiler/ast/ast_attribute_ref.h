@@ -18,7 +18,7 @@
 #include <boost/scoped_ptr.hpp>
 #include "ast_identifier.h"
 #include "ast_primary.h"
-#include "visitor/ast_visitor.h"
+#include "../visitor/ast_visitor.h"
 
 #ifndef _AST_ATTRIBUTE_REF_H_
 #define _AST_ATTRIBUTE_REF_H_

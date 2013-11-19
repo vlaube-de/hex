@@ -16,7 +16,7 @@
  */
 
 #include "ast_task_def.h"
-#include "visitor/ast_visitor.h"
+#include "../visitor/ast_visitor.h"
 
 _HexAstTaskDef::_HexAstTaskDef()
 {

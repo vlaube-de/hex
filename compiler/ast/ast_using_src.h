@@ -18,7 +18,7 @@
 #include <boost/smart_ptr.hpp>
 #include "ast_node.h"
 #include "ast_name.h"
-#include "visitor/ast_visitor.h"
+#include "../visitor/ast_visitor.h"
 
 #ifndef _AST_USING_SRC_H_
 #define _AST_USING_SRC_H_

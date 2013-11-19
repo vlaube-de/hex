@@ -19,7 +19,7 @@
 #include "ast_node.h"
 #include "ast_list_obj.h"
 #include "ast_val_atom.h"
-#include "visitor/ast_visitor.h"
+#include "../visitor/ast_visitor.h"
 
 #ifndef _AST_VAL_LIST_H_
 #define _AST_VAL_LIST_H_

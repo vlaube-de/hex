@@ -18,7 +18,7 @@
 #include "ast_expr.h"
 #include "ast_pseudo_assign_expr.h"
 #include "ast_pseudo_assign_bitwise_xor_expr.h"
-#include "visitor/ast_visitor.h"
+#include "../visitor/ast_visitor.h"
 
 _HexAstPseudoAssignBitwiseXorExpr::_HexAstPseudoAssignBitwiseXorExpr(
   HexAstExpr left,

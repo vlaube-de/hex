@@ -21,7 +21,7 @@
 #include <boost/smart_ptr.hpp>
 #include "ast_stmt_group.h"
 #include "ast_node.h"
-#include "visitor/ast_visitor.h"
+#include "../visitor/ast_visitor.h"
 
 #ifndef _AST_HEX_PROGRAM_H_
 #define _AST_HEX_PROGRAM_H_

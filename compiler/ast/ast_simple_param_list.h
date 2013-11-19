@@ -18,7 +18,7 @@
 #include "ast_list_obj.h"
 #include "ast_node.h"
 #include "ast_simple_param.h"
-#include "visitor/ast_visitor.h"
+#include "../visitor/ast_visitor.h"
 
 #ifndef _AST_SIMPLE_PARAM_LIST_H_
 #define _AST_SIMPLE_PARAM_LIST_H_

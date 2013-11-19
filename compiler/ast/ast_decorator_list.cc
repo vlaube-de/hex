@@ -17,7 +17,7 @@
 
 #include "ast_node.h"
 #include "ast_decorator_list.h"
-#include "visitor/ast_visitor.h"
+#include "../visitor/ast_visitor.h"
 #include "../../base/assert.h"
 
 _HexAstDecoratorList::_HexAstDecoratorList()

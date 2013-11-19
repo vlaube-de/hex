@@ -18,7 +18,7 @@
 #include "ast_list_obj.h"
 #include "ast_primary.h"
 #include "ast_simple_stmt.h"
-#include "visitor/ast_visitor.h"
+#include "../visitor/ast_visitor.h"
 
 #ifndef _AST_OUTPUT_STMT_H_
 #define _AST_OUTPUT_STMT_H_

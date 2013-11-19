@@ -20,7 +20,7 @@
 #include "ast_val_atom.h"
 #include "ast_identifier.h"
 #include "ast_decorator_list.h"
-#include "visitor/ast_visitor.h"
+#include "../visitor/ast_visitor.h"
 
 #ifndef _AST_FIELD_DEF_H_
 #define _AST_FIELD_DEF_H_
