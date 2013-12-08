@@ -99,6 +99,7 @@ public:
   virtual HexAstValList visit(HexAstValList);
   virtual HexAstArgList visit(HexAstArgList);
   virtual HexAstComprehension visit(HexAstComprehension);
+  virtual HexAstComprehensionList visit(HexAstComprehensionList);
   virtual HexAstExplicitListForm visit(HexAstExplicitListForm);
   virtual HexAstImplicitListForm visit(HexAstImplicitListForm);
   virtual HexAstFieldDef visit(HexAstFieldDef);

@@ -79,6 +79,7 @@ The sky is your limit...
   class _HexAstValAtom* hex_ast_val_atom;
   class _HexAstArgList* hex_ast_arg_list;
   class _HexAstComprehension* hex_ast_comprehension;
+  class _HexAstComprehensionList* hex_ast_comprehension_list;
   class _HexAstListForm* hex_ast_list_form;
   class _HexAstFieldDef* hex_ast_field_def;
   class _HexAstFieldDefList* hex_ast_field_def_list;
@@ -336,6 +337,7 @@ The sky is your limit...
 %type <hex_ast_val_atom> val_atom
 %type <hex_ast_arg_list> arg_list
 %type <hex_ast_comprehension> comprehension
+%type <hex_ast_comprehension_list> comprehension_list
 %type <hex_ast_list_form> list_form
 %type <hex_ast_field_def> field_def
 %type <hex_ast_field_def_list> field_def_list
@@ -660,7 +662,7 @@ decorator
 dict_form
   : LBRACE RBRACE                                                                                   { $$ = _HexAstExplicitDictForm::create(NULL); }
   | LBRACE key_value_pair_list RBRACE                                                               { $$ = _HexAstExplicitDictForm::create($2); }
-  | LBRACE comprehension RBRACE                                                                     { $$ = _HexAstImplicitDictForm::create($2); }
+  | LBRACE comprehension_list RBRACE                                                                { $$ = _HexAstImplicitDictForm::create($2); }
   ;
 
 key_value_pair_list
@@ -685,7 +687,12 @@ field_def
 list_form
   : LBRACKET RBRACKET                                                                               { $$ = _HexAstExplicitListForm::create(NULL); }
   | LBRACKET expr_list RBRACKET                                                                     { $$ = _HexAstExplicitListForm::create($2); }
-  | LBRACKET comprehension RBRACKET                                                                 { $$ = _HexAstImplicitListForm::create($2); }
+  | LBRACKET comprehension_list RBRACKET                                                            { $$ = _HexAstImplicitListForm::create($2); }
+  ;
+
+comprehension_list
+  : comprehension                                                                                   { $$ = AstListObj<_HexAstComprehensionList, HexAstComprehension>::create($1); }
+  | LPAREN comprehension_list RPAREN comprehension                                                  { $$ = AstListObj<_HexAstComprehensionList, HexAstComprehension>::expand($2, $4); }
   ;
 
 comprehension

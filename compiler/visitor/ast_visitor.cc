@@ -489,6 +489,13 @@ AstVisitor::visit(HexAstComprehension comprehension)
   return comprehension;
 }
 
+HexAstComprehensionList
+AstVisitor::visit(HexAstComprehensionList comprehensions)
+{
+  HEX_ASSERT(comprehensions);
+  return comprehensions;
+}
+
 HexAstExplicitListForm
 AstVisitor::visit(HexAstExplicitListForm form)
 {

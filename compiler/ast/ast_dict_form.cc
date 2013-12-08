@@ -20,7 +20,7 @@
 #include "ast_expr_associativity.h"
 #include "ast_expr_precedence.h"
 #include "ast_key_value_pair_list.h"
-#include "ast_comprehension.h"
+#include "ast_comprehension_list.h"
 #include "../visitor/ast_visitor.h"
 #include "../../base/assert.h"
 
@@ -70,8 +70,8 @@ _HexAstExplicitDictForm::create(
 
 
 _HexAstImplicitDictForm::_HexAstImplicitDictForm(
-  HexAstComprehension comprehension
-) : _comprehension(comprehension)
+  HexAstComprehensionList comprehensions
+) : _comprehensions(comprehensions)
 {
   this->reprOK();
 }
@@ -79,13 +79,13 @@ _HexAstImplicitDictForm::_HexAstImplicitDictForm(
 void
 _HexAstImplicitDictForm::reprOK()
 {
-  HEX_ASSERT(this->comprehension());
+  HEX_ASSERT(this->comprehensions());
 }
 
-HexAstComprehension
-_HexAstImplicitDictForm::comprehension()
+HexAstComprehensionList
+_HexAstImplicitDictForm::comprehensions()
 {
-  return this->_comprehension.get();
+  return this->_comprehensions.get();
 }
 
 void
@@ -95,9 +95,9 @@ _HexAstImplicitDictForm::accept(AstVisitor* visitor)
 }
 
 HexAstImplicitDictForm
-_HexAstImplicitDictForm::create(HexAstComprehension comprehension)
+_HexAstImplicitDictForm::create(HexAstComprehensionList comprehensions)
 {
-  HexAstImplicitDictForm obj = new _HexAstImplicitDictForm(comprehension);
+  HexAstImplicitDictForm obj = new _HexAstImplicitDictForm(comprehensions);
   HEX_ASSERT(obj);
   return obj;
 }

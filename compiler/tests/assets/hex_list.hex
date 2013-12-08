@@ -33,3 +33,5 @@ SQUARES = [i*i for i in 1...100];
 SQUARES_AND_SQRT = [i*i, i**(-1/2) for i in 1...100];
 
 UPPER_VOWELS = [upper(vowel) for vowel in 'a', 'e', 'i', 'o', 'u'];
+
+numbers = [(i for i in [1, 2, 3]) for s in [4, 5, 6]];

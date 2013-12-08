@@ -92,6 +92,7 @@ typedef class _HexAstValList * HexAstValList;
 typedef class _HexAstValAtom * HexAstValAtom;
 typedef class _HexAstArgList * HexAstArgList;
 typedef class _HexAstComprehension * HexAstComprehension;
+typedef class _HexAstComprehensionList * HexAstComprehensionList;
 typedef class _HexAstListForm * HexAstListForm;
 typedef class _HexAstExplicitListForm * HexAstExplicitListForm;
 typedef class _HexAstImplicitListForm * HexAstImplicitListForm;

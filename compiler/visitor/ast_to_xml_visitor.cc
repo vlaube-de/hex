@@ -1255,6 +1255,26 @@ AstToXmlVisitor::visit(HexAstComprehension comprehension_)
   return comprehension;
 }
 
+HexAstComprehensionList
+AstToXmlVisitor::visit(HexAstComprehensionList comprehensions_)
+{
+  HexAstComprehensionList comprehensions = AstVisitor::visit(comprehensions_);
+
+  this->double_tag(
+    "comprehensions",
+    [this, comprehensions]() {
+      this->iterate<HexAstComprehension>(
+        comprehensions->list(),
+        [this](HexAstComprehension comprehension) {
+          comprehension->accept(this);
+        }
+      );
+    }
+  );
+
+  return comprehensions;
+}
+
 HexAstExplicitListForm
 AstToXmlVisitor::visit(HexAstExplicitListForm form_)
 {
@@ -1281,8 +1301,8 @@ AstToXmlVisitor::visit(HexAstImplicitListForm form_)
   this->double_tag(
     "list_form",
     [this, form] () {
-      HexAstComprehension comprehension = form->comprehension();
-      comprehension->accept(this);
+      HexAstComprehensionList comprehensions = form->comprehensions();
+      comprehensions->accept(this);
     }
   );
 
@@ -1425,8 +1445,8 @@ AstToXmlVisitor::visit(HexAstImplicitDictForm dict_)
   this->double_tag(
     "dict_form",
     [this, dict] () {
-      HexAstComprehension comprehension = dict->comprehension();
-      comprehension->accept(this);
+      HexAstComprehensionList comprehensions = dict->comprehensions();
+      comprehensions->accept(this);
     }
   );
 

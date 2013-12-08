@@ -945,6 +945,22 @@ AstToStringVisitor::visit(HexAstComprehension comprehension_)
   return comprehension;
 }
 
+HexAstComprehensionList
+AstToStringVisitor::visit(HexAstComprehensionList comprehensions_)
+{
+  HexAstComprehensionList comprehensions = AstVisitor::visit(comprehensions_);
+
+  this->iterate<HexAstComprehension>(
+    comprehensions->list(),
+    [this](HexAstComprehension comprehension) {
+      comprehension->accept(this);
+    },
+    this->_spaceDelimiter
+  );
+
+  return comprehensions;
+}
+
 HexAstExplicitListForm
 AstToStringVisitor::visit(HexAstExplicitListForm form_)
 {
@@ -969,8 +985,8 @@ AstToStringVisitor::visit(HexAstImplicitListForm form_)
 
   this->append("[");
 
-  HexAstComprehension comprehension = form->comprehension();
-  comprehension->accept(this);
+  HexAstComprehensionList comprehensions = form->comprehensions();
+  comprehensions->accept(this);
 
   this->append("]");
 
@@ -1061,8 +1077,8 @@ AstToStringVisitor::visit(HexAstImplicitDictForm dict_)
 
   this->append("{");
 
-  HexAstComprehension comprehension = dict->comprehension();
-  comprehension->accept(this);
+  HexAstComprehensionList comprehensions = dict->comprehensions();
+  comprehensions->accept(this);
 
   this->append("}");
 

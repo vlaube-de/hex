@@ -20,7 +20,7 @@
 #include "ast_expr_list.h"
 #include "ast_expr_associativity.h"
 #include "ast_expr_precedence.h"
-#include "ast_comprehension.h"
+#include "ast_comprehension_list.h"
 #include "../visitor/ast_visitor.h"
 #include "../../base/assert.h"
 
@@ -66,8 +66,8 @@ _HexAstExplicitListForm::create(HexAstExprList elements)
 }
 
 _HexAstImplicitListForm::_HexAstImplicitListForm(
-  HexAstComprehension comprehension
-) : _comprehension(comprehension)
+  HexAstComprehensionList comprehensions
+) : _comprehensions(comprehensions)
 {
   this->reprOK();
 }
@@ -75,7 +75,7 @@ _HexAstImplicitListForm::_HexAstImplicitListForm(
 void
 _HexAstImplicitListForm::reprOK()
 {
-  HEX_ASSERT(this->comprehension());
+  HEX_ASSERT(this->comprehensions());
 }
 
 void
@@ -84,16 +84,16 @@ _HexAstImplicitListForm::accept(AstVisitor* visitor)
   visitor->visit(this);
 }
 
-HexAstComprehension
-_HexAstImplicitListForm::comprehension()
+HexAstComprehensionList
+_HexAstImplicitListForm::comprehensions()
 {
-  return this->_comprehension.get();
+  return this->_comprehensions.get();
 }
 
 HexAstImplicitListForm
-_HexAstImplicitListForm::create(HexAstComprehension comprehension)
+_HexAstImplicitListForm::create(HexAstComprehensionList comprehensions)
 {
-  HexAstImplicitListForm obj = new _HexAstImplicitListForm(comprehension);
+  HexAstImplicitListForm obj = new _HexAstImplicitListForm(comprehensions);
   HEX_ASSERT(obj);
   return obj;
 }

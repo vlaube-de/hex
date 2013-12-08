@@ -68,6 +68,9 @@ ast_arg_list.o: ast_node.o ast_arg_list.h ast_arg_list.cc
 ast_comprehension.o: ast_node.o ast_comprehension.h ast_comprehension.cc
 	$(CXX) $(CFLAGS) -c ast_comprehension.cc
 
+ast_comprehension_list.o: ast_comprehension.h ast_comprehension.cc
+	$(CXX) $(CFLAGS) -c ast_comprehension_list.cc
+
 ast_list_form.o: ast_node.o ast_comprehension.o ast_list_form.h ast_list_form.cc
 	$(CXX) $(CFLAGS) -c ast_list_form.cc
 
@@ -417,6 +420,7 @@ obj:ast.h \
 	ast_parameter_list.o	\
 	ast_arg_list.o	\
 	ast_comprehension.o	\
+	ast_comprehension_list.o \
 	ast_list_form.o	\
 	ast_field_def.o	\
 	ast_field_def_list.o	\

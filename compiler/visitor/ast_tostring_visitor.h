@@ -96,6 +96,7 @@ public:
   virtual HexAstValList visit(HexAstValList);
   virtual HexAstArgList visit(HexAstArgList);
   virtual HexAstComprehension visit(HexAstComprehension);
+  virtual HexAstComprehensionList visit(HexAstComprehensionList);
   virtual HexAstExplicitListForm visit(HexAstExplicitListForm);
   virtual HexAstImplicitListForm visit(HexAstImplicitListForm);
   virtual HexAstFieldDef visit(HexAstFieldDef);
@@ -158,6 +159,7 @@ protected:
   void iterate(std::list<T>*, Function, const c_str, bool breakOnLast=true);
 
   const c_str _nullDelimiter = "";
+  const c_str _spaceDelimiter = " ";
   const c_str _commaDelimiter = ", ";
   const c_str _dotDelimiter = ".";
   const c_str _newlineDelimiter = "\n";
