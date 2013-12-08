@@ -231,7 +231,7 @@ HexCodeGenVisitor::visit(HexAstSlicing slicing_)
   this->add_inst(NULL, "copy", ACCUMULATOR, TEMP);
 
   // Load the slice item into $acu.
-  slicing->slice()->accept(this);
+  //slicing->slice()->accept(this);
 
   // Put the slice item as an argument.
   this->add_inst(NULL, "putarg", ACCUMULATOR, NULL);

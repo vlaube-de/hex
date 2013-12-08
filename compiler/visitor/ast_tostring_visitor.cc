@@ -15,7 +15,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-// #include <stdio.h>
 #include <algorithm>
 #include "../ast/ast.h"
 #include "ast_tostring_visitor.h"
@@ -135,7 +134,89 @@ AstToStringVisitor::visit(HexAstSlicing slicing_)
 
   slicing->source()->accept(this);
   this->append("[");
-  slicing->slice()->accept(this);
+
+  switch(slicing->type()) {
+    case AST_SLICING_TYPE_1:
+      {
+        slicing->start()->accept(this);
+        this->append(":");
+        slicing->step()->accept(this);
+        this->append(":");
+        slicing->stop()->accept(this);
+      }
+      break;
+    case AST_SLICING_TYPE_2:
+      {
+        slicing->start()->accept(this);
+        this->append(":");
+        slicing->step()->accept(this);
+        this->append(":");
+      }
+      break;
+    case AST_SLICING_TYPE_3:
+      {
+        slicing->start()->accept(this);
+        this->append(":");
+        this->append(":");
+        slicing->stop()->accept(this);
+      }
+      break;
+    case AST_SLICING_TYPE_4:
+      {
+        slicing->start()->accept(this);
+        this->append(":");
+        this->append(":");
+      }
+      break;
+    case AST_SLICING_TYPE_5:
+      {
+        this->append(":");
+        slicing->step()->accept(this);
+        this->append(":");
+        slicing->stop()->accept(this);
+      }
+      break;
+    case AST_SLICING_TYPE_6:
+      {
+        this->append(":");
+        slicing->step()->accept(this);
+        this->append(":");
+      }
+      break;
+    case AST_SLICING_TYPE_7:
+      {
+        this->append(":");
+        this->append(":");
+        slicing->stop()->accept(this);
+      }
+      break;
+    case AST_SLICING_TYPE_8:
+      {
+        this->append(":");
+        this->append(":");
+      }
+      break;
+    case AST_SLICING_TYPE_9:
+      {
+        this->append(":");
+      }
+      break;
+    case AST_SLICING_TYPE_A:
+      {
+        this->append(":");
+        slicing->stop()->accept(this);
+      }
+      break;
+    case AST_SLICING_TYPE_B:
+      {
+        slicing->start()->accept(this);
+        this->append(":");
+      }
+      break;
+    default:
+      break;
+  }
+
   this->append("]");
 
   return slicing;

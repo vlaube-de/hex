@@ -923,7 +923,17 @@ identifier
   ;
 
 slicing
-  : primary LBRACKET expr RBRACKET                                                                  { $$ = _HexAstSlicing::create($1, $3); }
+  : primary LBRACKET expr COLON expr COLON expr RBRACKET                                            { $$ = _HexAstSlicing::create(AST_SLICING_TYPE_1, $1, $3, $5, $7); }
+  | primary LBRACKET expr COLON expr COLON      RBRACKET                                            { $$ = _HexAstSlicing::create(AST_SLICING_TYPE_2, $1, $3, $5, NULL); }
+  | primary LBRACKET expr COLON      COLON expr RBRACKET                                            { $$ = _HexAstSlicing::create(AST_SLICING_TYPE_3, $1, $3, NULL, $6); }
+  | primary LBRACKET expr COLON      COLON      RBRACKET                                            { $$ = _HexAstSlicing::create(AST_SLICING_TYPE_4, $1, $3, NULL, NULL); }
+  | primary LBRACKET      COLON expr COLON expr RBRACKET                                            { $$ = _HexAstSlicing::create(AST_SLICING_TYPE_5, $1, NULL, $4, $6); }
+  | primary LBRACKET      COLON expr COLON      RBRACKET                                            { $$ = _HexAstSlicing::create(AST_SLICING_TYPE_6, $1, NULL, $4, NULL); }
+  | primary LBRACKET      COLON      COLON expr RBRACKET                                            { $$ = _HexAstSlicing::create(AST_SLICING_TYPE_7, $1, NULL, NULL, $5); }
+  | primary LBRACKET      COLON      COLON      RBRACKET                                            { $$ = _HexAstSlicing::create(AST_SLICING_TYPE_8, $1, NULL, NULL, NULL); }
+  | primary LBRACKET      COLON                 RBRACKET                                            { $$ = _HexAstSlicing::create(AST_SLICING_TYPE_9, $1, NULL, NULL, NULL); }
+  | primary LBRACKET      COLON            expr RBRACKET                                            { $$ = _HexAstSlicing::create(AST_SLICING_TYPE_A, $1, NULL, NULL, $4); }
+  | primary LBRACKET expr                       RBRACKET                                            { $$ = _HexAstSlicing::create(AST_SLICING_TYPE_B, $1, $3, NULL, NULL); }
   ;
 
 attribute_ref

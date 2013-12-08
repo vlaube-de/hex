@@ -25,11 +25,17 @@
 
 
 _HexAstSlicing::_HexAstSlicing(
+  HexAstSlicingType type,
   HexAstPrimary source,
-  HexAstExpr slice
+  HexAstExpr start,
+  HexAstExpr step,
+  HexAstExpr stop
 ) :
+  _type(type),
   _source(source),
-  _slice(slice),
+  _start(start),
+  _step(step),
+  _stop(stop),
   _HexAstPrimary(
     EXPR_ASSOCIATIVITY_LEFT,
     EXPR_PRECEDENCE_PRIMARY_2
@@ -41,8 +47,14 @@ _HexAstSlicing::_HexAstSlicing(
 void
 _HexAstSlicing::reprOK()
 {
+  HEX_ASSERT(this->type());
   HEX_ASSERT(this->source());
-  HEX_ASSERT(this->slice());
+}
+
+HexAstSlicingType
+_HexAstSlicing::type()
+{
+  return this->_type;
 }
 
 HexAstPrimary
@@ -52,9 +64,21 @@ _HexAstSlicing::source()
 }
 
 HexAstExpr
-_HexAstSlicing::slice()
+_HexAstSlicing::start()
 {
-  return this->_slice.get();
+  return this->_start.get();
+}
+
+HexAstExpr
+_HexAstSlicing::step()
+{
+  return this->_step.get();
+}
+
+HexAstExpr
+_HexAstSlicing::stop()
+{
+  return this->_stop.get();
 }
 
 void
@@ -65,11 +89,20 @@ _HexAstSlicing::accept(AstVisitor* visitor)
 
 HexAstSlicing
 _HexAstSlicing::create(
+  HexAstSlicingType type,
   HexAstPrimary source,
-  HexAstExpr slice
+  HexAstExpr start,
+  HexAstExpr step,
+  HexAstExpr stop
 )
 {
-  HexAstSlicing obj = new _HexAstSlicing(source, slice);
+  HexAstSlicing obj = new _HexAstSlicing(
+    type,
+    source,
+    start,
+    step,
+    stop
+  );
   HEX_ASSERT(obj);
   return obj;
 }

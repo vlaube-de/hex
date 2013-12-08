@@ -23,20 +23,46 @@
 #ifndef _AST_SLICING_H_
 #define _AST_SLICING_H_
 
+enum HexAstSlicingType {
+  AST_SLICING_TYPE_1 = 0x01,
+  AST_SLICING_TYPE_2 = 0x02,
+  AST_SLICING_TYPE_3 = 0x03,
+  AST_SLICING_TYPE_4 = 0x04,
+  AST_SLICING_TYPE_5 = 0x05,
+  AST_SLICING_TYPE_6 = 0x06,
+  AST_SLICING_TYPE_7 = 0x07,
+  AST_SLICING_TYPE_8 = 0x08,
+  AST_SLICING_TYPE_9 = 0x09,
+  AST_SLICING_TYPE_A = 0x0A,
+  AST_SLICING_TYPE_B = 0x0B
+};
+
 typedef class _HexAstSlicing : public _HexAstPrimary {
 public:
-  _HexAstSlicing(HexAstPrimary, HexAstExpr);
+  _HexAstSlicing(HexAstSlicingType, HexAstPrimary, HexAstExpr, HexAstExpr, HexAstExpr);
 
   virtual void reprOK();
   virtual void accept(AstVisitor*);
 
+  HexAstSlicingType type();
   HexAstPrimary source();
-  HexAstExpr slice();
+  HexAstExpr start();
+  HexAstExpr step();
+  HexAstExpr stop();
 
-  static _HexAstSlicing* create(HexAstPrimary, HexAstExpr);
+  static _HexAstSlicing* create(
+    HexAstSlicingType,
+    HexAstPrimary,
+    HexAstExpr,
+    HexAstExpr,
+    HexAstExpr
+  );
 private:
+  HexAstSlicingType _type;
   boost::scoped_ptr<_HexAstPrimary> _source;
-  boost::scoped_ptr<_HexAstExpr> _slice;
+  boost::scoped_ptr<_HexAstExpr> _start;
+  boost::scoped_ptr<_HexAstExpr> _step;
+  boost::scoped_ptr<_HexAstExpr> _stop;
 } * HexAstSlicing;
 
 #endif /* _AST_SLICING_H_ */

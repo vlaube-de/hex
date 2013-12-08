@@ -224,6 +224,39 @@ AstToXmlVisitor::visit(HexAstAttributeRef ref_)
   return ref;
 }
 
+void
+AstToXmlVisitor::_visit_slicing_start(HexAstSlicing slicing)
+{
+  this->double_tag(
+    "slicing_start",
+    [this, slicing]() {
+      slicing->start()->accept(this);
+    }
+  );
+}
+
+void
+AstToXmlVisitor::_visit_slicing_step(HexAstSlicing slicing)
+{
+  this->double_tag(
+    "slicing_step",
+    [this, slicing]() {
+      slicing->step()->accept(this);
+    }
+  );
+}
+
+void
+AstToXmlVisitor::_visit_slicing_stop(HexAstSlicing slicing)
+{
+  this->double_tag(
+    "slicing_stop",
+    [this, slicing]() {
+      slicing->stop()->accept(this);
+    }
+  );
+}
+
 HexAstSlicing
 AstToXmlVisitor::visit(HexAstSlicing slicing_)
 {
@@ -239,12 +272,71 @@ AstToXmlVisitor::visit(HexAstSlicing slicing_)
         }
       );
 
-      this->double_tag(
-        "slicing-target",
-        [this, slicing]() {
-          slicing->slice()->accept(this);
-        }
-      );
+      switch(slicing->type()) {
+        case AST_SLICING_TYPE_1:
+          {
+            this->_visit_slicing_start(slicing);
+            this->_visit_slicing_step(slicing);
+            this->_visit_slicing_stop(slicing);
+          }
+          break;
+        case AST_SLICING_TYPE_2:
+          {
+            this->_visit_slicing_start(slicing);
+            this->_visit_slicing_step(slicing);
+          }
+          break;
+        case AST_SLICING_TYPE_3:
+          {
+            this->_visit_slicing_start(slicing);
+            this->_visit_slicing_stop(slicing);
+          }
+          break;
+        case AST_SLICING_TYPE_4:
+          {
+            this->_visit_slicing_start(slicing);
+          }
+          break;
+        case AST_SLICING_TYPE_5:
+          {
+            this->_visit_slicing_step(slicing);
+            this->_visit_slicing_stop(slicing);
+          }
+          break;
+        case AST_SLICING_TYPE_6:
+          {
+            this->_visit_slicing_step(slicing);
+          }
+          break;
+        case AST_SLICING_TYPE_7:
+          {
+            this->_visit_slicing_stop(slicing);
+          }
+          break;
+        case AST_SLICING_TYPE_8:
+          {
+            // Do nothing here.
+          }
+          break;
+        case AST_SLICING_TYPE_9:
+          {
+            // Do nothing here.
+          }
+          break;
+        case AST_SLICING_TYPE_A:
+          {
+            this->_visit_slicing_stop(slicing);
+          }
+          break;
+        case AST_SLICING_TYPE_B:
+          {
+            this->_visit_slicing_start(slicing);
+          }
+          break;
+        default:
+          break;
+      }
+
     }
   );
 

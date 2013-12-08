@@ -166,6 +166,10 @@ protected:
 
   template<class T>
   void double_tag_for_binary_expr(T, const c_str);
+
+  void _visit_slicing_start(HexAstSlicing);
+  void _visit_slicing_step(HexAstSlicing);
+  void _visit_slicing_stop(HexAstSlicing);
 };
 
 
