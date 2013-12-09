@@ -68,7 +68,7 @@ HexParserXmlTestBase::wrap_single_stmt(const c_str innerXML)
 }
 
 const c_str
-HexParserXmlTestBase::wrap_single_expr(const c_str innerXML)
+HexParserXmlTestBase::wrap_single_expr_stmt(const c_str innerXML)
 {
   char xml[MAX_XML_LENGTH];
 

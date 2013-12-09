@@ -27,7 +27,7 @@ protected:
   virtual void test(const c_str, const c_str);
 
   virtual const c_str wrap_single_stmt(const c_str);
-  virtual const c_str wrap_single_expr(const c_str);
+  virtual const c_str wrap_single_expr_stmt(const c_str);
 };
 
 #endif /* _HEX_PARSER_XML_TEST_BASE_H_ */

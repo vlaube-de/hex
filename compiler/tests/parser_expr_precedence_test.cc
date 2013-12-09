@@ -69,7 +69,7 @@ TEST_F(HexParserXmlTestBase, Call_vs_Primaries)
 {
   test(
     "person.set_name(name);",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<call>"
         "<call-source>"
           "<attribute>"
@@ -96,7 +96,7 @@ TEST_F(HexParserXmlTestBase, Call_vs_Primaries)
 
   test(
     "do_something((), [], {});",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<call>"
         "<call-source>"
           "<identifier>do_something<identifier/>"
@@ -122,7 +122,7 @@ TEST_F(HexParserExprPrecedenceTest, NegativeExpr_vs_PowerExpr)
   // -(5 ** 2)
   test(
     "-5 ** 2;",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<negative_expr>"
         "<power_expr>"
           "<power_expr-left>"
@@ -138,7 +138,7 @@ TEST_F(HexParserExprPrecedenceTest, NegativeExpr_vs_PowerExpr)
 
   test(
     "(-5) ** 2;",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<power_expr>"
         "<power_expr-left>"
           "<paren_form>"
@@ -162,7 +162,7 @@ TEST_F(HexParserExprPrecedenceTest, IncrementDecrement_vs_PositiveNegative)
   // (+1)++
   test(
     "+1++;",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<increment_expr>"
         "<positive_expr>"
           "<integer_literal>1<integer_literal/>"
@@ -174,7 +174,7 @@ TEST_F(HexParserExprPrecedenceTest, IncrementDecrement_vs_PositiveNegative)
   // ( ( + (-1) ) ++ )--
   test(
     "+-1++--;",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<decrement_expr>"
         "<increment_expr>"
           "<positive_expr>"
@@ -193,7 +193,7 @@ TEST_F(HexParserExprPrecedenceTest, BitwiseNot_vs_IncrementDecrement)
   // ~ (1++)
   test(
     "~1++;",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<bitwise_not_expr>"
         "<increment_expr>"
           "<integer_literal>1<integer_literal/>"
@@ -205,7 +205,7 @@ TEST_F(HexParserExprPrecedenceTest, BitwiseNot_vs_IncrementDecrement)
   // ~ ( ~( ( (1) ++ ) -- ) )
   test(
     "~~1++--;",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<bitwise_not_expr>"
         "<bitwise_not_expr>"
           "<decrement_expr>"
@@ -224,7 +224,7 @@ TEST_F(HexParserExprPrecedenceTest, Existential_vs_BitwiseNot)
   // ( ~ (1) ) ?
   test(
     "~1?;",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<existential_expr>"
         "<bitwise_not_expr>"
           "<integer_literal>1<integer_literal/>"
@@ -236,7 +236,7 @@ TEST_F(HexParserExprPrecedenceTest, Existential_vs_BitwiseNot)
   // ( ( ~ ( ~ (1) ) ) ? ) ?
   test(
     "~~1??;",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<existential_expr>"
         "<existential_expr>"
           "<bitwise_not_expr>"
@@ -254,7 +254,7 @@ TEST_F(HexParserExprPrecedenceTest, StringComposition_vs_Existential)
 {
   test(
     "\"name: %s\" %% (name?);",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<string_expr>"
         "<string_expr-literal>"
           "<string_literal>\"name: %s\"<string_literal/>"
@@ -272,7 +272,7 @@ TEST_F(HexParserExprPrecedenceTest, StringComposition_vs_Existential)
 
   test(
     "\"name: %s\" %% (\"%s\" %% (name?));",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<string_expr>"
         "<string_expr-literal>"
           "<string_literal>\"name: %s\"<string_literal/>"
@@ -303,7 +303,7 @@ TEST_F(HexParserExprPrecedenceTest, MultiplicativeExpr_vs_StringComposition)
   // ( "name: %s, " %% (name) ) * ( "age: %d" %% (age) )
   test(
     "\"name: %s, \" %% (name) * \"age: %d\" %% (age);",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<multiply_expr>"  
         "<multiply_expr-left>"
           "<string_expr>"
@@ -336,7 +336,7 @@ TEST_F(HexParserExprPrecedenceTest, MultiplicativeExpr_vs_StringComposition)
   // "My sweethearts: %s" * ( " sweet voices: %s" %% ('Tomiko Van, Rainie Yang') )
   test(
     "\"My sweethearts: %s \" * \" sweet voices: %s\" %% (\'Tomiko Van\', \'Rainie Yang\');",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<multiply_expr>"
         "<multiply_expr-left>"
           "<string_literal>\"My sweethearts: %s \"<string_literal/>"
@@ -364,7 +364,7 @@ TEST_F(HexParserExprPrecedenceTest, AdditiveExpr_vs_MultiplicativeExpr)
  // 1 + (2 * 3)
   test(
     "1 + 2 * 3;",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<add_expr>"
         "<add_expr-left>"
           "<integer_literal>1<integer_literal/>"
@@ -386,7 +386,7 @@ TEST_F(HexParserExprPrecedenceTest, AdditiveExpr_vs_MultiplicativeExpr)
   // (1 % 2) - 3
   test(
     "1 % 2 - 3;",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<minus_expr>"
         "<minus_expr-left>"
           "<modulus_expr>"
@@ -408,7 +408,7 @@ TEST_F(HexParserExprPrecedenceTest, AdditiveExpr_vs_MultiplicativeExpr)
   // 3 * (2 - 1)
   test(
     "3 * (2 - 1);",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<multiply_expr>"
         "<multiply_expr-left>"
           "<integer_literal>3<integer_literal/>"
@@ -437,7 +437,7 @@ TEST_F(HexParserExprPrecedenceTest, BitwiseShiftExpr_vs_AdditiveExpr)
   // (1 + 2) << 3
   test(
     "1 + 2 << 3;",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<bitwise_shift_left_expr>"
         "<bitwise_shift_left_expr-left>"
           "<add_expr>"
@@ -459,7 +459,7 @@ TEST_F(HexParserExprPrecedenceTest, BitwiseShiftExpr_vs_AdditiveExpr)
   // 2 >> (1 - 3)
   test(
     "2 >> 1 - 3;",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<bitwise_shift_right_expr>"
         "<bitwise_shift_right_expr-left>"
           "<integer_literal>2<integer_literal/>"
@@ -481,7 +481,7 @@ TEST_F(HexParserExprPrecedenceTest, BitwiseShiftExpr_vs_AdditiveExpr)
   // (2 << 3) - 5
   test(
     "(2 << 3) - 5;",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<minus_expr>"
         "<minus_expr-left>"
           "<paren_form>"
@@ -510,7 +510,7 @@ TEST_F(HexParserExprPrecedenceTest, BitwiseAndExpr_vs_BitwiseShiftExpr)
   // 1 & (2 << 3)
   test(
     "1 & 2 << 3;",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<bitwise_and_expr>"
         "<bitwise_and_expr-left>"
           "<integer_literal>1<integer_literal/>"
@@ -532,7 +532,7 @@ TEST_F(HexParserExprPrecedenceTest, BitwiseAndExpr_vs_BitwiseShiftExpr)
   // (1 << 2) & 3
   test(
     "1 << 2 & 3;",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<bitwise_and_expr>"
         "<bitwise_and_expr-left>"
           "<bitwise_shift_left_expr>"
@@ -554,7 +554,7 @@ TEST_F(HexParserExprPrecedenceTest, BitwiseAndExpr_vs_BitwiseShiftExpr)
   // (1 & 2) << 3
   test(
     "(1 & 2) << 3;",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<bitwise_shift_left_expr>"
         "<bitwise_shift_left_expr-left>"
           "<paren_form>"
@@ -583,7 +583,7 @@ TEST_F(HexParserExprPrecedenceTest, BitwiseXor_vs_BitwiseAnd)
   // (1 & 2) ^ 3
   test(
     "1 & 2 ^ 3;",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<bitwise_xor_expr>"
         "<bitwise_xor_expr-left>"
           "<bitwise_and_expr>"
@@ -605,7 +605,7 @@ TEST_F(HexParserExprPrecedenceTest, BitwiseXor_vs_BitwiseAnd)
   // 1 ^ (2 & 3)
   test(
     "1 ^ 2 & 3;",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<bitwise_xor_expr>"
         "<bitwise_xor_expr-left>"
           "<integer_literal>1<integer_literal/>"
@@ -627,7 +627,7 @@ TEST_F(HexParserExprPrecedenceTest, BitwiseXor_vs_BitwiseAnd)
   // 1 & (2 ^ 3)
   test(
     "1 & (2 ^ 3);",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<bitwise_and_expr>"
         "<bitwise_and_expr-left>"
           "<integer_literal>1<integer_literal/>"
@@ -656,7 +656,7 @@ TEST_F(HexParserExprPrecedenceTest, BitwiseOrExpr_vs_BitwiseXorExpr)
   // 2 | (3 ^ 4)
   test(
     "2 | 3 ^ 4;",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<bitwise_or_expr>"
         "<bitwise_or_expr-left>"
           "<integer_literal>2<integer_literal/>"
@@ -678,7 +678,7 @@ TEST_F(HexParserExprPrecedenceTest, BitwiseOrExpr_vs_BitwiseXorExpr)
   // (2 ^ 3) | 4
   test(
     "2 ^ 3 | 4;",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<bitwise_or_expr>"
         "<bitwise_or_expr-left>"
           "<bitwise_xor_expr>"
@@ -700,7 +700,7 @@ TEST_F(HexParserExprPrecedenceTest, BitwiseOrExpr_vs_BitwiseXorExpr)
   // (2 | 3) ^ 4
   test(
     "(2 | 3) ^ 4;",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<bitwise_xor_expr>"
         "<bitwise_xor_expr-left>"
           "<paren_form>"
@@ -729,7 +729,7 @@ TEST_F(HexParserExprPrecedenceTest, ComparisonExpr_vs_BitwiseOrExpr)
   // (2 | 3) is 2
   test(
     "2 | 3 is 2;",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<is_expr>"
         "<is_expr-left>"
           "<bitwise_or_expr>"
@@ -751,7 +751,7 @@ TEST_F(HexParserExprPrecedenceTest, ComparisonExpr_vs_BitwiseOrExpr)
   // // 5 >= (2 | 5)
   test(
     "5 >= 2 | 5;",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<ge_expr>"
         "<ge_expr-left>"
           "<integer_literal>5<integer_literal/>"
@@ -773,7 +773,7 @@ TEST_F(HexParserExprPrecedenceTest, ComparisonExpr_vs_BitwiseOrExpr)
   // // (2 <= 3) | 5
   test(
     "(2 <= 3) | 5;",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<bitwise_or_expr>"
         "<bitwise_or_expr-left>"
           "<paren_form>"
@@ -802,7 +802,7 @@ TEST_F(HexParserExprPrecedenceTest, LogicalNot_vs_ComparisonExpr)
   // not (1 == 1)
   test(
     "not 1 == 1;",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<not_expr>"
         "<equals_expr>"
           "<equals_expr-left>"
@@ -819,7 +819,7 @@ TEST_F(HexParserExprPrecedenceTest, LogicalNot_vs_ComparisonExpr)
   // (1) is not (2)
   test(
     "1 is not 2;",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<is_not_expr>"
         "<is_not_expr-left>"
           "<integer_literal>1<integer_literal/>"
@@ -834,7 +834,7 @@ TEST_F(HexParserExprPrecedenceTest, LogicalNot_vs_ComparisonExpr)
   // a != (not b)
   test(
     "a != not b;",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<not_equal_expr>"
         "<not_equal_expr-left>"
           "<identifier>a<identifier/>"
@@ -854,7 +854,7 @@ TEST_F(HexParserExprPrecedenceTest, LogicAnd_vs_LogicNot)
   // ( not a ) and ( not b )
   test(
     "not a and not b;",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<and_expr>"
         "<and_expr-left>"
           "<not_expr>"
@@ -874,7 +874,7 @@ TEST_F(HexParserExprPrecedenceTest, LogicAnd_vs_LogicNot)
   // ( not a ) and b
   test(
     "not a and b;",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<and_expr>"
         "<and_expr-left>"
           "<not_expr>"
@@ -894,7 +894,7 @@ TEST_F(HexParserExprPrecedenceTest, LogicOr_vs_LogicAnd)
   // a or ( b and c )
   test(
     "a or b and c;",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<or_expr>"
         "<or_expr-left>"
           "<identifier>a<identifier/>"
@@ -916,7 +916,7 @@ TEST_F(HexParserExprPrecedenceTest, LogicOr_vs_LogicAnd)
   // ( a or (b and c) ) or d
   test(
     "a or b and c or d;",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<or_expr>"
         "<or_expr-left>"
           "<or_expr>"
@@ -948,7 +948,7 @@ TEST_F(HexParserExprPrecedenceTest, RangeExpr_vs_LogicOrExpr)
   // ( a or b ) ... ( c or d )
   test(
     "a or b ... c or d;",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<inclusive_range_expr>"
         "<inclusive_range_expr-begin>"
           "<or_expr>"
@@ -979,7 +979,7 @@ TEST_F(HexParserExprPrecedenceTest, ConditionalExpr_vs_RangeExpr)
 {
   test(
     "if a is 2 then 1...2 else 1...10;",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<conditional_expr>"
         "<conditional_expr-predicate>"
           "<is_expr>"

@@ -75,7 +75,7 @@ HexParserXmlTest::test_indentifier(const c_str code)
 {
   test(
     code,
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       embed_code_in_xml(
         code,
         "<identifier>%s<identifier/>"
@@ -89,7 +89,7 @@ HexParserXmlTest::test_integer_literal(const c_str code)
 {
   test(
     code,
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       embed_code_in_xml(
         code,
         "<integer_literal>%s<integer_literal/>"
@@ -103,7 +103,7 @@ HexParserXmlTest::test_floating_literal(const c_str code)
 {
   test(
     code,
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       embed_code_in_xml(
         code,
         "<floating_literal>%s<floating_literal/>"
@@ -117,7 +117,7 @@ HexParserXmlTest::test_string_literal(const c_str code)
 {
   test(
     code,
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       embed_code_in_xml(
         code,
         "<string_literal>%s<string_literal/>"
@@ -201,7 +201,7 @@ TEST_F(HexParserXmlTest, TestCall)
 {
   test(
     "hello_world();",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<call>"
         "<call-source>"
           "<identifier>hello_world<identifier/>"
@@ -212,7 +212,7 @@ TEST_F(HexParserXmlTest, TestCall)
 
   test(
     "print(\"Hello world!\");",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<call>"
         "<call-source>"
           "<identifier>print<identifier/>"
@@ -232,7 +232,7 @@ TEST_F(HexParserXmlTest, TestCall)
 
   test(
     "person.set_age(24);",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<call>"
         "<call-source>"
           "<attribute>"
@@ -259,7 +259,7 @@ TEST_F(HexParserXmlTest, TestCall)
 
   test(
     "person.get_info().to_dict();",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<call>"
         "<call-source>"
           "<attribute>"
@@ -288,7 +288,7 @@ TEST_F(HexParserXmlTest, TestCall)
 
   test(
     "person.father().name;",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<attribute>"
         "<attribute-source>"
           "<call>"
@@ -316,7 +316,7 @@ TEST_F(HexParserXmlTest, TestAttributeRef)
 {
   test(
     "obj.attr.field;",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<attribute>"
         "<attribute-source>"
           "<attribute>"
@@ -336,11 +336,177 @@ TEST_F(HexParserXmlTest, TestAttributeRef)
   );
 }
 
+TEST_F(HexParserXmlTest, TestSlicing)
+{
+  test(
+    "a[1:2:10];",
+    wrap_single_expr_stmt(
+      "<slicing>"
+        "<slicing-source>"
+          "<identifier>a<identifier/>"
+        "<slicing-source/>"
+        "<slicing_start>"
+          "<integer_literal>1<integer_literal/>"
+        "<slicing_start/>"
+        "<slicing_step>"
+          "<integer_literal>2<integer_literal/>"
+        "<slicing_step/>"
+        "<slicing_stop>"
+          "<integer_literal>10<integer_literal/>"
+        "<slicing_stop/>"
+      "<slicing/>"
+    )
+  );
+
+  test(
+    "a[1:2:];",
+    wrap_single_expr_stmt(
+      "<slicing>"
+        "<slicing-source>"
+          "<identifier>a<identifier/>"
+        "<slicing-source/>"
+        "<slicing_start>"
+          "<integer_literal>1<integer_literal/>"
+        "<slicing_start/>"
+        "<slicing_step>"
+          "<integer_literal>2<integer_literal/>"
+        "<slicing_step/>"
+      "<slicing/>"
+    )
+  );
+
+  test(
+    "a[1::10];",
+    wrap_single_expr_stmt(
+      "<slicing>"
+        "<slicing-source>"
+          "<identifier>a<identifier/>"
+        "<slicing-source/>"
+        "<slicing_start>"
+          "<integer_literal>1<integer_literal/>"
+        "<slicing_start/>"
+        "<slicing_stop>"
+          "<integer_literal>10<integer_literal/>"
+        "<slicing_stop/>"
+      "<slicing/>"
+    )
+  );
+
+  test(
+    "a[1::];",
+    wrap_single_expr_stmt(
+      "<slicing>"
+        "<slicing-source>"
+          "<identifier>a<identifier/>"
+        "<slicing-source/>"
+        "<slicing_start>"
+          "<integer_literal>1<integer_literal/>"
+        "<slicing_start/>"
+      "<slicing/>"
+    )
+  );
+
+  test(
+    "a[:2:10];",
+    wrap_single_expr_stmt(
+      "<slicing>"
+        "<slicing-source>"
+          "<identifier>a<identifier/>"
+        "<slicing-source/>"
+        "<slicing_step>"
+          "<integer_literal>2<integer_literal/>"
+        "<slicing_step/>"
+        "<slicing_stop>"
+          "<integer_literal>10<integer_literal/>"
+        "<slicing_stop/>"
+      "<slicing/>"
+    )
+  );
+
+  test(
+    "a[:2:];",
+    wrap_single_expr_stmt(
+      "<slicing>"
+        "<slicing-source>"
+          "<identifier>a<identifier/>"
+        "<slicing-source/>"
+        "<slicing_step>"
+          "<integer_literal>2<integer_literal/>"
+        "<slicing_step/>"
+      "<slicing/>"
+    )
+  );
+
+  test(
+    "a[::10];",
+    wrap_single_expr_stmt(
+      "<slicing>"
+        "<slicing-source>"
+          "<identifier>a<identifier/>"
+        "<slicing-source/>"
+        "<slicing_stop>"
+          "<integer_literal>10<integer_literal/>"
+        "<slicing_stop/>"
+      "<slicing/>"
+    )
+  );
+
+  test(
+    "a[::];",
+    wrap_single_expr_stmt(
+      "<slicing>"
+        "<slicing-source>"
+          "<identifier>a<identifier/>"
+        "<slicing-source/>"
+      "<slicing/>"
+    )
+  );
+
+  test(
+    "a[:];",
+    wrap_single_expr_stmt(
+      "<slicing>"
+        "<slicing-source>"
+          "<identifier>a<identifier/>"
+        "<slicing-source/>"
+      "<slicing/>"
+    )
+  );
+
+  test(
+    "a[:10];",
+    wrap_single_expr_stmt(
+      "<slicing>"
+        "<slicing-source>"
+          "<identifier>a<identifier/>"
+        "<slicing-source/>"
+        "<slicing_stop>"
+          "<integer_literal>10<integer_literal/>"
+        "<slicing_stop/>"
+      "<slicing/>"
+    )
+  );
+
+  test(
+    "a[1];",
+    wrap_single_expr_stmt(
+      "<slicing>"
+        "<slicing-source>"
+          "<identifier>a<identifier/>"
+        "<slicing-source/>"
+        "<slicing_start>"
+          "<integer_literal>1<integer_literal/>"
+        "<slicing_start/>"
+      "<slicing/>"
+    )
+  );
+}
+
 TEST_F(HexParserXmlTest, TestTargetList)
 {
   test(
     "[for name in names];",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<list_form>"
         "<comprehensions>"
           "<comprehension>"
@@ -362,7 +528,7 @@ TEST_F(HexParserXmlTest, TestTargetList)
 
   test(
     "[for a, e, i, o, u in alphabets];",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<list_form>"
         "<comprehensions>"
           "<comprehension>"
@@ -391,7 +557,7 @@ TEST_F(HexParserXmlTest, TestPositiveExpr)
 {
   test(
     "+0987654321;",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<positive_expr>"
         "<integer_literal>0987654321<integer_literal/>"
       "<positive_expr/>"
@@ -400,7 +566,7 @@ TEST_F(HexParserXmlTest, TestPositiveExpr)
 
   test(
     "+0x0123456789ABCDEF;",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<positive_expr>"
         "<integer_literal>0x0123456789ABCDEF<integer_literal/>"
       "<positive_expr/>"
@@ -409,7 +575,7 @@ TEST_F(HexParserXmlTest, TestPositiveExpr)
 
   test(
     "+0.987654321;",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<positive_expr>"
         "<floating_literal>0.987654321<floating_literal/>"
       "<positive_expr/>"
@@ -418,7 +584,7 @@ TEST_F(HexParserXmlTest, TestPositiveExpr)
 
   test(
     "+987.654e-321;",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<positive_expr>"
         "<floating_literal>987.654e-321<floating_literal/>"
       "<positive_expr/>"
@@ -427,7 +593,7 @@ TEST_F(HexParserXmlTest, TestPositiveExpr)
 
   test(
     "+(1);",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<positive_expr>"
         "<paren_form>"
           "<exprlist>"
@@ -440,7 +606,7 @@ TEST_F(HexParserXmlTest, TestPositiveExpr)
 
   test(
     "+(1 + 1);",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<positive_expr>"
         "<paren_form>"
           "<exprlist>"
@@ -463,7 +629,7 @@ TEST_F(HexParserXmlTest, TestNegativeExpr)
 {
   test(
     "-0987654321;",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<negative_expr>"
         "<integer_literal>0987654321<integer_literal/>"
       "<negative_expr/>"
@@ -472,7 +638,7 @@ TEST_F(HexParserXmlTest, TestNegativeExpr)
 
   test(
     "-0x0123456789ABCDEF;",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<negative_expr>"
         "<integer_literal>0x0123456789ABCDEF<integer_literal/>"
       "<negative_expr/>"
@@ -481,7 +647,7 @@ TEST_F(HexParserXmlTest, TestNegativeExpr)
 
   test(
     "-0.987654321;",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<negative_expr>"
         "<floating_literal>0.987654321<floating_literal/>"
       "<negative_expr/>"
@@ -490,7 +656,7 @@ TEST_F(HexParserXmlTest, TestNegativeExpr)
 
   test(
     "-987.654e-321;",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<negative_expr>"
         "<floating_literal>987.654e-321<floating_literal/>"
       "<negative_expr/>"
@@ -499,7 +665,7 @@ TEST_F(HexParserXmlTest, TestNegativeExpr)
 
   test(
     "-(1);",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<negative_expr>"
         "<paren_form>"
           "<exprlist>"
@@ -512,7 +678,7 @@ TEST_F(HexParserXmlTest, TestNegativeExpr)
 
   test(
     "-(1 + 1);",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<negative_expr>"
         "<paren_form>"
           "<exprlist>"
@@ -535,7 +701,7 @@ TEST_F(HexParserXmlTest, TestNotExpr)
 {
   test(
     "not 1;",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<not_expr>"
         "<integer_literal>1<integer_literal/>"
       "<not_expr/>"
@@ -544,7 +710,7 @@ TEST_F(HexParserXmlTest, TestNotExpr)
 
   test(
     "not not 1;",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<not_expr>"
         "<not_expr>"
           "<integer_literal>1<integer_literal/>"
@@ -555,7 +721,7 @@ TEST_F(HexParserXmlTest, TestNotExpr)
 
   test(
     "not 1 != 1;",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<not_expr>"
         "<not_equal_expr>"
           "<not_equal_expr-left>"
@@ -571,7 +737,7 @@ TEST_F(HexParserXmlTest, TestNotExpr)
 
   test(
     "not a is not b;",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<not_expr>"
         "<is_not_expr>"
           "<is_not_expr-left>"
@@ -590,7 +756,7 @@ TEST_F(HexParserXmlTest, TestBitwiseNotExpr)
 {
   test(
     "~123;",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<bitwise_not_expr>"
         "<integer_literal>123<integer_literal/>"
       "<bitwise_not_expr/>"
@@ -599,7 +765,7 @@ TEST_F(HexParserXmlTest, TestBitwiseNotExpr)
 
   test(
     "~~123;",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<bitwise_not_expr>"
         "<bitwise_not_expr>"
           "<integer_literal>123<integer_literal/>"
@@ -613,7 +779,7 @@ TEST_F(HexParserXmlTest, TestIncrementExpr)
 {
   test(
     "c++;",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<increment_expr>"
         "<identifier>c<identifier/>"
       "<increment_expr/>"
@@ -622,7 +788,7 @@ TEST_F(HexParserXmlTest, TestIncrementExpr)
 
   test(
     "(1 + 2)++;",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<increment_expr>"
         "<paren_form>"
           "<exprlist>"
@@ -645,7 +811,7 @@ TEST_F(HexParserXmlTest, TestDecrementExpr)
 {
   test(
     "i--;",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<decrement_expr>"
         "<identifier>i<identifier/>"
       "<decrement_expr/>"
@@ -655,7 +821,7 @@ TEST_F(HexParserXmlTest, TestDecrementExpr)
   // (c++)--
   test(
     "c++--;",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<decrement_expr>"
         "<increment_expr>"
           "<identifier>c<identifier/>"
@@ -669,7 +835,7 @@ TEST_F(HexParserXmlTest, TestExistentialExpr)
 {
   test(
     "a?;",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<existential_expr>"
         "<identifier>a<identifier/>"
       "<existential_expr/>"
@@ -678,7 +844,7 @@ TEST_F(HexParserXmlTest, TestExistentialExpr)
 
   test(
     "(a or b)?;",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<existential_expr>"
         "<paren_form>"
           "<exprlist>"
@@ -698,7 +864,7 @@ TEST_F(HexParserXmlTest, TestExistentialExpr)
 
   test(
     "((a or b)? and (c is d)?)?;",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<existential_expr>"
         "<paren_form>"
           "<exprlist>"
@@ -747,7 +913,7 @@ TEST_F(HexParserXmlTest, TestAdditiveExpr)
 {
   test(
     "1 + 1;",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<add_expr>"
         "<add_expr-left>"
           "<integer_literal>1<integer_literal/>"
@@ -761,7 +927,7 @@ TEST_F(HexParserXmlTest, TestAdditiveExpr)
 
   test(
     "1 + 2 * 3;",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<add_expr>"
         "<add_expr-left>"
           "<integer_literal>1<integer_literal/>"
@@ -785,7 +951,7 @@ TEST_F(HexParserXmlTest, TestMultiplicativeExpr)
 {
   test(
     "3.14 * 3 / 9.543 % 5;",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<modulus_expr>"
         "<modulus_expr-left>"
           "<divide_expr>"
@@ -814,10 +980,9 @@ TEST_F(HexParserXmlTest, TestMultiplicativeExpr)
 
 TEST_F(HexParserXmlTest, TestPowerExpr)
 {
-  // TODO: associtivity is wrong...
   test(
     "a ** 2 + 1;",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<add_expr>"
         "<add_expr-left>"
           "<power_expr>"
@@ -841,7 +1006,7 @@ TEST_F(HexParserXmlTest, TestBitwiseExpr)
 {
   test(
     "1 & 2 | 3 ^ 4;",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<bitwise_or_expr>"
         "<bitwise_or_expr-left>"
           "<bitwise_and_expr>"
@@ -873,7 +1038,7 @@ TEST_F(HexParserXmlTest, TestComparisonExpr)
   // (a is not 2) is true
   test(
     "a is not 2 is true;",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<is_expr>"
         "<is_expr-left>"
           "<is_not_expr>"
@@ -895,7 +1060,7 @@ TEST_F(HexParserXmlTest, TestComparisonExpr)
   // ( ( 1 + 1 ) == 2 ) != 0
   test(
     "1 + 1 == 2 != 0;",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<not_equal_expr>"
         "<not_equal_expr-left>"
           "<equals_expr>"
@@ -923,7 +1088,7 @@ TEST_F(HexParserXmlTest, TestComparisonExpr)
 
   test(
     "a in b in c in d;",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<in_expr>"
         "<in_expr-left>"
           "<in_expr>"
@@ -955,7 +1120,7 @@ TEST_F(HexParserXmlTest, TestLogicExpr)
   // (a and b) or c
   test(
     "a and b or c;",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<or_expr>"
         "<or_expr-left>"
           "<and_expr>"
@@ -979,7 +1144,7 @@ TEST_F(HexParserXmlTest, TestRangeExpr)
 {
   test(
     "1...100;",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<inclusive_range_expr>"
         "<inclusive_range_expr-begin>"
           "<integer_literal>1<integer_literal/>"
@@ -997,7 +1162,7 @@ TEST_F(HexParserXmlTest, TestPseudoAssignExprs)
   // a += ( b -= ( c *= ( d /= ( e %= 1 ) ) ) )
   test(
     "a += b -= c *= d /= e %= 1;",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<pseudo_plus>"
         "<pseudo_plus-left>"
           "<identifier>a<identifier/>"
@@ -1042,14 +1207,14 @@ TEST_F(HexParserXmlTest, TestYieldExpr)
 {
   test(
     "yield;",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<yield_expr><yield_expr/>"
     )
   );
 
   test(
     "yield (yield);",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<yield_expr>"
         "<yield_expr-exprs>"
           "<exprlist>"
@@ -1064,10 +1229,9 @@ TEST_F(HexParserXmlTest, TestYieldExpr)
 
 TEST_F(HexParserXmlTest, TestStringExpr)
 {
-  // TODO: This is wrong...
   test(
     "\"My name is %s and I'm %d years old.\" %% (\'Yanzheng Li\', 20);",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<string_expr>"
         "<string_expr-literal>"
           "<string_literal>"
@@ -1089,7 +1253,7 @@ TEST_F(HexParserXmlTest, TestParenForm)
 {
   test(
     "(1, 2, 3);",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<paren_form>"
         "<exprlist>"
           "<integer_literal>1<integer_literal/>"
@@ -1102,7 +1266,7 @@ TEST_F(HexParserXmlTest, TestParenForm)
 
   test(
     "(1, (2, 3), (4, 5, 6), (7, 8, 9, 10));",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<paren_form>"
         "<exprlist>"
           "<integer_literal>1<integer_literal/>"
@@ -1137,14 +1301,14 @@ TEST_F(HexParserXmlTest, TestListForm)
 {
   test(
     "[];",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<list_form><list_form/>"
     )
   );
 
   test(
     "[[], [], []];",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<list_form>"
         "<exprlist>"
           "<list_form><list_form/>"
@@ -1157,7 +1321,7 @@ TEST_F(HexParserXmlTest, TestListForm)
 
   test(
     "[[[]]];",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<list_form>"
         "<exprlist>"
           "<list_form>"
@@ -1172,7 +1336,7 @@ TEST_F(HexParserXmlTest, TestListForm)
 
   test(
     "[1, 2, 4, 8, 16, 32];",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<list_form>"
         "<exprlist>"
           "<integer_literal>1<integer_literal/>"
@@ -1188,7 +1352,7 @@ TEST_F(HexParserXmlTest, TestListForm)
 
   test(
     "[for i in 1...100];",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<list_form>"
         "<comprehensions>"
           "<comprehension>"
@@ -1217,7 +1381,7 @@ TEST_F(HexParserXmlTest, TestListForm)
 
   test(
     "[for i in 1...100 if isprime(i)];",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<list_form>"
         "<comprehensions>"
           "<comprehension>"
@@ -1259,20 +1423,84 @@ TEST_F(HexParserXmlTest, TestListForm)
       "<list_form/>"
     )
   );
+
+  test(
+    "[((for a in [1,2,3]) for b in [4,5,6]) for c in [7,8,9]];",
+    wrap_single_expr_stmt(
+      "<list_form>"
+        "<comprehensions>"
+          "<comprehension>"
+            "<comprehension-candidates>"
+              "<target_list>"
+                "<identifier>a<identifier/>"
+              "<target_list/>"
+            "<comprehension-candidates/>"
+            "<comprehension-source>"
+              "<exprlist>"
+                "<list_form>"
+                  "<exprlist>"
+                    "<integer_literal>1<integer_literal/>"
+                    "<integer_literal>2<integer_literal/>"
+                    "<integer_literal>3<integer_literal/>"
+                  "<exprlist/>"
+                "<list_form/>"
+              "<exprlist/>"
+            "<comprehension-source/>"
+          "<comprehension/>"
+          "<comprehension>"
+            "<comprehension-candidates>"
+              "<target_list>"
+                "<identifier>b<identifier/>"
+              "<target_list/>"
+            "<comprehension-candidates/>"
+            "<comprehension-source>"
+              "<exprlist>"
+                "<list_form>"
+                  "<exprlist>"
+                    "<integer_literal>4<integer_literal/>"
+                    "<integer_literal>5<integer_literal/>"
+                    "<integer_literal>6<integer_literal/>"
+                  "<exprlist/>"
+                "<list_form/>"
+              "<exprlist/>"
+            "<comprehension-source/>"
+          "<comprehension/>"
+          "<comprehension>"
+            "<comprehension-candidates>"
+              "<target_list>"
+                "<identifier>c<identifier/>"
+              "<target_list/>"
+            "<comprehension-candidates/>"
+            "<comprehension-source>"
+              "<exprlist>"
+                "<list_form>"
+                  "<exprlist>"
+                    "<integer_literal>7<integer_literal/>"
+                    "<integer_literal>8<integer_literal/>"
+                    "<integer_literal>9<integer_literal/>"
+                  "<exprlist/>"
+                "<list_form/>"
+              "<exprlist/>"
+            "<comprehension-source/>"
+          "<comprehension/>"
+        "<comprehensions/>"
+      "<list_form/>"
+    )
+  );
 }
 
 TEST_F(HexParserXmlTest, TestDictForm)
 {
   test(
     "{};",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<dict_form><dict_form/>"
     )
   );
 
   test(
     "{a: 1, b: 2};",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<dict_form>"
         "<key_value_pair_list>"
           "<key_value_pair>"
@@ -1298,7 +1526,7 @@ TEST_F(HexParserXmlTest, TestDictForm)
 
   test(
     "{list: [], paren: (1), dict: {}};",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<dict_form>"
         "<key_value_pair_list>"
           "<key_value_pair>"
@@ -1336,7 +1564,7 @@ TEST_F(HexParserXmlTest, TestDictForm)
 
   test(
     "{a: {b: {c: {}}}};",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<dict_form>"
         "<key_value_pair_list>"
           "<key_value_pair>"
@@ -1371,6 +1599,39 @@ TEST_F(HexParserXmlTest, TestDictForm)
             "<key_value_pair-value/>"
           "<key_value_pair/>"
         "<key_value_pair_list/>"
+      "<dict_form/>"
+    )
+  );
+
+  test(
+    "{(value, key) for key, value in obj};",
+    wrap_single_expr_stmt(
+      "<dict_form>"
+        "<comprehensions>"
+          "<comprehension>"
+            "<comprehension-dst>"
+              "<exprlist>"
+                "<paren_form>"
+                  "<exprlist>"
+                    "<identifier>value<identifier/>"
+                    "<identifier>key<identifier/>"
+                  "<exprlist/>"
+                "<paren_form/>"
+              "<exprlist/>"
+            "<comprehension-dst/>"
+            "<comprehension-candidates>"
+              "<target_list>"
+                "<identifier>key<identifier/>"
+                "<identifier>value<identifier/>"
+              "<target_list/>"
+            "<comprehension-candidates/>"
+            "<comprehension-source>"
+              "<exprlist>"
+                "<identifier>obj<identifier/>"
+              "<exprlist/>"
+            "<comprehension-source/>"
+          "<comprehension/>"
+        "<comprehensions/>"
       "<dict_form/>"
     )
   );

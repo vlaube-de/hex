@@ -54,7 +54,7 @@ TEST_F(HexParserExprAssociativityTest, TestUnaryExprAssociativity)
   // ~ (not (not ( (-a) ++) ? ) )
   test(
     "~ not not -a++?;",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<bitwise_not_expr>"
         "<not_expr>"
           "<not_expr>"
@@ -77,7 +77,7 @@ TEST_F(HexParserExprAssociativityTest, TestAdditiveExprAssociativity)
   // ( a + b ) - c
   test(
     "a + b - c;",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<minus_expr>"
         "<minus_expr-left>"
           "<add_expr>"
@@ -102,7 +102,7 @@ TEST_F(HexParserExprAssociativityTest, TestMultiplicativeExprAssociativity)
   // ( ( a * b ) / c ) % d
   test(
     "a * b / c % d;",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<modulus_expr>"
         "<modulus_expr-left>"
           "<divide_expr>"
@@ -134,7 +134,7 @@ TEST_F(HexParserExprAssociativityTest, TestBitwiseShiftExprAssociativity)
   // ( a << b ) >> c
   test(
     "a << b >> c;",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<bitwise_shift_right_expr>"
         "<bitwise_shift_right_expr-left>"
           "<bitwise_shift_left_expr>"
@@ -159,7 +159,7 @@ TEST_F(HexParserExprAssociativityTest, TestLogicAndExprAssociativity)
   // ( a and b ) and c
   test(
     "a and b and c;",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<and_expr>"
         "<and_expr-left>"
           "<and_expr>"
@@ -184,7 +184,7 @@ TEST_F(HexParserExprAssociativityTest, TestBitwiseXorExprAssociativity)
   // ( a ^ b ) ^ c
   test(
     "a ^ b ^ c;",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<bitwise_xor_expr>"
         "<bitwise_xor_expr-left>"
           "<bitwise_xor_expr>"
@@ -209,7 +209,7 @@ TEST_F(HexParserExprAssociativityTest, TestLogicOrExprAssociativity)
   // ( a or b ) or c
   test(
     "a or b or c;",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<or_expr>"
         "<or_expr-left>"
           "<or_expr>"
@@ -234,7 +234,7 @@ TEST_F(HexParserExprAssociativityTest, TestComparisonExprAssociativity)
   // ( ( (a is b) is not c ) in d ) not in e
   test(
     "a is b is not c in d not in e;",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<not_in_expr>"
         "<not_in_expr-left>"
           "<in_expr>"
@@ -269,7 +269,7 @@ TEST_F(HexParserExprAssociativityTest, TestComparisonExprAssociativity)
 
   test(
     "a == b != c > d >= e < f <= g;",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<le_expr>"
         "<le_expr-left>"
           "<lt_expr>"
@@ -322,7 +322,7 @@ TEST_F(HexParserExprAssociativityTest, TestPseudoAssignmentExprAssociativity)
   // a += ( b -= ( c *= ( d /= ( e %= f ) ) ) )
   test(
     "a += b -= c *= d /= e %= f;",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<pseudo_plus>"
         "<pseudo_plus-left>"
           "<identifier>a<identifier/>"
@@ -365,7 +365,7 @@ TEST_F(HexParserExprAssociativityTest, TestPseudoAssignmentExprAssociativity)
   // a &= ( b |= ( c ^= ( d <<= ( e >>= f ) ) ) )
   test(
     "a &= b |= c ^= d <<= e >>= f;",
-    wrap_single_expr(
+    wrap_single_expr_stmt(
       "<pseudo_bitwise_and>"
         "<pseudo_bitwise_and-left>"
           "<identifier>a<identifier/>"
