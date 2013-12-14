@@ -1,0 +1,36 @@
+@optimized
+class ComplexNum {
+
+  real: 0
+
+  imag: 0
+
+  __init__: lambda (real, imag) => {
+    self.real = real;
+    self.imag = imag;
+  }
+
+  __eq__: lambda (num) -> real == num.real and imag == num.imag
+
+  __str__: lambda () -> str(real) + '+' + str(imag) + 'i'
+
+  abs: lambda () -> math.sqrt(real ** 2 + imag ** 2)
+
+  __add__: lambda (num) => {
+    real += num.real;
+    imag += num.imag;
+  }
+
+  __minus__: lambda (num) => {
+    real -= num.real;
+    imag -= num.imag;
+  }
+
+  conjugate: lambda () -> imag *= -1
+
+  normalize: lambda () => {
+    d = self.abs();
+    real = real / d;
+    imag = imag / d;
+  }
+}

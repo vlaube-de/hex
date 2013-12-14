@@ -17,7 +17,7 @@
 
 
 %{
-#include "parser.tab.hh"
+#include "parser_2.tab.hh"
 #include "yacc_extern.h"
 
 #define EAT_TOKEN(yytext, token_type)   \
@@ -34,7 +34,6 @@ int new_line_returned = 0;
 "after"                             EAT_TOKEN(yytext, AFTER);
 "and"                               EAT_TOKEN(yytext, AND);
 "as"                                EAT_TOKEN(yytext, AS);
-"async"                             EAT_TOKEN(yytext, ASYNC);
 "await"                             EAT_TOKEN(yytext, AWAIT);
 "before"                            EAT_TOKEN(yytext, BEFORE);
 "break"                             EAT_TOKEN(yytext, BREAK);
@@ -44,8 +43,6 @@ int new_line_returned = 0;
 "class"                             EAT_TOKEN(yytext, CLASS);
 "continue"                          EAT_TOKEN(yytext, CONTINUE);
 "defer"                             EAT_TOKEN(yytext, DEFER);
-"delay"                             EAT_TOKEN(yytext, DELAY);
-"delete"                            EAT_TOKEN(yytext, DELETE)
 "elif"                              EAT_TOKEN(yytext, ELIF);
 "else"                              EAT_TOKEN(yytext, ELSE);
 "extends"                           EAT_TOKEN(yytext, EXTENDS);
@@ -55,7 +52,8 @@ int new_line_returned = 0;
 "if"                                EAT_TOKEN(yytext, IF);
 "in"                                EAT_TOKEN(yytext, IN);
 "is"                                EAT_TOKEN(yytext, IS);
-"is not"                            EAT_TOKEN(yytext, IS_NOT)
+"is not"                            EAT_TOKEN(yytext, IS_NOT);
+"lambda"                            EAT_TOKEN(yytext, LAMBDA);
 "lock"                              EAT_TOKEN(yytext, LOCK);
 "not"                               EAT_TOKEN(yytext, NOT);
 "operator"                          EAT_TOKEN(yytext, OPERATOR);
@@ -69,7 +67,6 @@ int new_line_returned = 0;
 "then"                              EAT_TOKEN(yytext, THEN);
 "try"                               EAT_TOKEN(yytext, TRY);
 "using"                             EAT_TOKEN(yytext, USING);
-"when"                              EAT_TOKEN(yytext, WHEN);
 "where"                             EAT_TOKEN(yytext, WHERE);
 "while"                             EAT_TOKEN(yytext, WHILE);
 "with"                              EAT_TOKEN(yytext, WITH);

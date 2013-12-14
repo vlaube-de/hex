@@ -1,0 +1,10 @@
+not 1;
+not 0.912644e4;
+not b;
+not a + b;
+not True;
+not False;
+not 1;
+not not 1;
+not 1 != 1;
+not a is not b;

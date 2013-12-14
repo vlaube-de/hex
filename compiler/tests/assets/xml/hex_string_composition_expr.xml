@@ -1,0 +1,23 @@
+<hex_program>
+  <hex_program-stmts>
+    <stmt_group>
+      <expr_list_stmt>
+        <exprlist>
+          <string_expr>
+            <string_expr-literal>
+              <string_literal type="double">"My name is %s and I live in %s"<string_literal/>
+            <string_expr-literal/>
+            <string_expr-exprs>
+              <paren_form>
+                <exprlist>
+                  <string_literal type="double">"William"<string_literal/>
+                  <string_literal type="double">"Canada"<string_literal/>
+                <exprlist/>
+              <paren_form/>
+            <string_expr-exprs/>
+          <string_expr/>
+        <exprlist/>
+      <expr_list_stmt/>
+    <stmt_group/>
+  <hex_program-stmts/>
+<hex_program/>

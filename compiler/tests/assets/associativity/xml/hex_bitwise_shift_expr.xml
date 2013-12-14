@@ -1,0 +1,25 @@
+<hex_program>
+  <hex_program-stmts>
+    <stmt_group>
+      <expr_list_stmt>
+        <exprlist>
+          <bitwise_shift_right_expr>
+            <bitwise_shift_right_expr-left>
+              <bitwise_shift_left_expr>
+                <bitwise_shift_left_expr-left>
+                  <identifier>a<identifier/>
+                <bitwise_shift_left_expr-left/>
+                <bitwise_shift_left_expr-right>
+                  <identifier>b<identifier/>
+                <bitwise_shift_left_expr-right/>
+              <bitwise_shift_left_expr/>
+            <bitwise_shift_right_expr-left/>
+            <bitwise_shift_right_expr-right>
+              <identifier>c<identifier/>
+            <bitwise_shift_right_expr-right/>
+          <bitwise_shift_right_expr/>
+        <exprlist/>
+      <expr_list_stmt/>
+    <stmt_group/>
+  <hex_program-stmts/>
+<hex_program/>

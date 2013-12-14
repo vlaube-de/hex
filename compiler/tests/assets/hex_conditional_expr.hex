@@ -1,0 +1,2 @@
+if a == b then a++ else b--;
+if if a == b then False else True then True else False;

@@ -21,26 +21,32 @@
 #define _AST_VISITOR_H_
 
 // forward declaration.
-class AstVisitor;
+// class AstVisitor;
 
-#ifdef _HEX_AST_
-  #include "../ast/ast.h"
-#else
-  #include "fake_ast.h"
-#endif /* _HEX_AST_ */
+// #ifdef _HEX_AST_
+//   #include "../ast2/ast.h"
+// #else
+//   #include "fake_ast.h"
+// #endif /* _HEX_AST_ */
+
+#include "fake_ast.h"
 
 class AstVisitor {
 public:
-
   virtual HexAstIdentifier visit(HexAstIdentifier);
-  virtual HexAstIntegerLiteral visit(HexAstIntegerLiteral);
+  virtual HexAstDecimalIntegerLiteral visit(HexAstDecimalIntegerLiteral);
+  virtual HexAstBinaryIntegerLiteral visit(HexAstBinaryIntegerLiteral);
+  virtual HexAstOctalIntegerLiteral visit(HexAstOctalIntegerLiteral);
+  virtual HexAstHexadecimalIntegerLiteral visit(HexAstHexadecimalIntegerLiteral);
   virtual HexAstFloatLiteral visit(HexAstFloatLiteral);
-  virtual HexAstStringLiteral visit(HexAstStringLiteral);
+  virtual HexAstSingleQuoteStringLiteral visit(HexAstSingleQuoteStringLiteral);
+  virtual HexAstDoubleQuoteStringLiteral visit(HexAstDoubleQuoteStringLiteral);
   virtual HexAstCall visit(HexAstCall);
   virtual HexAstAttributeRef visit(HexAstAttributeRef);
   virtual HexAstSlicing visit(HexAstSlicing);
   virtual HexAstTargetList visit(HexAstTargetList);
   virtual HexAstName visit(HexAstName);
+  virtual HexAstNameList visit(HexAstNameList);
   virtual HexAstPositiveExpr visit(HexAstPositiveExpr);
   virtual HexAstNegativeExpr visit(HexAstNegativeExpr);
   virtual HexAstNotExpr visit(HexAstNotExpr);
@@ -48,17 +54,17 @@ public:
   virtual HexAstIncrementExpr visit(HexAstIncrementExpr);
   virtual HexAstDecrementExpr visit(HexAstDecrementExpr);
   virtual HexAstExistentialExpr visit(HexAstExistentialExpr);
-  virtual HexAstAddExpr visit(HexAstAddExpr);
-  virtual HexAstMinusExpr visit(HexAstMinusExpr);
-  virtual HexAstMultiplyExpr visit(HexAstMultiplyExpr);
-  virtual HexAstDivideExpr visit(HexAstDivideExpr);
+  virtual HexAstAdditionExpr visit(HexAstAdditionExpr);
+  virtual HexAstSubtractionExpr visit(HexAstSubtractionExpr);
+  virtual HexAstMultiplicationExpr visit(HexAstMultiplicationExpr);
+  virtual HexAstDivisionExpr visit(HexAstDivisionExpr);
   virtual HexAstModulusExpr visit(HexAstModulusExpr);
   virtual HexAstPowerExpr visit(HexAstPowerExpr);
-  virtual HexAstBitwiseAndExpr visit(HexAstBitwiseAndExpr);
-  virtual HexAstBitwiseOrExpr visit(HexAstBitwiseOrExpr);
-  virtual HexAstBitwiseXorExpr visit(HexAstBitwiseXorExpr);
-  virtual HexAstBitwiseShiftLeftExpr visit(HexAstBitwiseShiftLeftExpr);
-  virtual HexAstBitwiseShiftRightExpr visit(HexAstBitwiseShiftRightExpr);
+  virtual HexAstBitwiseANDExpr visit(HexAstBitwiseANDExpr);
+  virtual HexAstBitwiseORExpr visit(HexAstBitwiseORExpr);
+  virtual HexAstBitwiseXORExpr visit(HexAstBitwiseXORExpr);
+  virtual HexAstBitwiseLeftShiftExpr visit(HexAstBitwiseLeftShiftExpr);
+  virtual HexAstBitwiseRightShiftExpr visit(HexAstBitwiseRightShiftExpr);
   virtual HexAstEqualsExpr visit(HexAstEqualsExpr);
   virtual HexAstNotEqualExpr visit(HexAstNotEqualExpr);
   virtual HexAstIsExpr visit(HexAstIsExpr);
@@ -69,56 +75,57 @@ public:
   virtual HexAstLessOrEqualsExpr visit(HexAstLessOrEqualsExpr);
   virtual HexAstInExpr visit(HexAstInExpr);
   virtual HexAstNotInExpr visit(HexAstNotInExpr);
-  virtual HexAstAndExpr visit(HexAstAndExpr);
-  virtual HexAstOrExpr visit(HexAstOrExpr);
+  virtual HexAstLogicalANDExpr visit(HexAstLogicalANDExpr);
+  virtual HexAstLogicalORExpr visit(HexAstLogicalORExpr);
   virtual HexAstInclusiveRangeExpr visit(HexAstInclusiveRangeExpr);
   virtual HexAstExclusiveRangeExpr visit(HexAstExclusiveRangeExpr);
   virtual HexAstConditionalExpr visit(HexAstConditionalExpr);
-  virtual HexAstPseudoAssignPlusExpr visit(HexAstPseudoAssignPlusExpr);
-  virtual HexAstPseudoAssignMinusExpr visit(HexAstPseudoAssignMinusExpr);
-  virtual HexAstPseudoAssignMultiplyExpr visit(HexAstPseudoAssignMultiplyExpr);
-  virtual HexAstPseudoAssignDivideExpr visit(HexAstPseudoAssignDivideExpr);
-  virtual HexAstPseudoAssignModulusExpr visit(HexAstPseudoAssignModulusExpr);
-  virtual HexAstPseudoAssignBitwiseAndExpr visit(HexAstPseudoAssignBitwiseAndExpr);
-  virtual HexAstPseudoAssignBitwiseOrExpr visit(HexAstPseudoAssignBitwiseOrExpr);
-  virtual HexAstPseudoAssignBitwiseXorExpr visit(HexAstPseudoAssignBitwiseXorExpr);
-  virtual HexAstPseudoAssignBitwiseLeftShiftExpr visit(HexAstPseudoAssignBitwiseLeftShiftExpr);
-  virtual HexAstPseudoAssignBitwiseRightShiftExpr visit(HexAstPseudoAssignBitwiseRightShiftExpr);
+  virtual HexAstAdditionAssignmentExpr visit(HexAstAdditionAssignmentExpr);
+  virtual HexAstSubtractionAssignmentExpr visit(HexAstSubtractionAssignmentExpr);
+  virtual HexAstMultiplicationAssignmentExpr visit(HexAstMultiplicationAssignmentExpr);
+  virtual HexAstDivisionAssignmentExpr visit(HexAstDivisionAssignmentExpr);
+  virtual HexAstModulusAssignmentExpr visit(HexAstModulusAssignmentExpr);
+  virtual HexAstBitwiseANDAssignmentExpr visit(HexAstBitwiseANDAssignmentExpr);
+  virtual HexAstBitwiseORAssignmentExpr visit(HexAstBitwiseORAssignmentExpr);
+  virtual HexAstBitwiseXORAssignmentExpr visit(HexAstBitwiseXORAssignmentExpr);
+  virtual HexAstBitwiseLeftShiftAssignmentExpr visit(HexAstBitwiseLeftShiftAssignmentExpr);
+  virtual HexAstBitwiseRightShiftAssignmentExpr visit(HexAstBitwiseRightShiftAssignmentExpr);
   virtual HexAstYieldExpr visit(HexAstYieldExpr);
-  virtual HexAstStringExpr visit(HexAstStringExpr);
+  virtual HexAstStringCompositionExpr visit(HexAstStringCompositionExpr);
+  virtual HexAstNestedComprehension visit(HexAstNestedComprehension);
+  virtual HexAstExprComprehension visit(HexAstExprComprehension);
+  virtual HexAstGeneratorExpr visit(HexAstGeneratorExpr);
   virtual HexAstParenForm visit(HexAstParenForm);
+  virtual HexAstExplicitListForm visit(HexAstExplicitListForm);
+  virtual HexAstImplicitListForm visit(HexAstImplicitListForm);
+  virtual HexAstExplicitDictForm visit(HexAstExplicitDictForm);
+  virtual HexAstImplicitDictForm visit(HexAstImplicitDictForm);
+  virtual HexAstObjectForm visit(HexAstObjectForm);
   virtual HexAstExprList visit(HexAstExprList);
   virtual HexAstSimpleParam visit(HexAstSimpleParam);
   virtual HexAstSimpleParamList visit(HexAstSimpleParamList);
   virtual HexAstKeywordParam visit(HexAstKeywordParam);
   virtual HexAstKeywordParamList visit(HexAstKeywordParamList);
-  virtual HexAstKeywordVal visit(HexAstKeywordVal);
-  virtual HexAstKeywordValList visit(HexAstKeywordValList);
   virtual HexAstParameterList visit(HexAstParameterList);
-  virtual HexAstValAtom visit(HexAstValAtom);
-  virtual HexAstValList visit(HexAstValList);
+  virtual HexAstSimpleArgList visit(HexAstSimpleArgList);
+  virtual HexAstKeywordArg visit(HexAstKeywordArg);
+  virtual HexAstKeywordArgList visit(HexAstKeywordArgList);
   virtual HexAstArgList visit(HexAstArgList);
-  virtual HexAstComprehension visit(HexAstComprehension);
-  virtual HexAstComprehensionList visit(HexAstComprehensionList);
-  virtual HexAstExplicitListForm visit(HexAstExplicitListForm);
-  virtual HexAstImplicitListForm visit(HexAstImplicitListForm);
   virtual HexAstFieldDef visit(HexAstFieldDef);
   virtual HexAstFieldDefList visit(HexAstFieldDefList);
   virtual HexAstKeyValuePair visit(HexAstKeyValuePair);
   virtual HexAstKeyValuePairList visit(HexAstKeyValuePairList);
-  virtual HexAstExplicitDictForm visit(HexAstExplicitDictForm);
-  virtual HexAstImplicitDictForm visit(HexAstImplicitDictForm);
+  virtual HexAstAttributeValuePair visit(HexAstAttributeValuePair);
+  virtual HexAstAttributeValuePairList visit(HexAstAttributeValuePairList);
   virtual HexAstDecorator visit(HexAstDecorator);
   virtual HexAstDecoratorList visit(HexAstDecoratorList);
-  virtual HexAstExprListAssignmentStmt visit(HexAstExprListAssignmentStmt);
-  virtual HexAstLambdaAssignmentStmt visit(HexAstLambdaAssignmentStmt);
-  virtual HexAstTaskDefAssignmentStmt visit(HexAstTaskDefAssignmentStmt);
+  virtual HexAstAssignmentFeature visit(HexAstAssignmentFeature);
+  virtual HexAstAssignmentStmt visit(HexAstAssignmentStmt);
   virtual HexAstUsingSrc visit(HexAstUsingSrc);
-  virtual HexAstUsingStmtDirect visit(HexAstUsingStmtDirect);
-  virtual HexAstUsingStmtRelative visit(HexAstUsingStmtRelative);
+  virtual HexAstRelativeUsingStmt visit(HexAstRelativeUsingStmt);
+  virtual HexAstAbsoluteUsingStmt visit(HexAstAbsoluteUsingStmt);
   virtual HexAstElifStmt visit(HexAstElifStmt);
   virtual HexAstElifStmtGroup visit(HexAstElifStmtGroup);
-  virtual HexAstElseStmt visit(HexAstElseStmt);
   virtual HexAstIfStmt visit(HexAstIfStmt);
   virtual HexAstForStmt visit(HexAstForStmt);
   virtual HexAstWithStmt visit(HexAstWithStmt);
@@ -128,20 +135,17 @@ public:
   virtual HexAstCatchStmtGroup visit(HexAstCatchStmtGroup);
   virtual HexAstTryStmt visit(HexAstTryStmt);
   virtual HexAstClassDef visit(HexAstClassDef);
-  virtual HexAstLambdaSimple visit(HexAstLambdaSimple);
-  virtual HexAstLambdaComplex visit(HexAstLambdaComplex);
+  virtual HexAstSimpleLambda visit(HexAstSimpleLambda);
+  virtual HexAstComplexLambda visit(HexAstComplexLambda);
   virtual HexAstInputStmt visit(HexAstInputStmt);
   virtual HexAstOutputStmt visit(HexAstOutputStmt);
   virtual HexAstTaskState visit(HexAstTaskState);
   virtual HexAstConditionalPreposition visit(HexAstConditionalPreposition);
   virtual HexAstConditionalClause visit(HexAstConditionalClause);
-  virtual HexAstStartClauseSingle visit(HexAstStartClauseSingle);
-  virtual HexAstStartClauseMultiple visit(HexAstStartClauseMultiple);
+  virtual HexAstStartClause visit(HexAstStartClause);
   virtual HexAstPauseClause visit(HexAstPauseClause);
   virtual HexAstResumeClause visit(HexAstResumeClause);
   virtual HexAstCancelClause visit(HexAstCancelClause);
-  virtual HexAstConditionalDelayClause visit(HexAstConditionalDelayClause);
-  virtual HexAstFixedDelayClause visit(HexAstFixedDelayClause);
   virtual HexAstStopClause visit(HexAstStopClause);
   virtual HexAstTaskDef visit(HexAstTaskDef);
   virtual HexAstAwaitStmt visit(HexAstAwaitStmt);
@@ -150,9 +154,9 @@ public:
   virtual HexAstContinueStmt visit(HexAstContinueStmt);
   virtual HexAstRaiseStmt visit(HexAstRaiseStmt);
   virtual HexAstExprListStmt visit(HexAstExprListStmt);
+  virtual HexAstSimpleIfStmt visit(HexAstSimpleIfStmt);
   virtual HexAstStmtGroup visit(HexAstStmtGroup);
   virtual HexAstHexProgram visit(HexAstHexProgram);
-
 };
 
 #endif /* _AST_VISITOR_H_ */

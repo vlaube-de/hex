@@ -26,28 +26,27 @@ base:
 	cd ../base && make all
 
 ast:
-	cd ast/ && make all
+	cd ast2/ && make all
 
 lex.yy.c: lexer.l
 	$(LEX) lexer.l
 
-parser.tab.hh: parser.y
-	$(BISON) $(BFLAGS) parser.y -o parser.tab.cc
+# parser.tab.hh: parser.y
+# 	$(BISON) $(BFLAGS) parser.y -o parser.tab.cc
 
 parser_2.tab.hh: parser_2.y
 	$(BISON) $(BFLAGS) parser_2.y -o parser_2.tab.cc
 
-hex_parser.o: lex.yy.c parser.tab.hh hex_parser.cc
+hex_parser.o: lex.yy.c parser_2.tab.hh hex_parser.cc
 	$(CXX) $(CFLAGS) -c hex_parser.cc
 
 parser_stub.out: base ast hex_parser.o parser_stub.cc
-	$(CXX) $(CFLAGS) ../base/freader.o ast/libast.a lex.yy.c parser.tab.cc parser_stub.cc hex_parser.o -o parser_stub.out
+	$(CXX) $(CFLAGS) ../base/freader.o ast2/libast.a lex.yy.c parser_2.tab.cc parser_stub.cc hex_parser.o -o parser_stub.out
 
-all: lex.yy.c       \
-	 parser.tab.hh    \
-	 hex_parser.o     \
-	 parser_stub.out
+all: lex.yy.c        \
+	 	 hex_parser.o    \
+	   parser_stub.out
 
 .PHONY : clean
 clean:
-	rm *.gch *.out *.o *.swp .lexer.l.swp *.output *.vcg *.test parser.tab.cc parser.tab.hh
+	rm *.gch *.out *.o *.swp .lexer.l.swp *.output *.vcg *.test parser_2.tab.cc parser_2.tab.hh

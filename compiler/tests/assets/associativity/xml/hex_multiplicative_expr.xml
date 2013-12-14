@@ -1,0 +1,32 @@
+<hex_program>
+  <hex_program-stmts>
+    <stmt_group>
+      <expr_list_stmt>
+        <exprlist>
+          <modulus_expr>
+            <modulus_expr-left>
+              <divide_expr>
+                <divide_expr-left>
+                  <multiply_expr>
+                    <multiply_expr-left>
+                      <identifier>a<identifier/>
+                    <multiply_expr-left/>
+                    <multiply_expr-right>
+                      <identifier>b<identifier/>
+                    <multiply_expr-right/>
+                  <multiply_expr/>
+                <divide_expr-left/>
+                <divide_expr-right>
+                  <identifier>c<identifier/>
+                <divide_expr-right/>
+              <divide_expr/>
+            <modulus_expr-left/>
+            <modulus_expr-right>
+              <identifier>d<identifier/>
+            <modulus_expr-right/>
+          <modulus_expr/>
+        <exprlist/>
+      <expr_list_stmt/>
+    <stmt_group/>
+  <hex_program-stmts/>
+<hex_program/>

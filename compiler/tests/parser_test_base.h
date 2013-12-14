@@ -17,7 +17,10 @@
 
 /* Base class for all HEX parser tests. */
 
+#include <vector>
+#include "hex_parser_test_file.h"
 #include "../hex_parser.h"
+#include "../../base/memory.h"
 #include "../../base/unittest.h"
 
 #ifndef _HEX_PARSER_TEST_BASE_H_
@@ -25,15 +28,25 @@
 
 class HexParserTestBase : public ::testing::Test {
 protected:
+  HexParserTestBase(std::vector<HexTestFile> testfiles_):
+    testfiles(testfiles_)
+  {
+    // Do nothing here.
+  }
+
   virtual void SetUp() {
     parser = new HexParser();
   }
 
   virtual void TearDown() {
-    delete parser;
+    HEX_DELETE(parser);
   }
 
+  virtual void test(int index)=0;
+
   HexParser *parser;
+
+  std::vector<HexTestFile> testfiles;
 };
 
 #endif /* _HEX_PARSER_TEST_BASE_H_ */

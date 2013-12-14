@@ -1,0 +1,4 @@
+tasks = 
+  start t1, t2, t3 as tasks,
+  pause tasks after any(tasks) finish,
+  resume tasks after any(tasks) pause;

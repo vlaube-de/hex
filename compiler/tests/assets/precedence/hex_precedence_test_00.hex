@@ -1,0 +1,2 @@
+person.set_name(name);
+do_something((), [], {});

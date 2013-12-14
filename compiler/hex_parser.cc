@@ -18,12 +18,12 @@
 /* HEX parser. */
 
 #include <cstddef>
-#include "parser.tab.hh"
+#include "ast2/ast.h"
 #include "hex_parser.h"
-#include "ast/ast.h"
-#include "../base/freader.h"
+#include "parser_2.tab.hh"
 #include "../base/assert.h"
 #include "../base/c_str.h"
+#include "../base/freader.h"
 
 
 /* Bring out the parser functions that live in C land. */

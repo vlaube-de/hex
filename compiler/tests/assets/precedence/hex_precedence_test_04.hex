@@ -1,0 +1,7 @@
+# existential vs. bitwise not expr
+
+# ( ~ (1) ) ?
+~1?;
+
+# ( ( ~ ( ~ (1) ) ) ? ) ?
+~~1??;

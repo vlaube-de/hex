@@ -1,0 +1,73 @@
+<hex_program>
+  <hex_program-stmts>
+    <stmt_group>
+      <expr_list_stmt>
+        <exprlist>
+          <paren_form>
+          <paren_form/>
+        <exprlist/>
+      <expr_list_stmt/>
+      <expr_list_stmt>
+        <exprlist>
+          <paren_form>
+            <exprlist>
+              <paren_form>
+                <exprlist>
+                  <paren_form>
+                  <paren_form/>
+                <exprlist/>
+              <paren_form/>
+            <exprlist/>
+          <paren_form/>
+        <exprlist/>
+      <expr_list_stmt/>
+      <expr_list_stmt>
+        <exprlist>
+          <paren_form>
+            <exprlist>
+              <integer_literal type="decimal">1<integer_literal/>
+              <integer_literal type="decimal">2<integer_literal/>
+              <integer_literal type="decimal">3<integer_literal/>
+            <exprlist/>
+          <paren_form/>
+        <exprlist/>
+      <expr_list_stmt/>
+      <expr_list_stmt>
+        <exprlist>
+          <paren_form>
+            <exprlist>
+              <paren_form>
+              <paren_form/>
+              <list_form>
+              <list_form/>
+              <dict_form>
+              <dict_form/>
+            <exprlist/>
+          <paren_form/>
+        <exprlist/>
+      <expr_list_stmt/>
+      <expr_list_stmt>
+        <exprlist>
+          <paren_form>
+            <exprlist>
+              <increment_expr>
+                <integer_literal type="decimal">1<integer_literal/>
+              <increment_expr/>
+              <decrement_expr>
+                <integer_literal type="decimal">2<integer_literal/>
+              <decrement_expr/>
+              <addition_assignment_expr>
+                <addition_assignment_expr-left>
+                  <identifier>a<identifier/>
+                <addition_assignment_expr-left/>
+                <addition_assignment_expr-right>
+                  <identifier>b<identifier/>
+                <addition_assignment_expr-right/>
+              <addition_assignment_expr/>
+            <exprlist/>
+          <paren_form/>
+        <exprlist/>
+      <expr_list_stmt/>
+    <stmt_group/>
+  <hex_program-stmts/>
+<hex_program/>

@@ -1,0 +1,61 @@
+<hex_program>
+  <hex_program-stmts>
+    <stmt_group>
+      <assignment_stmt type="defer">
+        <assignment_stmt-target>
+          <identifier>person<identifier/>
+        <assignment_stmt-target/>
+        <assignment_stmt-source>
+          <exprlist>
+            <call>
+              <call-caller>
+                <identifier>Person<identifier/>
+              <call-caller/>
+              <call-args>
+                <arg_list>
+                  <arg_list-simple_args>
+                    <simple_args_list>
+                      <string_literal type="double">"William"<string_literal/>
+                    <simple_args_list/>
+                  <arg_list-simple_args/>
+                <arg_list/>
+              <call-args/>
+            <call/>
+          <exprlist/>
+        <assignment_stmt-source/>
+      <assignment_stmt/>
+      <assignment_stmt type="none">
+        <assignment_stmt-target>
+          <identifier>handler<identifier/>
+        <assignment_stmt-target/>
+        <assignment_stmt-source>
+          <lambda_complex>
+            <lambda_complex-params>
+              <parameter_list>
+                <parameter_list-args>
+                  <identifier>args<identifier/>
+                <parameter_list-args/>
+                <parameter_list-kwargs>
+                  <identifier>kwargs<identifier/>
+                <parameter_list-kwargs/>
+              <parameter_list/>
+            <lambda_complex-params/>
+            <lambda_complex-stmts>
+              <stmt_group>
+                <expr_list_stmt>
+                  <exprlist>
+                    <call>
+                      <call-caller>
+                        <identifier>hello<identifier/>
+                      <call-caller/>
+                    <call/>
+                  <exprlist/>
+                <expr_list_stmt/>
+              <stmt_group/>
+            <lambda_complex-stmts/>
+          <lambda_complex/>
+        <assignment_stmt-source/>
+      <assignment_stmt/>
+    <stmt_group/>
+  <hex_program-stmts/>
+<hex_program/>

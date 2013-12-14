@@ -1,0 +1,7 @@
+# bitwise not vs. increment/decrement expr
+
+# ~ (1++)
+~1++;
+
+# ~ ( ~( ( (1) ++ ) -- ) )
+~~1++--;

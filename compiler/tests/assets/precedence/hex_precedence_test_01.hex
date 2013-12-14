@@ -1,0 +1,3 @@
+# negative expr vs. power expr
+-5 ** 2;
+(-5) ** 2;

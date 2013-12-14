@@ -1,0 +1,7 @@
+PRIMES[1:10:2];
+PRIMES[1:10:];
+PRIMES[1::];
+PRIMES[:10:2];
+PRIMES[:10:];
+PRIMES[::];
+PRIMES[::-1];

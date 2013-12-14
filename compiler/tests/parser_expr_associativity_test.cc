@@ -15,16 +15,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <stdio.h>
-#include <string>
+#include <vector>
+#include "hex_parser_test_file.h"
 #include "parser_xml_test_base.h"
-#include "../../base/unittest.h"
-#include "../../base/memory.h"
-#include "../../base/assert.h"
-#include "../ast/ast.h"
-#include "../hex_parser.h"
-#include "../visitor/ast_to_xml_visitor.h"
-
 
 /***************************************************
  * HEX expression associativity
@@ -42,366 +35,38 @@
  * xor expr -------------- LR
  * or expr --------------- LR
  * comparison expr ------- LR
- * pseudo expr ----------- RL
+ * assignment expr ------- RL
  ***************************************************/
 
+std::vector<HexTestFile> hex_parser_expr_associativity_testfiles = {
+  /* 0 */ {"./assets/associativity/hex_unary_expr.hex", "./assets/associativity/xml/hex_unary_expr.xml"},
+  /* 1 */ {"./assets/associativity/hex_additive_expr.hex", "./assets/associativity/xml/hex_additive_expr.xml"},
+  /* 2 */ {"./assets/associativity/hex_multiplicative_expr.hex", "./assets/associativity/xml/hex_multiplicative_expr.xml"},
+  /* 3 */ {"./assets/associativity/hex_bitwise_shift_expr.hex", "./assets/associativity/xml/hex_bitwise_shift_expr.xml"},
+  /* 4 */ {"./assets/associativity/hex_logical_and_expr.hex", "./assets/associativity/xml/hex_logical_and_expr.xml"},
+  /* 5 */ {"./assets/associativity/hex_bitwise_xor_expr.hex", "./assets/associativity/xml/hex_bitwise_xor_expr.xml"},
+  /* 6 */ {"./assets/associativity/hex_logical_or_expr.hex", "./assets/associativity/xml/hex_logical_or_expr.xml"},
+  /* 7 */ {"./assets/associativity/hex_comparison_expr.hex", "./assets/associativity/xml/hex_comparison_expr.xml"},
+  /* 8 */ {"./assets/associativity/hex_assignment_expr_1.hex", "./assets/associativity/xml/hex_assignment_expr_1.xml"},
+  /* 9 */ {"./assets/associativity/hex_assignment_expr_2.hex", "./assets/associativity/xml/hex_assignment_expr_2.xml"}
+};
 
-class HexParserExprAssociativityTest : public HexParserXmlTestBase {};
+class HexParserExprAssociativityTest : public HexParserXmlTestBase {
+public:
+  HexParserExprAssociativityTest():
+    HexParserXmlTestBase(hex_parser_expr_associativity_testfiles)
+  {
+    // Do nothing here.
+  }
+};
 
-
-TEST_F(HexParserExprAssociativityTest, TestUnaryExprAssociativity)
-{
-  // ~ (not (not ( (-a) ++) ? ) )
-  test(
-    "~ not not -a++?;",
-    wrap_single_expr_stmt(
-      "<bitwise_not_expr>"
-        "<not_expr>"
-          "<not_expr>"
-            "<existential_expr>"
-              "<increment_expr>"
-                "<negative_expr>"
-                  "<identifier>a<identifier/>"
-                "<negative_expr/>"
-              "<increment_expr/>"
-            "<existential_expr/>"
-          "<not_expr/>"
-        "<not_expr/>"
-      "<bitwise_not_expr/>"
-    )
-  );
-}
-
-TEST_F(HexParserExprAssociativityTest, TestAdditiveExprAssociativity)
-{
-  // ( a + b ) - c
-  test(
-    "a + b - c;",
-    wrap_single_expr_stmt(
-      "<minus_expr>"
-        "<minus_expr-left>"
-          "<add_expr>"
-            "<add_expr-left>"
-              "<identifier>a<identifier/>"
-            "<add_expr-left/>"
-            "<add_expr-right>"
-              "<identifier>b<identifier/>"
-            "<add_expr-right/>"
-          "<add_expr/>"
-        "<minus_expr-left/>"
-        "<minus_expr-right>"
-          "<identifier>c<identifier/>"
-        "<minus_expr-right/>"
-      "<minus_expr/>"
-    )
-  );
-}
-
-TEST_F(HexParserExprAssociativityTest, TestMultiplicativeExprAssociativity)
-{
-  // ( ( a * b ) / c ) % d
-  test(
-    "a * b / c % d;",
-    wrap_single_expr_stmt(
-      "<modulus_expr>"
-        "<modulus_expr-left>"
-          "<divide_expr>"
-            "<divide_expr-left>"
-              "<multiply_expr>"
-                "<multiply_expr-left>"
-                  "<identifier>a<identifier/>"
-                "<multiply_expr-left/>"
-                "<multiply_expr-right>"
-                  "<identifier>b<identifier/>"
-                "<multiply_expr-right/>"
-              "<multiply_expr/>"
-            "<divide_expr-left/>"
-            "<divide_expr-right>"
-              "<identifier>c<identifier/>"
-            "<divide_expr-right/>"
-          "<divide_expr/>"
-        "<modulus_expr-left/>"
-        "<modulus_expr-right>"
-          "<identifier>d<identifier/>"
-        "<modulus_expr-right/>"
-      "<modulus_expr/>"
-    )
-  );
-}
-
-TEST_F(HexParserExprAssociativityTest, TestBitwiseShiftExprAssociativity)
-{
-  // ( a << b ) >> c
-  test(
-    "a << b >> c;",
-    wrap_single_expr_stmt(
-      "<bitwise_shift_right_expr>"
-        "<bitwise_shift_right_expr-left>"
-          "<bitwise_shift_left_expr>"
-            "<bitwise_shift_left_expr-left>"
-              "<identifier>a<identifier/>"
-            "<bitwise_shift_left_expr-left/>"
-            "<bitwise_shift_left_expr-right>"
-              "<identifier>b<identifier/>"
-            "<bitwise_shift_left_expr-right/>"
-          "<bitwise_shift_left_expr/>"
-        "<bitwise_shift_right_expr-left/>"
-        "<bitwise_shift_right_expr-right>"
-          "<identifier>c<identifier/>"
-        "<bitwise_shift_right_expr-right/>"
-      "<bitwise_shift_right_expr/>"
-    )
-  );
-}
-
-TEST_F(HexParserExprAssociativityTest, TestLogicAndExprAssociativity)
-{
-  // ( a and b ) and c
-  test(
-    "a and b and c;",
-    wrap_single_expr_stmt(
-      "<and_expr>"
-        "<and_expr-left>"
-          "<and_expr>"
-            "<and_expr-left>"
-              "<identifier>a<identifier/>"
-            "<and_expr-left/>"
-            "<and_expr-right>"
-              "<identifier>b<identifier/>"
-            "<and_expr-right/>"
-          "<and_expr/>"
-        "<and_expr-left/>"
-        "<and_expr-right>"
-          "<identifier>c<identifier/>"
-        "<and_expr-right/>"
-      "<and_expr/>"
-    )
-  );
-}
-
-TEST_F(HexParserExprAssociativityTest, TestBitwiseXorExprAssociativity)
-{
-  // ( a ^ b ) ^ c
-  test(
-    "a ^ b ^ c;",
-    wrap_single_expr_stmt(
-      "<bitwise_xor_expr>"
-        "<bitwise_xor_expr-left>"
-          "<bitwise_xor_expr>"
-            "<bitwise_xor_expr-left>"
-              "<identifier>a<identifier/>"
-            "<bitwise_xor_expr-left/>"
-            "<bitwise_xor_expr-right>"
-              "<identifier>b<identifier/>"
-            "<bitwise_xor_expr-right/>"
-          "<bitwise_xor_expr/>"
-        "<bitwise_xor_expr-left/>"
-        "<bitwise_xor_expr-right>"
-          "<identifier>c<identifier/>"
-        "<bitwise_xor_expr-right/>"
-      "<bitwise_xor_expr/>"
-    )
-  );
-}
-
-TEST_F(HexParserExprAssociativityTest, TestLogicOrExprAssociativity)
-{
-  // ( a or b ) or c
-  test(
-    "a or b or c;",
-    wrap_single_expr_stmt(
-      "<or_expr>"
-        "<or_expr-left>"
-          "<or_expr>"
-            "<or_expr-left>"
-              "<identifier>a<identifier/>"
-            "<or_expr-left/>"
-            "<or_expr-right>"
-              "<identifier>b<identifier/>"
-            "<or_expr-right/>"
-          "<or_expr/>"
-        "<or_expr-left/>"
-        "<or_expr-right>"
-          "<identifier>c<identifier/>"
-        "<or_expr-right/>"
-      "<or_expr/>"
-    )
-  );
-}
-
-TEST_F(HexParserExprAssociativityTest, TestComparisonExprAssociativity)
-{
-  // ( ( (a is b) is not c ) in d ) not in e
-  test(
-    "a is b is not c in d not in e;",
-    wrap_single_expr_stmt(
-      "<not_in_expr>"
-        "<not_in_expr-left>"
-          "<in_expr>"
-            "<in_expr-left>"
-              "<is_not_expr>"
-                "<is_not_expr-left>"
-                  "<is_expr>"
-                    "<is_expr-left>"
-                      "<identifier>a<identifier/>"
-                    "<is_expr-left/>"
-                    "<is_expr-right>"
-                      "<identifier>b<identifier/>"
-                    "<is_expr-right/>"
-                  "<is_expr/>"
-                "<is_not_expr-left/>"
-                "<is_not_expr-right>"
-                  "<identifier>c<identifier/>"
-                "<is_not_expr-right/>"
-              "<is_not_expr/>"
-            "<in_expr-left/>"
-            "<in_expr-right>"
-              "<identifier>d<identifier/>"
-            "<in_expr-right/>"
-          "<in_expr/>"
-        "<not_in_expr-left/>"
-        "<not_in_expr-right>"
-          "<identifier>e<identifier/>"
-        "<not_in_expr-right/>"
-      "<not_in_expr/>"
-    )
-  );
-
-  test(
-    "a == b != c > d >= e < f <= g;",
-    wrap_single_expr_stmt(
-      "<le_expr>"
-        "<le_expr-left>"
-          "<lt_expr>"
-            "<lt_expr-left>"
-              "<ge_expr>"
-                "<ge_expr-left>"
-                  "<gt_expr>"
-                    "<gt_expr-left>"
-                      "<not_equal_expr>"
-                        "<not_equal_expr-left>"
-                          "<equals_expr>"
-                            "<equals_expr-left>"
-                              "<identifier>a<identifier/>"
-                            "<equals_expr-left/>"
-                            "<equals_expr-right>"
-                              "<identifier>b<identifier/>"
-                            "<equals_expr-right/>"
-                          "<equals_expr/>"
-                        "<not_equal_expr-left/>"
-                        "<not_equal_expr-right>"
-                          "<identifier>c<identifier/>"
-                        "<not_equal_expr-right/>"
-                      "<not_equal_expr/>"
-                    "<gt_expr-left/>"
-                    "<gt_expr-right>"
-                      "<identifier>d<identifier/>"
-                    "<gt_expr-right/>"
-                  "<gt_expr/>"
-                "<ge_expr-left/>"
-                "<ge_expr-right>"
-                  "<identifier>e<identifier/>"
-                "<ge_expr-right/>"
-              "<ge_expr/>"
-            "<lt_expr-left/>"
-            "<lt_expr-right>"
-              "<identifier>f<identifier/>"
-            "<lt_expr-right/>"
-          "<lt_expr/>"
-        "<le_expr-left/>"
-        "<le_expr-right>"
-          "<identifier>g<identifier/>"
-        "<le_expr-right/>"
-      "<le_expr/>"
-    )
-  );
-}
-
-TEST_F(HexParserExprAssociativityTest, TestPseudoAssignmentExprAssociativity)
-{
-  // a += ( b -= ( c *= ( d /= ( e %= f ) ) ) )
-  test(
-    "a += b -= c *= d /= e %= f;",
-    wrap_single_expr_stmt(
-      "<pseudo_plus>"
-        "<pseudo_plus-left>"
-          "<identifier>a<identifier/>"
-        "<pseudo_plus-left/>"
-        "<pseudo_plus-right>"
-          "<pseudo_minus>"
-            "<pseudo_minus-left>"
-              "<identifier>b<identifier/>"
-            "<pseudo_minus-left/>"
-            "<pseudo_minus-right>"
-              "<pseudo_multiply>"
-                "<pseudo_multiply-left>"
-                  "<identifier>c<identifier/>"
-                "<pseudo_multiply-left/>"
-                "<pseudo_multiply-right>"
-                  "<pseudo_divide>"
-                    "<pseudo_divide-left>"
-                      "<identifier>d<identifier/>"
-                    "<pseudo_divide-left/>"
-                    "<pseudo_divide-right>"
-                      "<pseudo_modulus>"
-                        "<pseudo_modulus-left>"
-                          "<identifier>e<identifier/>"
-                        "<pseudo_modulus-left/>"
-                        "<pseudo_modulus-right>"
-                          "<identifier>f<identifier/>"
-                        "<pseudo_modulus-right/>"
-                      "<pseudo_modulus/>"
-                    "<pseudo_divide-right/>"
-                  "<pseudo_divide/>"
-                "<pseudo_multiply-right/>"
-              "<pseudo_multiply/>"
-            "<pseudo_minus-right/>"
-          "<pseudo_minus/>"
-        "<pseudo_plus-right/>"
-      "<pseudo_plus/>"
-    )
-  );
-
-  // a &= ( b |= ( c ^= ( d <<= ( e >>= f ) ) ) )
-  test(
-    "a &= b |= c ^= d <<= e >>= f;",
-    wrap_single_expr_stmt(
-      "<pseudo_bitwise_and>"
-        "<pseudo_bitwise_and-left>"
-          "<identifier>a<identifier/>"
-        "<pseudo_bitwise_and-left/>"
-        "<pseudo_bitwise_and-right>"
-          "<pseudo_bitwise_or>"
-            "<pseudo_bitwise_or-left>"
-              "<identifier>b<identifier/>"
-            "<pseudo_bitwise_or-left/>"
-            "<pseudo_bitwise_or-right>"
-              "<pseudo_bitwise_xor>"
-                "<pseudo_bitwise_xor-left>"
-                  "<identifier>c<identifier/>"
-                "<pseudo_bitwise_xor-left/>"
-                "<pseudo_bitwise_xor-right>"
-                  "<pseudo_bitwise_left_shift>"
-                    "<pseudo_bitwise_left_shift-left>"
-                      "<identifier>d<identifier/>"
-                    "<pseudo_bitwise_left_shift-left/>"
-                    "<pseudo_bitwise_left_shift-right>"
-                      "<pseudo_bitwise_right_shift>"
-                        "<pseudo_bitwise_right_shift-left>"
-                          "<identifier>e<identifier/>"
-                        "<pseudo_bitwise_right_shift-left/>"
-                        "<pseudo_bitwise_right_shift-right>"
-                          "<identifier>f<identifier/>"
-                        "<pseudo_bitwise_right_shift-right/>"
-                      "<pseudo_bitwise_right_shift/>"
-                    "<pseudo_bitwise_left_shift-right/>"
-                  "<pseudo_bitwise_left_shift/>"
-                "<pseudo_bitwise_xor-right/>"
-              "<pseudo_bitwise_xor/>"
-            "<pseudo_bitwise_or-right/>"
-          "<pseudo_bitwise_or/>"
-        "<pseudo_bitwise_and-right/>"
-      "<pseudo_bitwise_and/>"
-    )
-  );
-}
+TEST_F(HexParserExprAssociativityTest, TestUnaryExprAssociativity) { test(0); }
+TEST_F(HexParserExprAssociativityTest, TestAdditiveExprAssociativity) { test(1); }
+TEST_F(HexParserExprAssociativityTest, TestMultiplicativeExprAssociativity) { test(2); }
+TEST_F(HexParserExprAssociativityTest, TestBitwiseShiftExprAssociativity) { test(3); }
+TEST_F(HexParserExprAssociativityTest, TestLogicAndExprAssociativity) { test(4); }
+TEST_F(HexParserExprAssociativityTest, TestBitwiseXorExprAssociativity) { test(5); }
+TEST_F(HexParserExprAssociativityTest, TestLogicOrExprAssociativity) { test(6); }
+TEST_F(HexParserExprAssociativityTest, TestComparisonExprAssociativity) { test(7); }
+TEST_F(HexParserExprAssociativityTest, TestAssignmentExprAssociativity1) { test(8); }
+TEST_F(HexParserExprAssociativityTest, TestAssignmentExprAssociativity2) { test(9); }

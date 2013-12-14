@@ -1,0 +1,18 @@
+<hex_program>
+  <hex_program-stmts>
+    <stmt_group>
+      <output_stmt>
+        <attribute>
+          <attribute-source>
+            <identifier>std<identifier/>
+          <attribute-source/>
+          <attribute-target>
+            <identifier>cin<identifier/>
+          <attribute-target/>
+        <attribute/>
+        <identifier>filter<identifier/>
+        <identifier>input<identifier/>
+      <output_stmt/>
+    <stmt_group/>
+  <hex_program-stmts/>
+<hex_program/>

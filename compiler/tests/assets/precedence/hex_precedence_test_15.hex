@@ -1,0 +1,7 @@
+# logical or vs. logical and
+
+# a or ( b and c )
+a or b and c;
+
+# ( a or (b and c) ) or d
+a or b and c or d;

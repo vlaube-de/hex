@@ -1,0 +1,66 @@
+<hex_program>
+  <hex_program-stmts>
+    <stmt_group>
+      <expr_list_stmt>
+        <exprlist>
+          <string_literal type="single">'Hello World.'<string_literal/>
+        <exprlist/>
+      <expr_list_stmt/>
+      <expr_list_stmt>
+        <exprlist>
+          <string_literal type="single">'Welcome to HEX Programming Language!!!'<string_literal/>
+        <exprlist/>
+      <expr_list_stmt/>
+      <expr_list_stmt>
+        <exprlist>
+          <string_literal type="double">"Hello World!\n"<string_literal/>
+        <exprlist/>
+      <expr_list_stmt/>
+      <expr_list_stmt>
+        <exprlist>
+          <string_literal type="double">"\tWelcome to HEX Programming Language!!!\n"<string_literal/>
+        <exprlist/>
+      <expr_list_stmt/>
+      <expr_list_stmt>
+        <exprlist>
+          <string_literal type="double">"\"\""<string_literal/>
+        <exprlist/>
+      <expr_list_stmt/>
+      <expr_list_stmt>
+        <exprlist>
+          <string_literal type="double">"\"     \""<string_literal/>
+        <exprlist/>
+      <expr_list_stmt/>
+      <expr_list_stmt>
+        <exprlist>
+          <string_literal type="double">"\"this is a string\""<string_literal/>
+        <exprlist/>
+      <expr_list_stmt/>
+      <expr_list_stmt>
+        <exprlist>
+          <string_literal type="double">"\"1234567890\""<string_literal/>
+        <exprlist/>
+      <expr_list_stmt/>
+      <expr_list_stmt>
+        <exprlist>
+          <string_literal type="double">"\"!@#$%^&*()_+\""<string_literal/>
+        <exprlist/>
+      <expr_list_stmt/>
+      <expr_list_stmt>
+        <exprlist>
+          <string_literal type="double">"\"[]|;',./\""<string_literal/>
+        <exprlist/>
+      <expr_list_stmt/>
+      <expr_list_stmt>
+        <exprlist>
+          <string_literal type="double">"\"<>/?\""<string_literal/>
+        <exprlist/>
+      <expr_list_stmt/>
+      <expr_list_stmt>
+        <exprlist>
+          <string_literal type="double">"\"\n\t\r\""<string_literal/>
+        <exprlist/>
+      <expr_list_stmt/>
+    <stmt_group/>
+  <hex_program-stmts/>
+<hex_program/>

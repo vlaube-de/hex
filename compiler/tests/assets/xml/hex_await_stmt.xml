@@ -1,0 +1,53 @@
+<hex_program>
+  <hex_program-stmts>
+    <stmt_group>
+      <await_stmt>
+        <await_stmt-stmts>
+          <stmt_group>
+            <for_stmt>
+              <for_stmt-targets>
+                <target_list>
+                  <identifier>i<identifier/>
+                <target_list/>
+              <for_stmt-targets/>
+              <for_stmt-sources>
+                <exprlist>
+                  <inclusive_range_expr>
+                    <inclusive_range_expr-left>
+                      <integer_literal type="decimal">1<integer_literal/>
+                    <inclusive_range_expr-left/>
+                    <inclusive_range_expr-right>
+                      <integer_literal type="decimal">10<integer_literal/>
+                    <inclusive_range_expr-right/>
+                  <inclusive_range_expr/>
+                <exprlist/>
+              <for_stmt-sources/>
+              <for_stmt-stmts>
+                <stmt_group>
+                  <expr_list_stmt>
+                    <exprlist>
+                      <call>
+                        <call-caller>
+                          <identifier>fibonacci<identifier/>
+                        <call-caller/>
+                        <call-args>
+                          <arg_list>
+                            <arg_list-simple_args>
+                              <simple_args_list>
+                                <identifier>i<identifier/>
+                              <simple_args_list/>
+                            <arg_list-simple_args/>
+                          <arg_list/>
+                        <call-args/>
+                      <call/>
+                    <exprlist/>
+                  <expr_list_stmt/>
+                <stmt_group/>
+              <for_stmt-stmts/>
+            <for_stmt/>
+          <stmt_group/>
+        <await_stmt-stmts/>
+      <await_stmt/>
+    <stmt_group/>
+  <hex_program-stmts/>
+<hex_program/>

@@ -1,0 +1,39 @@
+<hex_program>
+  <hex_program-stmts>
+    <stmt_group>
+      <raise_stmt>
+        <raise_stmt-target>
+          <call>
+            <call-caller>
+              <identifier>Exception<identifier/>
+            <call-caller/>
+          <call/>
+        <raise_stmt-target/>
+      <raise_stmt/>
+      <raise_stmt>
+        <raise_stmt-target>
+          <identifier>e<identifier/>
+        <raise_stmt-target/>
+      <raise_stmt/>
+      <raise_stmt>
+        <raise_stmt-target>
+          <slicing>
+            <slicing-source>
+              <attribute>
+                <attribute-source>
+                  <identifier>common<identifier/>
+                <attribute-source/>
+                <attribute-target>
+                  <identifier>exceptions<identifier/>
+                <attribute-target/>
+              <attribute/>
+            <slicing-source/>
+            <slicing_start>
+              <integer_literal type="decimal">0<integer_literal/>
+            <slicing_start/>
+          <slicing/>
+        <raise_stmt-target/>
+      <raise_stmt/>
+    <stmt_group/>
+  <hex_program-stmts/>
+<hex_program/>

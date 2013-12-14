@@ -1,0 +1,42 @@
+<hex_program>
+  <hex_program-stmts>
+    <stmt_group>
+      <expr_list_stmt>
+        <exprlist>
+          <conditional_expr>
+            <conditional_expr-predicate>
+              <is_expr>
+                <is_expr-left>
+                  <identifier>a<identifier/>
+                <is_expr-left/>
+                <is_expr-right>
+                  <integer_literal type="decimal">2<integer_literal/>
+                <is_expr-right/>
+              <is_expr/>
+            <conditional_expr-predicate/>
+            <conditional_expr-consequent>
+              <exclusive_range_expr>
+                <exclusive_range_expr-left>
+                  <integer_literal type="decimal">1<integer_literal/>
+                <exclusive_range_expr-left/>
+                <exclusive_range_expr-right>
+                  <integer_literal type="decimal">2<integer_literal/>
+                <exclusive_range_expr-right/>
+              <exclusive_range_expr/>
+            <conditional_expr-consequent/>
+            <conditional_expr-alternate>
+              <inclusive_range_expr>
+                <inclusive_range_expr-left>
+                  <integer_literal type="decimal">1<integer_literal/>
+                <inclusive_range_expr-left/>
+                <inclusive_range_expr-right>
+                  <integer_literal type="decimal">10<integer_literal/>
+                <inclusive_range_expr-right/>
+              <inclusive_range_expr/>
+            <conditional_expr-alternate/>
+          <conditional_expr/>
+        <exprlist/>
+      <expr_list_stmt/>
+    <stmt_group/>
+  <hex_program-stmts/>
+<hex_program/>

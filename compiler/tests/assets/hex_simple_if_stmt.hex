@@ -1,0 +1,2 @@
+if self.name == 'William': print("William is awesome!");
+if self.name != 'William': return False;

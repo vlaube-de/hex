@@ -1,0 +1,115 @@
+<hex_program>
+  <hex_program-stmts>
+    <stmt_group>
+      <expr_list_stmt>
+        <exprlist>
+          <or_expr>
+            <or_expr-left>
+              <is_expr>
+                <is_expr-left>
+                  <identifier>a<identifier/>
+                <is_expr-left/>
+                <is_expr-right>
+                  <integer_literal type="decimal">2<integer_literal/>
+                <is_expr-right/>
+              <is_expr/>
+            <or_expr-left/>
+            <or_expr-right>
+              <integer_literal type="decimal">3<integer_literal/>
+            <or_expr-right/>
+          <or_expr/>
+        <exprlist/>
+      <expr_list_stmt/>
+      <expr_list_stmt>
+        <exprlist>
+          <ge_expr>
+            <ge_expr-left>
+              <integer_literal type="decimal">3<integer_literal/>
+            <ge_expr-left/>
+            <ge_expr-right>
+              <add_expr>
+                <add_expr-left>
+                  <integer_literal type="decimal">2<integer_literal/>
+                <add_expr-left/>
+                <add_expr-right>
+                  <integer_literal type="decimal">1<integer_literal/>
+                <add_expr-right/>
+              <add_expr/>
+            <ge_expr-right/>
+          <ge_expr/>
+        <exprlist/>
+      <expr_list_stmt/>
+      <expr_list_stmt>
+        <exprlist>
+          <lt_expr>
+            <lt_expr-left>
+              <integer_literal type="decimal">4<integer_literal/>
+            <lt_expr-left/>
+            <lt_expr-right>
+              <divide_expr>
+                <divide_expr-left>
+                  <integer_literal type="decimal">100<integer_literal/>
+                <divide_expr-left/>
+                <divide_expr-right>
+                  <integer_literal type="decimal">20<integer_literal/>
+                <divide_expr-right/>
+              <divide_expr/>
+            <lt_expr-right/>
+          <lt_expr/>
+        <exprlist/>
+      <expr_list_stmt/>
+      <expr_list_stmt>
+        <exprlist>
+          <in_expr>
+            <in_expr-left>
+              <in_expr>
+                <in_expr-left>
+                  <in_expr>
+                    <in_expr-left>
+                      <identifier>a<identifier/>
+                    <in_expr-left/>
+                    <in_expr-right>
+                      <identifier>b<identifier/>
+                    <in_expr-right/>
+                  <in_expr/>
+                <in_expr-left/>
+                <in_expr-right>
+                  <identifier>c<identifier/>
+                <in_expr-right/>
+              <in_expr/>
+            <in_expr-left/>
+            <in_expr-right>
+              <identifier>d<identifier/>
+            <in_expr-right/>
+          <in_expr/>
+        <exprlist/>
+      <expr_list_stmt/>
+      <expr_list_stmt>
+        <exprlist>
+          <not_in_expr>
+            <not_in_expr-left>
+              <not_in_expr>
+                <not_in_expr-left>
+                  <not_in_expr>
+                    <not_in_expr-left>
+                      <identifier>a<identifier/>
+                    <not_in_expr-left/>
+                    <not_in_expr-right>
+                      <identifier>b<identifier/>
+                    <not_in_expr-right/>
+                  <not_in_expr/>
+                <not_in_expr-left/>
+                <not_in_expr-right>
+                  <identifier>c<identifier/>
+                <not_in_expr-right/>
+              <not_in_expr/>
+            <not_in_expr-left/>
+            <not_in_expr-right>
+              <identifier>d<identifier/>
+            <not_in_expr-right/>
+          <not_in_expr/>
+        <exprlist/>
+      <expr_list_stmt/>
+    <stmt_group/>
+  <hex_program-stmts/>
+<hex_program/>

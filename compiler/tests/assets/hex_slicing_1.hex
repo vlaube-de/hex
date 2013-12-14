@@ -1,0 +1,5 @@
+PRIMES[:];
+PRIMES[0];
+PRIMES[1:];
+PRIMES[:5];
+PRIMES[1:5];

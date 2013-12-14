@@ -1,0 +1,6 @@
+using food;
+using food as f;
+using food.fruits.apple;
+using apple in fruits;
+using apple, bananna, coconut in food.fruits;
+using apple, bananna, coconut in food.fruits as fruits;

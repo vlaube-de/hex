@@ -1,0 +1,4 @@
+tasks = 
+  start t1, t2, t3 as tasks,
+  cancel tasks after t1 finish,
+  stop tasks after t2 finish;

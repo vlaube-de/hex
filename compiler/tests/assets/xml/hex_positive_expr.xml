@@ -1,0 +1,68 @@
+<hex_program>
+  <hex_program-stmts>
+    <stmt_group>
+      <expr_list_stmt>
+        <exprlist>
+          <positive_expr>
+            <integer_literal type="decimal">1<integer_literal/>
+          <positive_expr/>
+        <exprlist/>
+      <expr_list_stmt/>
+      <expr_list_stmt>
+        <exprlist>
+          <positive_expr>
+            <floating_literal>0.0999e1<floating_literal/>
+          <positive_expr/>
+        <exprlist/>
+      <expr_list_stmt/>
+      <expr_list_stmt>
+        <exprlist>
+          <positive_expr>
+            <identifier>a<identifier/>
+          <positive_expr/>
+        <exprlist/>
+      <expr_list_stmt/>
+      <expr_list_stmt>
+        <exprlist>
+          <positive_expr>
+            <paren_form>
+              <exprlist>
+                <not_expr>
+                  <identifier>b<identifier/>
+                <not_expr/>
+              <exprlist/>
+            <paren_form/>
+          <positive_expr/>
+        <exprlist/>
+      <expr_list_stmt/>
+      <expr_list_stmt>
+        <exprlist>
+          <minus_expr>
+            <minus_expr-left>
+              <positive_expr>
+                <integer_literal type="decimal">1<integer_literal/>
+              <positive_expr/>
+            <minus_expr-left/>
+            <minus_expr-right>
+              <integer_literal type="decimal">2<integer_literal/>
+            <minus_expr-right/>
+          <minus_expr/>
+        <exprlist/>
+      <expr_list_stmt/>
+      <expr_list_stmt>
+        <exprlist>
+          <divide_expr>
+            <divide_expr-left>
+              <positive_expr>
+                <integer_literal type="decimal">1<integer_literal/>
+              <positive_expr/>
+            <divide_expr-left/>
+            <divide_expr-right>
+              <integer_literal type="decimal">2<integer_literal/>
+            <divide_expr-right/>
+          <divide_expr/>
+        <exprlist/>
+      <expr_list_stmt/>
+    <stmt_group/>
+  <hex_program-stmts/>
+<hex_program/>

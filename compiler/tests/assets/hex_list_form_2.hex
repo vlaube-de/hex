@@ -1,0 +1,2 @@
+[i for i in numbers for numbers in number_sets];
+[i << 2 for i in 1...100 if isprime(i)];

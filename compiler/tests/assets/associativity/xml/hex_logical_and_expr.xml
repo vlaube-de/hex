@@ -1,0 +1,25 @@
+<hex_program>
+  <hex_program-stmts>
+    <stmt_group>
+      <expr_list_stmt>
+        <exprlist>
+          <and_expr>
+            <and_expr-left>
+              <and_expr>
+                <and_expr-left>
+                  <identifier>a<identifier/>
+                <and_expr-left/>
+                <and_expr-right>
+                  <identifier>b<identifier/>
+                <and_expr-right/>
+              <and_expr/>
+            <and_expr-left/>
+            <and_expr-right>
+              <identifier>c<identifier/>
+            <and_expr-right/>
+          <and_expr/>
+        <exprlist/>
+      <expr_list_stmt/>
+    <stmt_group/>
+  <hex_program-stmts/>
+<hex_program/>

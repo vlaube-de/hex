@@ -1,0 +1,76 @@
+<hex_program>
+  <hex_program-stmts>
+    <stmt_group>
+      <expr_list_stmt>
+        <exprlist>
+          <call>
+            <call-caller>
+              <identifier>call_with_args_and_kwargs<identifier/>
+            <call-caller/>
+            <call-args>
+              <arg_list>
+                <arg_list-simple_args>
+                  <simple_args_list>
+                    <list_form>
+                      <exprlist>
+                        <paren_form>
+                          <exprlist>
+                            <string_literal type="single">'a'<string_literal/>
+                            <string_literal type="single">'apple'<string_literal/>
+                          <exprlist/>
+                        <paren_form/>
+                        <paren_form>
+                          <exprlist>
+                            <string_literal type="single">'b'<string_literal/>
+                            <string_literal type="single">'banana'<string_literal/>
+                          <exprlist/>
+                        <paren_form/>
+                        <paren_form>
+                          <exprlist>
+                            <string_literal type="single">'c'<string_literal/>
+                            <string_literal type="single">'coconut'<string_literal/>
+                          <exprlist/>
+                        <paren_form/>
+                      <exprlist/>
+                    <list_form/>
+                    <dict_form>
+                      <key_value_pair_list>
+                        <key_value_pair>
+                          <key_value_pair-key>
+                            <identifier>a<identifier/>
+                          <key_value_pair-key/>
+                          <key_value_pair-value>
+                            <string_literal type="single">'apple'<string_literal/>
+                          <key_value_pair-value/>
+                        <key_value_pair/>
+                        <key_value_pair>
+                          <key_value_pair-key>
+                            <identifier>b<identifier/>
+                          <key_value_pair-key/>
+                          <key_value_pair-value>
+                            <string_literal type="single">'banana'<string_literal/>
+                          <key_value_pair-value/>
+                        <key_value_pair/>
+                        <key_value_pair>
+                          <key_value_pair-key>
+                            <identifier>c<identifier/>
+                          <key_value_pair-key/>
+                          <key_value_pair-value>
+                            <string_literal type="single">'coconut'<string_literal/>
+                          <key_value_pair-value/>
+                        <key_value_pair/>
+                      <key_value_pair_list/>
+                    <dict_form/>
+                  <simple_args_list/>
+                <arg_list-simple_args/>
+                <arg_list-kwargs>
+                  <identifier>kwargs<identifier/>
+                <arg_list-kwargs/>
+              <arg_list/>
+            <call-args/>
+          <call/>
+        <exprlist/>
+      <expr_list_stmt/>
+    <stmt_group/>
+  <hex_program-stmts/>
+<hex_program/>

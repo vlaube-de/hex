@@ -1,0 +1,11 @@
+class Person {
+
+  name: null
+
+  age: null
+
+  __init__: lambda (name, age) => {
+    self.name = name;
+    self.age = age;
+  }
+}

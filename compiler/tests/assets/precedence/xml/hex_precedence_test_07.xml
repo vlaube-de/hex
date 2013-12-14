@@ -1,0 +1,67 @@
+<hex_program>
+  <hex_program-stmts>
+    <stmt_group>
+      <expr_list_stmt>
+        <exprlist>
+          <add_expr>
+            <add_expr-left>
+              <integer_literal type="decimal">1<integer_literal/>
+            <add_expr-left/>
+            <add_expr-right>
+              <multiply_expr>
+                <multiply_expr-left>
+                  <integer_literal type="decimal">2<integer_literal/>
+                <multiply_expr-left/>
+                <multiply_expr-right>
+                  <integer_literal type="decimal">3<integer_literal/>
+                <multiply_expr-right/>
+              <multiply_expr/>
+            <add_expr-right/>
+          <add_expr/>
+        <exprlist/>
+      <expr_list_stmt/>
+      <expr_list_stmt>
+        <exprlist>
+          <minus_expr>
+            <minus_expr-left>
+              <modulus_expr>
+                <modulus_expr-left>
+                  <integer_literal type="decimal">1<integer_literal/>
+                <modulus_expr-left/>
+                <modulus_expr-right>
+                  <integer_literal type="decimal">2<integer_literal/>
+                <modulus_expr-right/>
+              <modulus_expr/>
+            <minus_expr-left/>
+            <minus_expr-right>
+              <integer_literal type="decimal">3<integer_literal/>
+            <minus_expr-right/>
+          <minus_expr/>
+        <exprlist/>
+      <expr_list_stmt/>
+      <expr_list_stmt>
+        <exprlist>
+          <multiply_expr>
+            <multiply_expr-left>
+              <integer_literal type="decimal">3<integer_literal/>
+            <multiply_expr-left/>
+            <multiply_expr-right>
+              <paren_form>
+                <exprlist>
+                  <minus_expr>
+                    <minus_expr-left>
+                      <integer_literal type="decimal">2<integer_literal/>
+                    <minus_expr-left/>
+                    <minus_expr-right>
+                      <integer_literal type="decimal">1<integer_literal/>
+                    <minus_expr-right/>
+                  <minus_expr/>
+                <exprlist/>
+              <paren_form/>
+            <multiply_expr-right/>
+          <multiply_expr/>
+        <exprlist/>
+      <expr_list_stmt/>
+    <stmt_group/>
+  <hex_program-stmts/>
+<hex_program/>

@@ -1,0 +1,2 @@
+call_with_args_and_kwargs(**kwargs);
+call_with_args_and_kwargs();

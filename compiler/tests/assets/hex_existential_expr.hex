@@ -1,0 +1,6 @@
+a?;
+a.b?;
+a[0].b?;
+(a + b)?;
+(a or b)?;
+((a or b)? and (c or d)?)?;

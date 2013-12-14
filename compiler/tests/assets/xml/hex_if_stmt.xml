@@ -1,0 +1,91 @@
+<hex_program>
+  <hex_program-stmts>
+    <stmt_group>
+      <if_stmt>
+        <if_stmt-predicate>
+          <conditional_expr>
+            <conditional_expr-predicate>
+              <identifier>true<identifier/>
+            <conditional_expr-predicate/>
+            <conditional_expr-consequent>
+              <integer_literal type="decimal">1<integer_literal/>
+            <conditional_expr-consequent/>
+            <conditional_expr-alternate>
+              <integer_literal type="decimal">0<integer_literal/>
+            <conditional_expr-alternate/>
+          <conditional_expr/>
+        <if_stmt-predicate/>
+        <if_stmt-stmts>
+          <stmt_group>
+            <expr_list_stmt>
+              <exprlist>
+                <identifier>true<identifier/>
+              <exprlist/>
+            <expr_list_stmt/>
+          <stmt_group/>
+        <if_stmt-stmts/>
+        <if_stmt-elif_stmts>
+          <elif_stmt_group>
+            <elif_stmt>
+              <elif_stmt-predicate>
+                <conditional_expr>
+                  <conditional_expr-predicate>
+                    <identifier>true<identifier/>
+                  <conditional_expr-predicate/>
+                  <conditional_expr-consequent>
+                    <integer_literal type="decimal">0<integer_literal/>
+                  <conditional_expr-consequent/>
+                  <conditional_expr-alternate>
+                    <integer_literal type="decimal">1<integer_literal/>
+                  <conditional_expr-alternate/>
+                <conditional_expr/>
+              <elif_stmt-predicate/>
+              <elif_stmt-stmts>
+                <stmt_group>
+                  <expr_list_stmt>
+                    <exprlist>
+                      <identifier>false<identifier/>
+                    <exprlist/>
+                  <expr_list_stmt/>
+                <stmt_group/>
+              <elif_stmt-stmts/>
+            <elif_stmt/>
+            <elif_stmt>
+              <elif_stmt-predicate>
+                <conditional_expr>
+                  <conditional_expr-predicate>
+                    <identifier>false<identifier/>
+                  <conditional_expr-predicate/>
+                  <conditional_expr-consequent>
+                    <integer_literal type="decimal">1<integer_literal/>
+                  <conditional_expr-consequent/>
+                  <conditional_expr-alternate>
+                    <integer_literal type="decimal">0<integer_literal/>
+                  <conditional_expr-alternate/>
+                <conditional_expr/>
+              <elif_stmt-predicate/>
+              <elif_stmt-stmts>
+                <stmt_group>
+                  <expr_list_stmt>
+                    <exprlist>
+                      <identifier>false<identifier/>
+                    <exprlist/>
+                  <expr_list_stmt/>
+                <stmt_group/>
+              <elif_stmt-stmts/>
+            <elif_stmt/>
+          <elif_stmt_group/>
+        <if_stmt-elif_stmts/>
+        <if_stmt-else_stmts>
+          <stmt_group>
+            <expr_list_stmt>
+              <exprlist>
+                <identifier>true<identifier/>
+              <exprlist/>
+            <expr_list_stmt/>
+          <stmt_group/>
+        <if_stmt-else_stmts/>
+      <if_stmt/>
+    <stmt_group/>
+  <hex_program-stmts/>
+<hex_program/>

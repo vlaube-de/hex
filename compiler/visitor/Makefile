@@ -23,19 +23,22 @@ CFLAGS=-Wno-implicit -Wno-deprecated-writable-strings -std=c++11 -arch x86_64
 ast_visitor.o: ast_visitor.h ast_visitor.cc
 	$(CXX) $(CFLAGS) -D_HEX_AST_ -c ast_visitor.cc
 
+ast_tostring_helper.o: ast_tostring_helper.h ast_tostring_helper.cc
+	$(CXX) $(CFLAGS) -c ast_tostring_helper.cc
+
 ast_tostring_visitor.o: ast_tostring_visitor.h ast_tostring_visitor.cc
 	$(CXX) $(CFLAGS) -D_HEX_AST_ -c ast_tostring_visitor.cc
 
 ast_to_xml_visitor.o: ast_to_xml_visitor.h ast_to_xml_visitor.cc
 	$(CXX) $(CFLAGS) -D_HEX_AST_ -c ast_to_xml_visitor.cc
 
-codegen_visitor.o: codegen_visitor.h codegen_visitor.cc
-	$(CXX) $(CFLAGS) -D_HEX_AST_ -c codegen_visitor.cc
+# codegen_visitor.o: codegen_visitor.h codegen_visitor.cc
+	# $(CXX) $(CFLAGS) -D_HEX_AST_ -c codegen_visitor.cc
 
-all: ast_visitor.o	\
-	 ast_tostring_visitor.o \
-	 ast_to_xml_visitor.o	\
-	 codegen_visitor.o
+all: 	ast_visitor.o	\
+			ast_tostring_helper.o \
+	 		ast_tostring_visitor.o \
+	 		ast_to_xml_visitor.o
 
 .PHONY : clean
 clean:

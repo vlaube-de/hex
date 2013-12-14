@@ -1,0 +1,26 @@
+class Student extends Person {
+
+  grade: 8
+
+  school: null
+
+  courses: {}
+
+  grades: {}
+
+  @logged
+  @retry(max_time=5, fail_silently=True)
+  enroll: lambda (course) => {
+    desired_course = school.courses.find(course);
+    if desired_course and desired_course.grade <= self.grade {
+      self.courses[desired_course.code] = desired_course;
+    }
+  }
+
+  drop: lambda (course) => {
+    desired_course = school.courses.find(course);
+    if desired_course and len(courses) - 1 >= school.MIN_COURSES {
+      self.courses[desired_course.code] = null;
+    }
+  }
+}

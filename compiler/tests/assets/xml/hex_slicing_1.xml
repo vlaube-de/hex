@@ -1,0 +1,66 @@
+<hex_program>
+  <hex_program-stmts>
+    <stmt_group>
+      <expr_list_stmt>
+        <exprlist>
+          <slicing>
+            <slicing-source>
+              <identifier>PRIMES<identifier/>
+            <slicing-source/>
+          <slicing/>
+        <exprlist/>
+      <expr_list_stmt/>
+      <expr_list_stmt>
+        <exprlist>
+          <slicing>
+            <slicing-source>
+              <identifier>PRIMES<identifier/>
+            <slicing-source/>
+            <slicing_start>
+              <integer_literal type="decimal">0<integer_literal/>
+            <slicing_start/>
+          <slicing/>
+        <exprlist/>
+      <expr_list_stmt/>
+      <expr_list_stmt>
+        <exprlist>
+          <slicing>
+            <slicing-source>
+              <identifier>PRIMES<identifier/>
+            <slicing-source/>
+            <slicing_start>
+              <integer_literal type="decimal">1<integer_literal/>
+            <slicing_start/>
+          <slicing/>
+        <exprlist/>
+      <expr_list_stmt/>
+      <expr_list_stmt>
+        <exprlist>
+          <slicing>
+            <slicing-source>
+              <identifier>PRIMES<identifier/>
+            <slicing-source/>
+            <slicing_stop>
+              <integer_literal type="decimal">5<integer_literal/>
+            <slicing_stop/>
+          <slicing/>
+        <exprlist/>
+      <expr_list_stmt/>
+      <expr_list_stmt>
+        <exprlist>
+          <slicing>
+            <slicing-source>
+              <identifier>PRIMES<identifier/>
+            <slicing-source/>
+            <slicing_start>
+              <integer_literal type="decimal">1<integer_literal/>
+            <slicing_start/>
+            <slicing_step>
+              <integer_literal type="decimal">5<integer_literal/>
+            <slicing_step/>
+          <slicing/>
+        <exprlist/>
+      <expr_list_stmt/>
+    <stmt_group/>
+  <hex_program-stmts/>
+<hex_program/>

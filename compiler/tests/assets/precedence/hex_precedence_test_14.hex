@@ -1,0 +1,10 @@
+# logical and vs. logical not
+
+# ( not a ) and ( not b )
+not a and not b;
+
+# ( not a ) and b
+not a and b;
+
+# ( not a ) and b
+not a and b;

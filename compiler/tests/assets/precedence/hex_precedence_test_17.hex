@@ -1,0 +1,4 @@
+# conditional vs. ranged expr
+
+# if a is 2 then (1..2) else (1...10)
+if a is 2 then 1..2 else 1...10;

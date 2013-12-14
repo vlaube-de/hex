@@ -1,0 +1,67 @@
+<hex_program>
+  <hex_program-stmts>
+    <stmt_group>
+      <expr_list_stmt>
+        <exprlist>
+          <bitwise_or_expr>
+            <bitwise_or_expr-left>
+              <integer_literal type="decimal">2<integer_literal/>
+            <bitwise_or_expr-left/>
+            <bitwise_or_expr-right>
+              <bitwise_xor_expr>
+                <bitwise_xor_expr-left>
+                  <integer_literal type="decimal">3<integer_literal/>
+                <bitwise_xor_expr-left/>
+                <bitwise_xor_expr-right>
+                  <integer_literal type="decimal">4<integer_literal/>
+                <bitwise_xor_expr-right/>
+              <bitwise_xor_expr/>
+            <bitwise_or_expr-right/>
+          <bitwise_or_expr/>
+        <exprlist/>
+      <expr_list_stmt/>
+      <expr_list_stmt>
+        <exprlist>
+          <bitwise_or_expr>
+            <bitwise_or_expr-left>
+              <bitwise_xor_expr>
+                <bitwise_xor_expr-left>
+                  <integer_literal type="decimal">2<integer_literal/>
+                <bitwise_xor_expr-left/>
+                <bitwise_xor_expr-right>
+                  <integer_literal type="decimal">3<integer_literal/>
+                <bitwise_xor_expr-right/>
+              <bitwise_xor_expr/>
+            <bitwise_or_expr-left/>
+            <bitwise_or_expr-right>
+              <integer_literal type="decimal">4<integer_literal/>
+            <bitwise_or_expr-right/>
+          <bitwise_or_expr/>
+        <exprlist/>
+      <expr_list_stmt/>
+      <expr_list_stmt>
+        <exprlist>
+          <bitwise_xor_expr>
+            <bitwise_xor_expr-left>
+              <paren_form>
+                <exprlist>
+                  <bitwise_or_expr>
+                    <bitwise_or_expr-left>
+                      <integer_literal type="decimal">2<integer_literal/>
+                    <bitwise_or_expr-left/>
+                    <bitwise_or_expr-right>
+                      <integer_literal type="decimal">3<integer_literal/>
+                    <bitwise_or_expr-right/>
+                  <bitwise_or_expr/>
+                <exprlist/>
+              <paren_form/>
+            <bitwise_xor_expr-left/>
+            <bitwise_xor_expr-right>
+              <integer_literal type="decimal">4<integer_literal/>
+            <bitwise_xor_expr-right/>
+          <bitwise_xor_expr/>
+        <exprlist/>
+      <expr_list_stmt/>
+    <stmt_group/>
+  <hex_program-stmts/>
+<hex_program/>

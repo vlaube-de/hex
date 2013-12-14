@@ -1,0 +1,36 @@
+<hex_program>
+  <hex_program-stmts>
+    <stmt_group>
+      <expr_list_stmt>
+        <exprlist>
+          <integer_literal type="hexadecimal">0x00<integer_literal/>
+        <exprlist/>
+      <expr_list_stmt/>
+      <expr_list_stmt>
+        <exprlist>
+          <integer_literal type="hexadecimal">0xFF<integer_literal/>
+        <exprlist/>
+      <expr_list_stmt/>
+      <expr_list_stmt>
+        <exprlist>
+          <integer_literal type="hexadecimal">0x0123456789ABCDEF<integer_literal/>
+        <exprlist/>
+      <expr_list_stmt/>
+      <expr_list_stmt>
+        <exprlist>
+          <integer_literal type="hexadecimal">0X00<integer_literal/>
+        <exprlist/>
+      <expr_list_stmt/>
+      <expr_list_stmt>
+        <exprlist>
+          <integer_literal type="hexadecimal">0XFF<integer_literal/>
+        <exprlist/>
+      <expr_list_stmt/>
+      <expr_list_stmt>
+        <exprlist>
+          <integer_literal type="hexadecimal">0X0123456789ABCDEF<integer_literal/>
+        <exprlist/>
+      <expr_list_stmt/>
+    <stmt_group/>
+  <hex_program-stmts/>
+<hex_program/>

@@ -15,47 +15,35 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 #include <list>
 #include <string>
-#include "../ast/ast.h"
+#include "ast_tostring_helper.h"
 #include "ast_to_xml_visitor.h"
+#include "../ast2/ast.h"
 #include "../../base/assert.h"
-#include "../../base/memory.h"
 
 
 AstToXmlVisitor::AstToXmlVisitor()
-  :_strbuf(new std::string())
+  :AstToStringHelper()
 {
-  HEX_ASSERT(_strbuf);
+  // Do nothing here.
 }
 
 AstToXmlVisitor::~AstToXmlVisitor()
 {
-  HEX_DELETE(_strbuf);
-}
-
-const c_str
-AstToXmlVisitor::str()
-{
-  c_str str = strdup(_strbuf->c_str());
-  HEX_ASSERT(str);
-  return (const c_str)str;
+  // Do nothing here.
 }
 
 void
-AstToXmlVisitor::append(const c_str s)
-{
-  HEX_ASSERT(s);
-  this->_strbuf->append(s);
-}
-
-void
-AstToXmlVisitor::begin_tag(const c_str tag)
+AstToXmlVisitor::begin_tag(const c_str tag, const c_str attributes)
 {
   std::string str;
   str.append("<");
   str.append(tag);
+  if(attributes) {
+    str.append(" ");
+    str.append(attributes);
+  }
   str.append(">");
 
   this->append((const c_str)str.c_str());
@@ -73,31 +61,101 @@ AstToXmlVisitor::end_tag(const c_str tag)
 }
 
 void
+AstToXmlVisitor::double_tag(const c_str tag)
+{
+  this->indentation();
+  this->begin_tag(tag);
+  this->end_tag(tag);
+  this->newline();
+}
+
+void
 AstToXmlVisitor::double_tag(const c_str tag, c_str value)
 {
+  this->indentation();
   this->begin_tag(tag);
   this->append(value);
   this->end_tag(tag);
+  this->newline();
 }
 
 template<class Function>
 void
 AstToXmlVisitor::double_tag(const c_str tag, Function f)
 {
+  this->indentation();
+  this->begin_tag(tag);
+  this->newline();
+  this->indent();
+  f();
+  this->dedent();
+  this->indentation();
+  this->end_tag(tag);
+  this->newline();
+}
+
+template<class Function>
+void
+AstToXmlVisitor::double_tag(const c_str tag, const c_str attributes, Function f)
+{
+  this->indentation();
+  this->begin_tag(tag, attributes);
+  this->newline();
+  this->indent();
+  f();
+  this->dedent();
+  this->indentation();
+  this->end_tag(tag);
+  this->newline();
+}
+
+template<class Function>
+void
+AstToXmlVisitor::double_tag_simple(const c_str tag, Function f)
+{
+  this->indentation();
   this->begin_tag(tag);
   f();
   this->end_tag(tag);
+  this->newline();
 }
 
-template<class T, class Function>
+template<class Function>
 void
-AstToXmlVisitor::iterate(std::list<T>* list, Function f, bool breakOnLast)
+AstToXmlVisitor::double_tag_simple(const c_str tag, const c_str attributes, Function f)
+{
+  this->indentation();
+  this->begin_tag(tag, attributes);
+  f();
+  this->end_tag(tag);
+  this->newline();
+}
+
+template<class T>
+void
+AstToXmlVisitor::iterate(std::list<T>* list, bool breakOnLast)
 {
   typename std::list<T>::iterator itr;
   for(itr=list->begin(); itr != list->end();) {
-    f((T)(*itr));
+    // this->newline();
+    // this->indentation();
+    ((T)(*itr))->accept(this);
+    // this->newline();
+    // if(++itr == list->end()) this->newline();
     if(++itr == list->end() && breakOnLast) break;
   }
+}
+
+template<class T>
+void
+AstToXmlVisitor::double_tag_for_unary_expr(T expr, const c_str tag)
+{
+  this->double_tag(
+    tag,
+    [this, expr]() {
+      expr->expr()->accept(this);
+    }
+  );
 }
 
 template<class T>
@@ -113,14 +171,14 @@ AstToXmlVisitor::double_tag_for_binary_expr(T expr, const c_str tag_)
       this->double_tag(
         (const c_str)tag_left.append("-left").c_str(),
         [this, expr]() {
-          expr->left()->accept(this);
+          expr->lexpr()->accept(this);
         }
       );
 
       this->double_tag(
         (const c_str)tag_right.append("-right").c_str(),
         [this, expr]() {
-          expr->right()->accept(this);
+          expr->rexpr()->accept(this);
         }
       );
     }
@@ -137,12 +195,78 @@ AstToXmlVisitor::visit(HexAstIdentifier identifier_)
   return identifier;
 }
 
-HexAstIntegerLiteral
-AstToXmlVisitor::visit(HexAstIntegerLiteral literal_)
+HexAstDecimalIntegerLiteral
+AstToXmlVisitor::visit(HexAstDecimalIntegerLiteral literal_)
 {
-  HexAstIntegerLiteral literal = AstVisitor::visit(literal_);
+  HexAstDecimalIntegerLiteral literal = AstVisitor::visit(literal_);
 
-  this->double_tag("integer_literal", literal->value());
+  this->double_tag_simple(
+    "integer_literal",
+    "type=\"decimal\"",
+    [this, literal]() {
+      this->append(literal->value());
+    }
+  );
+  // this->begin_tag("integer_literal", "type=\"decimal\"");
+  // this->append(literal->value());
+  // this->end_tag("integer_literal");
+
+  return literal;
+}
+
+HexAstBinaryIntegerLiteral
+AstToXmlVisitor::visit(HexAstBinaryIntegerLiteral literal_)
+{
+  HexAstBinaryIntegerLiteral literal = AstVisitor::visit(literal_);
+
+  this->double_tag_simple(
+    "integer_literal",
+    "type=\"binary\"",
+    [this, literal]() {
+      this->append(literal->value());
+    }
+  );
+  // this->begin_tag("integer_literal", "type=\"binary\"");
+  // this->append(literal->value());
+  // this->end_tag("integer_literal");
+
+  return literal;
+}
+
+HexAstOctalIntegerLiteral
+AstToXmlVisitor::visit(HexAstOctalIntegerLiteral literal_)
+{
+  HexAstOctalIntegerLiteral literal = AstVisitor::visit(literal_);
+
+  this->double_tag_simple(
+    "integer_literal",
+    "type=\"octal\"",
+    [this, literal]() {
+      this->append(literal->value());
+    }
+  );
+  // this->begin_tag("integer_literal", "type=\"octal\"");
+  // this->append(literal->value());
+  // this->end_tag("integer_literal");
+
+  return literal;
+}
+
+HexAstHexadecimalIntegerLiteral
+AstToXmlVisitor::visit(HexAstHexadecimalIntegerLiteral literal_)
+{
+  HexAstHexadecimalIntegerLiteral literal = AstVisitor::visit(literal_);
+
+  this->double_tag_simple(
+    "integer_literal",
+    "type=\"hexadecimal\"",
+    [this, literal]() {
+      this->append(literal->value());
+    }
+  );
+  // this->begin_tag("integer_literal", "type=\"hexadecimal\"");
+  // this->append(literal->value());
+  // this->end_tag("integer_literal");
 
   return literal;
 }
@@ -157,12 +281,40 @@ AstToXmlVisitor::visit(HexAstFloatLiteral literal_)
   return literal;
 }
 
-HexAstStringLiteral
-AstToXmlVisitor::visit(HexAstStringLiteral literal_)
+HexAstSingleQuoteStringLiteral
+AstToXmlVisitor::visit(HexAstSingleQuoteStringLiteral literal_)
 {
-  HexAstStringLiteral literal = AstVisitor::visit(literal_);
+  HexAstSingleQuoteStringLiteral literal = AstVisitor::visit(literal_);
 
-  this->double_tag("string_literal", literal->value());
+  this->double_tag_simple(
+    "string_literal",
+    "type=\"single\"",
+    [this, literal]() {
+      this->append(literal->value());
+    }
+  );
+  // this->begin_tag("string_literal", "quote=\"single\"");
+  // this->append(literal->value());
+  // this->end_tag("string_literal");
+
+  return literal;
+}
+
+HexAstDoubleQuoteStringLiteral
+AstToXmlVisitor::visit(HexAstDoubleQuoteStringLiteral literal_)
+{
+  HexAstDoubleQuoteStringLiteral literal = AstVisitor::visit(literal_);
+
+  this->double_tag_simple(
+    "string_literal",
+    "type=\"double\"",
+    [this, literal]() {
+      this->append(literal->value());
+    }
+  );
+  // this->begin_tag("string_literal", "quote=\"double\"");
+  // this->append(literal->value());
+  // this->end_tag("string_literal");
 
   return literal;
 }
@@ -176,9 +328,9 @@ AstToXmlVisitor::visit(HexAstCall call_)
     "call",
     [this, call]() {
       this->double_tag(
-        "call-source",
+        "call-caller",
         [this, call]() {
-          call->source()->accept(this);
+          call->caller()->accept(this);
         }
       );
 
@@ -289,33 +441,34 @@ AstToXmlVisitor::visit(HexAstSlicing slicing_)
         case AST_SLICING_TYPE_3:
           {
             this->_visit_slicing_start(slicing);
-            this->_visit_slicing_stop(slicing);
+            this->_visit_slicing_step(slicing);
           }
           break;
         case AST_SLICING_TYPE_4:
           {
             this->_visit_slicing_start(slicing);
+            this->_visit_slicing_stop(slicing);
           }
           break;
         case AST_SLICING_TYPE_5:
           {
-            this->_visit_slicing_step(slicing);
-            this->_visit_slicing_stop(slicing);
+            this->_visit_slicing_start(slicing);
           }
           break;
         case AST_SLICING_TYPE_6:
           {
             this->_visit_slicing_step(slicing);
+            this->_visit_slicing_stop(slicing);
           }
           break;
         case AST_SLICING_TYPE_7:
           {
-            this->_visit_slicing_stop(slicing);
+            this->_visit_slicing_step(slicing);
           }
           break;
         case AST_SLICING_TYPE_8:
           {
-            // Do nothing here.
+            this->_visit_slicing_stop(slicing);
           }
           break;
         case AST_SLICING_TYPE_9:
@@ -325,10 +478,20 @@ AstToXmlVisitor::visit(HexAstSlicing slicing_)
           break;
         case AST_SLICING_TYPE_A:
           {
-            this->_visit_slicing_stop(slicing);
+            // Do nothing here.
           }
           break;
         case AST_SLICING_TYPE_B:
+          {
+            this->_visit_slicing_stop(slicing);
+          }
+          break;
+        case AST_SLICING_TYPE_C:
+          {
+            this->_visit_slicing_start(slicing);
+          }
+          break;
+        case AST_SLICING_TYPE_D:
           {
             this->_visit_slicing_start(slicing);
           }
@@ -352,10 +515,7 @@ AstToXmlVisitor::visit(HexAstTargetList targets_)
     "target_list",
     [this, targets]() {
       this->iterate<HexAstIdentifier>(
-        targets->list(),
-        [this](HexAstIdentifier identifier) {
-          identifier->accept(this);
-        }
+        targets->list()
       );
     }
   );
@@ -372,10 +532,7 @@ AstToXmlVisitor::visit(HexAstName name_)
     "name",
     [this, name]() {
       this->iterate<HexAstIdentifier>(
-        name->list(),
-        [this](HexAstIdentifier identifier) {
-          identifier->accept(this);
-        }
+        name->list()
       );
     }
   );
@@ -383,16 +540,31 @@ AstToXmlVisitor::visit(HexAstName name_)
   return name;
 }
 
+HexAstNameList
+AstToXmlVisitor::visit(HexAstNameList names_)
+{
+  HexAstNameList names = AstVisitor::visit(names_);
+
+  this->double_tag(
+    "names",
+    [this, names]() {
+      this->iterate<HexAstName>(
+        names->list()
+      );
+    }
+  );
+
+  return names;
+}
+
 HexAstPositiveExpr
 AstToXmlVisitor::visit(HexAstPositiveExpr expr_)
 {
   HexAstPositiveExpr expr = AstVisitor::visit(expr_);
 
-  this->double_tag(
-    "positive_expr",
-    [this, expr]() {
-      expr->expr()->accept(this);
-    }
+  this->double_tag_for_unary_expr<HexAstPositiveExpr>(
+    expr,
+    "positive_expr"
   );
 
   return expr;
@@ -403,11 +575,9 @@ AstToXmlVisitor::visit(HexAstNegativeExpr expr_)
 {
   HexAstNegativeExpr expr = AstVisitor::visit(expr_);
 
-  this->double_tag(
-    "negative_expr",
-    [this, expr]() {
-      expr->expr()->accept(this);
-    }
+  this->double_tag_for_unary_expr<HexAstNegativeExpr>(
+    expr,
+    "negative_expr"
   );
 
   return expr;
@@ -418,11 +588,9 @@ AstToXmlVisitor::visit(HexAstNotExpr expr_)
 {
   HexAstNotExpr expr = AstVisitor::visit(expr_);
 
-  this->double_tag(
-    "not_expr",
-    [this, expr]() {
-      expr->expr()->accept(this);
-    }
+  this->double_tag_for_unary_expr<HexAstNotExpr>(
+    expr,
+    "not_expr"
   );
 
   return expr;
@@ -433,11 +601,9 @@ AstToXmlVisitor::visit(HexAstBitwiseNotExpr expr_)
 {
   HexAstBitwiseNotExpr expr = AstVisitor::visit(expr_);
 
-  this->double_tag(
-    "bitwise_not_expr",
-    [this, expr]() {
-      expr->expr()->accept(this);
-    }
+  this->double_tag_for_unary_expr<HexAstBitwiseNotExpr>(
+    expr,
+    "bitwise_not_expr"
   );
 
   return expr;
@@ -448,11 +614,9 @@ AstToXmlVisitor::visit(HexAstIncrementExpr expr_)
 {
   HexAstIncrementExpr expr = AstVisitor::visit(expr_);
 
-  this->double_tag(
-    "increment_expr",
-    [this, expr]() {
-      expr->expr()->accept(this);
-    }
+  this->double_tag_for_unary_expr<HexAstIncrementExpr>(
+    expr,
+    "increment_expr"
   );
 
   return expr;
@@ -463,11 +627,9 @@ AstToXmlVisitor::visit(HexAstDecrementExpr expr_)
 {
   HexAstDecrementExpr expr = AstVisitor::visit(expr_);
 
-  this->double_tag(
-    "decrement_expr",
-    [this, expr]() {
-      expr->expr()->accept(this);
-    }
+  this->double_tag_for_unary_expr<HexAstDecrementExpr>(
+    expr,
+    "decrement_expr"
   );
 
   return expr;
@@ -478,52 +640,62 @@ AstToXmlVisitor::visit(HexAstExistentialExpr expr_)
 {
   HexAstExistentialExpr expr = AstVisitor::visit(expr_);
 
-  this->double_tag(
-    "existential_expr",
-    [this, expr]() {
-      expr->expr()->accept(this);
-    }
+  this->double_tag_for_unary_expr<HexAstExistentialExpr>(
+    expr,
+    "existential_expr"
   );
 
   return expr;
 }
 
-HexAstAddExpr
-AstToXmlVisitor::visit(HexAstAddExpr expr_)
+HexAstAdditionExpr
+AstToXmlVisitor::visit(HexAstAdditionExpr expr_)
 {
-  HexAstAddExpr expr = AstVisitor::visit(expr_);
+  HexAstAdditionExpr expr = AstVisitor::visit(expr_);
 
-  this->double_tag_for_binary_expr<HexAstAddExpr>(expr, "add_expr");
+  this->double_tag_for_binary_expr<HexAstAdditionExpr>(
+    expr,
+    "add_expr"
+  );
 
   return expr;
 }
 
-HexAstMinusExpr
-AstToXmlVisitor::visit(HexAstMinusExpr expr_)
+HexAstSubtractionExpr
+AstToXmlVisitor::visit(HexAstSubtractionExpr expr_)
 {
-  HexAstMinusExpr expr = AstVisitor::visit(expr_);
+  HexAstSubtractionExpr expr = AstVisitor::visit(expr_);
 
-  this->double_tag_for_binary_expr<HexAstMinusExpr>(expr, "minus_expr");
+  this->double_tag_for_binary_expr<HexAstSubtractionExpr>(
+    expr,
+    "minus_expr"
+  );
 
   return expr;
 }
 
-HexAstMultiplyExpr
-AstToXmlVisitor::visit(HexAstMultiplyExpr expr_)
+HexAstMultiplicationExpr
+AstToXmlVisitor::visit(HexAstMultiplicationExpr expr_)
 {
-  HexAstMultiplyExpr expr = AstVisitor::visit(expr_);
+  HexAstMultiplicationExpr expr = AstVisitor::visit(expr_);
 
-  this->double_tag_for_binary_expr<HexAstMultiplyExpr>(expr, "multiply_expr");
+  this->double_tag_for_binary_expr<HexAstMultiplicationExpr>(
+    expr,
+    "multiply_expr"
+  );
 
   return expr;
 }
 
-HexAstDivideExpr
-AstToXmlVisitor::visit(HexAstDivideExpr expr_)
+HexAstDivisionExpr
+AstToXmlVisitor::visit(HexAstDivisionExpr expr_)
 {
-  HexAstDivideExpr expr = AstVisitor::visit(expr_);
+  HexAstDivisionExpr expr = AstVisitor::visit(expr_);
 
-  this->double_tag_for_binary_expr<HexAstDivideExpr>(expr, "divide_expr");
+  this->double_tag_for_binary_expr<HexAstDivisionExpr>(
+    expr,
+    "divide_expr"
+  );
 
   return expr;
 }
@@ -533,7 +705,10 @@ AstToXmlVisitor::visit(HexAstModulusExpr expr_)
 {
   HexAstModulusExpr expr = AstVisitor::visit(expr_);
 
-  this->double_tag_for_binary_expr<HexAstModulusExpr>(expr, "modulus_expr");
+  this->double_tag_for_binary_expr<HexAstModulusExpr>(
+    expr,
+    "modulus_expr"
+  );
 
   return expr;
 }
@@ -543,57 +718,75 @@ AstToXmlVisitor::visit(HexAstPowerExpr expr_)
 {
   HexAstPowerExpr expr = AstVisitor::visit(expr_);
 
-  this->double_tag_for_binary_expr<HexAstPowerExpr>(expr, "power_expr");
+  this->double_tag_for_binary_expr<HexAstPowerExpr>(
+    expr,
+    "power_expr"
+  );
 
   return expr;
 }
 
-HexAstBitwiseAndExpr
-AstToXmlVisitor::visit(HexAstBitwiseAndExpr expr_)
+HexAstBitwiseANDExpr
+AstToXmlVisitor::visit(HexAstBitwiseANDExpr expr_)
 {
-  HexAstBitwiseAndExpr expr = AstVisitor::visit(expr_);
+  HexAstBitwiseANDExpr expr = AstVisitor::visit(expr_);
 
-  this->double_tag_for_binary_expr<HexAstBitwiseAndExpr>(expr, "bitwise_and_expr");
+  this->double_tag_for_binary_expr<HexAstBitwiseANDExpr>(
+    expr,
+    "bitwise_and_expr"
+  );
 
   return expr;
 }
 
-HexAstBitwiseOrExpr
-AstToXmlVisitor::visit(HexAstBitwiseOrExpr expr_)
+HexAstBitwiseORExpr
+AstToXmlVisitor::visit(HexAstBitwiseORExpr expr_)
 {
-  HexAstBitwiseOrExpr expr = AstVisitor::visit(expr_);
+  HexAstBitwiseORExpr expr = AstVisitor::visit(expr_);
 
-  this->double_tag_for_binary_expr<HexAstBitwiseOrExpr>(expr, "bitwise_or_expr");
+  this->double_tag_for_binary_expr<HexAstBitwiseORExpr>(
+    expr,
+    "bitwise_or_expr"
+  );
 
   return expr;
 }
 
-HexAstBitwiseXorExpr
-AstToXmlVisitor::visit(HexAstBitwiseXorExpr expr_)
+HexAstBitwiseXORExpr
+AstToXmlVisitor::visit(HexAstBitwiseXORExpr expr_)
 {
-  HexAstBitwiseXorExpr expr = AstVisitor::visit(expr_);
+  HexAstBitwiseXORExpr expr = AstVisitor::visit(expr_);
 
-  this->double_tag_for_binary_expr<HexAstBitwiseXorExpr>(expr, "bitwise_xor_expr");
+  this->double_tag_for_binary_expr<HexAstBitwiseXORExpr>(
+    expr,
+    "bitwise_xor_expr"
+  );
 
   return expr;
 }
 
-HexAstBitwiseShiftLeftExpr
-AstToXmlVisitor::visit(HexAstBitwiseShiftLeftExpr expr_)
+HexAstBitwiseLeftShiftExpr
+AstToXmlVisitor::visit(HexAstBitwiseLeftShiftExpr expr_)
 {
-  HexAstBitwiseShiftLeftExpr expr = AstVisitor::visit(expr_);
+  HexAstBitwiseLeftShiftExpr expr = AstVisitor::visit(expr_);
 
-  this->double_tag_for_binary_expr<HexAstBitwiseShiftLeftExpr>(expr, "bitwise_shift_left_expr");
+  this->double_tag_for_binary_expr<HexAstBitwiseLeftShiftExpr>(
+    expr,
+    "bitwise_shift_left_expr"
+  );
 
   return expr;
 }
 
-HexAstBitwiseShiftRightExpr
-AstToXmlVisitor::visit(HexAstBitwiseShiftRightExpr expr_)
+HexAstBitwiseRightShiftExpr
+AstToXmlVisitor::visit(HexAstBitwiseRightShiftExpr expr_)
 {
-  HexAstBitwiseShiftRightExpr expr = AstVisitor::visit(expr_);
+  HexAstBitwiseRightShiftExpr expr = AstVisitor::visit(expr_);
 
-  this->double_tag_for_binary_expr<HexAstBitwiseShiftRightExpr>(expr, "bitwise_shift_right_expr");
+  this->double_tag_for_binary_expr<HexAstBitwiseRightShiftExpr>(
+    expr,
+    "bitwise_shift_right_expr"
+  );
 
   return expr;
 }
@@ -603,7 +796,10 @@ AstToXmlVisitor::visit(HexAstEqualsExpr expr_)
 {
   HexAstEqualsExpr expr = AstVisitor::visit(expr_);
 
-  this->double_tag_for_binary_expr<HexAstEqualsExpr>(expr, "equals_expr");
+  this->double_tag_for_binary_expr<HexAstEqualsExpr>(
+    expr,
+    "equals_expr"
+  );
 
   return expr;
 }
@@ -613,7 +809,10 @@ AstToXmlVisitor::visit(HexAstNotEqualExpr expr_)
 {
   HexAstNotEqualExpr expr = AstVisitor::visit(expr_);
 
-  this->double_tag_for_binary_expr<HexAstNotEqualExpr>(expr, "not_equal_expr");
+  this->double_tag_for_binary_expr<HexAstNotEqualExpr>(
+    expr,
+    "not_equal_expr"
+  );
 
   return expr;
 }
@@ -623,7 +822,10 @@ AstToXmlVisitor::visit(HexAstIsExpr expr_)
 {
   HexAstIsExpr expr = AstVisitor::visit(expr_);
 
-  this->double_tag_for_binary_expr<HexAstIsExpr>(expr, "is_expr");
+  this->double_tag_for_binary_expr<HexAstIsExpr>(
+    expr,
+    "is_expr"
+  );
 
   return expr;
 }
@@ -633,7 +835,10 @@ AstToXmlVisitor::visit(HexAstIsNotExpr expr_)
 {
   HexAstIsNotExpr expr = AstVisitor::visit(expr_);
 
-  this->double_tag_for_binary_expr<HexAstIsNotExpr>(expr, "is_not_expr");
+  this->double_tag_for_binary_expr<HexAstIsNotExpr>(
+    expr,
+    "is_not_expr"
+  );
 
   return expr;
 }
@@ -643,7 +848,10 @@ AstToXmlVisitor::visit(HexAstLessThanExpr expr_)
 {
   HexAstLessThanExpr expr = AstVisitor::visit(expr_);
 
-  this->double_tag_for_binary_expr<HexAstLessThanExpr>(expr, "lt_expr");
+  this->double_tag_for_binary_expr<HexAstLessThanExpr>(
+    expr,
+    "lt_expr"
+  );
 
   return expr;
 }
@@ -653,7 +861,10 @@ AstToXmlVisitor::visit(HexAstGreaterThanExpr expr_)
 {
   HexAstGreaterThanExpr expr = AstVisitor::visit(expr_);
 
-  this->double_tag_for_binary_expr<HexAstGreaterThanExpr>(expr, "gt_expr");
+  this->double_tag_for_binary_expr<HexAstGreaterThanExpr>(
+    expr,
+    "gt_expr"
+  );
 
   return expr;
 }
@@ -663,7 +874,10 @@ AstToXmlVisitor::visit(HexAstGreaterOrEqualsExpr expr_)
 {
   HexAstGreaterOrEqualsExpr expr = AstVisitor::visit(expr_);
 
-  this->double_tag_for_binary_expr<HexAstGreaterOrEqualsExpr>(expr, "ge_expr");
+  this->double_tag_for_binary_expr<HexAstGreaterOrEqualsExpr>(
+    expr,
+    "ge_expr"
+  );
 
   return expr;
 }
@@ -673,7 +887,10 @@ AstToXmlVisitor::visit(HexAstLessOrEqualsExpr expr_)
 {
   HexAstLessOrEqualsExpr expr = AstVisitor::visit(expr_);
 
-  this->double_tag_for_binary_expr<HexAstLessOrEqualsExpr>(expr, "le_expr");
+  this->double_tag_for_binary_expr<HexAstLessOrEqualsExpr>(
+    expr,
+    "le_expr"
+  );
 
   return expr;
 }
@@ -683,7 +900,10 @@ AstToXmlVisitor::visit(HexAstInExpr expr_)
 {
   HexAstInExpr expr = AstVisitor::visit(expr_);
 
-  this->double_tag_for_binary_expr(expr, "in_expr");
+  this->double_tag_for_binary_expr(
+    expr,
+    "in_expr"
+  );
 
   return expr;
 }
@@ -693,27 +913,36 @@ AstToXmlVisitor::visit(HexAstNotInExpr expr_)
 {
   HexAstNotInExpr expr = AstVisitor::visit(expr_);
 
-  this->double_tag_for_binary_expr<HexAstNotInExpr>(expr, "not_in_expr");
+  this->double_tag_for_binary_expr<HexAstNotInExpr>(
+    expr,
+    "not_in_expr"
+  );
 
   return expr;
 }
 
-HexAstAndExpr
-AstToXmlVisitor::visit(HexAstAndExpr expr_)
+HexAstLogicalANDExpr
+AstToXmlVisitor::visit(HexAstLogicalANDExpr expr_)
 {
-  HexAstAndExpr expr = AstVisitor::visit(expr_);
+  HexAstLogicalANDExpr expr = AstVisitor::visit(expr_);
 
-  this->double_tag_for_binary_expr<HexAstAndExpr>(expr, "and_expr");
+  this->double_tag_for_binary_expr<HexAstLogicalANDExpr>(
+    expr,
+    "and_expr"
+  );
 
   return expr;
 }
 
-HexAstOrExpr
-AstToXmlVisitor::visit(HexAstOrExpr expr_)
+HexAstLogicalORExpr
+AstToXmlVisitor::visit(HexAstLogicalORExpr expr_)
 {
-  HexAstOrExpr expr = AstVisitor::visit(expr_);
+  HexAstLogicalORExpr expr = AstVisitor::visit(expr_);
 
-  this->double_tag_for_binary_expr<HexAstOrExpr>(expr, "or_expr");
+  this->double_tag_for_binary_expr<HexAstLogicalORExpr>(
+    expr,
+    "or_expr"
+  );
 
   return expr;
 }
@@ -723,29 +952,9 @@ AstToXmlVisitor::visit(HexAstInclusiveRangeExpr expr_)
 {
   HexAstInclusiveRangeExpr expr = AstVisitor::visit(expr_);
 
-  this->double_tag(
-    "inclusive_range_expr",
-    [this, expr]() {
-
-      if(expr->begin()) {
-        this->double_tag(
-          "inclusive_range_expr-begin",
-          [this, expr]() {
-            expr->begin()->accept(this);
-          }
-        );
-      }
-
-      if(expr->end()) {
-        this->double_tag(
-          "inclusive_range_expr-end",
-          [this, expr]() {
-            expr->end()->accept(this);
-          }
-        );
-      }
-
-    }
+  this->double_tag_for_binary_expr<HexAstInclusiveRangeExpr>(
+    expr,
+    "inclusive_range_expr"
   );
 
   return expr;
@@ -756,130 +965,10 @@ AstToXmlVisitor::visit(HexAstExclusiveRangeExpr expr_)
 {
   HexAstExclusiveRangeExpr expr = AstVisitor::visit(expr_);
 
-  this->double_tag(
-    "exclusive_range_expr",
-    [this, expr]() {
-
-      if(expr->begin()) {
-        this->double_tag(
-          "exclusive_range_expr-begin",
-          [this, expr]() {
-            expr->begin()->accept(this);
-          }
-        );
-      }
-
-      if(expr->end()) {
-        this->double_tag(
-          "exclusive_range_expr-end",
-          [this, expr]() {
-            expr->end()->accept(this);
-          }
-        );
-      }
-
-    }
+  this->double_tag_for_binary_expr<HexAstExclusiveRangeExpr>(
+    expr,
+    "exclusive_range_expr"
   );
-
-  return expr;
-}
-
-HexAstPseudoAssignPlusExpr
-AstToXmlVisitor::visit(HexAstPseudoAssignPlusExpr expr_)
-{
-  HexAstPseudoAssignPlusExpr expr = AstVisitor::visit(expr_);
-
-  this->double_tag_for_binary_expr<HexAstPseudoAssignPlusExpr>(expr, "pseudo_plus");
-
-  return expr;
-}
-
-HexAstPseudoAssignMinusExpr
-AstToXmlVisitor::visit(HexAstPseudoAssignMinusExpr expr_)
-{
-  HexAstPseudoAssignMinusExpr expr = AstVisitor::visit(expr_);
-
-  this->double_tag_for_binary_expr<HexAstPseudoAssignMinusExpr>(expr, "pseudo_minus");
-
-  return expr;
-}
-
-HexAstPseudoAssignMultiplyExpr
-AstToXmlVisitor::visit(HexAstPseudoAssignMultiplyExpr expr_)
-{
-  HexAstPseudoAssignMultiplyExpr expr = AstVisitor::visit(expr_);
-
-  this->double_tag_for_binary_expr<HexAstPseudoAssignMultiplyExpr>(expr, "pseudo_multiply");
-
-  return expr;
-}
-
-HexAstPseudoAssignDivideExpr
-AstToXmlVisitor::visit(HexAstPseudoAssignDivideExpr expr_)
-{
-  HexAstPseudoAssignDivideExpr expr = AstVisitor::visit(expr_);
-
-  this->double_tag_for_binary_expr<HexAstPseudoAssignDivideExpr>(expr, "pseudo_divide");
-
-  return expr;
-}
-
-HexAstPseudoAssignModulusExpr
-AstToXmlVisitor::visit(HexAstPseudoAssignModulusExpr expr_)
-{
-  HexAstPseudoAssignModulusExpr expr = AstVisitor::visit(expr_);
-
-  this->double_tag_for_binary_expr<HexAstPseudoAssignModulusExpr>(expr, "pseudo_modulus");
-
-  return expr;
-}
-
-HexAstPseudoAssignBitwiseAndExpr
-AstToXmlVisitor::visit(HexAstPseudoAssignBitwiseAndExpr expr_)
-{
-  HexAstPseudoAssignBitwiseAndExpr expr = AstVisitor::visit(expr_);
-
-  this->double_tag_for_binary_expr<HexAstPseudoAssignBitwiseAndExpr>(expr, "pseudo_bitwise_and");
-
-  return expr;
-}
-
-HexAstPseudoAssignBitwiseOrExpr
-AstToXmlVisitor::visit(HexAstPseudoAssignBitwiseOrExpr expr_)
-{
-  HexAstPseudoAssignBitwiseOrExpr expr = AstVisitor::visit(expr_);
-
-  this->double_tag_for_binary_expr<HexAstPseudoAssignBitwiseOrExpr>(expr, "pseudo_bitwise_or");
-
-  return expr;
-}
-
-HexAstPseudoAssignBitwiseXorExpr
-AstToXmlVisitor::visit(HexAstPseudoAssignBitwiseXorExpr expr_)
-{
-  HexAstPseudoAssignBitwiseXorExpr expr = AstVisitor::visit(expr_);
-
-  this->double_tag_for_binary_expr<HexAstPseudoAssignBitwiseXorExpr>(expr, "pseudo_bitwise_xor");
-
-  return expr;
-}
-
-HexAstPseudoAssignBitwiseLeftShiftExpr
-AstToXmlVisitor::visit(HexAstPseudoAssignBitwiseLeftShiftExpr expr_)
-{
-  HexAstPseudoAssignBitwiseLeftShiftExpr expr = AstVisitor::visit(expr_);
-
-  this->double_tag_for_binary_expr<HexAstPseudoAssignBitwiseLeftShiftExpr>(expr, "pseudo_bitwise_left_shift");
-
-  return expr;
-}
-
-HexAstPseudoAssignBitwiseRightShiftExpr
-AstToXmlVisitor::visit(HexAstPseudoAssignBitwiseRightShiftExpr expr_)
-{
-  HexAstPseudoAssignBitwiseRightShiftExpr expr = AstVisitor::visit(expr_);
-
-  this->double_tag_for_binary_expr<HexAstPseudoAssignBitwiseRightShiftExpr>(expr, "pseudo_bitwise_right_shift");
 
   return expr;
 }
@@ -923,6 +1012,136 @@ AstToXmlVisitor::visit(HexAstConditionalExpr expr_)
   return expr;
 }
 
+HexAstAdditionAssignmentExpr
+AstToXmlVisitor::visit(HexAstAdditionAssignmentExpr expr_)
+{
+  HexAstAdditionAssignmentExpr expr = AstVisitor::visit(expr_);
+
+  this->double_tag_for_binary_expr<HexAstAdditionAssignmentExpr>(
+    expr,
+    "addition_assignment_expr"
+  );
+
+  return expr;
+}
+
+HexAstSubtractionAssignmentExpr
+AstToXmlVisitor::visit(HexAstSubtractionAssignmentExpr expr_)
+{
+  HexAstSubtractionAssignmentExpr expr = AstVisitor::visit(expr_);
+
+  this->double_tag_for_binary_expr<HexAstSubtractionAssignmentExpr>(
+    expr,
+    "subtraction_assignment_expr"
+  );
+
+  return expr;
+}
+
+HexAstMultiplicationAssignmentExpr
+AstToXmlVisitor::visit(HexAstMultiplicationAssignmentExpr expr_)
+{
+  HexAstMultiplicationAssignmentExpr expr = AstVisitor::visit(expr_);
+
+  this->double_tag_for_binary_expr<HexAstMultiplicationAssignmentExpr>(
+    expr,
+    "multiplication_assignment_expr"
+  );
+
+  return expr;
+}
+
+HexAstDivisionAssignmentExpr
+AstToXmlVisitor::visit(HexAstDivisionAssignmentExpr expr_)
+{
+  HexAstDivisionAssignmentExpr expr = AstVisitor::visit(expr_);
+
+  this->double_tag_for_binary_expr<HexAstDivisionAssignmentExpr>(
+    expr,
+    "division_assignment_expr"
+  );
+
+  return expr;
+}
+
+HexAstModulusAssignmentExpr
+AstToXmlVisitor::visit(HexAstModulusAssignmentExpr expr_)
+{
+  HexAstModulusAssignmentExpr expr = AstVisitor::visit(expr_);
+
+  this->double_tag_for_binary_expr<HexAstModulusAssignmentExpr>(
+    expr,
+    "modulus_assignment_expr"
+  );
+
+  return expr;
+}
+
+HexAstBitwiseANDAssignmentExpr
+AstToXmlVisitor::visit(HexAstBitwiseANDAssignmentExpr expr_)
+{
+  HexAstBitwiseANDAssignmentExpr expr = AstVisitor::visit(expr_);
+
+  this->double_tag_for_binary_expr<HexAstBitwiseANDAssignmentExpr>(
+    expr,
+    "bitwise_and_assignment_expr"
+  );
+
+  return expr;
+}
+
+HexAstBitwiseORAssignmentExpr
+AstToXmlVisitor::visit(HexAstBitwiseORAssignmentExpr expr_)
+{
+  HexAstBitwiseORAssignmentExpr expr = AstVisitor::visit(expr_);
+
+  this->double_tag_for_binary_expr<HexAstBitwiseORAssignmentExpr>(
+    expr,
+    "bitwise_or_assignment_expr"
+  );
+
+  return expr;
+}
+
+HexAstBitwiseXORAssignmentExpr
+AstToXmlVisitor::visit(HexAstBitwiseXORAssignmentExpr expr_)
+{
+  HexAstBitwiseXORAssignmentExpr expr = AstVisitor::visit(expr_);
+
+  this->double_tag_for_binary_expr<HexAstBitwiseXORAssignmentExpr>(
+    expr,
+    "bitwise_xor_assignment_expr"
+  );
+
+  return expr;
+}
+
+HexAstBitwiseLeftShiftAssignmentExpr
+AstToXmlVisitor::visit(HexAstBitwiseLeftShiftAssignmentExpr expr_)
+{
+  HexAstBitwiseLeftShiftAssignmentExpr expr = AstVisitor::visit(expr_);
+
+  this->double_tag_for_binary_expr<HexAstBitwiseLeftShiftAssignmentExpr>(
+    expr,
+    "bitwise_left_shift_assignment_expr"
+  );
+
+  return expr;
+}
+
+HexAstBitwiseRightShiftAssignmentExpr
+AstToXmlVisitor::visit(HexAstBitwiseRightShiftAssignmentExpr expr_)
+{
+  HexAstBitwiseRightShiftAssignmentExpr expr = AstVisitor::visit(expr_);
+
+  this->double_tag_for_binary_expr<HexAstBitwiseRightShiftAssignmentExpr>(
+    expr,
+    "bitwise_right_shift_assignment_expr"
+  );
+
+  return expr;
+}
+
 HexAstYieldExpr
 AstToXmlVisitor::visit(HexAstYieldExpr expr_)
 {
@@ -931,7 +1150,6 @@ AstToXmlVisitor::visit(HexAstYieldExpr expr_)
   this->double_tag(
     "yield_expr",
     [this, expr]() {
-
       if(expr->exprs()) {
         this->double_tag(
           "yield_expr-exprs",
@@ -940,17 +1158,16 @@ AstToXmlVisitor::visit(HexAstYieldExpr expr_)
             }
         );
       }
-
     }
   );
 
   return expr;
 }
 
-HexAstStringExpr
-AstToXmlVisitor::visit(HexAstStringExpr expr_)
+HexAstStringCompositionExpr
+AstToXmlVisitor::visit(HexAstStringCompositionExpr expr_)
 {
-  HexAstStringExpr expr = AstVisitor::visit(expr_);
+  HexAstStringCompositionExpr expr = AstVisitor::visit(expr_);
 
   this->double_tag(
     "string_expr",
@@ -966,7 +1183,7 @@ AstToXmlVisitor::visit(HexAstStringExpr expr_)
       this->double_tag(
         "string_expr-exprs",
         [this, expr]() {
-          expr->exprs()->accept(this);
+          expr->paren()->accept(this);
         }
       );
     }
@@ -975,21 +1192,212 @@ AstToXmlVisitor::visit(HexAstStringExpr expr_)
   return expr;
 }
 
-HexAstParenForm
-AstToXmlVisitor::visit(HexAstParenForm form_)
+HexAstNestedComprehension
+AstToXmlVisitor::visit(HexAstNestedComprehension comprehension_)
 {
-  HexAstParenForm form = AstVisitor::visit(form_);
+  HexAstNestedComprehension comprehension = AstVisitor::visit(comprehension_);
+
+  this->double_tag(
+    "nested_comprehension",
+    [this, comprehension]() {
+
+      this->double_tag(
+        "nested_comprehension-nested-comprehension",
+        [this, comprehension]() {
+          comprehension->nested_comprehension()->accept(this);
+        }
+      );
+
+      this->double_tag(
+        "nested_comprehension-targets",
+        [this, comprehension]() {
+          comprehension->targets()->accept(this);
+        }
+      );
+
+      this->double_tag(
+        "nested_comprehension-sources",
+        [this, comprehension]() {
+          comprehension->sources()->accept(this);
+        }
+      );
+
+      if(comprehension->predicate()) {
+        this->double_tag(
+          "nested_comprehension-predicate",
+          [this, comprehension]() {
+            comprehension->predicate()->accept(this);
+          }
+        );
+      }
+
+    }
+  );
+
+  return comprehension;
+}
+
+HexAstExprComprehension
+AstToXmlVisitor::visit(HexAstExprComprehension comprehension_)
+{
+  HexAstExprComprehension comprehension = AstVisitor::visit(comprehension_);
+
+  this->double_tag(
+    "expr_comprehension",
+    [this, comprehension]() {
+
+      this->double_tag(
+        "expr_comprehension-exprs",
+        [this, comprehension]() {
+          comprehension->exprs()->accept(this);
+        }
+      );
+
+      this->double_tag(
+        "expr_comprehension-targets",
+        [this, comprehension]() {
+          comprehension->targets()->accept(this);
+        }
+      );
+
+      this->double_tag(
+        "expr_comprehension-sources",
+        [this, comprehension]() {
+          comprehension->sources()->accept(this);
+        }
+      );
+
+      if(comprehension->predicate()) {
+        this->double_tag(
+          "nested_comprehension-predicate",
+          [this, comprehension]() {
+            comprehension->predicate()->accept(this);
+          }
+        );
+      }
+
+    }
+  );
+
+  return comprehension;
+}
+
+HexAstGeneratorExpr
+AstToXmlVisitor::visit(HexAstGeneratorExpr expr_)
+{
+  HexAstGeneratorExpr expr = AstVisitor::visit(expr_);
+
+  this->double_tag(
+    "generator_expr",
+    [this, expr]() {
+
+      this->double_tag(
+        "generator_expr-comprehension",
+        [this, expr]() {
+          expr->comprehension()->accept(this);
+        }
+      );
+
+    }
+  );
+
+  return expr;
+}
+
+HexAstParenForm
+AstToXmlVisitor::visit(HexAstParenForm paren_)
+{
+  HexAstParenForm paren = AstVisitor::visit(paren_);
 
   this->double_tag(
     "paren_form",
-    [this, form]() {
-      if(form->exprs()) {
-        form->exprs()->accept(this);
+    [this, paren]() {
+      if(paren->exprs()) {
+        paren->exprs()->accept(this);
       }
     }
   );
 
-  return form;
+  return paren;
+}
+
+HexAstExplicitListForm
+AstToXmlVisitor::visit(HexAstExplicitListForm list_)
+{
+  HexAstExplicitListForm list = AstVisitor::visit(list_);
+
+  this->double_tag(
+    "list_form",
+    [this, list]() {
+      if(list->elements()) {
+        list->elements()->accept(this);
+      }
+    }
+  );
+
+  return list;
+}
+
+HexAstImplicitListForm
+AstToXmlVisitor::visit(HexAstImplicitListForm list_)
+{
+  HexAstImplicitListForm list = AstVisitor::visit(list_);
+
+  this->double_tag(
+    "list_form",
+    [this, list] () {
+      list->comprehension()->accept(this);
+    }
+  );
+
+  return list;
+}
+
+HexAstExplicitDictForm
+AstToXmlVisitor::visit(HexAstExplicitDictForm dict_)
+{
+  HexAstExplicitDictForm dict = AstVisitor::visit(dict_);
+
+  this->double_tag(
+    "dict_form",
+    [this, dict]() {
+      if(dict->fields()) {
+        dict->fields()->accept(this);
+      }
+    }
+  );
+
+  return dict;
+}
+
+HexAstImplicitDictForm
+AstToXmlVisitor::visit(HexAstImplicitDictForm dict_)
+{
+  HexAstImplicitDictForm dict = AstVisitor::visit(dict_);
+
+  this->double_tag(
+    "dict_form",
+    [this, dict] () {
+      dict->comprehension()->accept(this);
+    }
+  );
+
+  return dict;
+}
+
+HexAstObjectForm
+AstToXmlVisitor::visit(HexAstObjectForm object_)
+{
+  HexAstObjectForm object = AstVisitor::visit(object_);
+
+  this->double_tag(
+    "object_form",
+    [this, object]() {
+      object->fields()->accept(this);
+    }    
+  );
+
+  return object;
 }
 
 HexAstExprList
@@ -1001,10 +1409,7 @@ AstToXmlVisitor::visit(HexAstExprList exprlist_)
     "exprlist",
     [this, exprlist]() {
       this->iterate<HexAstExpr>(
-        exprlist->list(),
-        [this](HexAstExpr expr) {
-          expr->accept(this);
-        }
+        exprlist->list()
       );
     }
   );
@@ -1050,10 +1455,7 @@ AstToXmlVisitor::visit(HexAstSimpleParamList params_)
     "simple_parameter_list",
     [this, params]() {
       this->iterate<HexAstSimpleParam>(
-        params->list(),
-        [this](HexAstSimpleParam param) {
-          param->accept(this);
-        }
+        params->list()
       );
     }
   );
@@ -1107,63 +1509,12 @@ AstToXmlVisitor::visit(HexAstKeywordParamList params_)
     "keyword_param_list",
     [this, params]() {
       this->iterate<HexAstKeywordParam>(
-        params->list(),
-        [this](HexAstKeywordParam param) {
-          param->accept(this);
-        }
+        params->list()
       );
     }
   );
 
   return params;
-}
-
-HexAstKeywordVal
-AstToXmlVisitor::visit(HexAstKeywordVal keyval_)
-{
-  HexAstKeywordVal keyval = AstVisitor::visit(keyval_);
-
-  this->double_tag(
-    "keyword_val",
-    [this, keyval]() {
-
-      this->double_tag(
-        "keyword_val-key",
-        [this, keyval]() {
-          keyval->key()->accept(this);
-        }
-      );
-
-      this->double_tag(
-        "keyword_val-val",
-        [this, keyval]() {
-          keyval->val()->accept(this);
-        }
-      );
-    }
-  );
-
-  return keyval;
-}
-
-HexAstKeywordValList
-AstToXmlVisitor::visit(HexAstKeywordValList list_)
-{
-  HexAstKeywordValList list = AstVisitor::visit(list_);
-
-  this->double_tag(
-    "keyword_val_list",
-    [this, list]() {
-      this->iterate<HexAstKeywordVal>(
-        list->list(),
-        [this](HexAstKeywordVal keyval) {
-          keyval->accept(this);
-        }
-      );
-    }
-  );
-
-  return list;
 }
 
 HexAstParameterList
@@ -1185,22 +1536,22 @@ AstToXmlVisitor::visit(HexAstParameterList params_)
         );
       }
 
-      // keyword params
-      if(params->keyword_params()) {
-        this->double_tag(
-          "parameter_list-keyword_params",
-          [this, params]() {
-            params->keyword_params()->accept(this);
-          }
-        );
-      }
-
       // args
       if(params->args()) {
         this->double_tag(
           "parameter_list-args",
           [this, params]() {
             params->args()->accept(this);
+          }
+        );
+      }
+
+      // keyword params
+      if(params->keyword_params()) {
+        this->double_tag(
+          "parameter_list-keyword_params",
+          [this, params]() {
+            params->keyword_params()->accept(this);
           }
         );
       }
@@ -1221,24 +1572,66 @@ AstToXmlVisitor::visit(HexAstParameterList params_)
   return params;
 }
 
-HexAstValList
-AstToXmlVisitor::visit(HexAstValList vallist_)
+HexAstSimpleArgList
+AstToXmlVisitor::visit(HexAstSimpleArgList args_)
 {
-  HexAstValList vallist = AstVisitor::visit(vallist_);
+  HexAstSimpleArgList args = AstVisitor::visit(args_);
 
   this->double_tag(
-    "val_atom_list",
-    [this, vallist]() {
-      this->iterate<HexAstValAtom>(
-        vallist->list(),
-        [this](HexAstValAtom atom) {
-          atom->accept(this);
+    "simple_args_list",
+    [this, args]() {
+      this->iterate<HexAstSimpleArg>(
+        args->list()
+      );
+    }
+  );
+
+  return args;
+}
+
+HexAstKeywordArg
+AstToXmlVisitor::visit(HexAstKeywordArg arg_)
+{
+  HexAstKeywordArg arg = AstVisitor::visit(arg_);
+
+  this->double_tag(
+    "keyword_arg",
+    [this, arg]() {
+
+      this->double_tag(
+        "keyword_arg-name",
+        [this, arg]() {
+          arg->name()->accept(this);
+        }
+      );
+
+      this->double_tag(
+        "keyword_arg-value",
+        [this, arg]() {
+          arg->value()->accept(this);
         }
       );
     }
   );
 
-  return vallist;
+  return arg;
+}
+
+HexAstKeywordArgList
+AstToXmlVisitor::visit(HexAstKeywordArgList args_)
+{
+  HexAstKeywordArgList args = AstVisitor::visit(args_);
+
+  this->double_tag(
+    "keyword_args_list",
+    [this, args]() {
+      this->iterate<HexAstKeywordArg>(
+        args->list()
+      );
+    }
+  );
+
+  return args;
 }
 
 HexAstArgList
@@ -1260,22 +1653,22 @@ AstToXmlVisitor::visit(HexAstArgList arglist_)
         );
       }
 
-      // keyword args
-      if(arglist->keyword_args()) {
-        this->double_tag(
-          "arg_list-keyword_args",
-          [this, arglist]() {
-            arglist->keyword_args()->accept(this);
-          }
-        );
-      }
-
       // args
       if(arglist->args()) {
         this->double_tag(
           "arg_list-args",
           [this, arglist]() {
             arglist->args()->accept(this);
+          }
+        );
+      }
+
+      // keyword args
+      if(arglist->keyword_args()) {
+        this->double_tag(
+          "arg_list-keyword_args",
+          [this, arglist]() {
+            arglist->keyword_args()->accept(this);
           }
         );
       }
@@ -1296,126 +1689,21 @@ AstToXmlVisitor::visit(HexAstArgList arglist_)
   return arglist;
 }
 
-HexAstComprehension
-AstToXmlVisitor::visit(HexAstComprehension comprehension_)
-{
-  HexAstComprehension comprehension = AstVisitor::visit(comprehension_);
-
-  this->double_tag(
-    "comprehension",
-    [this, comprehension]() {
-
-      // destination
-      if(comprehension->dst()) {
-        this->double_tag(
-          "comprehension-dst",
-          [this, comprehension]() {
-            comprehension->dst()->accept(this);
-          }
-        );
-      }
-
-      // candidates
-      this->double_tag(
-        "comprehension-candidates",
-        [this, comprehension]() {
-          comprehension->candidates()->accept(this);
-        }
-      );
-
-      // source
-      this->double_tag(
-        "comprehension-source",
-        [this, comprehension]() {
-          comprehension->src()->accept(this);
-        }
-      );
-
-      // predicate
-      if(comprehension->predicate()) {
-        this->double_tag(
-          "comprehension-predicate",
-          [this, comprehension]() {
-            comprehension->predicate()->accept(this);
-          }
-        );
-      }
-
-    }
-  );
-
-  return comprehension;
-}
-
-HexAstComprehensionList
-AstToXmlVisitor::visit(HexAstComprehensionList comprehensions_)
-{
-  HexAstComprehensionList comprehensions = AstVisitor::visit(comprehensions_);
-
-  this->double_tag(
-    "comprehensions",
-    [this, comprehensions]() {
-      this->iterate<HexAstComprehension>(
-        comprehensions->list(),
-        [this](HexAstComprehension comprehension) {
-          comprehension->accept(this);
-        }
-      );
-    }
-  );
-
-  return comprehensions;
-}
-
-HexAstExplicitListForm
-AstToXmlVisitor::visit(HexAstExplicitListForm form_)
-{
-  HexAstExplicitListForm form = AstVisitor::visit(form_);
-
-  this->double_tag(
-    "list_form",
-    [this, form]() {
-      if(form->elements()) {
-        HexAstExprList elements = form->elements();
-        elements->accept(this);
-      }
-    }
-  );
-
-  return form;
-}
-
-HexAstImplicitListForm
-AstToXmlVisitor::visit(HexAstImplicitListForm form_)
-{
-  HexAstImplicitListForm form = AstVisitor::visit(form_);
-
-  this->double_tag(
-    "list_form",
-    [this, form] () {
-      HexAstComprehensionList comprehensions = form->comprehensions();
-      comprehensions->accept(this);
-    }
-  );
-
-  return form;
-}
-
 HexAstFieldDef
-AstToXmlVisitor::visit(HexAstFieldDef def_)
+AstToXmlVisitor::visit(HexAstFieldDef field_)
 {
-  HexAstFieldDef def = AstVisitor::visit(def_);
+  HexAstFieldDef field = AstVisitor::visit(field_);
 
   this->double_tag(
     "field_def",
-    [this, def]() {
+    [this, field]() {
 
       // decorators
-      if(def->decorators()) {
+      if(field->decorators()) {
         this->double_tag(
           "field_def-decorators",
-          [this, def]() {
-            def->decorators()->accept(this);
+          [this, field]() {
+            field->decorators()->accept(this);
           }
         );
       }
@@ -1423,42 +1711,39 @@ AstToXmlVisitor::visit(HexAstFieldDef def_)
       // name
       this->double_tag(
         "field_def-name",
-        [this, def]() {
-          def->name()->accept(this);
+        [this, field]() {
+          field->name()->accept(this);
         }
       );
 
       // val
       this->double_tag(
-        "field_def-val",
-        [this, def]() {
-          def->val()->accept(this);
+        "field_def-value",
+        [this, field]() {
+          field->value()->accept(this);
         }
       );
     }
   );
 
-  return def;
+  return field;
 }
 
 HexAstFieldDefList
-AstToXmlVisitor::visit(HexAstFieldDefList list_)
+AstToXmlVisitor::visit(HexAstFieldDefList fields_)
 {
-  HexAstFieldDefList list = AstVisitor::visit(list_);
+  HexAstFieldDefList fields = AstVisitor::visit(fields_);
 
   this->double_tag(
     "field_def_list",
-    [this, list]() {
+    [this, fields]() {
       this->iterate<HexAstFieldDef>(
-        list->list(),
-        [this](HexAstFieldDef field) {
-          field->accept(this);
-        }
+        fields->list()
       );
     }
   );
 
-  return list;
+  return fields;
 }
 
 HexAstKeyValuePair
@@ -1492,57 +1777,66 @@ AstToXmlVisitor::visit(HexAstKeyValuePair pair_)
 }
 
 HexAstKeyValuePairList
-AstToXmlVisitor::visit(HexAstKeyValuePairList list_)
+AstToXmlVisitor::visit(HexAstKeyValuePairList pairs_)
 {
-  HexAstKeyValuePairList list = AstVisitor::visit(list_);
+  HexAstKeyValuePairList pairs = AstVisitor::visit(pairs_);
 
   this->double_tag(
     "key_value_pair_list",
-    [this, list]() {
+    [this, pairs]() {
       this->iterate<HexAstKeyValuePair>(
-        list->list(),
-        [this](HexAstKeyValuePair pair) {
-          pair->accept(this);
-        }
+        pairs->list()
       );
     }
   );
 
-  return list;
+  return pairs;
 }
 
-HexAstExplicitDictForm
-AstToXmlVisitor::visit(HexAstExplicitDictForm dict_)
+HexAstAttributeValuePair
+AstToXmlVisitor::visit(HexAstAttributeValuePair pair_)
 {
-  HexAstExplicitDictForm dict = AstVisitor::visit(dict_);
+  HexAstAttributeValuePair pair = AstVisitor::visit(pair_);
 
   this->double_tag(
-    "dict_form",
-    [this, dict]() {
-      if(dict->fields()) {
-        HexAstKeyValuePairList fields = dict->fields();
-        fields->accept(this); 
-      }
+    "attribute_value_pair",
+    [this, pair]() {
+
+      this->double_tag(
+        "attributes_value_pair-attribute",
+        [this, pair]() {
+          pair->attribute()->accept(this);
+        }
+      );
+
+      this->double_tag(
+        "attributes_value_pair-value",
+        [this, pair]() {
+          pair->value()->accept(this);
+        }
+      );
+
     }
   );
 
-  return dict;
+  return pair;
 }
 
-HexAstImplicitDictForm
-AstToXmlVisitor::visit(HexAstImplicitDictForm dict_)
+HexAstAttributeValuePairList
+AstToXmlVisitor::visit(HexAstAttributeValuePairList pairs_)
 {
-  HexAstImplicitDictForm dict = AstVisitor::visit(dict_);
+  HexAstAttributeValuePairList pairs = AstVisitor::visit(pairs_);
 
   this->double_tag(
-    "dict_form",
-    [this, dict] () {
-      HexAstComprehensionList comprehensions = dict->comprehensions();
-      comprehensions->accept(this);
+    "attribute_value_pair_list",
+    [this, pairs]() {
+      this->iterate<HexAstAttributeValuePair>(
+        pairs->list()
+      );
     }
   );
 
-  return dict;
+  return pairs;
 }
 
 HexAstDecorator
@@ -1554,7 +1848,6 @@ AstToXmlVisitor::visit(HexAstDecorator decorator_)
     "decorator",
     [this, decorator]() {
 
-      // name
       this->double_tag(
         "decorator-name",
         [this, decorator]() {
@@ -1562,7 +1855,6 @@ AstToXmlVisitor::visit(HexAstDecorator decorator_)
         }
       );
 
-      // args
       if(decorator->args()) {
         this->double_tag(
           "decorator-args",
@@ -1587,10 +1879,7 @@ AstToXmlVisitor::visit(HexAstDecoratorList decorators_)
     "decorator_list",
     [this, decorators]() {
       this->iterate<HexAstDecorator>(
-        decorators->list(),
-        [this](HexAstDecorator decorator) {
-          decorator->accept(this);
-        }
+        decorators->list()
       );
     }
   );
@@ -1598,103 +1887,40 @@ AstToXmlVisitor::visit(HexAstDecoratorList decorators_)
   return decorators;
 }
 
-HexAstExprListAssignmentStmt
-AstToXmlVisitor::visit(HexAstExprListAssignmentStmt stmt_)
+HexAstAssignmentStmt
+AstToXmlVisitor::visit(HexAstAssignmentStmt stmt_)
 {
-  HexAstExprListAssignmentStmt stmt = AstVisitor::visit(stmt_);
+  HexAstAssignmentStmt stmt = AstVisitor::visit(stmt_);
+
+  char *feature = NULL;
+  switch(stmt->feature()->feature())
+  {
+    case HEX_AST_ASSIGNMENT_FEATURE_NONE:
+      feature = "type=\"none\"";
+      break;
+    case HEX_AST_ASSIGNMENT_FEATURE_DEFER:
+      feature = "type=\"defer\"";
+      break;
+    default:
+      break;
+  }
 
   this->double_tag(
     "assignment_stmt",
+    feature,
     [this, stmt]() {
 
-      // dst
       this->double_tag(
-        "assignment_stmt-dst",
+        "assignment_stmt-target",
         [this, stmt]() {
           stmt->target()->accept(this);
         }
       );
 
-      // src
       this->double_tag(
-        "assignment_stmt-src",
+        "assignment_stmt-source",
         [this, stmt]() {
-          HexAstExprList exprlist = stmt->src();
-          exprlist->accept(this);
-        }
-      );
-
-    }
-  );
-
-  return stmt;
-}
-
-HexAstLambdaAssignmentStmt
-AstToXmlVisitor::visit(HexAstLambdaAssignmentStmt stmt_)
-{
-  HexAstLambdaAssignmentStmt stmt = AstVisitor::visit(stmt_);
-
-  this->double_tag(
-    "assignment_stmt",
-    [this, stmt]() {
-
-      // decorators
-      if(stmt->decorators()) {
-        this->double_tag(
-          "assignment_stmt-decorators",
-          [this, stmt]() {
-            stmt->decorators()->accept(this);
-          }
-        );
-      }
-
-      // dst
-      this->double_tag(
-        "assignment_stmt-dst",
-        [this, stmt]() {
-          stmt->target()->accept(this);
-        }
-      );
-
-      // src
-      this->double_tag(
-        "assignment_stmt-src",
-        [this, stmt]() {
-          HexAstLambda lambda = stmt->src();
-          lambda->accept(this);
-        }
-      );
-
-    }
-  );
-
-  return stmt;
-}
-
-HexAstTaskDefAssignmentStmt
-AstToXmlVisitor::visit(HexAstTaskDefAssignmentStmt stmt_)
-{
-  HexAstTaskDefAssignmentStmt stmt = AstVisitor::visit(stmt_);
-
-  this->double_tag(
-    "assignment_stmt",
-    [this, stmt]() {
-
-      // dst
-      this->double_tag(
-        "assignment_stmt-dst",
-        [this, stmt]() {
-          stmt->target()->accept(this);
-        }
-      );
-
-      // src
-      this->double_tag(
-        "assignment_stmt-src",
-        [this, stmt]() {
-          HexAstTaskDef task = stmt->src();
-          task->accept(this);
+          stmt->source()->accept(this);
         }
       );
 
@@ -1731,27 +1957,34 @@ AstToXmlVisitor::visit(HexAstUsingSrc src_)
   return src;
 }
 
-HexAstUsingStmtDirect
-AstToXmlVisitor::visit(HexAstUsingStmtDirect stmt_)
+HexAstRelativeUsingStmt
+AstToXmlVisitor::visit(HexAstRelativeUsingStmt stmt_)
 {
-  HexAstUsingStmtDirect stmt = AstVisitor::visit(stmt_);
+  HexAstRelativeUsingStmt stmt = AstVisitor::visit(stmt_);
 
   this->double_tag(
-    "using_stmt_direct",
+    "using_stmt_relative",
     [this, stmt]() {
 
-      // target
+      if(stmt->targets()) {
+        this->double_tag(
+          "using_stmt_relative-targets",
+          [this, stmt]() {
+            stmt->targets()->accept(this);
+          }
+        );
+      }
+
       this->double_tag(
-        "using_stmt_direct-target",
+        "using_stmt_relative-source",
         [this, stmt]() {
-          stmt->target()->accept(this);
+          stmt->source()->accept(this);
         }
       );
 
-      // alias
       if(stmt->alias()) {
         this->double_tag(
-          "using_stmt_direct-alias",
+          "using_stmt_relative-alias",
           [this, stmt]() {
             stmt->alias()->accept(this);
           }
@@ -1764,37 +1997,25 @@ AstToXmlVisitor::visit(HexAstUsingStmtDirect stmt_)
   return stmt;
 }
 
-HexAstUsingStmtRelative
-AstToXmlVisitor::visit(HexAstUsingStmtRelative stmt_)
+HexAstAbsoluteUsingStmt
+AstToXmlVisitor::visit(HexAstAbsoluteUsingStmt stmt_)
 {
-  HexAstUsingStmtRelative stmt = AstVisitor::visit(stmt_);
+  HexAstAbsoluteUsingStmt stmt = AstVisitor::visit(stmt_);
 
   this->double_tag(
-    "using_stmt_relative",
+    "using_stmt_direct",
     [this, stmt]() {
 
-      // targets
-      if(stmt->targets()) {
-        this->double_tag(
-          "using_stmt_relative-targets",
-          [this, stmt]() {
-            stmt->targets()->accept(this);
-          }
-        );
-      }
-
-      // src
       this->double_tag(
-        "using_stmt_relative-src",
+        "using_stmt_direct-source",
         [this, stmt]() {
-          stmt->src()->accept(this);
+          stmt->source()->accept(this);
         }
       );
 
-      // alias
       if(stmt->alias()) {
         this->double_tag(
-          "using_stmt_relative-alias",
+          "using_stmt_direct-alias",
           [this, stmt]() {
             stmt->alias()->accept(this);
           }
@@ -1816,7 +2037,6 @@ AstToXmlVisitor::visit(HexAstElifStmt stmt_)
     "elif_stmt",
     [this, stmt]() {
 
-      // predicate
       this->double_tag(
         "elif_stmt-predicate",
         [this, stmt]() {
@@ -1824,7 +2044,6 @@ AstToXmlVisitor::visit(HexAstElifStmt stmt_)
         }
       );
 
-      // stmts
       this->double_tag(
         "elif_stmt-stmts",
         [this, stmt]() {
@@ -1847,30 +2066,12 @@ AstToXmlVisitor::visit(HexAstElifStmtGroup stmts_)
     "elif_stmt_group",
     [this, stmts]() {
       this->iterate<HexAstElifStmt>(
-        stmts->list(),
-        [this](HexAstElifStmt stmt) {
-          stmt->accept(this);
-        }
+        stmts->list()
       );
     }
   );
 
   return stmts;
-}
-
-HexAstElseStmt
-AstToXmlVisitor::visit(HexAstElseStmt stmt_)
-{
-  HexAstElseStmt stmt = AstVisitor::visit(stmt_);
-
-  this->double_tag(
-    "else_stmt",
-    [this, stmt]() {
-      stmt->stmts()->accept(this);
-    }
-  );
-
-  return stmt;
 }
 
 HexAstIfStmt
@@ -1882,7 +2083,6 @@ AstToXmlVisitor::visit(HexAstIfStmt stmt_)
     "if_stmt",
     [this, stmt]() {
 
-      // predicate
       this->double_tag(
         "if_stmt-predicate",
         [this, stmt]() {
@@ -1890,7 +2090,6 @@ AstToXmlVisitor::visit(HexAstIfStmt stmt_)
         }
       );
 
-      // stmts
       this->double_tag(
         "if_stmt-stmts",
         [this, stmt]() {
@@ -1898,7 +2097,6 @@ AstToXmlVisitor::visit(HexAstIfStmt stmt_)
         }
       );
 
-      // elif stmts
       if(stmt->elif_stmts()) {
         this->double_tag(
           "if_stmt-elif_stmts",
@@ -1908,12 +2106,11 @@ AstToXmlVisitor::visit(HexAstIfStmt stmt_)
         );
       }
 
-      // else stmts
-      if(stmt->else_stmt()) {
+      if(stmt->else_stmts()) {
         this->double_tag(
           "if_stmt-else_stmts",
           [this, stmt]() {
-            stmt->else_stmt()->accept(this);
+            stmt->else_stmts()->accept(this);
           }
         );
       }
@@ -1933,7 +2130,6 @@ AstToXmlVisitor::visit(HexAstForStmt stmt_)
     "for_stmt",
     [this, stmt]() {
 
-      // targets
       this->double_tag(
         "for_stmt-targets",
         [this, stmt]() {
@@ -1941,15 +2137,13 @@ AstToXmlVisitor::visit(HexAstForStmt stmt_)
         }
       );
 
-      // exprs
       this->double_tag(
-        "for_stmt-exprs",
+        "for_stmt-sources",
         [this, stmt]() {
-          stmt->exprs()->accept(this);
+          stmt->sources()->accept(this);
         }
       );
 
-      // predicate
       if(stmt->predicate()) {
         this->double_tag(
           "for_stmt-predicate",
@@ -1959,7 +2153,6 @@ AstToXmlVisitor::visit(HexAstForStmt stmt_)
         );
       }
 
-      // stmts
       this->double_tag(
         "for_stmt-stmts",
         [this, stmt]() {
@@ -1982,15 +2175,13 @@ AstToXmlVisitor::visit(HexAstWithStmt stmt_)
     "with_stmt",
     [this, stmt]() {
 
-      // exprs
       this->double_tag(
-        "with_stmt-exprs",
+        "with_stmt-expr",
         [this, stmt]() {
-          stmt->exprs()->accept(this);
+          stmt->expr()->accept(this);
         }
       );
 
-      // alias
       if(stmt->alias()) {
         this->double_tag(
           "with_stmt-alias",
@@ -2000,7 +2191,6 @@ AstToXmlVisitor::visit(HexAstWithStmt stmt_)
         );
       }
 
-      // stmts
       this->double_tag(
         "with_stmt-stmts",
         [this, stmt]() {
@@ -2023,15 +2213,13 @@ AstToXmlVisitor::visit(HexAstLockStmt stmt_)
     "lock_stmt",
     [this, stmt]() {
 
-      // exprs
       this->double_tag(
-        "lock_stmt-exprs",
+        "lock_stmt-target",
         [this, stmt]() {
-          stmt->exprs()->accept(this);
+          stmt->target()->accept(this);
         }
       );
 
-      // stmts
       this->double_tag(
         "lock_stmt-stmts",
         [this, stmt]() {
@@ -2054,15 +2242,13 @@ AstToXmlVisitor::visit(HexAstWhileStmt stmt_)
     "while_stmt",
     [this, stmt]() {
 
-      // expr
       this->double_tag(
-        "while_stmt-expr",
+        "while_stmt-predicate",
         [this, stmt]() {
-          stmt->expr()->accept(this);
+          stmt->predicate()->accept(this);
         }
       );
 
-      // stmts
       this->double_tag(
         "while_stmt-stmts",
         [this, stmt]() {
@@ -2085,16 +2271,14 @@ AstToXmlVisitor::visit(HexAstCatchStmt stmt_)
     "catch_stmt",
     [this, stmt]() {
 
-      // targets
-      if(stmt->targets()) {
+      if(stmt->types()) {
         this->double_tag(
-          "catch_stmt-targets",
+          "catch_stmt-types",
           [this, stmt]() {
-            stmt->targets()->accept(this);
+            stmt->types()->accept(this);
           }
         );
 
-        // alias
         if(stmt->alias()) {
           this->double_tag(
             "catch_stmt-alias",
@@ -2105,7 +2289,6 @@ AstToXmlVisitor::visit(HexAstCatchStmt stmt_)
         }
       }
 
-      // stmts
       this->double_tag(
         "catch_stmt-stmts",
         [this, stmt]() {
@@ -2128,10 +2311,7 @@ AstToXmlVisitor::visit(HexAstCatchStmtGroup stmts_)
     "catch_stmt_group",
     [this, stmts]() {
       this->iterate<HexAstCatchStmt>(
-        stmts->list(),
-        [this](HexAstCatchStmt stmt) {
-          stmt->accept(this);
-        }
+        stmts->list()
       );
     }
   );
@@ -2148,7 +2328,6 @@ AstToXmlVisitor::visit(HexAstTryStmt stmt_)
     "try_stmt",
     [this, stmt]() {
 
-      // stmts
       this->double_tag(
         "try_stmt-stmts",
         [this, stmt]() {
@@ -2156,13 +2335,21 @@ AstToXmlVisitor::visit(HexAstTryStmt stmt_)
         }
       );
 
-      // catch stmts
       this->double_tag(
         "try_stmt-catch_stmts",
         [this, stmt]() {
           stmt->catch_stmt_group()->accept(this);
         }
       );
+
+      if(stmt->else_stmts()) {
+        this->double_tag(
+          "try_stmt-else_stmts",
+          [this, stmt]() {
+            stmt->else_stmts()->accept(this);
+          }
+        );
+      }
 
     }
   );
@@ -2179,7 +2366,6 @@ AstToXmlVisitor::visit(HexAstClassDef def_)
     "class_def",
     [this, def]() {
 
-      // decorators
       if(def->decorators()) {
         this->double_tag(
           "class_def-decorators",
@@ -2189,7 +2375,6 @@ AstToXmlVisitor::visit(HexAstClassDef def_)
         );
       }
 
-      // name
       this->double_tag(
         "class_def-name",
         [this, def]() {
@@ -2197,17 +2382,15 @@ AstToXmlVisitor::visit(HexAstClassDef def_)
         }
       );
 
-      // parent
-      if(def->parent()) {
+      if(def->parents()) {
         this->double_tag(
-          "class_def-parent",
+          "class_def-parents",
           [this, def]() {
-            def->parent()->accept(this);
+            def->parents()->accept(this);
           }
         );
       }
 
-      // attributes
       if(def->attributes()) {
         this->double_tag(
           "class_def-attributes",
@@ -2223,16 +2406,15 @@ AstToXmlVisitor::visit(HexAstClassDef def_)
   return def;
 }
 
-HexAstLambdaSimple
-AstToXmlVisitor::visit(HexAstLambdaSimple lambda_)
+HexAstSimpleLambda
+AstToXmlVisitor::visit(HexAstSimpleLambda lambda_)
 {
-  HexAstLambdaSimple lambda = AstVisitor::visit(lambda_);
+  HexAstSimpleLambda lambda = AstVisitor::visit(lambda_);
 
   this->double_tag(
     "lambda_simple",
     [this, lambda]() {
 
-      // params
       if(lambda->params()) {
         this->double_tag(
           "lambda_simple-params",
@@ -2242,7 +2424,6 @@ AstToXmlVisitor::visit(HexAstLambdaSimple lambda_)
         );
       }
 
-      // expr
       this->double_tag(
         "lambda_simple-expr",
         [this, lambda]() {
@@ -2256,16 +2437,15 @@ AstToXmlVisitor::visit(HexAstLambdaSimple lambda_)
   return lambda;
 }
 
-HexAstLambdaComplex
-AstToXmlVisitor::visit(HexAstLambdaComplex lambda_)
+HexAstComplexLambda
+AstToXmlVisitor::visit(HexAstComplexLambda lambda_)
 {
-  HexAstLambdaComplex lambda = AstVisitor::visit(lambda_);
+  HexAstComplexLambda lambda = AstVisitor::visit(lambda_);
 
   this->double_tag(
     "lambda_complex",
     [this, lambda]() {
 
-      // params
       if(lambda->params()) {
         this->double_tag(
           "lambda_complex-params",
@@ -2275,7 +2455,6 @@ AstToXmlVisitor::visit(HexAstLambdaComplex lambda_)
         );
       }
 
-      // stmts
       this->double_tag(
         "lambda_complex-stmts",
         [this, lambda]() {
@@ -2298,15 +2477,7 @@ AstToXmlVisitor::visit(HexAstInputStmt stmt_)
     "input_stmt",
     [this, stmt]() {
       this->iterate<HexAstPrimary>(
-        stmt->list(),
-        [this](HexAstPrimary primary) {
-          this->double_tag(
-            "input_stmt-component",
-            [this, primary]() {
-              primary->accept(this);
-            }
-          );
-        }
+        stmt->list()
       );
     }
   );
@@ -2323,15 +2494,7 @@ AstToXmlVisitor::visit(HexAstOutputStmt stmt_)
     "output_stmt",
     [this, stmt]() {
       this->iterate<HexAstPrimary>(
-        stmt->list(),
-        [this](HexAstPrimary primary) {
-          this->double_tag(
-            "output_stmt-component",
-            [this, primary]() {
-              primary->accept(this);
-            }
-          );
-        }
+        stmt->list()
       );
     }
   );
@@ -2362,14 +2525,14 @@ AstToXmlVisitor::visit(HexAstTaskState state_)
     case AST_TASK_STATE_FINISH:
       s = "finish";
       break;
-    case AST_TASK_STATE_STOP:
-      s = "stop";
-      break;
+    // case AST_TASK_STATE_STOP:
+    //   s = "stop";
+    //   break;
     default:
       break;
   }
 
-  this->double_tag(
+  this->double_tag_simple(
     "task_state",
     [this, s]() {
       this->append(s);
@@ -2393,14 +2556,13 @@ AstToXmlVisitor::visit(HexAstConditionalPreposition preposition_)
     case AST_TASK_CONDITIONAL_PREPOSITION_AFTER:
       s = "after";
       break;
-    case AST_TASK_CONDITIONAL_PREPOSITION_WHEN:
-      s = "when";
-      break;
     default:
       break;
   }
 
-  this->double_tag(
+  HEX_ASSERT(s);
+
+  this->double_tag_simple(
     "conditional_preposition",
     [this, s]() {
       this->append(s);
@@ -2419,7 +2581,6 @@ AstToXmlVisitor::visit(HexAstConditionalClause clause_)
     "conditional_clause",
     [this, clause]() {
 
-      // preposition
       this->double_tag(
         "conditional_clause-preposition",
         [this, clause]() {
@@ -2427,7 +2588,6 @@ AstToXmlVisitor::visit(HexAstConditionalClause clause_)
         }
       );
 
-      // exprs
       this->double_tag(
         "conditional_clause-exprs",
         [this, clause]() {
@@ -2435,7 +2595,6 @@ AstToXmlVisitor::visit(HexAstConditionalClause clause_)
         }
       );
 
-      // state
       this->double_tag(
         "conditional_clause-state",
         [this, clause]() {
@@ -2449,82 +2608,36 @@ AstToXmlVisitor::visit(HexAstConditionalClause clause_)
   return clause;
 }
 
-HexAstStartClauseSingle
-AstToXmlVisitor::visit(HexAstStartClauseSingle clause_)
+HexAstStartClause
+AstToXmlVisitor::visit(HexAstStartClause clause_)
 {
-  HexAstStartClauseSingle clause = AstVisitor::visit(clause_);
+  HexAstStartClause clause = AstVisitor::visit(clause_);
 
   this->double_tag(
-    "start_clause_single",
+    "start_clause",
     [this, clause]() {
 
-      // target
       this->double_tag(
-        "start_clause_single-target",
+        "start_clause-tasks",
         [this, clause]() {
-          clause->target()->accept(this);
+          clause->tasks()->accept(this);
         }
       );
 
-      // alias
       if(clause->alias()) {
         this->double_tag(
-          "start_clause_single-alias",
+          "start_clause-alias",
           [this, clause]() {
             clause->alias()->accept(this);
           }
         );
       }
 
-      // condition
-      if(clause->condition()) {
+      if(clause->condition_clause()) {
         this->double_tag(
-          "start_clause_single-condition",
+          "start_clause-condition-clause",
           [this, clause]() {
-            clause->condition()->accept(this);
-          }
-        );
-      }
-
-    }
-  );
-
-  return clause;
-}
-
-HexAstStartClauseMultiple
-AstToXmlVisitor::visit(HexAstStartClauseMultiple clause_)
-{
-  HexAstStartClauseMultiple clause = AstVisitor::visit(clause_);
-
-  this->double_tag(
-    "start_clause_multiple",
-    [this, clause]() {
-
-      // targets
-      this->double_tag(
-        "start_clause_multiple-targets",
-        [this, clause]() {
-          clause->targets()->accept(this);
-        }
-      );
-
-      // alias
-      if(clause->alias()) {
-        this->double_tag(
-          "start_clause_multiple-alias",
-          [this, clause]() {
-            clause->alias()->accept(this);
-          }
-        );
-      }
-
-      // condition
-      if(clause->condition()) {
-        this->double_tag(
-          "start_clause_multiple-condition",
-          [this, clause]() {
-            clause->condition()->accept(this);
+            clause->condition_clause()->accept(this);
           }
         );
       }
@@ -2544,19 +2657,17 @@ AstToXmlVisitor::visit(HexAstPauseClause clause_)
     "pause_clause",
     [this, clause]() {
 
-      // exprs
       this->double_tag(
-        "pause_clause-exprs",
+        "pause_clause-tasks",
         [this, clause]() {
-          clause->exprs()->accept(this);
+          clause->tasks()->accept(this);
         }
       );
 
-      // condition
       this->double_tag(
-        "pause_clause-condition",
+        "pause_clause-condition-clause",
         [this, clause]() {
-          clause->condition()->accept(this);
+          clause->condition_clause()->accept(this);
         }
       );
 
@@ -2575,19 +2686,17 @@ AstToXmlVisitor::visit(HexAstResumeClause clause_)
     "resume_clause",
     [this, clause]() {
 
-      // exprs
       this->double_tag(
-        "resume_clause-exprs",
+        "resume_clause-tasks",
         [this, clause]() {
-          clause->exprs()->accept(this);
+          clause->tasks()->accept(this);
         }
       );
 
-      // condition
       this->double_tag(
-        "resume_clause-condition",
+        "resume_clause-condition-clause",
         [this, clause]() {
-          clause->condition()->accept(this);
+          clause->condition_clause()->accept(this);
         }
       );
 
@@ -2606,83 +2715,17 @@ AstToXmlVisitor::visit(HexAstCancelClause clause_)
     "cancel_clause",
     [this, clause]() {
 
-      // exprs
       this->double_tag(
-        "cancel_clause-exprs",
+        "cancel_clause-tasks",
         [this, clause]() {
-          clause->exprs()->accept(this);
+          clause->tasks()->accept(this);
         }
       );
 
-      // condition
       this->double_tag(
-        "cancel_clause-condition",
+        "cancel_clause-condition-clause",
         [this, clause]() {
-          clause->condition()->accept(this);
-        }
-      );
-
-    }
-  );
-
-  return clause;
-}
-
-HexAstConditionalDelayClause
-AstToXmlVisitor::visit(HexAstConditionalDelayClause clause_)
-{
-  HexAstConditionalDelayClause clause = AstVisitor::visit(clause_);
-
-  this->double_tag(
-    "conditional_delay_clause",
-    [this, clause]() {
-
-      // exprs
-      this->double_tag(
-        "conditional_delay_clause-exprs",
-        [this, clause]() {
-          clause->exprs()->accept(this);
-        }
-      );
-
-      // condition
-      this->double_tag(
-        "conditional_delay_clause-condition",
-        [this, clause]() {
-          clause->condition()->accept(this);
-        }
-      );
-
-    }
-  );
-
-  return clause;
-}
-
-HexAstFixedDelayClause
-AstToXmlVisitor::visit(HexAstFixedDelayClause clause_)
-{
-  HexAstFixedDelayClause clause = AstVisitor::visit(clause_);
-
-  this->double_tag(
-    "fixed_delay_clause",
-    [this, clause]() {
-
-      // exprs
-      if(clause->exprs()) {
-        this->double_tag(
-          "fixed_delay_clause-exprs",
-          [this, clause]() {
-            clause->exprs()->accept(this);
-          }
-        );
-      }
-
-      // delay
-      this->double_tag(
-        "fixed_delay_clause-delay",
-        [this, clause]() {
-          clause->delay()->accept(this);
+          clause->condition_clause()->accept(this);
         }
       );
 
@@ -2701,19 +2744,17 @@ AstToXmlVisitor::visit(HexAstStopClause clause_)
     "stop_clause",
     [this, clause]() {
 
-      // exprs
       this->double_tag(
-        "stop_clause-exprs",
+        "stop_clause-tasks",
         [this, clause]() {
-          clause->exprs()->accept(this);
+          clause->tasks()->accept(this);
         }
       );
 
-      // condition
       this->double_tag(
-        "stop_clause-condition",
+        "stop_clause-condition-clause",
         [this, clause]() {
-          clause->condition()->accept(this);
+          clause->condition_clause()->accept(this);
         }
       );
 
@@ -2732,10 +2773,7 @@ AstToXmlVisitor::visit(HexAstTaskDef def_)
     "task_def",
     [this, def]() {
       this->iterate<HexAstTaskClause>(
-        def->list(),
-        [this](HexAstTaskClause clause) {
-          clause->accept(this);
-        }
+        def->list()
       );
     }
   );
@@ -2774,22 +2812,11 @@ AstToXmlVisitor::visit(HexAstReturnStmt stmt_)
     "return_stmt",
     [this, stmt]() {
 
-      // return vals
       if(stmt->return_vals()) {
         this->double_tag(
           "return_stmt-return_vals",
           [this, stmt]() {
             stmt->return_vals()->accept(this);
-          }
-        );
-      }
-
-      // predicate
-      if(stmt->predicate()) {
-        this->double_tag(
-          "return_vals-predicate",
-          [this, stmt]() {
-            stmt->predicate()->accept(this);
           }
         );
       }
@@ -2805,22 +2832,7 @@ AstToXmlVisitor::visit(HexAstBreakStmt stmt_)
 {
   HexAstBreakStmt stmt = AstVisitor::visit(stmt_);
 
-  this->double_tag(
-    "break_stmt",
-    [this, stmt]() {
-
-      // predicate
-      if(stmt->predicate()) {
-        this->double_tag(
-          "break_vals-predicate",
-          [this, stmt]() {
-            stmt->predicate()->accept(this);
-          }
-        );
-      }
-
-    }
-  );
+  this->double_tag("break_stmt");
 
   return stmt;
 }
@@ -2830,22 +2842,7 @@ AstToXmlVisitor::visit(HexAstContinueStmt stmt_)
 {
   HexAstContinueStmt stmt = AstVisitor::visit(stmt_);
 
-  this->double_tag(
-    "continue_stmt",
-    [this, stmt]() {
-
-      // predicate
-      if(stmt->predicate()) {
-        this->double_tag(
-          "continue_vals-predicate",
-          [this, stmt]() {
-            stmt->predicate()->accept(this);
-          }
-        );
-      }
-
-    }
-  );
+  this->double_tag("continue_stmt");
 
   return stmt;
 }
@@ -2860,9 +2857,9 @@ AstToXmlVisitor::visit(HexAstRaiseStmt stmt_)
     [this, stmt]() {
 
       this->double_tag(
-        "raise_stmt-expr",
+        "raise_stmt-target",
         [this, stmt]() {
-          stmt->expr()->accept(this);
+          stmt->target()->accept(this);
         }
       );
 
@@ -2887,6 +2884,35 @@ AstToXmlVisitor::visit(HexAstExprListStmt stmt_)
   return stmt;
 }
 
+HexAstSimpleIfStmt
+AstToXmlVisitor::visit(HexAstSimpleIfStmt stmt_)
+{
+  HexAstSimpleIfStmt stmt = AstVisitor::visit(stmt_);
+
+  this->double_tag(
+    "simple_if_stmt",
+    [this, stmt]() {
+
+      this->double_tag(
+        "simple_if_stmt-predicate",
+        [this, stmt]() {
+          stmt->predicate()->accept(this);
+        }
+      );
+
+      this->double_tag(
+        "simple_if_stmt-stmt",
+        [this, stmt]() {
+          stmt->stmt()->accept(this);
+        }
+      );
+
+    }
+  );
+
+  return stmt;
+}
+
 HexAstStmtGroup
 AstToXmlVisitor::visit(HexAstStmtGroup stmts_)
 {
@@ -2896,10 +2922,7 @@ AstToXmlVisitor::visit(HexAstStmtGroup stmts_)
     "stmt_group",
     [this, stmts]() {
       this->iterate<HexAstStmt>(
-        stmts->list(),
-        [this](HexAstStmt stmt) {
-          stmt->accept(this);
-        }
+        stmts->list()
       );
     }
   );
@@ -2916,7 +2939,6 @@ AstToXmlVisitor::visit(HexAstHexProgram program_)
     "hex_program",
     [this, program]() {
 
-      // stmts
       this->double_tag(
         "hex_program-stmts",
         [this, program]() {

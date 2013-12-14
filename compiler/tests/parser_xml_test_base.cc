@@ -15,78 +15,34 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
-#include <stdio.h>
 #include "parser_xml_test_base.h"
-#include "../ast/ast.h"
+#include "../ast2/ast.h"
 #include "../hex_parser.h"
 #include "../visitor/ast_to_xml_visitor.h"
-#include "../../base/unittest.h"
-#include "../../base/memory.h"
 #include "../../base/assert.h"
-
-
-#define MAX_XML_LENGTH 5000
-
+#include "../../base/freader.h"
 
 void
-HexParserXmlTestBase::test(const c_str content_str, const c_str expected_xml)
+HexParserXmlTestBase::test(int index)
 {
-  AstToXmlVisitor* visitor = new AstToXmlVisitor();
+  AstToXmlVisitor visitor;
   HexAstHexProgram program = NULL;
 
-  parser->parse(content_str, &program);
+  c_str filepath = this->testfiles[index].filePath;
+  c_str xmlFilePath = this->testfiles[index].xmlFilePath;
 
+  c_str expected_str = NULL;
+  FileReader freader(xmlFilePath);
+  freader.read_file(&expected_str);
+  HEX_ASSERT(expected_str);
+
+  int res = this->parser->parse_from_file(filepath, &program);
+  EXPECT_EQ(0, res);
   HEX_ASSERT(program);
 
-  program->accept(visitor);
-  c_str actual_xml = visitor->str();
+  program->accept(&visitor);
+  c_str actual_str = visitor.str();
+  HEX_ASSERT(actual_str);
 
-  HEX_DELETE(visitor);
-
-  ASSERT_STREQ(expected_xml, actual_xml);
-}
-
-const c_str
-HexParserXmlTestBase::wrap_single_stmt(const c_str innerXML)
-{
-  char xml[MAX_XML_LENGTH];
-
-  sprintf(
-    xml,
-    "<hex_program>"
-      "<hex_program-stmts>"
-        "<stmt_group>"
-          "%s"
-        "<stmt_group/>"
-      "<hex_program-stmts/>"
-    "<hex_program/>",
-    innerXML
-  );
-
-  return (const c_str)strdup(xml);
-}
-
-const c_str
-HexParserXmlTestBase::wrap_single_expr_stmt(const c_str innerXML)
-{
-  char xml[MAX_XML_LENGTH];
-
-  sprintf(
-    xml,
-    "<hex_program>"
-      "<hex_program-stmts>"
-        "<stmt_group>"
-          "<expr_list_stmt>"
-            "<exprlist>"
-              "%s"
-            "<exprlist/>"
-          "<expr_list_stmt/>"
-        "<stmt_group/>"
-      "<hex_program-stmts/>"
-    "<hex_program/>",
-    innerXML
-  );
-
-  return (const c_str)strdup(xml);
+  ASSERT_STREQ(expected_str, actual_str);
 }

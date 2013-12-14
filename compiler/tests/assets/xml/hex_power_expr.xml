@@ -1,0 +1,112 @@
+<hex_program>
+  <hex_program-stmts>
+    <stmt_group>
+      <expr_list_stmt>
+        <exprlist>
+          <power_expr>
+            <power_expr-left>
+              <identifier>a<identifier/>
+            <power_expr-left/>
+            <power_expr-right>
+              <paren_form>
+                <exprlist>
+                  <add_expr>
+                    <add_expr-left>
+                      <integer_literal type="decimal">2<integer_literal/>
+                    <add_expr-left/>
+                    <add_expr-right>
+                      <integer_literal type="decimal">1<integer_literal/>
+                    <add_expr-right/>
+                  <add_expr/>
+                <exprlist/>
+              <paren_form/>
+            <power_expr-right/>
+          <power_expr/>
+        <exprlist/>
+      <expr_list_stmt/>
+      <expr_list_stmt>
+        <exprlist>
+          <multiply_expr>
+            <multiply_expr-left>
+              <power_expr>
+                <power_expr-left>
+                  <identifier>a<identifier/>
+                <power_expr-left/>
+                <power_expr-right>
+                  <integer_literal type="decimal">3<integer_literal/>
+                <power_expr-right/>
+              <power_expr/>
+            <multiply_expr-left/>
+            <multiply_expr-right>
+              <integer_literal type="decimal">2<integer_literal/>
+            <multiply_expr-right/>
+          <multiply_expr/>
+        <exprlist/>
+      <expr_list_stmt/>
+      <expr_list_stmt>
+        <exprlist>
+          <power_expr>
+            <power_expr-left>
+              <identifier>a<identifier/>
+            <power_expr-left/>
+            <power_expr-right>
+              <paren_form>
+                <exprlist>
+                  <add_expr>
+                    <add_expr-left>
+                      <integer_literal type="decimal">2<integer_literal/>
+                    <add_expr-left/>
+                    <add_expr-right>
+                      <modulus_expr>
+                        <modulus_expr-left>
+                          <integer_literal type="decimal">2<integer_literal/>
+                        <modulus_expr-left/>
+                        <modulus_expr-right>
+                          <integer_literal type="decimal">1<integer_literal/>
+                        <modulus_expr-right/>
+                      <modulus_expr/>
+                    <add_expr-right/>
+                  <add_expr/>
+                <exprlist/>
+              <paren_form/>
+            <power_expr-right/>
+          <power_expr/>
+        <exprlist/>
+      <expr_list_stmt/>
+      <expr_list_stmt>
+        <exprlist>
+          <power_expr>
+            <power_expr-left>
+              <integer_literal type="decimal">1<integer_literal/>
+            <power_expr-left/>
+            <power_expr-right>
+              <paren_form>
+                <exprlist>
+                  <power_expr>
+                    <power_expr-left>
+                      <paren_form>
+                        <exprlist>
+                          <power_expr>
+                            <power_expr-left>
+                              <integer_literal type="decimal">2<integer_literal/>
+                            <power_expr-left/>
+                            <power_expr-right>
+                              <integer_literal type="decimal">3<integer_literal/>
+                            <power_expr-right/>
+                          <power_expr/>
+                        <exprlist/>
+                      <paren_form/>
+                    <power_expr-left/>
+                    <power_expr-right>
+                      <integer_literal type="decimal">4<integer_literal/>
+                    <power_expr-right/>
+                  <power_expr/>
+                <exprlist/>
+              <paren_form/>
+            <power_expr-right/>
+          <power_expr/>
+        <exprlist/>
+      <expr_list_stmt/>
+    <stmt_group/>
+  <hex_program-stmts/>
+<hex_program/>

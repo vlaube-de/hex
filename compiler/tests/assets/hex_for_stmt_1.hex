@@ -1,0 +1,6 @@
+for i in 1...10 {
+  fibonacci(i);
+}
+for num, sqr in pairs {
+  print('%d^2 = %d' %% (num, sqr));
+}

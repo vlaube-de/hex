@@ -1,0 +1,4 @@
+person = defer Person("William");
+handler = lambda (*args, **kwargs) => {
+  hello();
+};

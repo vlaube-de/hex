@@ -1,0 +1,7 @@
+# increment/decrement vs. positive/negative expr
+
+# ( +1 )++
++1++;
+
+# ( ( + (-1) ) ++ )--
++-1++--;

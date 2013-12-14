@@ -1,0 +1,49 @@
+<hex_program>
+  <hex_program-stmts>
+    <stmt_group>
+      <return_stmt>
+      <return_stmt/>
+      <return_stmt>
+        <return_stmt-return_vals>
+          <exprlist>
+            <integer_literal type="decimal">1<integer_literal/>
+          <exprlist/>
+        <return_stmt-return_vals/>
+      <return_stmt/>
+      <return_stmt>
+        <return_stmt-return_vals>
+          <exprlist>
+            <identifier>a<identifier/>
+            <identifier>b<identifier/>
+            <identifier>c<identifier/>
+          <exprlist/>
+        <return_stmt-return_vals/>
+      <return_stmt/>
+      <return_stmt>
+        <return_stmt-return_vals>
+          <exprlist>
+            <slicing>
+              <slicing-source>
+                <call>
+                  <call-caller>
+                    <attribute>
+                      <attribute-source>
+                        <identifier>self<identifier/>
+                      <attribute-source/>
+                      <attribute-target>
+                        <identifier>names<identifier/>
+                      <attribute-target/>
+                    <attribute/>
+                  <call-caller/>
+                <call/>
+              <slicing-source/>
+              <slicing_start>
+                <integer_literal type="decimal">0<integer_literal/>
+              <slicing_start/>
+            <slicing/>
+          <exprlist/>
+        <return_stmt-return_vals/>
+      <return_stmt/>
+    <stmt_group/>
+  <hex_program-stmts/>
+<hex_program/>

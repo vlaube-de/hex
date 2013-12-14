@@ -1,0 +1,4 @@
+{};
+{name: 'William', country: 'Canada'};
+{list: [], dict: {}, paren: ()};
+{value, key for key, value in {}};

@@ -1,0 +1,53 @@
+<hex_program>
+  <hex_program-stmts>
+    <stmt_group>
+      <expr_list_stmt>
+        <exprlist>
+          <string_expr>
+            <string_expr-literal>
+              <string_literal type="double">"name: %s"<string_literal/>
+            <string_expr-literal/>
+            <string_expr-exprs>
+              <paren_form>
+                <exprlist>
+                  <existential_expr>
+                    <identifier>name<identifier/>
+                  <existential_expr/>
+                <exprlist/>
+              <paren_form/>
+            <string_expr-exprs/>
+          <string_expr/>
+        <exprlist/>
+      <expr_list_stmt/>
+      <expr_list_stmt>
+        <exprlist>
+          <string_expr>
+            <string_expr-literal>
+              <string_literal type="double">"name: %s"<string_literal/>
+            <string_expr-literal/>
+            <string_expr-exprs>
+              <paren_form>
+                <exprlist>
+                  <string_expr>
+                    <string_expr-literal>
+                      <string_literal type="double">"%s"<string_literal/>
+                    <string_expr-literal/>
+                    <string_expr-exprs>
+                      <paren_form>
+                        <exprlist>
+                          <existential_expr>
+                            <identifier>name<identifier/>
+                          <existential_expr/>
+                        <exprlist/>
+                      <paren_form/>
+                    <string_expr-exprs/>
+                  <string_expr/>
+                <exprlist/>
+              <paren_form/>
+            <string_expr-exprs/>
+          <string_expr/>
+        <exprlist/>
+      <expr_list_stmt/>
+    <stmt_group/>
+  <hex_program-stmts/>
+<hex_program/>

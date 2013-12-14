@@ -1,0 +1,7 @@
+# range expr vs. logical or
+
+# ( a or b ) ... ( c or d )
+a or b ... c or d;
+
+# a or (b .. c)
+a or b .. c;

@@ -1,0 +1,3 @@
+raise Exception();
+raise e;
+raise common.exceptions[0];

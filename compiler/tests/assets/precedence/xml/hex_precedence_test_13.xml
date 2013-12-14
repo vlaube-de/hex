@@ -1,0 +1,46 @@
+<hex_program>
+  <hex_program-stmts>
+    <stmt_group>
+      <expr_list_stmt>
+        <exprlist>
+          <not_expr>
+            <equals_expr>
+              <equals_expr-left>
+                <integer_literal type="decimal">1<integer_literal/>
+              <equals_expr-left/>
+              <equals_expr-right>
+                <integer_literal type="decimal">1<integer_literal/>
+              <equals_expr-right/>
+            <equals_expr/>
+          <not_expr/>
+        <exprlist/>
+      <expr_list_stmt/>
+      <expr_list_stmt>
+        <exprlist>
+          <is_not_expr>
+            <is_not_expr-left>
+              <integer_literal type="decimal">1<integer_literal/>
+            <is_not_expr-left/>
+            <is_not_expr-right>
+              <integer_literal type="decimal">2<integer_literal/>
+            <is_not_expr-right/>
+          <is_not_expr/>
+        <exprlist/>
+      <expr_list_stmt/>
+      <expr_list_stmt>
+        <exprlist>
+          <not_equal_expr>
+            <not_equal_expr-left>
+              <identifier>a<identifier/>
+            <not_equal_expr-left/>
+            <not_equal_expr-right>
+              <not_expr>
+                <identifier>b<identifier/>
+              <not_expr/>
+            <not_equal_expr-right/>
+          <not_equal_expr/>
+        <exprlist/>
+      <expr_list_stmt/>
+    <stmt_group/>
+  <hex_program-stmts/>
+<hex_program/>

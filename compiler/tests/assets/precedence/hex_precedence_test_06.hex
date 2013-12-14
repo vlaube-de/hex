@@ -1,0 +1,7 @@
+# multiplicative expr vs. string composition
+
+# ( "name: %s, " %% (name) ) * ( "age: %d" %% (age) )
+"name: %s, " %% (name) * "age: %d" %% (age);
+
+# "My sweethearts: %s" * ( " sweet voices: %s" %% ('Tomiko Van, Rainie Yang') )
+"My sweethearts: %s " * " sweet voices: %s" %% ('Tomiko Van', 'Rainie Yang');

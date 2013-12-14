@@ -1,0 +1,1 @@
+call_with_args_and_kwargs(*args, l=lambda (a, b, c) -> a += b -= c, a='airplane', **kwargs);

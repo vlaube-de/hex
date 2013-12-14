@@ -1,0 +1,3 @@
+for i, j in [(i, i * 2) for i in 1...100] if i + j >= 50 {
+  compute(i, j);
+}

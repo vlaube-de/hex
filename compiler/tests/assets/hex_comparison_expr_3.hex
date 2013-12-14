@@ -1,0 +1,5 @@
+a is 2 or 3;
+3 >= 2 + 1;
+4 < 100 / 20;
+a in b in c in d;
+a not in b not in c not in d;

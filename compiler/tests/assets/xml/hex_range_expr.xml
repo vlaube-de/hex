@@ -1,0 +1,54 @@
+<hex_program>
+  <hex_program-stmts>
+    <stmt_group>
+      <expr_list_stmt>
+        <exprlist>
+          <inclusive_range_expr>
+            <inclusive_range_expr-left>
+              <integer_literal type="decimal">1<integer_literal/>
+            <inclusive_range_expr-left/>
+            <inclusive_range_expr-right>
+              <integer_literal type="decimal">10<integer_literal/>
+            <inclusive_range_expr-right/>
+          <inclusive_range_expr/>
+        <exprlist/>
+      <expr_list_stmt/>
+      <expr_list_stmt>
+        <exprlist>
+          <inclusive_range_expr>
+            <inclusive_range_expr-left>
+              <identifier>a<identifier/>
+            <inclusive_range_expr-left/>
+            <inclusive_range_expr-right>
+              <identifier>b<identifier/>
+            <inclusive_range_expr-right/>
+          <inclusive_range_expr/>
+        <exprlist/>
+      <expr_list_stmt/>
+      <expr_list_stmt>
+        <exprlist>
+          <exclusive_range_expr>
+            <exclusive_range_expr-left>
+              <integer_literal type="decimal">1<integer_literal/>
+            <exclusive_range_expr-left/>
+            <exclusive_range_expr-right>
+              <integer_literal type="decimal">100<integer_literal/>
+            <exclusive_range_expr-right/>
+          <exclusive_range_expr/>
+        <exprlist/>
+      <expr_list_stmt/>
+      <expr_list_stmt>
+        <exprlist>
+          <exclusive_range_expr>
+            <exclusive_range_expr-left>
+              <identifier>a<identifier/>
+            <exclusive_range_expr-left/>
+            <exclusive_range_expr-right>
+              <identifier>c<identifier/>
+            <exclusive_range_expr-right/>
+          <exclusive_range_expr/>
+        <exprlist/>
+      <expr_list_stmt/>
+    <stmt_group/>
+  <hex_program-stmts/>
+<hex_program/>

@@ -1,0 +1,1 @@
+"My name is %s and I live in %s" %% ("William", "Canada");

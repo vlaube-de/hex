@@ -1,0 +1,28 @@
+<hex_program>
+  <hex_program-stmts>
+    <stmt_group>
+      <expr_list_stmt>
+        <exprlist>
+          <bitwise_not_expr>
+            <increment_expr>
+              <integer_literal type="decimal">1<integer_literal/>
+            <increment_expr/>
+          <bitwise_not_expr/>
+        <exprlist/>
+      <expr_list_stmt/>
+      <expr_list_stmt>
+        <exprlist>
+          <bitwise_not_expr>
+            <bitwise_not_expr>
+              <decrement_expr>
+                <increment_expr>
+                  <integer_literal type="decimal">1<integer_literal/>
+                <increment_expr/>
+              <decrement_expr/>
+            <bitwise_not_expr/>
+          <bitwise_not_expr/>
+        <exprlist/>
+      <expr_list_stmt/>
+    <stmt_group/>
+  <hex_program-stmts/>
+<hex_program/>

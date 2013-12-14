@@ -15,19 +15,39 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/*
 
+
+                              |
+                        --====|====--
+                              |  
+                          .-"""""-. 
+                        .'_________'. 
+                       /_/_|__|__|_\_\
+                      ;'-._       _.-';
+ ,--------------------|    `-. .-'    |--------------------,
+  ``""--..__    ___   ;       '       ;   ___    __..--""``
+            `"-// \\.._\             /_..// \\-"`
+               \\_//    '._       _.'    \\_//
+                `"`        ``---``        `"`
+*/
+
+#include <vector>
+#include "hex_parser_test_file.h"
 #include "parser_test_base.h"
-#include "../../base/c_str.h"
 
 #ifndef _HEX_PARSER_XML_TEST_BASE_H_
 #define _HEX_PARSER_XML_TEST_BASE_H_
 
 class HexParserXmlTestBase : public HexParserTestBase {
 protected:
-  virtual void test(const c_str, const c_str);
+  HexParserXmlTestBase(std::vector<HexTestFile> testfiles):
+    HexParserTestBase(testfiles)
+  {
+    // Do nothing here.
+  }
 
-  virtual const c_str wrap_single_stmt(const c_str);
-  virtual const c_str wrap_single_expr_stmt(const c_str);
+  virtual void test(int index);
 };
 
-#endif /* _HEX_PARSER_XML_TEST_BASE_H_ */
+#endif /* #ifndef _HEX_PARSER_XML_TEST_BASE_H_ */

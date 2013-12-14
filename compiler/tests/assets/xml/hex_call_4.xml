@@ -1,0 +1,28 @@
+<hex_program>
+  <hex_program-stmts>
+    <stmt_group>
+      <expr_list_stmt>
+        <exprlist>
+          <call>
+            <call-caller>
+              <identifier>call_with_args_and_kwargs<identifier/>
+            <call-caller/>
+            <call-args>
+              <arg_list>
+                <arg_list-simple_args>
+                  <simple_args_list>
+                    <identifier>obj1<identifier/>
+                    <identifier>obj2<identifier/>
+                  <simple_args_list/>
+                <arg_list-simple_args/>
+                <arg_list-args>
+                  <identifier>args<identifier/>
+                <arg_list-args/>
+              <arg_list/>
+            <call-args/>
+          <call/>
+        <exprlist/>
+      <expr_list_stmt/>
+    <stmt_group/>
+  <hex_program-stmts/>
+<hex_program/>
