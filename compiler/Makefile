@@ -34,6 +34,9 @@ lex.yy.c: lexer.l
 parser.tab.hh: parser.y
 	$(BISON) $(BFLAGS) parser.y -o parser.tab.cc
 
+parser_2.tab.hh: parser_2.y
+	$(BISON) $(BFLAGS) parser_2.y -o parser_2.tab.cc
+
 hex_parser.o: lex.yy.c parser.tab.hh hex_parser.cc
 	$(CXX) $(CFLAGS) -c hex_parser.cc
 
