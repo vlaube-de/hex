@@ -15,14 +15,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 #include <stddef.h>
-#include <stdio.h>
-#include <stdarg.h>
 #include "assert.h"
+#include "c_str.h"
 #include "memory.h"
-#include "utils.h"
 #include "strbuf.h"
+#include "utils.h"
 
 
 #define DEFAULT_STRBUF_INITIAL_ALLOC 1024
@@ -44,12 +42,12 @@ void _strbuf_init(Strbuf *strbuf, size_t min_len)
 
   RETURN_IF_NULL(_strbuf);
 
-  char* _str=NULL;
+  c_str _str = NULL;
 
   size_t len = MAX(min_len, _strbuf_alloc_size);
   size_t capacity = len;
 
-  _str = (char*)malloc(len);
+  _str = (c_str)malloc(len);
 
   if(!_str) {
     errno = ENOMEM;
@@ -73,14 +71,14 @@ void _strbuf_allocate_more(Strbuf *strbuf, size_t len)
   HEX_ASSERT(_strbuf);
 
   size_t new_capacity = _strbuf->capacity + len;
-  char* c_str = NULL;
+  c_str c_str = NULL;
 
   new_capacity = MAX(new_capacity, _strbuf_alloc_size);
 
   c_str = realloc(_strbuf->c_str, new_capacity);
 
   if(!c_str) {
-    errno=ENOMEM;
+    errno = ENOMEM;
     exit(-5);
   }
 
@@ -92,18 +90,19 @@ void _strbuf_allocate_more(Strbuf *strbuf, size_t len)
 
 Strbuf strbuf_create()
 {
-  Strbuf strbuf=NULL;
+  Strbuf strbuf = NULL;
 
   strbuf = HEX_MALLOC(struct HexStrbuf_s);
 
   if(!strbuf) {
-    errno=ENOMEM;
+    errno = ENOMEM;
     return NULL;
   }
 
   _strbuf_init(&strbuf, _strbuf_alloc_size);
 
   HEX_ASSERT(strbuf->c_str);
+
   return strbuf;
 }
 
@@ -114,9 +113,7 @@ strbuf_free(Strbuf *strbuf)
 
   HEX_ASSERT(_strbuf);
 
-  char **_str = &_strbuf->c_str;
-  
-  HEX_FREE(*_str);
+  HEX_FREE(_strbuf->c_str);
   _strbuf->size = 0;
   _strbuf->capacity = 0;
 
@@ -143,11 +140,11 @@ strbuf_len(Strbuf strbuf)
   return strbuf->size;
 }
 
-char*
+const c_str
 strbuf_cstr(Strbuf strbuf)
 {
   HEX_ASSERT(strbuf);
-  return strbuf->c_str;
+  return (const c_str)strbuf->c_str;
 }
 
 size_t
@@ -158,7 +155,7 @@ strbuf_capacity(Strbuf strbuf)
 }
 
 int
-strbuf_append(Strbuf strbuf, const char *in_str)
+strbuf_append(Strbuf strbuf, const c_str in_str)
 {
   HEX_ASSERT(strbuf);
   HEX_ASSERT(in_str);
@@ -170,14 +167,13 @@ strbuf_append(Strbuf strbuf, const char *in_str)
     _strbuf_init(&strbuf, MAX(len, _strbuf_alloc_size));
   }
 
-  if(len > strbuf->capacity) {
+  if(strbuf->size + len > strbuf->capacity) {
     _strbuf_allocate_more(&strbuf, needed);
   }
-  strncpy(&strbuf->c_str[strbuf->size], in_str, len);
-  strbuf->size += len;
 
-  /* Insist on explicit NULL terminator */
-  strbuf->c_str[strbuf->size] = '\0';
+  c_str str = strcat(strbuf->c_str, in_str);
+  strbuf->c_str = str;
+  strbuf->size = strlen(strbuf->c_str);
 
   return 1;
 }

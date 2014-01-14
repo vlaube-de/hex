@@ -22,12 +22,11 @@
 #define _STRBUF_H_
 
 #include <stddef.h>
-
+#include "c_str.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
-
 
 typedef struct HexStrbuf_s *Strbuf;
 
@@ -39,16 +38,14 @@ void strbuf_empty(Strbuf strbuf);
 
 size_t strbuf_len(Strbuf strbuf);
 
-char* strbuf_cstr(Strbuf strbuf);
+const c_str strbuf_cstr(Strbuf strbuf);
 
 size_t strbuf_capacity(Strbuf strbuf);
 
-int strbuf_append(Strbuf strbuf, const char *in_str);
-
+int strbuf_append(Strbuf strbuf, const c_str in_str);
 
 #ifdef __cplusplus
 }
 #endif
-
 
 #endif /* _STRBUF_H_ */
