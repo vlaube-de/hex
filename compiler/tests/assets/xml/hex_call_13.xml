@@ -79,9 +79,9 @@
                     <keyword_arg/>
                   <keyword_args_list/>
                 <arg_list-keyword_args/>
-                <arg_list-kwargs>
+                <arg_list-kwargs_argument>
                   <identifier>kwargs<identifier/>
-                <arg_list-kwargs/>
+                <arg_list-kwargs_argument/>
               <arg_list/>
             <call-args/>
           <call/>

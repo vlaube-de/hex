@@ -9,9 +9,9 @@
             <call-caller/>
             <call-args>
               <arg_list>
-                <arg_list-kwargs>
+                <arg_list-kwargs_argument>
                   <identifier>kwargs<identifier/>
-                <arg_list-kwargs/>
+                <arg_list-kwargs_argument/>
               <arg_list/>
             <call-args/>
           <call/>

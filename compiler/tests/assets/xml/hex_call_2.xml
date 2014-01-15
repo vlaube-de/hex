@@ -14,9 +14,9 @@
                     <identifier>obj<identifier/>
                   <simple_args_list/>
                 <arg_list-simple_args/>
-                <arg_list-args>
+                <arg_list-args_argument>
                   <identifier>args<identifier/>
-                <arg_list-args/>
+                <arg_list-args_argument/>
                 <arg_list-keyword_args>
                   <keyword_args_list>
                     <keyword_arg>

@@ -1654,11 +1654,11 @@ AstToXmlVisitor::visit(HexAstArgList arglist_)
       }
 
       // args
-      if(arglist->args()) {
+      if(arglist->args_argument()) {
         this->double_tag(
-          "arg_list-args",
+          "arg_list-args_argument",
           [this, arglist]() {
-            arglist->args()->accept(this);
+            arglist->args_argument()->accept(this);
           }
         );
       }
@@ -1674,11 +1674,11 @@ AstToXmlVisitor::visit(HexAstArgList arglist_)
       }
 
       // kwargs
-      if(arglist->kwargs()) {
+      if(arglist->kwargs_argument()) {
         this->double_tag(
-          "arg_list-kwargs",
+          "arg_list-kwargs_argument",
           [this, arglist]() {
-            arglist->kwargs()->accept(this);
+            arglist->kwargs_argument()->accept(this);
           }
         );
       }

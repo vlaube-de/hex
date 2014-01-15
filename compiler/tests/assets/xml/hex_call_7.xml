@@ -63,9 +63,9 @@
                     <dict_form/>
                   <simple_args_list/>
                 <arg_list-simple_args/>
-                <arg_list-kwargs>
+                <arg_list-kwargs_argument>
                   <identifier>kwargs<identifier/>
-                <arg_list-kwargs/>
+                <arg_list-kwargs_argument/>
               <arg_list/>
             <call-args/>
           <call/>

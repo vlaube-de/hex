@@ -353,6 +353,8 @@ The sky is your limit...
 %type <hex_ast_simple_arg_list>             simple_arg_list
 %type <hex_ast_keyword_arg>                 keyword_arg
 %type <hex_ast_keyword_arg_list>            keyword_arg_list
+%type <hex_ast_primary>                     args_argument
+%type <hex_ast_primary>                     kwargs_argument
 %type <hex_ast_arg_list>                    arg_list
 %type <hex_ast_arg_list>                    arg_list_or_none
 %type <hex_ast_field_def>                   field_def
@@ -747,21 +749,29 @@ arg_list_or_none
   ;
 
 arg_list
-  : simple_arg_list COMMA arg COMMA keyword_arg_list COMMA kwarg                                    { $$ = AstFactory<_HexAstArgList>::create<HexAstSimpleArgList, HexAstIdentifier, HexAstKeywordArgList, HexAstIdentifier>($1,   $3,   $5,   $7  ); }
-  | simple_arg_list COMMA arg COMMA keyword_arg_list                                                { $$ = AstFactory<_HexAstArgList>::create<HexAstSimpleArgList, HexAstIdentifier, HexAstKeywordArgList, HexAstIdentifier>($1,   $3,   $5,   NULL); }
-  | simple_arg_list COMMA arg                        COMMA kwarg                                    { $$ = AstFactory<_HexAstArgList>::create<HexAstSimpleArgList, HexAstIdentifier, HexAstKeywordArgList, HexAstIdentifier>($1,   $3,   NULL, $5  ); }
-  | simple_arg_list COMMA arg                                                                       { $$ = AstFactory<_HexAstArgList>::create<HexAstSimpleArgList, HexAstIdentifier, HexAstKeywordArgList, HexAstIdentifier>($1,   $3,   NULL, NULL); }
-  | simple_arg_list           COMMA keyword_arg_list COMMA kwarg                                    { $$ = AstFactory<_HexAstArgList>::create<HexAstSimpleArgList, HexAstIdentifier, HexAstKeywordArgList, HexAstIdentifier>($1,   NULL, $3,   $5  ); }
-  | simple_arg_list           COMMA keyword_arg_list                                                { $$ = AstFactory<_HexAstArgList>::create<HexAstSimpleArgList, HexAstIdentifier, HexAstKeywordArgList, HexAstIdentifier>($1,   NULL, $3,   NULL); }
-  | simple_arg_list                                  COMMA kwarg                                    { $$ = AstFactory<_HexAstArgList>::create<HexAstSimpleArgList, HexAstIdentifier, HexAstKeywordArgList, HexAstIdentifier>($1,   NULL, NULL, $3  ); }
-  | simple_arg_list                                                                                 { $$ = AstFactory<_HexAstArgList>::create<HexAstSimpleArgList, HexAstIdentifier, HexAstKeywordArgList, HexAstIdentifier>($1,   NULL, NULL, NULL); }
-  |                       arg COMMA keyword_arg_list COMMA kwarg                                    { $$ = AstFactory<_HexAstArgList>::create<HexAstSimpleArgList, HexAstIdentifier, HexAstKeywordArgList, HexAstIdentifier>(NULL, $1,   $3,   $5  ); }
-  |                       arg COMMA keyword_arg_list                                                { $$ = AstFactory<_HexAstArgList>::create<HexAstSimpleArgList, HexAstIdentifier, HexAstKeywordArgList, HexAstIdentifier>(NULL, $1,   $3,   NULL); }
-  |                       arg                        COMMA kwarg                                    { $$ = AstFactory<_HexAstArgList>::create<HexAstSimpleArgList, HexAstIdentifier, HexAstKeywordArgList, HexAstIdentifier>(NULL, $1,   NULL, $3  ); }
-  |                       arg                                                                       { $$ = AstFactory<_HexAstArgList>::create<HexAstSimpleArgList, HexAstIdentifier, HexAstKeywordArgList, HexAstIdentifier>(NULL, $1,   NULL, NULL); }
-  |                                 keyword_arg_list COMMA kwarg                                    { $$ = AstFactory<_HexAstArgList>::create<HexAstSimpleArgList, HexAstIdentifier, HexAstKeywordArgList, HexAstIdentifier>(NULL, NULL, $1,   $3  ); }
-  |                                 keyword_arg_list                                                { $$ = AstFactory<_HexAstArgList>::create<HexAstSimpleArgList, HexAstIdentifier, HexAstKeywordArgList, HexAstIdentifier>(NULL, NULL, $1,   NULL); }
-  |                                                        kwarg                                    { $$ = AstFactory<_HexAstArgList>::create<HexAstSimpleArgList, HexAstIdentifier, HexAstKeywordArgList, HexAstIdentifier>(NULL, NULL, NULL, $1  ); }
+  : simple_arg_list COMMA args_argument COMMA keyword_arg_list COMMA kwargs_argument                 { $$ = AstFactory<_HexAstArgList>::create<HexAstSimpleArgList, HexAstPrimary, HexAstKeywordArgList, HexAstPrimary>($1,   $3,   $5,   $7  ); }
+  | simple_arg_list COMMA args_argument COMMA keyword_arg_list                                       { $$ = AstFactory<_HexAstArgList>::create<HexAstSimpleArgList, HexAstPrimary, HexAstKeywordArgList, HexAstPrimary>($1,   $3,   $5,   NULL); }
+  | simple_arg_list COMMA args_argument                        COMMA kwargs_argument                 { $$ = AstFactory<_HexAstArgList>::create<HexAstSimpleArgList, HexAstPrimary, HexAstKeywordArgList, HexAstPrimary>($1,   $3,   NULL, $5  ); }
+  | simple_arg_list COMMA args_argument                                                              { $$ = AstFactory<_HexAstArgList>::create<HexAstSimpleArgList, HexAstPrimary, HexAstKeywordArgList, HexAstPrimary>($1,   $3,   NULL, NULL); }
+  | simple_arg_list                     COMMA keyword_arg_list COMMA kwargs_argument                 { $$ = AstFactory<_HexAstArgList>::create<HexAstSimpleArgList, HexAstPrimary, HexAstKeywordArgList, HexAstPrimary>($1,   NULL, $3,   $5  ); }
+  | simple_arg_list                     COMMA keyword_arg_list                                       { $$ = AstFactory<_HexAstArgList>::create<HexAstSimpleArgList, HexAstPrimary, HexAstKeywordArgList, HexAstPrimary>($1,   NULL, $3,   NULL); }
+  | simple_arg_list                                            COMMA kwargs_argument                 { $$ = AstFactory<_HexAstArgList>::create<HexAstSimpleArgList, HexAstPrimary, HexAstKeywordArgList, HexAstPrimary>($1,   NULL, NULL, $3  ); }
+  | simple_arg_list                                                                                  { $$ = AstFactory<_HexAstArgList>::create<HexAstSimpleArgList, HexAstPrimary, HexAstKeywordArgList, HexAstPrimary>($1,   NULL, NULL, NULL); }
+  |                       args_argument COMMA keyword_arg_list COMMA kwargs_argument                 { $$ = AstFactory<_HexAstArgList>::create<HexAstSimpleArgList, HexAstPrimary, HexAstKeywordArgList, HexAstPrimary>(NULL, $1,   $3,   $5  ); }
+  |                       args_argument COMMA keyword_arg_list                                       { $$ = AstFactory<_HexAstArgList>::create<HexAstSimpleArgList, HexAstPrimary, HexAstKeywordArgList, HexAstPrimary>(NULL, $1,   $3,   NULL); }
+  |                       args_argument                        COMMA kwargs_argument                 { $$ = AstFactory<_HexAstArgList>::create<HexAstSimpleArgList, HexAstPrimary, HexAstKeywordArgList, HexAstPrimary>(NULL, $1,   NULL, $3  ); }
+  |                       args_argument                                                              { $$ = AstFactory<_HexAstArgList>::create<HexAstSimpleArgList, HexAstPrimary, HexAstKeywordArgList, HexAstPrimary>(NULL, $1,   NULL, NULL); }
+  |                                           keyword_arg_list COMMA kwargs_argument                 { $$ = AstFactory<_HexAstArgList>::create<HexAstSimpleArgList, HexAstPrimary, HexAstKeywordArgList, HexAstPrimary>(NULL, NULL, $1,   $3  ); }
+  |                                           keyword_arg_list                                       { $$ = AstFactory<_HexAstArgList>::create<HexAstSimpleArgList, HexAstPrimary, HexAstKeywordArgList, HexAstPrimary>(NULL, NULL, $1,   NULL); }
+  |                                                                  kwargs_argument                 { $$ = AstFactory<_HexAstArgList>::create<HexAstSimpleArgList, HexAstPrimary, HexAstKeywordArgList, HexAstPrimary>(NULL, NULL, NULL, $1  ); }
+  ;
+
+kwargs_argument
+  : STARS primary                                                                                   { $$ = $2; }
+  ;
+
+args_argument
+  : MUL_OP primary                                                                                  { $$ = $2; }
   ;
 
 keyword_arg_list

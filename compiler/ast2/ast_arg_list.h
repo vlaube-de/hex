@@ -16,9 +16,9 @@
  */
 
 #include <boost/smart_ptr.hpp>
-#include "ast_identifier.h"
 #include "ast_keyword_arg_list.h"
 #include "ast_node.h"
+#include "ast_primary.h"
 #include "ast_simple_arg_list.h"
 #include "../visitor/ast_visitor.h"
 #include "../../base/assert.h"
@@ -30,14 +30,14 @@ typedef class _HexAstArgList : public _HexAstNode {
 public:
   _HexAstArgList(
     HexAstSimpleArgList simple_args,
-    HexAstIdentifier args,
+    HexAstPrimary args_argument,
     HexAstKeywordArgList keyword_args,
-    HexAstIdentifier kwargs
+    HexAstPrimary kwargs_argument
   ):
     _simple_args(simple_args),
-    _args(args),
+    _args_argument(args_argument),
     _keyword_args(keyword_args),
-    _kwargs(kwargs)
+    _kwargs_argument(kwargs_argument)
   {
     this->reprOK();
   }
@@ -45,9 +45,9 @@ public:
   virtual void reprOK() {
     HEX_ASSERT(
       this->simple_args() ||
-      this->args() ||
+      this->args_argument() ||
       this->keyword_args() ||
-      this->kwargs()
+      this->kwargs_argument()
     );
   }
 
@@ -56,15 +56,15 @@ public:
   }
 
   HexAstSimpleArgList simple_args() { return this->_simple_args.get(); }
-  HexAstIdentifier args() { return this->_args.get(); }
+  HexAstPrimary args_argument() { return this->_args_argument.get(); }
   HexAstKeywordArgList keyword_args() { return this->_keyword_args.get(); }
-  HexAstIdentifier kwargs() { return this->_kwargs.get(); }
+  HexAstPrimary kwargs_argument() { return this->_kwargs_argument.get(); }
 
 private:
   boost::scoped_ptr<_HexAstSimpleArgList> _simple_args;
-  boost::scoped_ptr<_HexAstIdentifier> _args;
+  boost::scoped_ptr<_HexAstPrimary> _args_argument;
   boost::scoped_ptr<_HexAstKeywordArgList> _keyword_args;
-  boost::scoped_ptr<_HexAstIdentifier> _kwargs;
+  boost::scoped_ptr<_HexAstPrimary> _kwargs_argument;
 } * HexAstArgList;
 
 #endif /* _AST_ARG_LIST_H_ */

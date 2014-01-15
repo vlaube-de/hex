@@ -1122,10 +1122,10 @@ AstToStringVisitor::visit(HexAstArgList arglist_)
     prev = true;
   }
 
-  if(arglist->args()) {
+  if(arglist->args_argument()) {
     if(prev) this->append(", ");
     this->append("*");
-    arglist->args()->accept(this);
+    arglist->args_argument()->accept(this);
     prev = true;
   }
 
@@ -1135,10 +1135,10 @@ AstToStringVisitor::visit(HexAstArgList arglist_)
     prev = true;
   }
 
-  if(arglist->kwargs()) {
+  if(arglist->kwargs_argument()) {
     if(prev) this->append(", ");
     this->append("**");
-    arglist->kwargs()->accept(this);
+    arglist->kwargs_argument()->accept(this);
     prev = true;
   }
 
