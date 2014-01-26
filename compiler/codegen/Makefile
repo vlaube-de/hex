@@ -33,6 +33,12 @@ quadruple_code_vector_generator.o: quadruple_code_vector_generator.cc
 hex_object_block_generator.o: hex_object_block_generator.cc
 		$(CXX) $(CFLAGS) -c hex_object_block_generator.cc
 
+hex_compilation_unit_metadata.o: hex_compilation_unit_metadata.cc
+		$(CXX) $(CFLAGS) -c hex_compilation_unit_metadata.cc
+
+hex_bytecode_generator.o: hex_bytecode_generator.cc
+		$(CXX) $(CFLAGS) -c hex_bytecode_generator.cc
+
 _libcodegen.a:
 		$(AR) $(ARFLAGS) _libcodegen.a *.o
 
@@ -40,6 +46,8 @@ all: ascii_box_generator.o \
 		 fixed_length_string_builder.o \
 		 quadruple_code_vector_generator.o \
 		 hex_object_block_generator.o \
+		 hex_compilation_unit_metadata.o \
+		 hex_bytecode_generator.o \
 		 _libcodegen.a
 
 
