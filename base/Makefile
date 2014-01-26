@@ -91,10 +91,10 @@ obj: unittest.o \
 	 bst.o  \
 	 freader.o
 
-libbase.a: obj
-	$(AR) $(ARFLAGS) libbase.a *.o
+_libbase.a: obj
+	$(AR) $(ARFLAGS) _libbase.a *.o
 
-all: libbase.a
+all: _libbase.a
 
 .PHONY : clean
 clean:
