@@ -21,7 +21,7 @@ CFLAGS=-Wno-implicit -w -g -arch x86_64 -DGTEST_HAS_TR1_TUPLE=0 -std=gnu++11
 GTEST_INCLUDE=-I/usr/local/gtest-1.6.0/include
 LIBGTEST=/usr/lib/libgtest.a
 LIBBASE=../../base/_libbase.a
-LIBAST=../ast2/libast.a
+LIBAST=../ast/libast.a
 
 LIBRARIES=$(LIBGTEST) $(LIBAST) $(LIBBASE)
 
@@ -31,7 +31,7 @@ OBJECTS=../hex_parser.o \
 		../visitor/ast_tostring_visitor.o \
 		../visitor/ast_to_xml_visitor.o
 
-SOURCES=../lex.yy.c ../parser_2.tab.cc
+SOURCES=../lex.yy.c ../parser.tab.cc
 
 parser_xml_test_base.o: parser_xml_test_base.h parser_xml_test_base.cc
 	$(CXX) $(CFLAGS) -c parser_xml_test_base.cc

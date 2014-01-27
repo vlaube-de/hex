@@ -19,7 +19,7 @@
 /* HEX parser. */
 
 #include "../base/c_str.h"
-#include "ast2/ast.h"
+#include "ast/ast.h"
 
 #ifndef _HEX_PARSER_H_
 #define _HEX_PARSER_H_

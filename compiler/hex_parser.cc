@@ -18,9 +18,9 @@
 /* HEX parser. */
 
 #include <cstddef>
-#include "ast2/ast.h"
+#include "ast/ast.h"
 #include "hex_parser.h"
-#include "parser_2.tab.hh"
+#include "parser.tab.hh"
 #include "../base/assert.h"
 #include "../base/c_str.h"
 #include "../base/freader.h"

@@ -18,7 +18,7 @@
 #include "hex_parser_test_file.h"
 #include "parser_test_base.h"
 #include "parser_test_files.h"
-#include "../ast2/ast.h"
+#include "../ast/ast.h"
 #include "../hex_parser.h"
 #include "../visitor/ast_tostring_visitor.h"
 #include "../../base/assert.h"

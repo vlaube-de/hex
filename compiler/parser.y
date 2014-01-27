@@ -76,7 +76,7 @@ The sky is your limit...
 
 #include <stdio.h>
 #include "yacc_extern.h"
-#include "ast2/ast.h"
+#include "ast/ast.h"
 
 #define YYDEBUG 1
 #define YYERROR_VERBOSE

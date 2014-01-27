@@ -25,7 +25,7 @@
 
 #include <boost/smart_ptr.hpp>
 #include "hex_compilation_unit_metadata.h"
-#include "../ast2/ast_hex_program.h"
+#include "../ast/ast_hex_program.h"
 
 #ifndef _HEX_BYTECODE_GENERATOR_H_
 #define _HEX_BYTECODE_GENERATOR_H_

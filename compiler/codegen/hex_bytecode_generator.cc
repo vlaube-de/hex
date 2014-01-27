@@ -18,7 +18,7 @@
 
 #include "hex_bytecode_generator.h"
 #include "hex_compilation_unit_metadata.h"
-#include "../ast2/ast_hex_program.h"
+#include "../ast/ast_hex_program.h"
 
 
 HexBytecodeGenerator::HexBytecodeGenerator(

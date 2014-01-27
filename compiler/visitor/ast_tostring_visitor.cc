@@ -18,7 +18,7 @@
 #include <algorithm>
 #include "ast_tostring_helper.h"
 #include "ast_tostring_visitor.h"
-#include "../ast2/ast.h"
+#include "../ast/ast.h"
 #include "../../base/assert.h"
 
 AstToStringVisitor::AstToStringVisitor()

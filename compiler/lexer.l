@@ -17,7 +17,7 @@
 
 
 %{
-#include "parser_2.tab.hh"
+#include "parser.tab.hh"
 #include "yacc_extern.h"
 
 #define EAT_TOKEN(yytext, token_type)   \

@@ -16,7 +16,7 @@
  */
 
 #include "hex_codegen_visitor.h"
-#include "../ast2/ast.h"
+#include "../ast/ast.h"
 #include "../../base/assert.h"
 
 HexCodeGenerationVisitor::HexCodeGenerationVisitor()
