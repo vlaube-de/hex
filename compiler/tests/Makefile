@@ -20,7 +20,7 @@ CFLAGS=-Wno-implicit -w -g -arch x86_64 -DGTEST_HAS_TR1_TUPLE=0 -std=gnu++11
 
 GTEST_INCLUDE=-I/usr/local/gtest-1.6.0/include
 LIBGTEST=/usr/lib/libgtest.a
-LIBBASE=../../base/libbase.a
+LIBBASE=../../base/_libbase.a
 LIBAST=../ast2/libast.a
 
 LIBRARIES=$(LIBGTEST) $(LIBAST) $(LIBBASE)
