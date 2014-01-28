@@ -38,6 +38,9 @@ public:
   );
   ~HexCompilationUnitMetadata();
 
+  const c_str put(const c_str, const c_str);
+  const c_str get(const c_str);
+
   const c_str input_path();
   const c_str input_filename();
   const c_str input_encoding();

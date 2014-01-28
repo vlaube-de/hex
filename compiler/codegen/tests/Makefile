@@ -38,11 +38,14 @@ quadruple_code_vector_generator_unittest.test: base quadruple_code_vector_genera
 hex_object_block_generator_unittest.test: base hex_object_block_generator_unittest.cc
 		$(CXX) $(CFLAGS) $(LIBS) hex_object_block_generator_unittest.cc -o hex_object_block_generator_unittest.test
 
+hex_compilation_unit_metadata_unittest.test: hex_object_block_generator_unittest.cc
+		$(CXX) $(CFLAGS) $(LIBS) hex_compilation_unit_metadata_unittest.cc -o hex_compilation_unit_metadata_unittest.test
 
 all: fixed_length_string_builder_unittest.test \
 		 ascii_box_generator_unittest.test \
 		 quadruple_code_vector_generator_unittest.test \
-		 hex_object_block_generator_unittest.test
+		 hex_object_block_generator_unittest.test \
+		 hex_compilation_unit_metadata_unittest.test
 
 
 .PHONY : clean

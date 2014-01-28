@@ -53,6 +53,23 @@ HexCompilationUnitMetadata::init()
 }
 
 const c_str
+HexCompilationUnitMetadata::put(const c_str key, const c_str value)
+{
+  HEX_ASSERT(key);
+  HEX_ASSERT(value);
+
+  return (const c_str)dict_put(this->_dict, key, value);
+}
+
+const c_str
+HexCompilationUnitMetadata::get(const c_str key)
+{
+  HEX_ASSERT(key);
+
+  return (const c_str)dict_get(this->_dict, key);
+}
+
+const c_str
 HexCompilationUnitMetadata::input_path()
 {
   return (const c_str)dict_get(this->_dict, "input_path");
