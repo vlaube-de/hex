@@ -34,7 +34,7 @@ public:
 
   size_t size();
 
-	void append(const c_str, const c_str, const c_str, const c_str);
+  void append(const c_str, const c_str, const c_str, const c_str);
 
   void iterate(QuadrupleInstrHandler*);
 
@@ -45,7 +45,7 @@ public:
   const c_str instr_to_str(quadruple_instr);
 
 protected:
-	std::vector<quadruple_instr> _vector;
+  std::vector<quadruple_instr> _vector;
 };
 
 #endif /* _QUADRUPLE_CODE_VECTOR_GENERATOR_H_ */

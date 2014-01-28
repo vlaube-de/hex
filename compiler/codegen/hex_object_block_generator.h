@@ -24,7 +24,7 @@
 
 class HexObjectBlockGenerator {
 public:
-	HexObjectBlockGenerator(
+  HexObjectBlockGenerator(
     const c_str address,
     const c_str flags,
     const c_str scope_id,
@@ -33,7 +33,7 @@ public:
     QuadrupleCodeVectorGenerator * code_generator
   );
 
-	~HexObjectBlockGenerator();
+  ~HexObjectBlockGenerator();
 
   const c_str to_string();
 

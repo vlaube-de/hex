@@ -23,7 +23,7 @@
 
 class AsciiBoxGenerator {
 public:
-	AsciiBoxGenerator(size_t width);
+  AsciiBoxGenerator(size_t width);
   AsciiBoxGenerator(AsciiBoxGenerator&);
 
   size_t width();
