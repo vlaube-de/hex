@@ -39,6 +39,12 @@ hex_compilation_unit_metadata.o: hex_compilation_unit_metadata.cc
 hex_bytecode_generator.o: hex_bytecode_generator.cc
 		$(CXX) $(CFLAGS) -c hex_bytecode_generator.cc
 
+hex_stmt_codegen_visitor.o: hex_stmt_codegen_visitor.cc
+		$(CXX) $(CFLAGS) -c hex_stmt_codegen_visitor.cc
+
+hex_codegen_visitor.o: hex_codegen_visitor.cc
+		$(CXX) $(CFLAGS) -c hex_codegen_visitor.cc
+
 _libcodegen.a:
 		$(AR) $(ARFLAGS) _libcodegen.a *.o
 
@@ -48,6 +54,8 @@ all: ascii_box_generator.o \
 		 hex_object_block_generator.o \
 		 hex_compilation_unit_metadata.o \
 		 hex_bytecode_generator.o \
+		 hex_stmt_codegen_visitor.o \
+		 hex_codegen_visitor.o \
 		 _libcodegen.a
 
 

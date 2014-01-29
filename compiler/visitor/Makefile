@@ -32,14 +32,10 @@ ast_tostring_visitor.o: ast_tostring_visitor.h ast_tostring_visitor.cc
 ast_to_xml_visitor.o: ast_to_xml_visitor.h ast_to_xml_visitor.cc
 	$(CXX) $(CFLAGS) -D_HEX_AST_ -c ast_to_xml_visitor.cc
 
-hex_codegen_visitor.o: hex_codegen_visitor.h hex_codegen_visitor.cc
-	$(CXX) $(CFLAGS) -D_HEX_AST_ -c hex_codegen_visitor.cc
-
 all: 	ast_visitor.o	\
 			ast_tostring_helper.o \
 	 		ast_tostring_visitor.o \
-	 		ast_to_xml_visitor.o \
-	 		hex_codegen_visitor.o
+	 		ast_to_xml_visitor.o
 
 .PHONY : clean
 clean:

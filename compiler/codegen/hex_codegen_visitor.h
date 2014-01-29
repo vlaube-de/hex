@@ -17,8 +17,11 @@
 
 /* Visitor that traverses the AST and generates code. */
 
+#include <list>
 #include <boost/smart_ptr.hpp>
-#include "ast_visitor.h"
+#include "hex_compilation_unit_metadata.h"
+#include "hex_object_block_generator.h"
+#include "../visitor/ast_visitor.h"
 #include "../../base/c_str.h"
 
 #ifndef _HEX_CODEGEN_VISITOR_H_
@@ -26,7 +29,12 @@
 
 class HexCodeGenerationVisitor : public AstVisitor {
 public:
-  HexCodeGenerationVisitor();
+  HexCodeGenerationVisitor(HexCompilationUnitMetadata*, HexAstHexProgram);
+
+  HexCompilationUnitMetadata* metadata();
+  HexAstHexProgram ast();
+
+  std::list<HexObjectBlockGenerator*>* generate();
 
   // virtual HexAstIdentifier visit(HexAstIdentifier);
   // virtual HexAstDecimalIntegerLiteral visit(HexAstDecimalIntegerLiteral);
@@ -129,9 +137,9 @@ public:
   // virtual HexAstCatchStmt visit(HexAstCatchStmt);
   // virtual HexAstCatchStmtGroup visit(HexAstCatchStmtGroup);
   // virtual HexAstTryStmt visit(HexAstTryStmt);
-  // virtual HexAstClassDef visit(HexAstClassDef);
-  // virtual HexAstSimpleLambda visit(HexAstSimpleLambda);
-  // virtual HexAstComplexLambda visit(HexAstComplexLambda);
+  virtual HexAstClassDef visit(HexAstClassDef);
+  virtual HexAstSimpleLambda visit(HexAstSimpleLambda);
+  virtual HexAstComplexLambda visit(HexAstComplexLambda);
   // virtual HexAstInputStmt visit(HexAstInputStmt);
   // virtual HexAstOutputStmt visit(HexAstOutputStmt);
   // virtual HexAstTaskState visit(HexAstTaskState);
@@ -150,8 +158,16 @@ public:
   // virtual HexAstRaiseStmt visit(HexAstRaiseStmt);
   // virtual HexAstExprListStmt visit(HexAstExprListStmt);
   // virtual HexAstSimpleIfStmt visit(HexAstSimpleIfStmt);
-  // virtual HexAstStmtGroup visit(HexAstStmtGroup);
+  virtual HexAstStmtGroup visit(HexAstStmtGroup);
   virtual HexAstHexProgram visit(HexAstHexProgram);
+
+protected:
+  template<class T>
+  void iterate(std::list<T>*);
+
+  std::list<HexObjectBlockGenerator*>* _blocks;
+  boost::scoped_ptr<HexCompilationUnitMetadata> _metadata;
+  boost::scoped_ptr<_HexAstHexProgram> _ast;
 };
 
 #endif /* _HEX_CODEGEN_VISITOR_H_ */
