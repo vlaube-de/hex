@@ -32,7 +32,7 @@ protected:
     );
   }
 
-  virtual void Teardown() {
+  virtual void TearDown() {
     delete _stringbuilder;
   }
 

@@ -19,8 +19,9 @@ CXX=c++
 CFLAGS=-Wno-implicit -w -g -std=c++11 -arch x86_64 -DGTEST_HAS_TR1_TUPLE=0
 LIBGTEST=/usr/lib/libgtest.a
 LIBBASE=../../../base/_libbase.a
+LIBAST=../../ast/libast.a
 LIBCODEGEN=../_libcodegen.a
-LIBS= $(LIBGTEST) $(LIBBASE) $(LIBCODEGEN)
+LIBS= $(LIBGTEST) $(LIBBASE) $(LIBAST) $(LIBCODEGEN)
 
 base:
 		cd ../../../base && make all
@@ -41,11 +42,15 @@ hex_object_block_generator_unittest.test: base hex_object_block_generator_unitte
 hex_compilation_unit_metadata_unittest.test: hex_object_block_generator_unittest.cc
 		$(CXX) $(CFLAGS) $(LIBS) hex_compilation_unit_metadata_unittest.cc -o hex_compilation_unit_metadata_unittest.test
 
+hex_bytecode_generator_unittest.test: hex_bytecode_generator_unittest.cc
+		$(CXX) $(CFLAGS) $(LIBS) hex_bytecode_generator_unittest.cc -o hex_bytecode_generator_unittest.test
+
 all: fixed_length_string_builder_unittest.test \
 		 ascii_box_generator_unittest.test \
 		 quadruple_code_vector_generator_unittest.test \
 		 hex_object_block_generator_unittest.test \
-		 hex_compilation_unit_metadata_unittest.test
+		 hex_compilation_unit_metadata_unittest.test \
+		 hex_bytecode_generator_unittest.test
 
 
 .PHONY : clean

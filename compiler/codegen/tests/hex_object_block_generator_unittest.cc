@@ -42,7 +42,7 @@ protected:
     );
   }
 
-  virtual void Teardown() {
+  virtual void TearDown() {
     delete this->_code_generator;
     delete this->_generator;
   }

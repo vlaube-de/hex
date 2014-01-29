@@ -29,7 +29,7 @@ protected:
     this->_generator = new AsciiBoxGenerator(10);
   }
 
-  virtual void Teardown() {
+  virtual void TearDown() {
     delete this->_generator;
   }
 

@@ -31,7 +31,7 @@ protected:
     this->_generator = new QuadrupleCodeVectorGenerator();
   }
 
-  virtual void Teardown() {
+  virtual void TearDown() {
     delete this->_generator;
   }
 
