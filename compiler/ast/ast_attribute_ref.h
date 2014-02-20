@@ -37,8 +37,8 @@ public:
   }
 
   virtual void reprOK() {
-    HEX_ASSERT(this->source());
-    HEX_ASSERT(this->attribute());
+    ASSERT(this->source());
+    ASSERT(this->attribute());
   }
 
   virtual void accept(AstVisitor* visitor) {

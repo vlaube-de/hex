@@ -34,8 +34,8 @@ HexBytecodeGenerator::HexBytecodeGenerator(
 void
 HexBytecodeGenerator::check_invariance()
 {
-  HEX_ASSERT(this->metadata());
-  HEX_ASSERT(this->ast());
+  ASSERT(this->metadata());
+  ASSERT(this->ast());
 }
 
 HexCompilationUnitMetadata*

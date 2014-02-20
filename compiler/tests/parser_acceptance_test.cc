@@ -15,11 +15,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <sneaker/libc/assert.h>
+#include <sneaker/libc/c_str.h>
+#include <sneaker/libc/memory.h>
 #include "parser_test_base.h"
 #include "parser_test_files.h"
-#include "../../base/assert.h"
-#include "../../base/c_str.h"
-#include "../../base/memory.h"
 
 class HexParserAcceptanceTest : public HexParserTestBase {
 protected:

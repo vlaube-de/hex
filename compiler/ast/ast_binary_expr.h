@@ -16,10 +16,11 @@
  */
 
 #include <boost/smart_ptr.hpp>
+#include <sneaker/libc/assert.h>
 #include "ast_expr.h"
 #include "ast_expr_associativity.h"
 #include "ast_expr_precedence.h"
-#include "../../base/assert.h"
+
 
 #ifndef _HEX_AST_BINARY_EXPR_H_
 #define _HEX_AST_BINARY_EXPR_H_
@@ -40,13 +41,13 @@ public:
   }
 
   virtual void reprOK() {
-    HEX_ASSERT(this->lexpr());
-    HEX_ASSERT(this->rexpr());
+    ASSERT(this->lexpr());
+    ASSERT(this->rexpr());
 
     // Check for precedence.
-    HEX_ASSERT(this->lexpr()->precedence() >= this->precedence());
+    ASSERT(this->lexpr()->precedence() >= this->precedence());
     if(this->rexpr()->associativity() == EXPR_ASSOCIATIVITY_LEFT) {
-      HEX_ASSERT(this->rexpr()->precedence() >= this->precedence());
+      ASSERT(this->rexpr()->precedence() >= this->precedence());
     }
   }
 

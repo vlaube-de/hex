@@ -17,11 +17,11 @@
 
 /* Unit test for compiler/codegen/hex_bytecode_generator.cc */
 
+#include <sneaker/libc/assert.h>
+#include <sneaker/testing/_unittest.h>
 #include "../hex_bytecode_generator.h"
 #include "../hex_compilation_unit_metadata.h"
 #include "../../ast/ast.h"
-#include "../../../base/unittest.h"
-#include "../../../base/assert.h"
 
 
 class HexBytecodeGeneratorUnitTest : public ::testing::Test {
@@ -44,7 +44,7 @@ protected:
 
 TEST_F(HexBytecodeGeneratorUnitTest, TestInitialization)
 {
-  HEX_ASSERT(this->_generator);
+  ASSERT(this->_generator);
   ASSERT_EQ(this->_ast, this->_generator->ast());
   ASSERT_EQ(this->_metadata, this->_generator->metadata());
 }

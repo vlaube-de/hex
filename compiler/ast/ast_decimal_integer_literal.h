@@ -15,9 +15,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <sneaker/libc/c_str.h>
 #include "ast_integer_literal.h"
 #include "../visitor/ast_visitor.h"
-#include "../../base/c_str.h"
+
 
 #ifndef _AST_DECIMAL_INTEGER_LITERAL_H_
 #define _AST_DECIMAL_INTEGER_LITERAL_H_

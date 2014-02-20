@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "../../base/c_str.h"
+#include <sneaker/libc/c_str.h>
 
 #ifndef _HEX_PARSER_TEST_FILE_H_
 #define _HEX_PARSER_TEST_FILE_H_

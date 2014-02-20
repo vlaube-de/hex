@@ -16,6 +16,7 @@
  */
 
 #include <boost/smart_ptr.hpp>
+#include <sneaker/libc/assert.h>
 #include "ast_identifier.h"
 #include "ast_task_clause.h"
 #include "../visitor/ast_visitor.h"
@@ -38,7 +39,7 @@ public:
 
   virtual void reprOK() {
     _HexAstTaskClause::reprOK();
-    HEX_ASSERT(this->alias());
+    ASSERT(this->alias());
   }
 
   virtual void accept(AstVisitor* visitor) {

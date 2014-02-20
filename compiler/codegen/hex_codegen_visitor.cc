@@ -15,11 +15,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <sneaker/libc/assert.h>
 #include "hex_codegen_visitor.h"
 #include "hex_object_block_generator.h"
 #include "hex_stmt_codegen_visitor.h"
 #include "../ast/ast.h"
-#include "../../base/assert.h"
 
 HexCodeGenerationVisitor::HexCodeGenerationVisitor(
   HexCompilationUnitMetadata * metadata,

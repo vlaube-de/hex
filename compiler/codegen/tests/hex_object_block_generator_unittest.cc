@@ -17,12 +17,11 @@
 
 /* Unit test for compiler/codegen/hex_object_block_generator.cc */
 
-
+#include <sneaker/libc/assert.h>
+#include <sneaker/libc/c_str.h>
+#include <sneaker/testing/_unittest.h>
 #include "../hex_object_block_generator.h"
 #include "../quadruple_code_vector_generator.h"
-#include "../../../base/c_str.h"
-#include "../../../base/assert.h"
-#include "../../../base/unittest.h"
 
 
 class HexObjectBlockGeneratorUnitTest : public ::testing::Test {
@@ -58,7 +57,7 @@ protected:
 
 TEST_F(HexObjectBlockGeneratorUnitTest, TestInitialization)
 {
-  HEX_ASSERT(this->_generator);
+  ASSERT(this->_generator);
 
   ASSERT_STREQ(_address, this->_generator->address());
   ASSERT_STREQ(_flags, this->_generator->flags());

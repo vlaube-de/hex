@@ -16,11 +16,12 @@
  */
 
 #include <boost/smart_ptr.hpp>
+#include <sneaker/libc/assert.h>
 #include "ast_assignment_source.h"
 #include "ast_reference.h"
 #include "ast_simple_stmt.h"
 #include "../visitor/ast_visitor.h"
-#include "../../base/assert.h"
+
 
 #ifndef _AST_ASSIGNMENT_STMT_H_
 #define _AST_ASSIGNMENT_STMT_H_
@@ -40,9 +41,9 @@ public:
   }
 
   virtual void reprOK() {
-    HEX_ASSERT(this->target());
-    HEX_ASSERT(this->feature());
-    HEX_ASSERT(this->source());
+    ASSERT(this->target());
+    ASSERT(this->feature());
+    ASSERT(this->source());
   }
 
   virtual void accept(AstVisitor* visitor) {

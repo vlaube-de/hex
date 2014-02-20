@@ -16,9 +16,10 @@
  */
 
 #include <string>
+#include <sneaker/libc/assert.h>
+#include <sneaker/libc/c_str.h>
 #include "fixed_length_string_builder.h"
-#include "../../base/assert.h"
-#include "../../base/c_str.h"
+
 
 FixedLengthStringBuilder::FixedLengthStringBuilder(
   size_t maxLength,
@@ -112,7 +113,7 @@ FixedLengthStringBuilder::pad_with_whitespace()
 void
 FixedLengthStringBuilder::_check_size()
 {
-  HEX_ASSERT(this->size() <= this->max_length());
+  ASSERT(this->size() <= this->max_length());
 }
 
 void

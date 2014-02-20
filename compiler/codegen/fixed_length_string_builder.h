@@ -16,7 +16,7 @@
  */
 
 #include <string>
-#include "../../base/c_str.h"
+#include <sneaker/libc/c_str.h>
 
 #ifndef _FIXED_LENGTH_STRING_BUILDER_H_
 #define _FIXED_LENGTH_STRING_BUILDER_H_

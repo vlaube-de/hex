@@ -18,7 +18,7 @@
 
 /* HEX parser. */
 
-#include "../base/c_str.h"
+#include <sneaker/libc/c_str.h>
 #include "ast/ast.h"
 
 #ifndef _HEX_PARSER_H_

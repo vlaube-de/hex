@@ -16,11 +16,12 @@
  */
 
 #include <boost/smart_ptr.hpp>
+#include <sneaker/libc/assert.h>
 #include "ast_expr.h"
 #include "ast_paren_form.h"
 #include "ast_string_literal.h"
 #include "../visitor/ast_visitor.h"
-#include "../../base/assert.h"
+
 
 #ifndef _AST_STRING_COMPOSITION_EXPR_H_
 #define _AST_STRING_COMPOSITION_EXPR_H_
@@ -41,11 +42,11 @@ public:
   }
 
   virtual void reprOK() {
-    HEX_ASSERT(this->string());
-    HEX_ASSERT(this->paren());
+    ASSERT(this->string());
+    ASSERT(this->paren());
 
-    HEX_ASSERT(this->precedence() < this->string()->precedence());
-    HEX_ASSERT(this->precedence() < this->paren()->precedence());
+    ASSERT(this->precedence() < this->string()->precedence());
+    ASSERT(this->precedence() < this->paren()->precedence());
   }
 
   virtual void accept(AstVisitor* visitor) {

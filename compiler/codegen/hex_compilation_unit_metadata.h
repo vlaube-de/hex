@@ -19,8 +19,8 @@
  * A wrapper around a set of metadata for one compilation unit. 
  */
 
-#include "../../base/c_str.h"
-#include "../../base/dict.h"
+#include <sneaker/libc/c_str.h>
+#include <sneaker/libc/dict.h>
 
 #ifndef _HEX_COMPILATION_UNIT_METADATA_H_
 #define _HEX_COMPILATION_UNIT_METADATA_H_
@@ -48,7 +48,7 @@ public:
   const c_str time_compiled_at();
 
 protected:
-  Dict _dict;
+  dict_t _dict;
 
   void init();
 };

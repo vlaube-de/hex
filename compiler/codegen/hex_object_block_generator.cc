@@ -16,10 +16,11 @@
  */
 
 #include <string>
+#include <sneaker/libc/c_str.h>
 #include "ascii_box_generator.h"
 #include "hex_object_block_generator.h"
 #include "quadruple_instr.h"
-#include "../../base/c_str.h"
+
 
 #define DEFAULT_BLOCK_WIDTH 80
 

@@ -16,14 +16,14 @@
  */
 
 #include "ast_unparsed.h"
-#include "../../base/assert.h"
-#include "../../base/c_str.h"
+#include <sneaker/libc/assert.h>
+#include <sneaker/libc/c_str.h>
 
 AstUnparsed::AstUnparsed(
   c_str value
 ):_value(strdup(value))
 {
-  HEX_ASSERT(this->value());
+  ASSERT(this->value());
 }
 
 c_str

@@ -16,10 +16,11 @@
  */
 
 #include <boost/smart_ptr.hpp>
+#include <sneaker/libc/assert.h>
 #include "ast_expr.h"
 #include "ast_expr_associativity.h"
 #include "ast_expr_precedence.h"
-#include "../../base/assert.h"
+
 
 #ifndef _AST_UNARY_EXPR_H_
 #define _AST_UNARY_EXPR_H_
@@ -38,7 +39,7 @@ public:
   }
 
   virtual void reprOK() {
-    HEX_ASSERT(this->expr());
+    ASSERT(this->expr());
   }
 
   HexAstExpr expr() { return this->_expr.get(); }

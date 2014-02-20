@@ -18,13 +18,12 @@
 CXX=c++
 CFLAGS=-Wno-implicit -w -g -std=c++11 -arch x86_64 -DGTEST_HAS_TR1_TUPLE=0
 LIBGTEST=/usr/lib/libgtest.a
-LIBBASE=../../../base/_libbase.a
+LIBSNEAKER=/usr/local/lib/libsneaker.a
 LIBAST=../../ast/libast.a
 LIBCODEGEN=../_libcodegen.a
-LIBS= $(LIBGTEST) $(LIBBASE) $(LIBAST) $(LIBCODEGEN)
+LIBS= $(LIBGTEST) $(LIBSNEAKER) $(LIBAST) $(LIBCODEGEN)
 
 base:
-		cd ../../../base && make all
 		cd ../ && make all
 
 fixed_length_string_builder_unittest.test: base fixed_length_string_builder_unittest.cc

@@ -16,11 +16,12 @@
  */
 
 #include <boost/smart_ptr.hpp>
+#include <sneaker/libc/assert.h>
 #include "ast_identifier.h"
 #include "ast_name.h"
 #include "ast_using_stmt.h"
 #include "../visitor/ast_visitor.h"
-#include "../../base/assert.h"
+
 
 #ifndef _AST_ABSOLUTE_USING_STMT_H_
 #define _AST_ABSOLUTE_USING_STMT_H_
@@ -35,7 +36,7 @@ public:
   }
 
   virtual void reprOK() {
-    HEX_ASSERT(this->source());
+    ASSERT(this->source());
   }
 
   virtual void accept(AstVisitor* visitor) {

@@ -17,8 +17,8 @@
 
 #include <string>
 #include "ast_tostring_helper.h"
-#include "../../base/assert.h"
-#include "../../base/c_str.h"
+#include <sneaker/libc/assert.h>
+#include <sneaker/libc/c_str.h>
 
 AstToStringHelper::AstToStringHelper(size_t indentSize):
   _indentLvl(0),
@@ -42,14 +42,14 @@ const c_str
 AstToStringHelper::str()
 {
   c_str str = strdup(_strbuf->c_str());
-  HEX_ASSERT(str);
+  ASSERT(str);
   return (const c_str)str;
 }
 
 void
 AstToStringHelper::append(const c_str s)
 {
-  HEX_ASSERT(s);
+  ASSERT(s);
   this->_strbuf->append(s);
 }
 
@@ -57,14 +57,14 @@ void
 AstToStringHelper::indent()
 {
   this->_indentLvl++;
-  HEX_ASSERT(this->_indentLvl >= 0);
+  ASSERT(this->_indentLvl >= 0);
 }
 
 void
 AstToStringHelper::dedent()
 {
   this->_indentLvl--;
-  HEX_ASSERT(this->_indentLvl >= 0);
+  ASSERT(this->_indentLvl >= 0);
 }
 
 void

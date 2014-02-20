@@ -27,10 +27,10 @@
 
 #include <list>
 #include <boost/smart_ptr.hpp>
+#include <sneaker/libc/assert.h>
 #include "hex_compilation_unit_metadata.h"
 #include "quadruple_code_vector_generator.h"
 #include "../visitor/ast_visitor.h"
-#include "../../base/c_str.h"
 
 
 #ifndef _HEX_STMT_CODEGEN_VISITOR_H_

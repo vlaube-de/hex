@@ -16,12 +16,13 @@
  */
 
 #include <boost/smart_ptr.hpp>
+#include <sneaker/libc/assert.h>
 #include "ast_expr.h"
 #include "ast_expr_list.h"
 #include "ast_node.h"
 #include "ast_target_list.h"
 #include "../visitor/ast_visitor.h"
-#include "../../base/assert.h"
+
 
 #ifndef _AST_COMPREHENSION_H_
 #define _AST_COMPREHENSION_H_
@@ -41,8 +42,8 @@ public:
   }
 
   virtual void reprOK() {
-    HEX_ASSERT(this->targets());
-    HEX_ASSERT(this->sources());
+    ASSERT(this->targets());
+    ASSERT(this->sources());
   }
 
   virtual void accept(AstVisitor*)=0;

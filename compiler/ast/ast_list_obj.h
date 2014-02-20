@@ -17,7 +17,7 @@
 
 #include <list>
 #include <boost/smart_ptr.hpp>
-#include "../../base/assert.h"
+#include <sneaker/libc/assert.h>
 
 #ifndef _AST_LIST_OBJ_
 #define _AST_LIST_OBJ_
@@ -44,21 +44,21 @@ template<typename C, typename T>
 AstListObj<C, T>::AstListObj():
   _list(new std::list<T>())
 {
-  HEX_ASSERT(this->list());
+  ASSERT(this->list());
 }
 
 template<typename C, typename T>
 void
 AstListObj<C, T>::reprOK()
 {
-  HEX_ASSERT(this->list());
+  ASSERT(this->list());
 }
 
 template<typename C, typename T>
 bool
 AstListObj<C, T>::append(T obj)
 {
-  HEX_ASSERT(obj);
+  ASSERT(obj);
 
   this->_list->push_back(obj);
 
@@ -69,7 +69,7 @@ template<typename C, typename T>
 bool
 AstListObj<C, T>::push_front(T obj)
 {
-  HEX_ASSERT(obj);
+  ASSERT(obj);
 
   this->_list->push_front(obj);
 
@@ -87,10 +87,10 @@ template<typename C, typename T>
 C*
 AstListObj<C, T>::create(T child)
 {
-  HEX_ASSERT(child);
+  ASSERT(child);
 
   C* obj = new C();
-  HEX_ASSERT(obj);
+  ASSERT(obj);
 
   obj->append(child);
 
@@ -101,11 +101,11 @@ template<typename C, typename T>
 C*
 AstListObj<C, T>::create(T child1, T child2)
 {
-  HEX_ASSERT(child1);
-  HEX_ASSERT(child2);
+  ASSERT(child1);
+  ASSERT(child2);
 
   C* obj = new C();
-  HEX_ASSERT(obj);
+  ASSERT(obj);
 
   obj->append(child1);
   obj->append(child2);
@@ -117,8 +117,8 @@ template<typename C, typename T>
 C*
 AstListObj<C, T>::extend(C* listobj, T element)
 {
-  HEX_ASSERT(listobj);
-  HEX_ASSERT(element);
+  ASSERT(listobj);
+  ASSERT(element);
 
   listobj->append(element);
 

@@ -16,7 +16,7 @@
  */
 
 #include <boost/smart_ptr.hpp>
-#include "../../base/c_str.h"
+#include <sneaker/libc/c_str.h>
 
 #ifndef _AST_UNPARSED_H_
 #define _AST_UNPARSED_H_

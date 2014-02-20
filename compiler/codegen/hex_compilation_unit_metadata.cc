@@ -16,9 +16,9 @@
  */
 
 #include "hex_compilation_unit_metadata.h"
-#include "../../base/assert.h"
-#include "../../base/c_str.h"
-#include "../../base/dict.h"
+#include <sneaker/libc/assert.h>
+#include <sneaker/libc/c_str.h>
+#include <sneaker/libc/dict.h>
 
 HexCompilationUnitMetadata::HexCompilationUnitMetadata()
 {
@@ -55,8 +55,8 @@ HexCompilationUnitMetadata::init()
 const c_str
 HexCompilationUnitMetadata::put(const c_str key, const c_str value)
 {
-  HEX_ASSERT(key);
-  HEX_ASSERT(value);
+  ASSERT(key);
+  ASSERT(value);
 
   return (const c_str)dict_put(this->_dict, key, value);
 }
@@ -64,7 +64,7 @@ HexCompilationUnitMetadata::put(const c_str key, const c_str value)
 const c_str
 HexCompilationUnitMetadata::get(const c_str key)
 {
-  HEX_ASSERT(key);
+  ASSERT(key);
 
   return (const c_str)dict_get(this->_dict, key);
 }

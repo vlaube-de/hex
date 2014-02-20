@@ -22,9 +22,6 @@ LEX=lex
 BISON=bison
 BFLAGS=-y -d -t -v -g
 
-base:
-	cd ../base && make all
-
 ast:
 	cd ast/ && make all
 
@@ -37,7 +34,7 @@ parser.tab.hh: parser.y
 hex_parser.o: lex.yy.c parser.tab.hh hex_parser.cc
 	$(CXX) $(CFLAGS) -c hex_parser.cc
 
-parser_stub.out: base ast hex_parser.o parser_stub.cc
+parser_stub.out: ast hex_parser.o parser_stub.cc
 
 all: lex.yy.c        \
 	 	 hex_parser.o    \

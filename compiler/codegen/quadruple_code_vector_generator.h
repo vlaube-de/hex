@@ -16,8 +16,9 @@
  */
 
 #include <vector>
+#include <sneaker/libc/c_str.h>
 #include "quadruple_instr.h"
-#include "../../base/c_str.h"
+
 
 #ifndef _QUADRUPLE_CODE_VECTOR_GENERATOR_H_
 #define _QUADRUPLE_CODE_VECTOR_GENERATOR_H_

@@ -17,10 +17,10 @@
 
 /* Unit test for compiler/codegen/hex_compilation_unit_metadata.cc */
 
+#include <sneaker/libc/assert.h>
+#include <sneaker/libc/c_str.h>
+#include <sneaker/testing/_unittest.h>
 #include "../hex_compilation_unit_metadata.h"
-#include "../../../base/c_str.h"
-#include "../../../base/assert.h"
-#include "../../../base/unittest.h"
 
 
 class HexCompilationUnitMetadataUnitTest : public ::testing::Test {
@@ -51,7 +51,7 @@ protected:
 
 TEST_F(HexCompilationUnitMetadataUnitTest, TestInitialization)
 {
-  HEX_ASSERT(this->_metadata);
+  ASSERT(this->_metadata);
 
   ASSERT_STREQ(this->input_path, this->_metadata->input_path());
   ASSERT_STREQ(this->input_filename, this->_metadata->input_filename());

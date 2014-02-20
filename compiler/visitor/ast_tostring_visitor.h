@@ -17,9 +17,10 @@
 
 #include <list>
 #include <boost/smart_ptr.hpp>
+#include <sneaker/libc/c_str.h>
 #include "ast_tostring_helper.h"
 #include "ast_visitor.h"
-#include "../../base/c_str.h"
+
 
 #ifndef _AST_TOSTRING_VISITOR_H_
 #define _AST_TOSTRING_VISITOR_H_

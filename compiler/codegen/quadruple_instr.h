@@ -17,8 +17,8 @@
 
 /* Represents one quadruple code instruction. */
 
-#include "boost/tuple/tuple.hpp"
-#include "../../base/c_str.h"
+#include <boost/tuple/tuple.hpp>
+#include <sneaker/libc/c_str.h>
 
 #ifndef _QUADRUPLE_INSTR_H_
 #define _QUADRUPLE_INSTR_H_

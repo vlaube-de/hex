@@ -16,10 +16,11 @@
  */
 
 #include <algorithm>
+#include <sneaker/libc/assert.h>
 #include "ast_tostring_helper.h"
 #include "ast_tostring_visitor.h"
 #include "../ast/ast.h"
-#include "../../base/assert.h"
+
 
 AstToStringVisitor::AstToStringVisitor()
   :AstToStringHelper()
@@ -1659,7 +1660,7 @@ AstToStringVisitor::visit(HexAstTaskState state_)
       break;
   }
 
-  HEX_ASSERT(s);
+  ASSERT(s);
   this->append(s);
 
   return state;
@@ -1683,7 +1684,7 @@ AstToStringVisitor::visit(HexAstConditionalPreposition preposition_)
       break;
   }
 
-  HEX_ASSERT(s);
+  ASSERT(s);
   this->append(s);
 
   return preposition;

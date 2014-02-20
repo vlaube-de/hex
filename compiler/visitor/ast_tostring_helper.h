@@ -17,7 +17,7 @@
 
 #include <string>
 #include <boost/smart_ptr.hpp>
-#include "../../base/c_str.h"
+#include <sneaker/libc/c_str.h>
 
 #ifndef _AST_TOSTRING_HELPER_H_
 #define _AST_TOSTRING_HELPER_H_
