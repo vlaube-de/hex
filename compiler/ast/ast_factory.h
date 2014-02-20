@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "../../base/assert.h"
+#include <sneaker/libc/assert.h>
 
 #ifndef _AST_FACTORY_H_
 #define _AST_FACTORY_H_
@@ -54,7 +54,7 @@ public:
   template<typename... Args>
   static T* create(Args... args) {
     T *obj = new T(args...);
-    HEX_ASSERT(obj);
+    ASSERT(obj);
     return obj;
   }
 

@@ -20,7 +20,7 @@
 #include "ast_parameter_list.h"
 #include "ast_stmt_group.h"
 #include "../visitor/ast_visitor.h"
-#include "../../base/assert.h"
+
 
 #ifndef _AST_COMPLEX_LAMBDA_H_
 #define _AST_COMPLEX_LAMBDA_H_

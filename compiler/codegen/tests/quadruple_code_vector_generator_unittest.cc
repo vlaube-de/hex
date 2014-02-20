@@ -19,10 +19,10 @@
 
 
 #include <vector>
+#include <sneaker/libc/assert.h>
+#include <sneaker/testing/_unittest.h>
 #include "../quadruple_code_vector_generator.h"
 #include "../quadruple_instr.h"
-#include "../../../base/unittest.h"
-#include "../../../base/assert.h"
 
 
 class QuadrupleCodeVectorGeneratorUnitTest : public ::testing::Test {
@@ -78,7 +78,7 @@ QuadrupleCodeVectorGeneratorUnitTest::check_code_vector(
 
 TEST_F(QuadrupleCodeVectorGeneratorUnitTest, TestInitialization)
 {
-  HEX_ASSERT(this->_generator);
+  ASSERT(this->_generator);
   ASSERT_EQ(0, this->_generator->size());
 }
 

@@ -19,8 +19,8 @@
 
 
 #include "../ascii_box_generator.h"
-#include "../../../base/unittest.h"
-#include "../../../base/assert.h"
+#include <sneaker/libc/assert.h>
+#include <sneaker/testing/_unittest.h>
 
 
 class AsciiBoxGeneratorUnitTest : public ::testing::Test {
@@ -38,7 +38,7 @@ protected:
 
 TEST_F(AsciiBoxGeneratorUnitTest, TestInitialization)
 {
-  HEX_ASSERT(this->_generator);
+  ASSERT(this->_generator);
   ASSERT_EQ(10, this->_generator->width());
 }
 

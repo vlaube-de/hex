@@ -18,12 +18,12 @@
 /* HEX parser. */
 
 #include <cstddef>
+#include <sneaker/io/file_reader.h>
+#include <sneaker/libc/assert.h>
+#include <sneaker/libc/c_str.h>
 #include "ast/ast.h"
 #include "hex_parser.h"
 #include "parser.tab.hh"
-#include "../base/assert.h"
-#include "../base/c_str.h"
-#include "../base/freader.h"
 
 
 /* Bring out the parser functions that live in C land. */
@@ -43,9 +43,9 @@ HexParser::HexParser()
 int
 HexParser::parse_from_file(const c_str path, HexAstHexProgram* program)
 {
-  HEX_ASSERT(path);
+  ASSERT(path);
 
-  FileReader reader(path);
+  sneaker::io::file_reader reader(path);
   c_str content = NULL;
   reader.read_file(&content);
 
@@ -55,7 +55,7 @@ HexParser::parse_from_file(const c_str path, HexAstHexProgram* program)
 int
 HexParser::parse(const c_str content, HexAstHexProgram* program)
 {
-  HEX_ASSERT(content);
+  ASSERT(content);
   return this->_parse(content, program);
 }
 
@@ -82,11 +82,11 @@ HexParser::_parse(const c_str content, HexAstHexProgram* program)
   HexAstHexProgram root = NULL;
   _HexAstHexProgram::get_parse_tree_root(&root);
 
-  HEX_ASSERT(root);
+  ASSERT(root);
 
   if(program) {
     *program = root;
-    HEX_ASSERT(*program);
+    ASSERT(*program);
   }
 
   return res;

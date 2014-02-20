@@ -16,13 +16,14 @@
  */
 
 #include <boost/smart_ptr.hpp>
+#include <sneaker/libc/assert.h>
 #include "ast_compound_stmt.h"
 #include "ast_decorator_list.h"
 #include "ast_field_def_list.h"
 #include "ast_identifier.h"
 #include "ast_name.h"
 #include "../visitor/ast_visitor.h"
-#include "../../base/assert.h"
+
 
 #ifndef _AST_CLASS_DEF_H_
 #define _AST_CLASS_DEF_H_
@@ -45,7 +46,7 @@ public:
   }
 
   virtual void reprOK() {
-    HEX_ASSERT(this->name());
+    ASSERT(this->name());
   }
 
   virtual void accept(AstVisitor* visitor) {

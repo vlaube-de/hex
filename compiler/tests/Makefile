@@ -20,10 +20,10 @@ CFLAGS=-Wno-implicit -w -g -arch x86_64 -DGTEST_HAS_TR1_TUPLE=0 -std=gnu++11
 
 GTEST_INCLUDE=-I/usr/local/gtest-1.6.0/include
 LIBGTEST=/usr/lib/libgtest.a
-LIBBASE=../../base/_libbase.a
+LIBSNEAKER=/usr/local/lib/libsneaker.a
 LIBAST=../ast/libast.a
 
-LIBRARIES=$(LIBGTEST) $(LIBAST) $(LIBBASE)
+LIBRARIES=$(LIBGTEST) $(LIBSNEAKER) $(LIBAST)
 
 OBJECTS=../hex_parser.o \
 		../visitor/ast_visitor.o \

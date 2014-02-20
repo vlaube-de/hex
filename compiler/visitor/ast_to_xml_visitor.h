@@ -16,9 +16,10 @@
  */
 
 #include <list>
+#include <sneaker/libc/c_str.h>
 #include "ast_tostring_helper.h"
 #include "ast_visitor.h"
-#include "../../base/c_str.h"
+
 
 #ifndef _AST_TO_XML_VISITOR_H_
 #define _AST_TO_XML_VISITOR_H_

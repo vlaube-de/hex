@@ -16,11 +16,12 @@
  */
 
 #include <boost/smart_ptr.hpp>
+#include <sneaker/libc/assert.h>
 #include "ast_conditional_clause.h"
 #include "ast_expr_list.h"
 #include "ast_node.h"
 #include "../visitor/ast_visitor.h"
-#include "../../base/assert.h"
+
 
 #ifndef _AST_TASK_CLAUSE_H_
 #define _AST_TASK_CLAUSE_H_
@@ -38,7 +39,7 @@ public:
   }
 
   virtual void reprOK() {
-    HEX_ASSERT(this->tasks());
+    ASSERT(this->tasks());
   }
 
   virtual void accept(AstVisitor*)=0;

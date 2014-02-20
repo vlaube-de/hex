@@ -16,6 +16,7 @@
  */
 
 #include <boost/smart_ptr.hpp>
+#include <sneaker/libc/assert.h>
 #include "ast_expr.h"
 #include "ast_reference.h"
 #include "../visitor/ast_visitor.h"
@@ -62,8 +63,8 @@ public:
   }
 
   virtual void reprOK() {
-    HEX_ASSERT(this->type());
-    HEX_ASSERT(this->source());
+    ASSERT(this->type());
+    ASSERT(this->source());
   }
 
   virtual void accept(AstVisitor* visitor) {

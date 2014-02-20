@@ -15,12 +15,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <sneaker/io/file_reader.h>
+#include <sneaker/libc/assert.h>
 #include "parser_xml_test_base.h"
 #include "../ast/ast.h"
 #include "../hex_parser.h"
 #include "../visitor/ast_to_xml_visitor.h"
-#include "../../base/assert.h"
-#include "../../base/freader.h"
 
 void
 HexParserXmlTestBase::test(int index)
@@ -32,17 +32,17 @@ HexParserXmlTestBase::test(int index)
   c_str xmlFilePath = this->testfiles[index].xmlFilePath;
 
   c_str expected_str = NULL;
-  FileReader freader(xmlFilePath);
+  sneaker::io::file_reader freader(xmlFilePath);
   freader.read_file(&expected_str);
-  HEX_ASSERT(expected_str);
+  ASSERT(expected_str);
 
   int res = this->parser->parse_from_file(filepath, &program);
   EXPECT_EQ(0, res);
-  HEX_ASSERT(program);
+  ASSERT(program);
 
   program->accept(&visitor);
   c_str actual_str = visitor.str();
-  HEX_ASSERT(actual_str);
+  ASSERT(actual_str);
 
   ASSERT_STREQ(expected_str, actual_str);
 }

@@ -15,8 +15,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <sneaker/libc/c_str.h>
 #include "ast_literal.h"
-#include "../../base/c_str.h"
+
 
 #ifndef _AST_STRING_LITERAL_H_
 #define _AST_STRING_LITERAL_H_

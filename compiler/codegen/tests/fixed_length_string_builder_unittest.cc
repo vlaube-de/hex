@@ -19,8 +19,8 @@
 
 
 #include "../fixed_length_string_builder.h"
-#include "../../../base/unittest.h"
-#include "../../../base/assert.h"
+#include <sneaker/libc/assert.h>
+#include <sneaker/testing/_unittest.h>
 
 
 class FixedLengthStringBuilderUnitTest : public ::testing::Test {
@@ -48,7 +48,7 @@ FixedLengthStringBuilderUnitTest::append_and_check_actual_string(
 {
   this->_stringbuilder->append(inputString);
   const c_str actualString = this->_stringbuilder->to_string();
-  HEX_ASSERT(actualString);
+  ASSERT(actualString);
 
   size_t expectedLength = this->_stringbuilder->max_length();
   size_t actualLength = strlen(actualString);
@@ -62,7 +62,7 @@ FixedLengthStringBuilderUnitTest::append_and_check_actual_string(
 
 TEST_F(FixedLengthStringBuilderUnitTest, TestInitialization)
 {
-  HEX_ASSERT(this->_stringbuilder);
+  ASSERT(this->_stringbuilder);
 }
 
 TEST_F(FixedLengthStringBuilderUnitTest, TestAppendWithOverMaxLength)

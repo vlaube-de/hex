@@ -18,10 +18,11 @@
 /* Base class for all HEX parser tests. */
 
 #include <vector>
+#include <sneaker/libc/memory.h>
+#include <sneaker/testing/_unittest.h>
 #include "hex_parser_test_file.h"
 #include "../hex_parser.h"
-#include "../../base/memory.h"
-#include "../../base/unittest.h"
+
 
 #ifndef _HEX_PARSER_TEST_BASE_H_
 #define _HEX_PARSER_TEST_BASE_H_
@@ -39,7 +40,7 @@ protected:
   }
 
   virtual void TearDown() {
-    HEX_DELETE(parser);
+    DELETE(parser);
   }
 
   virtual void test(int index)=0;

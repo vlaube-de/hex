@@ -16,8 +16,9 @@
  */
 
 #include <boost/smart_ptr.hpp>
+#include <sneaker/libc/c_str.h>
 #include "quadruple_code_vector_generator.h"
-#include "../../base/c_str.h"
+
 
 #ifndef _HEX_OBJECT_BLOCK_GENERATOR_H_
 #define _HEX_OBJECT_BLOCK_GENERATOR_H_

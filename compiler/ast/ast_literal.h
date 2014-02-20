@@ -15,12 +15,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <sneaker/libc/assert.h>
+#include <sneaker/libc/c_str.h>
 #include "ast_primary.h"
 #include "ast_unparsed.h"
 #include "ast_expr_associativity.h"
 #include "ast_expr_precedence.h"
-#include "../../base/assert.h"
-#include "../../base/c_str.h"
 
 #ifndef _AST_LITERAL_H_
 #define _AST_LITERAL_H_
@@ -38,7 +38,7 @@ public:
   }
 
   virtual void reprOK() {
-    HEX_ASSERT(this->value());
+    ASSERT(this->value());
   }
 } * HexAstLiteral;
 

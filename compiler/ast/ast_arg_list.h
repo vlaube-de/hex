@@ -16,12 +16,13 @@
  */
 
 #include <boost/smart_ptr.hpp>
+#include <sneaker/libc/assert.h>
 #include "ast_keyword_arg_list.h"
 #include "ast_node.h"
 #include "ast_primary.h"
 #include "ast_simple_arg_list.h"
 #include "../visitor/ast_visitor.h"
-#include "../../base/assert.h"
+
 
 #ifndef _AST_ARG_LIST_H_
 #define _AST_ARG_LIST_H_
@@ -43,7 +44,7 @@ public:
   }
 
   virtual void reprOK() {
-    HEX_ASSERT(
+    ASSERT(
       this->simple_args() ||
       this->args_argument() ||
       this->keyword_args() ||

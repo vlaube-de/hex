@@ -16,8 +16,9 @@
  */
 
 #include "hex_stmt_codegen_visitor.h"
+#include <sneaker/libc/assert.h>
 #include "../ast/ast.h"
-#include "../../base/assert.h"
+
 
 HexStmtCodeGenerationVisitor::HexStmtCodeGenerationVisitor():
   _cv_generator(new QuadrupleCodeVectorGenerator())

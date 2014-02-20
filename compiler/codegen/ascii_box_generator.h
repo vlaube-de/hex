@@ -16,7 +16,7 @@
  */
 
 #include <string>
-#include "../../base/c_str.h"
+#include <sneaker/libc/c_str.h>
 
 #ifndef _ASCII_BOX_GENERATOR_H_
 #define _ASCII_BOX_GENERATOR_H_

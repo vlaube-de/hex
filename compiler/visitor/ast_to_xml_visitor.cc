@@ -17,10 +17,10 @@
 
 #include <list>
 #include <string>
+#include <sneaker/libc/assert.h>
 #include "ast_tostring_helper.h"
 #include "ast_to_xml_visitor.h"
 #include "../ast/ast.h"
-#include "../../base/assert.h"
 
 
 AstToXmlVisitor::AstToXmlVisitor()
@@ -2560,7 +2560,7 @@ AstToXmlVisitor::visit(HexAstConditionalPreposition preposition_)
       break;
   }
 
-  HEX_ASSERT(s);
+  ASSERT(s);
 
   this->double_tag_simple(
     "conditional_preposition",
